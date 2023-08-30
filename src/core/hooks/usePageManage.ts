@@ -1,45 +1,45 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ChangeContainerEventType,
-  PageAnimationConfig,
-  PageContainerConfig,
-  PageContainerType,
-  PageInfo,
-  PageRef,
-  PageType,
+  ViewAnimationConfig,
+  ViewContainerConfig,
+  ViewContainerType,
+  ViewInfo,
+  ViewRef,
+  ViewType,
 } from "../@types/page";
-import { registerContainer, removeContainer } from "../utils/page";
+import { registerContainer, removeContainer } from "../utils/pageBuilder";
 import { useAnimate } from "./useAnimate";
 
-export const usePageManage = (
-  type: PageContainerType | string,
+export const useViewManage = (
+  type: ViewContainerType | string,
   containerOrder: number,
-  config?: PageContainerConfig,
-  openConfig?: PageAnimationConfig,
-  closeConfig?: PageAnimationConfig,
-  activateConfig?: PageAnimationConfig,
-  onEnterContainerConfig?: PageAnimationConfig,
-  onLeaveContainerConfig?: PageAnimationConfig,
+  config?: ViewContainerConfig,
+  openConfig?: ViewAnimationConfig,
+  closeConfig?: ViewAnimationConfig,
+  activateConfig?: ViewAnimationConfig,
+  onEnterContainerConfig?: ViewAnimationConfig,
+  onLeaveContainerConfig?: ViewAnimationConfig,
 ) => {
-  const [pagesInfo, setPagesInfo] = useState<PageInfo[]>([]);
-  const activePageIdRef = useRef<string>("");
+  const [viewsInfo, setViewsInfo] = useState<ViewInfo[]>([]);
+  const activeViewIdRef = useRef<string>("");
   const { requestAnimate } = useAnimate();
 
   const doAnimate = useCallback(
     (
-      newPage: PageRef,
-      prevPage?: PageRef,
-      config?: PageAnimationConfig,
+      newView: ViewRef,
+      prevView?: ViewRef,
+      config?: ViewAnimationConfig,
       immediate?: boolean,
     ) =>
       new Promise<any>((resolve, reject) => {
         if (!config) {
           resolve(true);
         }
-        config?.start?.(newPage, prevPage);
+        config?.start?.(newView, prevView);
         if (immediate || !config?.duration) {
-          config?.animate?.(1, newPage, prevPage);
-          config?.end?.(newPage, prevPage);
+          config?.animate?.(1, newView, prevView);
+          config?.end?.(newView, prevView);
           resolve(true);
           return;
         }
@@ -47,10 +47,10 @@ export const usePageManage = (
         requestAnimate(
           config.duration,
           (t: number) => {
-            config?.animate?.(t, newPage, prevPage);
+            config?.animate?.(t, newView, prevView);
           },
           () => {
-            config?.end?.(newPage, prevPage);
+            config?.end?.(newView, prevView);
             document.body.classList.remove("animating");
             resolve(true);
           },
@@ -60,128 +60,128 @@ export const usePageManage = (
     [],
   );
 
-  const openPage = useCallback(
-    (newPage: PageType<any>) =>
+  const openView = useCallback(
+    (newView: ViewType<any>) =>
       new Promise((resolve, reject) => {
-        const newPgeInfo: PageInfo = {
-          id: newPage.id,
-          page: newPage,
+        const newPgeInfo: ViewInfo = {
+          id: newView.id,
+          view: newView,
           onInit: async (el: HTMLElement) => {
-            const currentPageInfo = pagesInfo.find(
-              (x) => x.id === activePageIdRef.current,
+            const currentViewInfo = viewsInfo.find(
+              (x) => x.id === activeViewIdRef.current,
             );
-            activePageIdRef.current = newPage.id;
+            activeViewIdRef.current = newView.id;
             await doAnimate(
               {
-                page: newPage,
+                view: newView,
                 ref: newPgeInfo.elRef as any,
               },
-              currentPageInfo
+              currentViewInfo
                 ? {
-                    page: currentPageInfo?.page,
-                    ref: currentPageInfo?.elRef as any,
+                    view: currentViewInfo?.view,
+                    ref: currentViewInfo?.elRef as any,
                   }
                 : undefined,
               openConfig,
             );
-            if (currentPageInfo) {
-              currentPageInfo.events?.onLeave?.({
-                toPage: newPage,
+            if (currentViewInfo) {
+              currentViewInfo.events?.onLeave?.({
+                toView: newView,
               });
             }
             newPgeInfo.events?.onEnter?.({
-              fromPage: currentPageInfo?.page,
-              data: newPage.data,
+              fromView: currentViewInfo?.view,
+              data: newView.data,
             });
             resolve(true);
           },
         };
-        pagesInfo.push(newPgeInfo);
-        setPagesInfo([...pagesInfo]);
+        viewsInfo.push(newPgeInfo);
+        setViewsInfo([...viewsInfo]);
       }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 
-  const activatePage = useCallback(async (page: PageType<any>) => {
-    const pageInfo = pagesInfo.find((x) => x.id === page.id);
-    if (!pageInfo) {
+  const activateView = useCallback(async (view: ViewType<any>) => {
+    const viewInfo = viewsInfo.find((x) => x.id === view.id);
+    if (!viewInfo) {
       return;
     }
-    if (activePageIdRef.current === page.id) {
+    if (activeViewIdRef.current === view.id) {
       return;
     }
-    const currentPageInfo = pagesInfo.find(
-      (x) => x.id === activePageIdRef.current,
+    const currentViewInfo = viewsInfo.find(
+      (x) => x.id === activeViewIdRef.current,
     );
-    activePageIdRef.current = page.id;
+    activeViewIdRef.current = view.id;
     await doAnimate(
       {
-        page: pageInfo.page,
-        ref: pageInfo.elRef as any,
+        view: viewInfo.view,
+        ref: viewInfo.elRef as any,
       },
-      currentPageInfo
+      currentViewInfo
         ? {
-            page: currentPageInfo.page,
-            ref: currentPageInfo.elRef as any,
+            view: currentViewInfo.view,
+            ref: currentViewInfo.elRef as any,
           }
         : undefined,
       activateConfig,
     );
-    if (currentPageInfo) {
-      currentPageInfo.events?.onLeave?.({
-        toPage: page,
+    if (currentViewInfo) {
+      currentViewInfo.events?.onLeave?.({
+        toView: view,
       });
     }
-    pageInfo.events?.onEnter?.({
-      fromPage: currentPageInfo?.page,
+    viewInfo.events?.onEnter?.({
+      fromView: currentViewInfo?.view,
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const closePage = useCallback(
-    async (page: PageType<any>, newActivePage?: PageType<any>, res?: any) => {
-      let activePageInfo: PageInfo | undefined;
-      activePageIdRef.current = "";
-      if (newActivePage) {
-        activePageIdRef.current = newActivePage.id;
-        activePageInfo = pagesInfo.find((x) => x.id === newActivePage.id);
+  const closeView = useCallback(
+    async (view: ViewType<any>, newActiveView?: ViewType<any>, res?: any) => {
+      let activeViewInfo: ViewInfo | undefined;
+      activeViewIdRef.current = "";
+      if (newActiveView) {
+        activeViewIdRef.current = newActiveView.id;
+        activeViewInfo = viewsInfo.find((x) => x.id === newActiveView.id);
       }
-      const index = pagesInfo.findIndex((x) => x.id === page.id);
+      const index = viewsInfo.findIndex((x) => x.id === view.id);
       if (index < 0) {
         return;
       }
-      const closePageInfo = pagesInfo[index];
+      const closeViewInfo = viewsInfo[index];
       const immediate =
-        !config?.moveBetweenPages && index < pagesInfo.length - 1;
-      closePageInfo.events?.onClosing?.({
-        toPage: newActivePage,
+        !config?.moveBetweenViews && index < viewsInfo.length - 1;
+      closeViewInfo.events?.onClosing?.({
+        toView: newActiveView,
       });
 
       await doAnimate(
         {
-          page: pagesInfo[index].page,
-          ref: pagesInfo[index].elRef as any,
+          view: viewsInfo[index].view,
+          ref: viewsInfo[index].elRef as any,
         },
-        activePageInfo
+        activeViewInfo
           ? {
-              page: activePageInfo.page,
-              ref: activePageInfo.elRef as any,
+              view: activeViewInfo.view,
+              ref: activeViewInfo.elRef as any,
             }
           : undefined,
         closeConfig,
         immediate,
       );
 
-      if (activePageInfo) {
-        activePageInfo.events?.onEnter?.({
-          fromPage: closePageInfo.page,
+      if (activeViewInfo) {
+        activeViewInfo.events?.onEnter?.({
+          fromView: closeViewInfo.view,
         });
       }
 
       if (index > -1) {
-        pagesInfo.splice(index, 1);
-        setPagesInfo([...pagesInfo]);
+        viewsInfo.splice(index, 1);
+        setViewsInfo([...viewsInfo]);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -189,21 +189,21 @@ export const usePageManage = (
   );
 
   const changeContainer = useCallback(
-    async (fromPage: PageType<any>, eventType: ChangeContainerEventType) => {
-      const activePageInfo = pagesInfo.find(
-        (x) => x.id === activePageIdRef.current,
+    async (fromView: ViewType<any>, eventType: ChangeContainerEventType) => {
+      const activeViewInfo = viewsInfo.find(
+        (x) => x.id === activeViewIdRef.current,
       );
 
-      if (!activePageInfo) {
+      if (!activeViewInfo) {
         return;
       }
       await doAnimate(
         {
-          page: activePageInfo.page,
-          ref: activePageInfo.elRef as any,
+          view: activeViewInfo.view,
+          ref: activeViewInfo.elRef as any,
         },
         {
-          page: fromPage,
+          view: fromView,
           ref: null as any,
         },
         eventType === ChangeContainerEventType.onEnter
@@ -211,12 +211,12 @@ export const usePageManage = (
           : onLeaveContainerConfig,
       );
       if (eventType === ChangeContainerEventType.onEnter) {
-        activePageInfo.events?.onEnter?.({
-          fromPage: fromPage,
+        activeViewInfo.events?.onEnter?.({
+          fromView: fromView,
         });
       } else if (eventType === ChangeContainerEventType.onLeave) {
-        activePageInfo.events?.onLeave?.({
-          toPage: fromPage,
+        activeViewInfo.events?.onLeave?.({
+          toView: fromView,
         });
       }
     },
@@ -229,9 +229,9 @@ export const usePageManage = (
       type,
       containerOrder,
       config || {},
-      openPage,
-      closePage,
-      activatePage,
+      openView,
+      closeView,
+      activateView,
       changeContainer,
     );
     return () => {
@@ -241,9 +241,9 @@ export const usePageManage = (
   }, []);
 
   return {
-    activePageId: activePageIdRef.current,
-    pagesInfo,
-    openPage,
-    closePage,
+    activeViewId: activeViewIdRef.current,
+    viewsInfo,
+    openView,
+    closeView,
   };
 };

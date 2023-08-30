@@ -1,9 +1,9 @@
 import { HistoryItem } from "../@types/page";
 
+var queryParams: any;
+const historyStack: HistoryItem[] = [];
 let registeredHistory = false;
 let browserAction = true;
-const historyStack: HistoryItem[] = [];
-var queryParams: any;
 
 (function registerBrowserHistory() {
   if (registeredHistory) {
@@ -14,24 +14,6 @@ var queryParams: any;
   document.addEventListener("keydown", escapeHandler, false);
   registeredHistory = true;
 })();
-
-function onPopState(e: any) {
-  if (browserAction) {
-    handleBrowserAction(e.state);
-  }
-}
-
-function handleBrowserAction(state: any) {
-  if (historyStack.length > 0) {
-    doBack();
-  }
-}
-
-function escapeHandler(e: any) {
-  if (e.key === "Escape") {
-    window.history.back();
-  }
-}
 
 export function listenBack(historyItem: HistoryItem) {
   setTimeout(() => {
@@ -53,6 +35,26 @@ export function unlistenBack(pageId: string) {
   }
 }
 
+export function disableBrowserAction() {
+  browserAction = false;
+  setTimeout(() => {
+    browserAction = true;
+  }, 1000);
+}
+
+export function getQueryParam(key: string) {
+  if (!queryParams) {
+    queryParams = getAllQueryParams();
+  }
+  return queryParams[key];
+}
+
+export function replaceUrlWithoutQueryParam(key: string) {
+  const sourceURL = window.location.href;
+  const newUrl = removeParam(key, sourceURL);
+  window.history.replaceState({}, document.title, newUrl);
+}
+
 function doBack() {
   const backItem = historyStack.pop();
   if (backItem) {
@@ -60,11 +62,22 @@ function doBack() {
   }
 }
 
-export function disableBrowserAction() {
-  browserAction = false;
-  setTimeout(() => {
-    browserAction = true;
-  }, 1000);
+function onPopState(e: any) {
+  if (browserAction) {
+    handleBrowserAction(e.state);
+  }
+}
+
+function handleBrowserAction(state: any) {
+  if (historyStack.length > 0) {
+    doBack();
+  }
+}
+
+function escapeHandler(e: any) {
+  if (e.key === "Escape") {
+    window.history.back();
+  }
 }
 
 function getAllQueryParams() {
@@ -79,19 +92,6 @@ function getAllQueryParams() {
     (result as any)[param[0]] = param[1];
     return result;
   }, {});
-}
-
-export function getQueryParam(key: string) {
-  if (!queryParams) {
-    queryParams = getAllQueryParams();
-  }
-  return queryParams[key];
-}
-
-export function replaceUrlWithoutQueryParam(key: string) {
-  const sourceURL = window.location.href;
-  const newUrl = removeParam(key, sourceURL);
-  window.history.replaceState({}, document.title, newUrl);
 }
 
 function removeParam(key: string, sourceURL: string) {

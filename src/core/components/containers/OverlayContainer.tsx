@@ -1,12 +1,12 @@
 import React, { useEffect, useRef } from "react";
 import { PageComponent } from "./PageComponent";
-import PageContextProvider from "../../context/PageContextProvider";
-import { usePageManage } from "../../hooks/usePageManage";
-import { closePage } from "../../utils/page";
-import { PageAnimationConfig } from "../../@types/page";
+import ViewContextProvider from "../../context/PageContextProvider";
+import { useViewManage } from "../../hooks/usePageManage";
+import { closeView } from "../../utils/pageBuilder";
+import { ViewAnimationConfig } from "../../@types/page";
 import { bezier } from "../../utils/bezier";
 
-export enum ContextMenuEventType {
+export enum OverlayEventType {
   Click = "Click",
   RightClick = "RightClick",
   DoubleClick = "DoubleClick",
@@ -14,18 +14,18 @@ export enum ContextMenuEventType {
   Hover = "Hover",
 }
 
-interface ContextMenuParamsType {
+interface OverlayParamsType {
   target: HTMLElement;
   event: MouseEvent;
   position: "TopLeft" | "TopRight" | "BottomLeft" | "BottomRight";
 }
 
-const ContextMenuContainer = () => {
+const OverlayContainer = () => {
   const slideIn = bezier(0.25, 1, 0.5, 1);
 
   const backDropRef = useRef<any>(null);
 
-  const getPosition = (params: ContextMenuParamsType) =>
+  const getPosition = (params: OverlayParamsType) =>
     // if (
     //   window.innerWidth - pageInfo?.page.options?.params.posX <
     //   newPage.ref.offsetWidth
@@ -54,14 +54,14 @@ const ContextMenuContainer = () => {
 
       top: params.event.clientY,
     });
-  const { pagesInfo } = usePageManage(
-    "ContextMenu",
+  const { viewsInfo: pagesInfo } = useViewManage(
+    "Overlay",
     6,
     {},
     {
       duration: 500,
       start(newPage) {
-        const params: ContextMenuParamsType = newPage.page.options?.params;
+        const params: OverlayParamsType = newPage.view.options?.params;
         if (params.target) {
           params.target.classList?.add("is-open");
         }
@@ -74,7 +74,7 @@ const ContextMenuContainer = () => {
         backDropRef.current.style.opacity = "0";
       },
       animate(t, newPage) {
-        const options = newPage?.page.options;
+        const options = newPage?.view.options;
         const newPageStyle = newPage.ref.style;
         const p = slideIn(t);
         newPageStyle.opacity = `${p}`;
@@ -82,41 +82,38 @@ const ContextMenuContainer = () => {
           backDropRef.current.style.opacity = p + "";
         }
       },
-    } as PageAnimationConfig,
+    } as ViewAnimationConfig,
     {
       duration: 0,
       start(closePage) {
-        const { target }: ContextMenuParamsType =
-          closePage.page.options?.params;
+        const { target }: OverlayParamsType = closePage.view.options?.params;
         if (target) {
           target.classList.remove("is-open");
         }
       },
-    } as PageAnimationConfig,
+    } as ViewAnimationConfig,
   );
 
   const closeModal = () => {
     if (pagesInfo.length > 0) {
-      closePage(pagesInfo[0].page);
+      closeView(pagesInfo[0].view);
     }
   };
 
   useEffect(() => {}, []);
 
   return (
-    <div
-      className={pagesInfo.length === 0 ? "hidden" : "context-menu-container"}
-    >
+    <div className={pagesInfo.length === 0 ? "hidden" : "overlay-container"}>
       <div ref={backDropRef} onClick={closeModal} className="backdrop" />
       {pagesInfo?.map((pageInfo) => (
         <React.Fragment key={pageInfo.id}>
-          <PageContextProvider pageInfo={pageInfo}>
+          <ViewContextProvider viewInfo={pageInfo}>
             <PageComponent pageInfo={pageInfo} />
-          </PageContextProvider>
+          </ViewContextProvider>
         </React.Fragment>
       ))}
     </div>
   );
 };
 
-export default ContextMenuContainer;
+export default OverlayContainer;

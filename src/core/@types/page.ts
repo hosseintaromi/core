@@ -1,4 +1,4 @@
-export enum PageContainerType {
+export enum ViewContainerType {
   MasterTab = "MasterTab",
   Tab = "Tab",
   Modal = "Modal",
@@ -6,21 +6,21 @@ export enum PageContainerType {
   Toast = "Toast",
 }
 
-export enum PageEventType {
+export enum ViewEventType {
   onInit = "onInit",
   onEnter = "onEnter",
   onLeave = "onLeave",
   onClosing = "onClosing",
 }
 
-export interface PageContainerConfig {
-  moveBetweenPages?: boolean;
+export interface ViewContainerConfig {
+  moveBetweenViews?: boolean;
   disableBrowserHistory?: boolean;
 }
 
-export interface PageEventArg {
-  fromPage?: PageType<any>;
-  toPage?: PageType<any>;
+export interface ViewEventArg {
+  fromView?: ViewType<any>;
+  toView?: ViewType<any>;
   data?: any;
 }
 
@@ -35,43 +35,43 @@ export enum PartialTabContainerType {
   tab3 = "tab3",
 }
 
-export interface PageContainerDataType {
-  pages: PageType<any>[];
+export interface ViewContainerDataType {
+  views: ViewType<any>[];
   containerOrder: number;
-  config?: PageContainerConfig;
-  openPage: (newPage: PageType<any>) => Promise<any>;
-  closePage: (
-    page: PageType<any>,
-    newActivePage?: PageType<any>,
+  config?: ViewContainerConfig;
+  openView: (newView: ViewType<any>) => Promise<any>;
+  closeView: (
+    view: ViewType<any>,
+    newActiveView?: ViewType<any>,
     res?: any,
   ) => Promise<any>;
-  activatePage: (page: PageType<any>) => Promise<any>;
+  activateView: (view: ViewType<any>) => Promise<any>;
   changeContainer: (
-    fromPage: PageType<any>,
+    fromView: ViewType<any>,
     eventType: ChangeContainerEventType,
   ) => Promise<any>;
 }
 
-export interface PageEvents {
-  onEnter?: (e: PageEventArg) => void;
-  onLeave?: (e: PageEventArg) => void;
-  onClosing?: (e: PageEventArg) => void;
+export interface ViewEvents {
+  onEnter?: (e: ViewEventArg) => void;
+  onLeave?: (e: ViewEventArg) => void;
+  onClosing?: (e: ViewEventArg) => void;
 }
 
-export interface PageContextType {
-  listenEvents: (events: PageEvents) => () => void;
-  emitEvent: (type: PageEventType, e: PageEventArg) => void;
-  getPageData: () => any;
+export interface ViewContextType {
+  listenEvents: (events: ViewEvents) => () => void;
+  emitEvent: (type: ViewEventType, e: ViewEventArg) => void;
+  getViewData: () => any;
   close?: (res?: any) => void;
 }
 
-export interface OpenPageOptions {
+export interface OpenViewOptions {
   disableBackdrop?: boolean;
   params?: any;
   onClickedBackdrop?: () => void;
 }
-export interface PageType<T> {
-  type: PageContainerType | string;
+export interface ViewType<T> {
+  type: ViewContainerType | string;
   id: string;
   data?: T;
   className?: string;
@@ -79,22 +79,22 @@ export interface PageType<T> {
   onClose?: (res?: any) => void;
   onClosed?: (res?: any) => void;
   onOpened?: () => void;
-  options?: OpenPageOptions;
+  options?: OpenViewOptions;
 }
 
-export interface PageInfo {
+export interface ViewInfo {
   id: string;
-  page: PageType<any>;
-  events?: PageEvents;
+  view: ViewType<any>;
+  events?: ViewEvents;
   elRef?: HTMLElement;
   onInit?: (el: HTMLElement) => void;
 }
 
-export interface PageAnimationConfig {
+export interface ViewAnimationConfig {
   duration?: number;
-  start?: (newPage: PageRef, prevPage?: PageRef) => void;
-  end?: (newPage: PageRef, prevPage?: PageRef) => void;
-  animate?: (t: number, newPage: PageRef, prevPage?: PageRef) => void;
+  start?: (newView: ViewRef, prevView?: ViewRef) => void;
+  end?: (newView: ViewRef, prevView?: ViewRef) => void;
+  animate?: (t: number, newView: ViewRef, prevView?: ViewRef) => void;
 }
 
 export interface HistoryItem {
@@ -102,7 +102,7 @@ export interface HistoryItem {
   back: () => void;
 }
 
-export interface PageRef {
-  page: PageType<any>;
+export interface ViewRef {
+  view: ViewType<any>;
   ref: HTMLElement;
 }

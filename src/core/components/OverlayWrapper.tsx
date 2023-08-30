@@ -1,5 +1,5 @@
 import { ReactNode, useEffect, useRef } from "react";
-import { ContextMenuConfig, useContextMenu } from "../hooks/useContextMenu";
+import { OverlayConfig, useOverlay } from "../hooks/useOverlay";
 
 export function ContextMenuWrapper<T, U>({
   children,
@@ -8,7 +8,7 @@ export function ContextMenuWrapper<T, U>({
   onSelect,
 }: {
   children: ReactNode;
-  contextMenuConfig: ContextMenuConfig<T, U>;
+  contextMenuConfig: OverlayConfig<T, U>;
   data?: T;
   onSelect?: (res?: U) => void;
 }) {
@@ -19,7 +19,7 @@ export function ContextMenuWrapper<T, U>({
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const menuRef = useContextMenu<T, U>({
+  const menuRef = useOverlay<T, U>({
     component: contextMenuConfig.component,
     backdrop: contextMenuConfig.backdrop,
     className: contextMenuConfig.className,

@@ -1,9 +1,9 @@
-import { PageAnimationConfig } from "../@types/page";
+import { ViewAnimationConfig } from "../@types/page";
 import { bezier } from "./bezier";
 
 const slideIn = bezier(0.25, 1, 0.5, 1);
 
-export const closeTabAnimationConfig: PageAnimationConfig = {
+export const closeTabAnimationConfig: ViewAnimationConfig = {
   duration: 400,
   start(closePage, activePage) {
     const closeStyle = closePage.ref.style;
@@ -37,7 +37,7 @@ export const closeTabAnimationConfig: PageAnimationConfig = {
   },
 };
 
-export const openTabAnimationConfig: PageAnimationConfig = {
+export const openTabAnimationConfig: ViewAnimationConfig = {
   duration: 300,
   start(newPage, prevPage) {
     const newPageStyle = newPage.ref.style;
@@ -61,7 +61,7 @@ export const openTabAnimationConfig: PageAnimationConfig = {
   },
 };
 
-export const onEnterContainerConfig: PageAnimationConfig = {
+export const onEnterContainerConfig: ViewAnimationConfig = {
   duration: 300,
   animate(t, activePage) {
     const activePageStyle = activePage.ref.style;
@@ -69,14 +69,14 @@ export const onEnterContainerConfig: PageAnimationConfig = {
   },
 };
 
-export const onLeaveContainerConfig: PageAnimationConfig = {
+export const onLeaveContainerConfig: ViewAnimationConfig = {
   duration: 500,
   start(closePage, activePage) {},
   animate(t, closePage, activePage) {},
   end(closePage, activePage) {},
 };
 
-export const activateTabConfig: PageAnimationConfig = {
+export const activateTabConfig: ViewAnimationConfig = {
   duration: 200,
   start(newPage, prevPage) {
     const newStyle = newPage.ref.style;
@@ -99,7 +99,7 @@ export const activateTabConfig: PageAnimationConfig = {
   },
 };
 
-export const openTabContainerConfig: PageAnimationConfig = {
+export const openTabContainerConfig: ViewAnimationConfig = {
   duration: 400,
   start(newPage, prevPage) {
     const newStyle = newPage.ref.style;
@@ -131,14 +131,14 @@ export const openTabContainerConfig: PageAnimationConfig = {
   },
 };
 
-export const onEnterTabContainerConfig: PageAnimationConfig = {
+export const onEnterTabContainerConfig: ViewAnimationConfig = {
   duration: 400,
   start(newPage, prevPage) {},
   animate(t, newPage, prevPage) {},
   end(newPage, prevPage) {},
 };
 
-export const openPartialTabAnimationConfig: PageAnimationConfig = {
+export const openPartialTabAnimationConfig: ViewAnimationConfig = {
   duration: 300,
   start(newPage, prevPage) {
     const newStyle = newPage.ref.style;
@@ -156,7 +156,7 @@ export const openPartialTabAnimationConfig: PageAnimationConfig = {
   },
 };
 
-export const activePartialTabAnimationConfig: PageAnimationConfig = {
+export const activePartialTabAnimationConfig: ViewAnimationConfig = {
   duration: 300,
   start(newPage, prevPage) {
     const newStyle = newPage.ref.style;
@@ -174,7 +174,7 @@ export const activePartialTabAnimationConfig: PageAnimationConfig = {
   },
 };
 
-export const leaveContainerMasterTabAnimationConfig: PageAnimationConfig = {
+export const leaveContainerMasterTabAnimationConfig: ViewAnimationConfig = {
   duration: 300,
   start(newPage, prevPage) {
     const newStyle = newPage.ref.style;
@@ -193,7 +193,7 @@ export const leaveContainerMasterTabAnimationConfig: PageAnimationConfig = {
   },
 };
 
-export const onOpenToastConfig: PageAnimationConfig = {
+export const onOpenToastConfig: ViewAnimationConfig = {
   duration: 300,
   start(newPage, prevPage) {
     const newPageStyle = newPage.ref.style;
@@ -207,7 +207,7 @@ export const onOpenToastConfig: PageAnimationConfig = {
   },
 };
 
-export const onCloseToastConfig: PageAnimationConfig = {
+export const onCloseToastConfig: ViewAnimationConfig = {
   duration: 300,
   start(closePage, activePage) {
     const closedPageStyle = closePage.ref.style;

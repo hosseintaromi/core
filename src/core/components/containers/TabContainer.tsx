@@ -1,16 +1,16 @@
 import React from "react";
-import { PageContainerType } from "../../@types/page";
+import { ViewContainerType } from "../../@types/page";
 import { PageComponent } from "./PageComponent";
-import PageContextProvider from "../../context/PageContextProvider";
-import { usePageManage } from "../../hooks/usePageManage";
+import ViewContextProvider from "../../context/PageContextProvider";
+import { useViewManage } from "../../hooks/usePageManage";
 import {
   closeTabAnimationConfig,
   openTabContainerConfig,
 } from "../../utils/pageAnimations";
 
 const TabContainer = () => {
-  const { pagesInfo } = usePageManage(
-    PageContainerType.Tab,
+  const { viewsInfo: pagesInfo } = useViewManage(
+    ViewContainerType.Tab,
     2,
     {},
     openTabContainerConfig,
@@ -25,9 +25,9 @@ const TabContainer = () => {
       <div className="tab-container">
         {pagesInfo?.map((pageInfo) => (
           <React.Fragment key={pageInfo.id}>
-            <PageContextProvider pageInfo={pageInfo}>
+            <ViewContextProvider viewInfo={pageInfo}>
               <PageComponent pageInfo={pageInfo} />
-            </PageContextProvider>
+            </ViewContextProvider>
           </React.Fragment>
         ))}
       </div>

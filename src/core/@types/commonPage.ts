@@ -37,6 +37,6 @@ export interface MessageLoading {
   callback: () => Promise<MessageLoadingResponseData>;
 }
 
-export interface MessageLoadingPageModel extends MessageLoading {
+export interface MessageLoadingViewModel extends MessageLoading {
   onClickedBackdrop?: () => void;
 }

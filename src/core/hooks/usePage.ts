@@ -1,9 +1,9 @@
-import { PageEvents } from "../@types/page";
+import { ViewEvents } from "../@types/page";
 import { useContext, useEffect } from "react";
-import { PageContext } from "../context/PageContextProvider";
+import { ViewContext } from "../context/PageContextProvider";
 
-export const usePage = <T = any>(events?: PageEvents) => {
-  const pageContext = useContext(PageContext);
+export const usePage = <T = any>(events?: ViewEvents) => {
+  const pageContext = useContext(ViewContext);
 
   useEffect(() => {
     if (events) {
@@ -20,6 +20,6 @@ export const usePage = <T = any>(events?: PageEvents) => {
   };
   return {
     close,
-    pageData: pageContext.getPageData() as T,
+    pageData: pageContext.getViewData() as T,
   };
 };

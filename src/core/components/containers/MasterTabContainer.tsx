@@ -1,8 +1,8 @@
 import React from "react";
-import { PageContainerType } from "../../@types/page";
+import { ViewContainerType } from "../../@types/page";
 import { PageComponent } from "./PageComponent";
-import PageContextProvider from "../../context/PageContextProvider";
-import { usePageManage } from "../../hooks/usePageManage";
+import ViewContextProvider from "../../context/PageContextProvider";
+import { useViewManage } from "../../hooks/usePageManage";
 import {
   onEnterTabContainerConfig,
   closeTabAnimationConfig,
@@ -11,11 +11,11 @@ import {
 } from "../../utils/pageAnimations";
 
 const MasterTabContainer = () => {
-  const { pagesInfo } = usePageManage(
-    PageContainerType.MasterTab,
+  const { viewsInfo: pagesInfo } = useViewManage(
+    ViewContainerType.MasterTab,
     0,
     {
-      moveBetweenPages: true,
+      moveBetweenViews: true,
     },
     activateTabConfig,
     closeTabAnimationConfig,
@@ -30,9 +30,9 @@ const MasterTabContainer = () => {
     <div className="tab-wrapper">
       {pagesInfo?.map((pageInfo) => (
         <React.Fragment key={pageInfo.id}>
-          <PageContextProvider pageInfo={pageInfo}>
+          <ViewContextProvider viewInfo={pageInfo}>
             <PageComponent pageInfo={pageInfo} />
-          </PageContextProvider>
+          </ViewContextProvider>
         </React.Fragment>
       ))}
     </div>

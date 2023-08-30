@@ -1,18 +1,18 @@
 import React, { useRef } from "react";
-import { PageAnimationConfig, PageContainerType } from "../../@types/page";
+import { ViewAnimationConfig, ViewContainerType } from "../../@types/page";
 import { PageComponent } from "./PageComponent";
-import PageContextProvider from "../../context/PageContextProvider";
-import { usePageManage } from "../../hooks/usePageManage";
+import ViewContextProvider from "../../context/PageContextProvider";
+import { useViewManage } from "../../hooks/usePageManage";
 import { activateTabConfig } from "../../utils/pageAnimations";
 import { bezier } from "../../utils/bezier";
-import { closePage } from "../../utils/page";
+import { closeView } from "../../utils/pageBuilder";
 
 const BottomSheetContainer = () => {
   const slideIn = bezier(0.25, 1, 0.5, 1);
   const backDropRefHook = useRef<any>(null);
 
-  const { pagesInfo } = usePageManage(
-    PageContainerType.BottomSheet,
+  const { viewsInfo: pagesInfo } = useViewManage(
+    ViewContainerType.BottomSheet,
     3,
     {},
     {
@@ -40,7 +40,7 @@ const BottomSheetContainer = () => {
         newPageStyle.transform = `translateY(${100 - p * 100}%)`;
       },
       end(newPage, prevPage) {},
-    } as PageAnimationConfig,
+    } as ViewAnimationConfig,
     {
       duration: 300,
       start(closePageEl, activePageEl) {
@@ -72,12 +72,12 @@ const BottomSheetContainer = () => {
         closedPageStyle.display = "none";
         backDropRefHook.current.style.zIndex = pagesInfo.length.toString();
       },
-    } as PageAnimationConfig,
+    } as ViewAnimationConfig,
     activateTabConfig,
     {
       duration: 300,
       animate(t, closedPage, newPage) {
-        if (newPage?.page.type === PageContainerType.Modal) {
+        if (newPage?.view.type === ViewContainerType.Modal) {
           const p = slideIn(t);
           backDropRefHook.current.style.opacity = p + "";
         }
@@ -86,7 +86,7 @@ const BottomSheetContainer = () => {
     {
       duration: 300,
       animate(t, closedPage, newPage) {
-        if (newPage?.page.type === PageContainerType.Modal) {
+        if (newPage?.view.type === ViewContainerType.Modal) {
           const p = slideIn(t);
           backDropRefHook.current.style.opacity = 1 - p + "";
         }
@@ -99,11 +99,11 @@ const BottomSheetContainer = () => {
       return;
     }
     const topPageInfo = pagesInfo[pagesInfo.length - 1];
-    if (topPageInfo.page.options?.disableBackdrop) {
-      topPageInfo.page.options.onClickedBackdrop?.();
+    if (topPageInfo.view.options?.disableBackdrop) {
+      topPageInfo.view.options.onClickedBackdrop?.();
       return;
     }
-    closePage(topPageInfo.page);
+    closeView(topPageInfo.view);
   };
 
   return (
@@ -115,9 +115,9 @@ const BottomSheetContainer = () => {
       />
       {pagesInfo?.map((pageInfo) => (
         <React.Fragment key={pageInfo.id}>
-          <PageContextProvider pageInfo={pageInfo}>
+          <ViewContextProvider viewInfo={pageInfo}>
             <PageComponent pageInfo={pageInfo} />
-          </PageContextProvider>
+          </ViewContextProvider>
         </React.Fragment>
       ))}
     </div>

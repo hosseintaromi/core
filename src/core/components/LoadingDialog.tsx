@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { usePage } from "../hooks/usePage";
 import {
   MessageLoadingResponseData,
-  MessageLoadingPageModel,
+  MessageLoadingViewModel,
   MessageLoadingResponseType,
 } from "../@types/commonPage";
 
@@ -12,7 +12,7 @@ export function LoadingDialog() {
   >();
 
   const loaded = useRef<boolean>(false);
-  const { pageData, close } = usePage<MessageLoadingPageModel>({});
+  const { pageData, close } = usePage<MessageLoadingViewModel>({});
 
   const callLoading = async () => {
     try {

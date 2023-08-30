@@ -1,10 +1,10 @@
-import { PageContainerType } from "../@types/page";
-import { openPage } from "./page";
+import { ViewContainerType } from "../@types/page";
+import { openView } from "./pageBuilder";
 import {
   MessageAlert,
   MessageConfirm,
   MessageLoading,
-  MessageLoadingPageModel,
+  MessageLoadingViewModel,
   MessageToast,
 } from "../@types/commonPage";
 import { Alert } from "../components/Alert";
@@ -13,8 +13,8 @@ import { Toast } from "../components/Toast";
 import { LoadingDialog } from "../components/LoadingDialog";
 
 export function openToast(messageToast: MessageToast) {
-  openPage<MessageToast>({
-    type: PageContainerType.Toast,
+  openView<MessageToast>({
+    type: ViewContainerType.Toast,
     id: "toast-" + Date.now(),
     data: messageToast,
     component: Toast,
@@ -24,8 +24,8 @@ export function openToast(messageToast: MessageToast) {
 
 export async function openAlert(messageAlert: MessageAlert) {
   return new Promise((resolve) => {
-    openPage<MessageAlert>({
-      type: PageContainerType.Tab,
+    openView<MessageAlert>({
+      type: ViewContainerType.Tab,
       id: "alert-" + Date.now(),
       component: Alert,
       data: messageAlert,
@@ -53,8 +53,8 @@ export async function openCustomConfirm<T>(
   data: T,
 ) {
   return new Promise((resolve, reject) => {
-    openPage<T>({
-      type: PageContainerType.Modal,
+    openView<T>({
+      type: ViewContainerType.Modal,
       id: "confirm-" + Date.now(),
       component: component,
       data,
@@ -71,11 +71,11 @@ export async function openCustomConfirm<T>(
 
 export function openLoading(
   messageLoading: MessageLoading,
-  pageType?: PageContainerType.Modal | PageContainerType.BottomSheet,
+  viewType?: ViewContainerType.Modal | ViewContainerType.BottomSheet,
 ) {
-  const model = messageLoading as MessageLoadingPageModel;
-  openPage<MessageLoadingPageModel>({
-    type: pageType || PageContainerType.Modal,
+  const model = messageLoading as MessageLoadingViewModel;
+  openView<MessageLoadingViewModel>({
+    type: viewType || ViewContainerType.Modal,
     id: "loading-" + Date.now(),
     data: model,
     component: LoadingDialog,

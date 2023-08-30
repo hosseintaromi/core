@@ -1,9 +1,9 @@
 import { MutableRefObject, useEffect } from "react";
-import { openPage } from "../utils/page";
-import { ContextMenuEventType } from "../components/containers/ContextMenuContainer";
+import { openView } from "../utils/pageBuilder";
+import { OverlayEventType } from "../components/containers/OverlayContainer";
 
-export interface ContextMenuData<T, U> {
-  event: ContextMenuEventType;
+export interface OverlayData<T, U> {
+  event: OverlayEventType;
   component: (props?: any) => JSX.Element;
   data?: T;
   backdrop?: boolean;
@@ -15,8 +15,8 @@ export interface ContextMenuData<T, U> {
   mapDataTo?: (data?: T) => any;
 }
 
-export interface ContextMenuConfig<T, U> {
-  event: ContextMenuEventType;
+export interface OverlayConfig<T, U> {
+  event: OverlayEventType;
   component: (props?: any) => JSX.Element;
   backdrop?: boolean;
   className?: string;
@@ -26,46 +26,42 @@ export interface ContextMenuConfig<T, U> {
   mapDataTo?: (data?: T) => any;
 }
 
-export const useContextMenu = <T, U>(
-  contextMenuData: ContextMenuData<T, U>,
-) => {
+export const useOverlay = <T, U>(overlayData: OverlayData<T, U>) => {
   const elRef: MutableRefObject<any> = { current: null };
 
   const openMenu = (event: MouseEvent) => {
-    openPage<T>({
-      type: "ContextMenu",
-      component: contextMenuData.component,
-      data: contextMenuData.mapDataTo?.(contextMenuData.data),
+    openView<T>({
+      type: "Overlay",
+      component: overlayData.component,
+      data: overlayData.mapDataTo?.(overlayData.data),
       onClose: (res?: U) => {
-        contextMenuData.onClose?.(res);
+        overlayData.onClose?.(res);
       },
       options: {
-        disableBackdrop: !contextMenuData.backdrop,
+        disableBackdrop: !overlayData.backdrop,
         params: {
           event,
           target:
-            contextMenuData.getTargetElement?.() ||
-            elRef.current ||
-            event.target,
-          position: contextMenuData.position,
+            overlayData.getTargetElement?.() || elRef.current || event.target,
+          position: overlayData.position,
         },
       },
     });
   };
 
   useEffect(() => {
-    switch (contextMenuData.event) {
-      case ContextMenuEventType.Click:
+    switch (overlayData.event) {
+      case OverlayEventType.Click:
         elRef.current.addEventListener("click", (event: MouseEvent) => {
           openMenu(event);
         });
         return;
-      case ContextMenuEventType.DoubleClick:
+      case OverlayEventType.DoubleClick:
         elRef.current.addEventListener("dblclick", (event: MouseEvent) => {
           openMenu(event);
         });
         return;
-      case ContextMenuEventType.RightClick:
+      case OverlayEventType.RightClick:
         return;
       default:
         return;

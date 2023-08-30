@@ -1,25 +1,25 @@
 import { ReactNode, useEffect, useRef, memo, createContext } from "react";
 import {
-  PageEventType,
-  PageEvents,
-  PageInfo,
-  PageEventArg,
-  PageContextType,
+  ViewEventType,
+  ViewEvents,
+  ViewInfo,
+  ViewEventArg,
+  ViewContextType,
 } from "../@types/page";
-import { closePage } from "../utils/page";
+import { closeView } from "../utils/pageBuilder";
 
-export const PageContext = createContext<PageContextType>({} as any);
+export const ViewContext = createContext<ViewContextType>({} as any);
 
-const PageContextProvider = ({
+const ViewContextProvider = ({
   children,
-  pageInfo,
+  viewInfo,
 }: {
   children: ReactNode;
-  pageInfo: PageInfo;
+  viewInfo: ViewInfo;
 }) => {
   const eventListeners = useRef<any>({});
 
-  const addEvent = (type: PageEventType, event?: (e: PageEventArg) => void) => {
+  const addEvent = (type: ViewEventType, event?: (e: ViewEventArg) => void) => {
     if (!event) {
       return;
     }
@@ -31,8 +31,8 @@ const PageContextProvider = ({
   };
 
   const removeEvent = (
-    type: PageEventType,
-    event?: (e: PageEventArg) => void,
+    type: ViewEventType,
+    event?: (e: ViewEventArg) => void,
   ) => {
     if (!event) {
       return;
@@ -44,53 +44,53 @@ const PageContextProvider = ({
     }
   };
 
-  const listenEvents = (events: PageEvents) => {
-    addEvent(PageEventType.onEnter, events.onEnter);
-    addEvent(PageEventType.onLeave, events.onLeave);
-    addEvent(PageEventType.onClosing, events.onClosing);
+  const listenEvents = (events: ViewEvents) => {
+    addEvent(ViewEventType.onEnter, events.onEnter);
+    addEvent(ViewEventType.onLeave, events.onLeave);
+    addEvent(ViewEventType.onClosing, events.onClosing);
     return () => {
-      removeEvent(PageEventType.onEnter, events.onEnter);
-      removeEvent(PageEventType.onLeave, events.onLeave);
-      removeEvent(PageEventType.onClosing, events.onClosing);
+      removeEvent(ViewEventType.onEnter, events.onEnter);
+      removeEvent(ViewEventType.onLeave, events.onLeave);
+      removeEvent(ViewEventType.onClosing, events.onClosing);
     };
   };
 
-  const emitEvent = (type: PageEventType, e: PageEventArg) => {
-    const listeners: ((e: PageEventArg) => void)[] =
+  const emitEvent = (type: ViewEventType, e: ViewEventArg) => {
+    const listeners: ((e: ViewEventArg) => void)[] =
       eventListeners.current[type];
     listeners?.forEach((listener) => {
       listener(e);
     });
   };
 
-  const getPageData = () => pageInfo.page.data;
+  const getViewData = () => viewInfo.view.data;
 
   const close = (res?: any) => {
-    closePage(pageInfo.page, res);
+    closeView(viewInfo.view, res);
   };
 
   useEffect(() => {
-    pageInfo.events = {
-      onEnter: (e: PageEventArg) => {
-        emitEvent(PageEventType.onEnter, e);
+    viewInfo.events = {
+      onEnter: (e: ViewEventArg) => {
+        emitEvent(ViewEventType.onEnter, e);
       },
-      onLeave: (e: PageEventArg) => {
-        emitEvent(PageEventType.onLeave, e);
+      onLeave: (e: ViewEventArg) => {
+        emitEvent(ViewEventType.onLeave, e);
       },
-      onClosing: (e: PageEventArg) => {
-        emitEvent(PageEventType.onClosing, e);
+      onClosing: (e: ViewEventArg) => {
+        emitEvent(ViewEventType.onClosing, e);
       },
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
-    <PageContext.Provider
-      value={{ listenEvents, emitEvent, close, getPageData }}
+    <ViewContext.Provider
+      value={{ listenEvents, emitEvent, close, getViewData: getViewData }}
     >
       {children}
-    </PageContext.Provider>
+    </ViewContext.Provider>
   );
 };
 
-export default memo(PageContextProvider, () => true);
+export default memo(ViewContextProvider, () => true);

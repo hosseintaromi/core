@@ -1,9 +1,9 @@
 import { useEffect, useRef } from "react";
-import { PageInfo } from "../../@types/page";
+import { ViewInfo } from "../../@types/page";
 
-export function PageComponent({ pageInfo }: { pageInfo: PageInfo }) {
+export function PageComponent({ pageInfo }: { pageInfo: ViewInfo }) {
   const elRef = useRef<any>(null);
-  const className = pageInfo.page.className;
+  const className = pageInfo.view.className;
 
   useEffect(() => {
     pageInfo.elRef = elRef.current;
@@ -16,7 +16,7 @@ export function PageComponent({ pageInfo }: { pageInfo: PageInfo }) {
       ref={elRef}
       className={"page-wrapper" + (className ? ` ${className}` : "")}
     >
-      {pageInfo.page.component()}
+      {pageInfo.view.component()}
     </div>
   );
 }

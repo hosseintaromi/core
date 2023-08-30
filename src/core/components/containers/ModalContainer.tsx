@@ -1,17 +1,17 @@
 import React, { useEffect, useRef } from "react";
-import { PageAnimationConfig, PageContainerType } from "../../@types/page";
+import { ViewAnimationConfig, ViewContainerType } from "../../@types/page";
 import { PageComponent } from "./PageComponent";
-import PageContextProvider from "../../context/PageContextProvider";
-import { usePageManage } from "../../hooks/usePageManage";
+import ViewContextProvider from "../../context/PageContextProvider";
+import { useViewManage } from "../../hooks/usePageManage";
 import { bezier } from "../../utils/bezier";
-import { closePage } from "../../utils/page";
+import { closeView } from "../../utils/pageBuilder";
 
 const ModalContainer = () => {
   const slideIn = bezier(0.25, 1, 0.5, 1);
   const backDropRef = useRef<any>(null);
 
-  const { pagesInfo } = usePageManage(
-    PageContainerType.Modal,
+  const { viewsInfo: pagesInfo } = useViewManage(
+    ViewContainerType.Modal,
     4,
     {},
     {
@@ -40,7 +40,7 @@ const ModalContainer = () => {
         newPageStyle.transform = `translateY(${20 - p * 20}%)`;
       },
       end(newPage, prevPage) {},
-    } as PageAnimationConfig,
+    } as ViewAnimationConfig,
     {
       duration: 300,
       start(closePageEl, activePageEl) {
@@ -72,7 +72,7 @@ const ModalContainer = () => {
         closedPageStyle.display = "none";
         backDropRef.current.style.zIndex = pagesInfo.length.toString();
       },
-    } as PageAnimationConfig,
+    } as ViewAnimationConfig,
   );
 
   useEffect(() => {}, []);
@@ -82,11 +82,11 @@ const ModalContainer = () => {
       return;
     }
     const topPageInfo = pagesInfo[pagesInfo.length - 1];
-    if (topPageInfo.page.options?.disableBackdrop) {
-      topPageInfo.page.options.onClickedBackdrop?.();
+    if (topPageInfo.view.options?.disableBackdrop) {
+      topPageInfo.view.options.onClickedBackdrop?.();
       return;
     }
-    closePage(topPageInfo.page);
+    closeView(topPageInfo.view);
   };
 
   return (
@@ -98,9 +98,9 @@ const ModalContainer = () => {
       />
       {pagesInfo?.map((pageInfo) => (
         <React.Fragment key={pageInfo.id}>
-          <PageContextProvider pageInfo={pageInfo}>
+          <ViewContextProvider viewInfo={pageInfo}>
             <PageComponent pageInfo={pageInfo} />
-          </PageContextProvider>
+          </ViewContextProvider>
         </React.Fragment>
       ))}
     </div>

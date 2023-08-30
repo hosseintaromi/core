@@ -1,7 +1,7 @@
 import React from "react";
 import { PageComponent } from "./PageComponent";
-import PageContextProvider from "../../context/PageContextProvider";
-import { usePageManage } from "../../hooks/usePageManage";
+import ViewContextProvider from "../../context/PageContextProvider";
+import { useViewManage } from "../../hooks/usePageManage";
 import {
   closeTabAnimationConfig,
   onLeaveContainerConfig,
@@ -14,7 +14,7 @@ const PartialTabContainer = ({
 }: {
   containerName: PartialTabContainerType;
 }) => {
-  const { pagesInfo } = usePageManage(
+  const { viewsInfo: pagesInfo } = useViewManage(
     containerName,
     0,
     {},
@@ -31,9 +31,9 @@ const PartialTabContainer = ({
     <div className="partial-tab-container">
       {pagesInfo?.map((pageInfo) => (
         <React.Fragment key={pageInfo.id}>
-          <PageContextProvider pageInfo={pageInfo}>
+          <ViewContextProvider viewInfo={pageInfo}>
             <PageComponent pageInfo={pageInfo} />
-          </PageContextProvider>
+          </ViewContextProvider>
         </React.Fragment>
       ))}
     </div>

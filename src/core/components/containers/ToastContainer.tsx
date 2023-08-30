@@ -1,16 +1,16 @@
 import React from "react";
-import { PageContainerType } from "../../@types/page";
+import { ViewContainerType } from "../../@types/page";
 import { PageComponent } from "./PageComponent";
-import PageContextProvider from "../../context/PageContextProvider";
-import { usePageManage } from "../../hooks/usePageManage";
+import ViewContextProvider from "../../context/PageContextProvider";
+import { useViewManage } from "../../hooks/usePageManage";
 import {
   onCloseToastConfig,
   onOpenToastConfig,
 } from "../../utils/pageAnimations";
 
 const ToastContainer = () => {
-  const { pagesInfo } = usePageManage(
-    PageContainerType.Toast,
+  const { viewsInfo: pagesInfo } = useViewManage(
+    ViewContainerType.Toast,
     5,
     { disableBrowserHistory: true },
     onOpenToastConfig,
@@ -24,9 +24,9 @@ const ToastContainer = () => {
       <div className="toasts-container">
         {pagesInfo?.map((pageInfo) => (
           <React.Fragment key={pageInfo.id}>
-            <PageContextProvider pageInfo={pageInfo}>
+            <ViewContextProvider viewInfo={pageInfo}>
               <PageComponent pageInfo={pageInfo} />
-            </PageContextProvider>
+            </ViewContextProvider>
           </React.Fragment>
         ))}
       </div>

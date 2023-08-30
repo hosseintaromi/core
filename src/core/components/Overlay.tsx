@@ -9,7 +9,7 @@ export interface MenuOption {
   value: string;
 }
 
-export function ContextMenu() {
+export function Overlay() {
   const { close, pageData } = usePage<MenuConfig>({});
   return (
     <ul className="d-block bg-primary p-2 text-lite">

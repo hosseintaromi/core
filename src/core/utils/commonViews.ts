@@ -7,10 +7,10 @@ import {
   MessageLoadingViewModel,
   MessageToast,
 } from "../@types/commonView";
-import { Alert } from "../components/Alert";
-import { Confirm } from "../components/Confirm";
-import { Toast } from "../components/Toast";
-import { LoadingDialog } from "../components/LoadingDialog";
+import { Alert } from "../components/common-views/Alert";
+import { Confirm } from "../components/common-views/Confirm";
+import { Toast } from "../components/common-views/Toast";
+import { LoadingDialog } from "../components/common-views/LoadingDialog";
 
 export function openToast(messageToast: MessageToast) {
   openView<MessageToast>({

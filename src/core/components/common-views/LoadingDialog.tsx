@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { useView } from "../hooks/useView";
+import { useView } from "../../hooks/useView";
 import {
   MessageLoadingResponseData,
   MessageLoadingViewModel,
   MessageLoadingResponseType,
-} from "../@types/commonView";
+} from "../../@types/commonView";
 
 export function LoadingDialog() {
   const [loadingEnd, setLoadingEnd] = useState<

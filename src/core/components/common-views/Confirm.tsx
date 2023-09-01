@@ -1,5 +1,5 @@
-import { MessageConfirm } from "../@types/commonView";
-import { useView } from "../hooks/useView";
+import { MessageConfirm } from "../../@types/commonView";
+import { useView } from "../../hooks/useView";
 
 export function Confirm() {
   const { close, viewData } = useView<MessageConfirm>({});

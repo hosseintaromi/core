@@ -4,7 +4,7 @@ import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import { bezier } from "../../utils/bezier";
-import { closeView } from "../../utils/viewBuilder";
+import { closeView } from "../../utils/viewManager";
 
 const ModalContainer = () => {
   const slideIn = bezier(0.25, 1, 0.5, 1);

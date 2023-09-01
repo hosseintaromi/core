@@ -1,5 +1,5 @@
 import { MutableRefObject, useEffect } from "react";
-import { openView } from "../utils/viewBuilder";
+import { openView } from "../utils/viewManager";
 import { OverlayEventType } from "../components/containers/OverlayContainer";
 
 export interface OverlayData<T, U> {

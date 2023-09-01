@@ -8,7 +8,7 @@ import {
   ViewRef,
   ViewType,
 } from "../@types/view";
-import { registerContainer, removeContainer } from "../utils/viewBuilder";
+import { registerContainer, removeContainer } from "../utils/viewManager";
 import { useAnimate } from "./useAnimate";
 
 export const useViewManage = (

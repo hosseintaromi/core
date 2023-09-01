@@ -5,7 +5,7 @@ import {
   ViewContainerType,
   ViewType,
 } from "../@types/view";
-import { listenBack, unlistenBack } from "./history";
+import { listenBack, unlistenBack } from "./historyManager";
 
 const viewContainers: { [name: string]: ViewContainerDataType } = {};
 const loadedViewsStack: ViewType<any>[] = [];

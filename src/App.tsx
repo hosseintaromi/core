@@ -4,17 +4,15 @@ import ModalContainer from "./core/components/containers/ModalContainer";
 import MasterTabContainer from "./core/components/containers/MasterTabContainer";
 import ToastContainer from "./core/components/containers/ToastContainer";
 import BottomSheetContainer from "./core/components/containers/BottomSheetContainer";
-import { openView } from "./core/utils/viewBuilder";
+import { openView } from "./core/utils/viewManager";
 import { ViewContainerType } from "./core/@types/view";
 
 function App() {
   useEffect(() => {
     openView({
-      type: ViewContainerType.MasterTab,
       id: "Home",
+      type: ViewContainerType.MasterTab,
       data: {},
-      // component: Home,
-      // for demo its start from intro tab
       component: () => <h1>Home</h1>,
     });
   }, []);

@@ -1,5 +1,5 @@
 import { ViewContainerType } from "../@types/view";
-import { openView } from "./viewBuilder";
+import { openView } from "./viewManager";
 import {
   MessageAlert,
   MessageConfirm,

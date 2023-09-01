@@ -2,7 +2,7 @@ import React, { useEffect, useRef } from "react";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
-import { closeView } from "../../utils/viewBuilder";
+import { closeView } from "../../utils/viewManager";
 import { ViewAnimationConfig } from "../../@types/view";
 import { bezier } from "../../utils/bezier";
 

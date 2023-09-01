@@ -6,7 +6,7 @@ import {
   ViewEventArg,
   ViewContextType,
 } from "../@types/view";
-import { closeView } from "../utils/viewBuilder";
+import { closeView } from "../utils/viewManager";
 
 export const ViewContext = createContext<ViewContextType>({} as any);
 

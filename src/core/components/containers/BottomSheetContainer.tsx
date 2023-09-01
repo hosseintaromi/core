@@ -5,7 +5,7 @@ import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import { activateTabConfig } from "../../utils/viewAnimations";
 import { bezier } from "../../utils/bezier";
-import { closeView } from "../../utils/viewBuilder";
+import { closeView } from "../../utils/viewManager";
 
 const BottomSheetContainer = () => {
   const slideIn = bezier(0.25, 1, 0.5, 1);

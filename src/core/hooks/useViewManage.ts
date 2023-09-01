@@ -7,8 +7,8 @@ import {
   ViewInfo,
   ViewRef,
   ViewType,
-} from "../@types/page";
-import { registerContainer, removeContainer } from "../utils/pageBuilder";
+} from "../@types/view";
+import { registerContainer, removeContainer } from "../utils/viewBuilder";
 import { useAnimate } from "./useAnimate";
 
 export const useViewManage = (

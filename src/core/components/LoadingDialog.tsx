@@ -1,10 +1,10 @@
 import { useEffect, useRef, useState } from "react";
-import { usePage } from "../hooks/usePage";
+import { useView } from "../hooks/useView";
 import {
   MessageLoadingResponseData,
   MessageLoadingViewModel,
   MessageLoadingResponseType,
-} from "../@types/commonPage";
+} from "../@types/commonView";
 
 export function LoadingDialog() {
   const [loadingEnd, setLoadingEnd] = useState<
@@ -12,11 +12,11 @@ export function LoadingDialog() {
   >();
 
   const loaded = useRef<boolean>(false);
-  const { pageData, close } = usePage<MessageLoadingViewModel>({});
+  const { viewData, close } = useView<MessageLoadingViewModel>({});
 
   const callLoading = async () => {
     try {
-      const loadingEndRes = await pageData.callback();
+      const loadingEndRes = await viewData.callback();
       if (loadingEndRes.type === MessageLoadingResponseType.Close) {
         close();
       } else {
@@ -29,7 +29,7 @@ export function LoadingDialog() {
 
   useEffect(() => {
     callLoading();
-    pageData.onClickedBackdrop = () => {
+    viewData.onClickedBackdrop = () => {
       if (loaded.current) {
         close();
       }
@@ -58,7 +58,7 @@ export function LoadingDialog() {
         </>
       ) : (
         <>
-          <span>{pageData.message}</span>
+          <span>{viewData.message}</span>
           <span>loading...</span>
         </>
       )}

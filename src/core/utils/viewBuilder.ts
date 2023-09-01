@@ -4,7 +4,7 @@ import {
   ViewContainerDataType,
   ViewContainerType,
   ViewType,
-} from "../@types/page";
+} from "../@types/view";
 import { listenBack, unlistenBack } from "./history";
 
 const viewContainers: { [name: string]: ViewContainerDataType } = {};

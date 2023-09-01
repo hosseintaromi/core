@@ -1,83 +1,83 @@
 import React, { useRef } from "react";
-import { ViewAnimationConfig, ViewContainerType } from "../../@types/page";
-import { PageComponent } from "./PageComponent";
-import ViewContextProvider from "../../context/PageContextProvider";
-import { useViewManage } from "../../hooks/usePageManage";
-import { activateTabConfig } from "../../utils/pageAnimations";
+import { ViewAnimationConfig, ViewContainerType } from "../../@types/view";
+import { ViewComponent } from "../ViewComponent";
+import ViewContextProvider from "../../context/ViewContextProvider";
+import { useViewManage } from "../../hooks/useViewManage";
+import { activateTabConfig } from "../../utils/viewAnimations";
 import { bezier } from "../../utils/bezier";
-import { closeView } from "../../utils/pageBuilder";
+import { closeView } from "../../utils/viewBuilder";
 
 const BottomSheetContainer = () => {
   const slideIn = bezier(0.25, 1, 0.5, 1);
   const backDropRefHook = useRef<any>(null);
 
-  const { viewsInfo: pagesInfo } = useViewManage(
+  const { viewsInfo } = useViewManage(
     ViewContainerType.BottomSheet,
     3,
     {},
     {
       duration: 300,
-      start(newPage, prevPage) {
-        const newPageStyle = newPage.ref.style;
-        newPageStyle.display = "block";
-        newPageStyle.opacity = "0";
-        const length = pagesInfo.length;
-        newPageStyle.zIndex = length + 1 + "";
-        newPageStyle.transform = "translateY(100%)";
+      start(newView, prevView) {
+        const newViewStyle = newView.ref.style;
+        newViewStyle.display = "block";
+        newViewStyle.opacity = "0";
+        const length = viewsInfo.length;
+        newViewStyle.zIndex = length + 1 + "";
+        newViewStyle.transform = "translateY(100%)";
 
-        if (prevPage?.ref) {
-          prevPage.ref.style.zIndex = length - 1 + "";
+        if (prevView?.ref) {
+          prevView.ref.style.zIndex = length - 1 + "";
         }
         backDropRefHook.current.style.zIndex = length + "";
       },
-      animate(t, newPage, prevPage) {
+      animate(t, newView, prevView) {
         const p = slideIn(t);
-        const newPageStyle = newPage.ref.style;
-        if (pagesInfo.length === 1) {
+        const newViewStyle = newView.ref.style;
+        if (viewsInfo.length === 1) {
           backDropRefHook.current.style.opacity = `${p}`;
         }
-        newPageStyle.opacity = `${p}`;
-        newPageStyle.transform = `translateY(${100 - p * 100}%)`;
+        newViewStyle.opacity = `${p}`;
+        newViewStyle.transform = `translateY(${100 - p * 100}%)`;
       },
-      end(newPage, prevPage) {},
+      end(newView, prevView) {},
     } as ViewAnimationConfig,
     {
       duration: 300,
-      start(closePageEl, activePageEl) {
-        const closedPageStyle = closePageEl.ref.style;
-        const activePageStyle = activePageEl?.ref.style;
-        if (activePageStyle) {
-          activePageStyle.opacity = "0";
-          activePageStyle.zIndex = pagesInfo.length + 1 + "";
+      start(closeViewEl, activeViewEl) {
+        const closedViewStyle = closeViewEl.ref.style;
+        const activeViewStyle = activeViewEl?.ref.style;
+        if (activeViewStyle) {
+          activeViewStyle.opacity = "0";
+          activeViewStyle.zIndex = viewsInfo.length + 1 + "";
         }
-        closedPageStyle.opacity = "1";
+        closedViewStyle.opacity = "1";
       },
-      animate(t, closePageEl, activePageEl) {
-        const closedPageStyle = closePageEl.ref.style;
-        const activePageStyle = activePageEl?.ref.style;
+      animate(t, closeViewEl, activeViewEl) {
+        const closedViewStyle = closeViewEl.ref.style;
+        const activeViewStyle = activeViewEl?.ref.style;
         const p = slideIn(t);
 
-        closedPageStyle.opacity = `${1 - p}`;
-        closedPageStyle.transform = `translateY(${p * 100}%)`;
-        if (pagesInfo.length === 1) {
+        closedViewStyle.opacity = `${1 - p}`;
+        closedViewStyle.transform = `translateY(${p * 100}%)`;
+        if (viewsInfo.length === 1) {
           backDropRefHook.current.style.opacity = `${1 - p}`;
         }
 
-        if (activePageStyle) {
-          activePageStyle.opacity = `${p}`;
+        if (activeViewStyle) {
+          activeViewStyle.opacity = `${p}`;
         }
       },
-      end(closePageEl, activePageEl) {
-        const closedPageStyle = closePageEl.ref.style;
-        closedPageStyle.display = "none";
-        backDropRefHook.current.style.zIndex = pagesInfo.length.toString();
+      end(closeViewEl, activeViewEl) {
+        const closedViewStyle = closeViewEl.ref.style;
+        closedViewStyle.display = "none";
+        backDropRefHook.current.style.zIndex = viewsInfo.length.toString();
       },
     } as ViewAnimationConfig,
     activateTabConfig,
     {
       duration: 300,
-      animate(t, closedPage, newPage) {
-        if (newPage?.view.type === ViewContainerType.Modal) {
+      animate(t, closedView, newView) {
+        if (newView?.view.type === ViewContainerType.Modal) {
           const p = slideIn(t);
           backDropRefHook.current.style.opacity = p + "";
         }
@@ -85,8 +85,8 @@ const BottomSheetContainer = () => {
     },
     {
       duration: 300,
-      animate(t, closedPage, newPage) {
-        if (newPage?.view.type === ViewContainerType.Modal) {
+      animate(t, closedView, newView) {
+        if (newView?.view.type === ViewContainerType.Modal) {
           const p = slideIn(t);
           backDropRefHook.current.style.opacity = 1 - p + "";
         }
@@ -95,28 +95,28 @@ const BottomSheetContainer = () => {
   );
 
   const closeSheet = () => {
-    if (pagesInfo.length === 0) {
+    if (viewsInfo.length === 0) {
       return;
     }
-    const topPageInfo = pagesInfo[pagesInfo.length - 1];
-    if (topPageInfo.view.options?.disableBackdrop) {
-      topPageInfo.view.options.onClickedBackdrop?.();
+    const topViewInfo = viewsInfo[viewsInfo.length - 1];
+    if (topViewInfo.view.options?.disableBackdrop) {
+      topViewInfo.view.options.onClickedBackdrop?.();
       return;
     }
-    closeView(topPageInfo.view);
+    closeView(topViewInfo.view);
   };
 
   return (
-    <div className={pagesInfo.length === 0 ? "" : "bottom-sheet-container"}>
+    <div className={viewsInfo.length === 0 ? "" : "bottom-sheet-container"}>
       <div
         ref={backDropRefHook}
         onClick={closeSheet}
-        className={pagesInfo.length === 0 ? "" : "sheet-backdrop"}
+        className={viewsInfo.length === 0 ? "" : "sheet-backdrop"}
       />
-      {pagesInfo?.map((pageInfo) => (
-        <React.Fragment key={pageInfo.id}>
-          <ViewContextProvider viewInfo={pageInfo}>
-            <PageComponent pageInfo={pageInfo} />
+      {viewsInfo?.map((viewInfo) => (
+        <React.Fragment key={viewInfo.id}>
+          <ViewContextProvider viewInfo={viewInfo}>
+            <ViewComponent viewInfo={viewInfo} />
           </ViewContextProvider>
         </React.Fragment>
       ))}

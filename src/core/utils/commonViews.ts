@@ -1,12 +1,12 @@
-import { ViewContainerType } from "../@types/page";
-import { openView } from "./pageBuilder";
+import { ViewContainerType } from "../@types/view";
+import { openView } from "./viewBuilder";
 import {
   MessageAlert,
   MessageConfirm,
   MessageLoading,
   MessageLoadingViewModel,
   MessageToast,
-} from "../@types/commonPage";
+} from "../@types/commonView";
 import { Alert } from "../components/Alert";
 import { Confirm } from "../components/Confirm";
 import { Toast } from "../components/Toast";

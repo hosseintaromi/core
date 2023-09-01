@@ -1,9 +1,9 @@
 import React, { useEffect, useRef } from "react";
-import { PageComponent } from "./PageComponent";
-import ViewContextProvider from "../../context/PageContextProvider";
-import { useViewManage } from "../../hooks/usePageManage";
-import { closeView } from "../../utils/pageBuilder";
-import { ViewAnimationConfig } from "../../@types/page";
+import { ViewComponent } from "../ViewComponent";
+import ViewContextProvider from "../../context/ViewContextProvider";
+import { useViewManage } from "../../hooks/useViewManage";
+import { closeView } from "../../utils/viewBuilder";
+import { ViewAnimationConfig } from "../../@types/view";
 import { bezier } from "../../utils/bezier";
 
 export enum OverlayEventType {
@@ -27,26 +27,26 @@ const OverlayContainer = () => {
 
   const getPosition = (params: OverlayParamsType) =>
     // if (
-    //   window.innerWidth - pageInfo?.page.options?.params.posX <
-    //   newPage.ref.offsetWidth
+    //   window.innerWidth - viewInfo?.view.options?.params.posX <
+    //   newView.ref.offsetWidth
     // ) {
-    //   newPageStyle.left =
-    //     pageInfo?.page.options?.params.posX - newPage.ref.offsetWidth + "px";
+    //   newViewStyle.left =
+    //     viewInfo?.view.options?.params.posX - newView.ref.offsetWidth + "px";
     // } else {
-    //   newPageStyle.left = pageInfo?.page.options?.params.posX + "px";
+    //   newViewStyle.left = viewInfo?.view.options?.params.posX + "px";
     // }
 
     // if (
-    //   window.innerHeight - pageInfo?.page.options?.params.posY <
-    //   newPage.ref.offsetHeight
+    //   window.innerHeight - viewInfo?.view.options?.params.posY <
+    //   newView.ref.offsetHeight
     // ) {
-    //   newPageStyle.top =
-    //     pageInfo?.page.options?.params.posY -
-    //     newPage.ref.offsetHeight +
+    //   newViewStyle.top =
+    //     viewInfo?.view.options?.params.posY -
+    //     newView.ref.offsetHeight +
     //     20 +
     //     "px";
     // } else {
-    //   newPageStyle.top = pageInfo?.page.options?.params.posY + "px";
+    //   newViewStyle.top = viewInfo?.view.options?.params.posY + "px";
     // }
 
     ({
@@ -54,30 +54,30 @@ const OverlayContainer = () => {
 
       top: params.event.clientY,
     });
-  const { viewsInfo: pagesInfo } = useViewManage(
+  const { viewsInfo } = useViewManage(
     "Overlay",
     6,
     {},
     {
       duration: 500,
-      start(newPage) {
-        const params: OverlayParamsType = newPage.view.options?.params;
+      start(newView) {
+        const params: OverlayParamsType = newView.view.options?.params;
         if (params.target) {
           params.target.classList?.add("is-open");
         }
-        const newPageStyle = newPage.ref.style;
-        newPageStyle.position = "absolute";
+        const newViewStyle = newView.ref.style;
+        newViewStyle.position = "absolute";
         const { left, top } = getPosition(params);
-        newPageStyle.left = left + "px";
-        newPageStyle.top = top + "px";
-        newPageStyle.opacity = "0";
+        newViewStyle.left = left + "px";
+        newViewStyle.top = top + "px";
+        newViewStyle.opacity = "0";
         backDropRef.current.style.opacity = "0";
       },
-      animate(t, newPage) {
-        const options = newPage?.view.options;
-        const newPageStyle = newPage.ref.style;
+      animate(t, newView) {
+        const options = newView?.view.options;
+        const newViewStyle = newView.ref.style;
         const p = slideIn(t);
-        newPageStyle.opacity = `${p}`;
+        newViewStyle.opacity = `${p}`;
         if (!options?.disableBackdrop) {
           backDropRef.current.style.opacity = p + "";
         }
@@ -85,8 +85,8 @@ const OverlayContainer = () => {
     } as ViewAnimationConfig,
     {
       duration: 0,
-      start(closePage) {
-        const { target }: OverlayParamsType = closePage.view.options?.params;
+      start(closeView) {
+        const { target }: OverlayParamsType = closeView.view.options?.params;
         if (target) {
           target.classList.remove("is-open");
         }
@@ -95,20 +95,20 @@ const OverlayContainer = () => {
   );
 
   const closeModal = () => {
-    if (pagesInfo.length > 0) {
-      closeView(pagesInfo[0].view);
+    if (viewsInfo.length > 0) {
+      closeView(viewsInfo[0].view);
     }
   };
 
   useEffect(() => {}, []);
 
   return (
-    <div className={pagesInfo.length === 0 ? "hidden" : "overlay-container"}>
+    <div className={viewsInfo.length === 0 ? "hidden" : "overlay-container"}>
       <div ref={backDropRef} onClick={closeModal} className="backdrop" />
-      {pagesInfo?.map((pageInfo) => (
-        <React.Fragment key={pageInfo.id}>
-          <ViewContextProvider viewInfo={pageInfo}>
-            <PageComponent pageInfo={pageInfo} />
+      {viewsInfo?.map((viewInfo) => (
+        <React.Fragment key={viewInfo.id}>
+          <ViewContextProvider viewInfo={viewInfo}>
+            <ViewComponent viewInfo={viewInfo} />
           </ViewContextProvider>
         </React.Fragment>
       ))}

@@ -1,17 +1,17 @@
 import { useEffect, useRef } from "react";
-import { usePage } from "../hooks/usePage";
-import { MessageToast } from "../@types/commonPage";
+import { useView } from "../hooks/useView";
+import { MessageToast } from "../@types/commonView";
 
 export function Toast() {
   const timer = useRef<NodeJS.Timeout>();
 
-  const { close, pageData } = usePage<MessageToast>({});
+  const { close, viewData } = useView<MessageToast>({});
 
   useEffect(() => {
-    if (pageData.delay) {
+    if (viewData.delay) {
       timer.current = setTimeout(() => {
         close();
-      }, pageData.delay * 1000);
+      }, viewData.delay * 1000);
     }
     return () => {
       if (timer.current) {
@@ -24,7 +24,7 @@ export function Toast() {
   return (
     <div className="w-100">
       <div className="row">
-        <h1 className="col-8">{pageData.message}</h1>
+        <h1 className="col-8">{viewData.message}</h1>
         <button className="col-3 btn btn-success" onClick={() => close(true)}>
           delete
         </button>

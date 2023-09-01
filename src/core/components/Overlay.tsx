@@ -1,4 +1,4 @@
-import { usePage } from "../hooks/usePage";
+import { useView } from "../hooks/useView";
 
 export interface MenuConfig {
   options: MenuOption[];
@@ -10,15 +10,15 @@ export interface MenuOption {
 }
 
 export function Overlay() {
-  const { close, pageData } = usePage<MenuConfig>({});
+  const { close, viewData } = useView<MenuConfig>({});
   return (
     <ul className="d-block bg-primary p-2 text-lite">
-      {pageData.options.map((item: MenuOption) => (
+      {viewData.options.map((item: MenuOption) => (
         <li
           key={item.text}
           onClick={() => {
             close({
-              pageData,
+              viewData,
               value: item.value,
             });
           }}

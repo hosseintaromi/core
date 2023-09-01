@@ -1,4 +1,4 @@
-import { HistoryItem } from "../@types/page";
+import { HistoryItem } from "../@types/view";
 
 var queryParams: any;
 const historyStack: HistoryItem[] = [];
@@ -28,8 +28,8 @@ export function listenBack(historyItem: HistoryItem) {
   historyStack.push(historyItem);
 }
 
-export function unlistenBack(pageId: string) {
-  const index = historyStack.findIndex((x) => x.id === pageId);
+export function unlistenBack(viewId: string) {
+  const index = historyStack.findIndex((x) => x.id === viewId);
   if (index >= 0) {
     historyStack.splice(index, 1);
   }

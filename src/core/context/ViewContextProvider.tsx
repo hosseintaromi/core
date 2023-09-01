@@ -5,8 +5,8 @@ import {
   ViewInfo,
   ViewEventArg,
   ViewContextType,
-} from "../@types/page";
-import { closeView } from "../utils/pageBuilder";
+} from "../@types/view";
+import { closeView } from "../utils/viewBuilder";
 
 export const ViewContext = createContext<ViewContextType>({} as any);
 

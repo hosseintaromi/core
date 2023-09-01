@@ -1,12 +1,12 @@
-import { MessageConfirm } from "../@types/commonPage";
-import { usePage } from "../hooks/usePage";
+import { MessageConfirm } from "../@types/commonView";
+import { useView } from "../hooks/useView";
 
 export function Confirm() {
-  const { close, pageData } = usePage<MessageConfirm>({});
+  const { close, viewData } = useView<MessageConfirm>({});
 
   return (
     <>
-      <div className="confirm-card">{pageData?.message}</div>
+      <div className="confirm-card">{viewData?.message}</div>
       <div className="d-flex mt-3">
         <div style={{ paddingRight: ".5rem", width: "50%" }}>
           <button

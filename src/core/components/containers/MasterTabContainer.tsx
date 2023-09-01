@@ -1,17 +1,17 @@
 import React from "react";
-import { ViewContainerType } from "../../@types/page";
-import { PageComponent } from "./PageComponent";
-import ViewContextProvider from "../../context/PageContextProvider";
-import { useViewManage } from "../../hooks/usePageManage";
+import { ViewContainerType } from "../../@types/view";
+import { ViewComponent } from "../ViewComponent";
+import ViewContextProvider from "../../context/ViewContextProvider";
+import { useViewManage } from "../../hooks/useViewManage";
 import {
   onEnterTabContainerConfig,
   closeTabAnimationConfig,
   onLeaveContainerConfig,
   activateTabConfig,
-} from "../../utils/pageAnimations";
+} from "../../utils/viewAnimations";
 
 const MasterTabContainer = () => {
-  const { viewsInfo: pagesInfo } = useViewManage(
+  const { viewsInfo } = useViewManage(
     ViewContainerType.MasterTab,
     0,
     {
@@ -24,14 +24,14 @@ const MasterTabContainer = () => {
     onLeaveContainerConfig,
   );
 
-  return pagesInfo.length === 0 ? (
+  return viewsInfo.length === 0 ? (
     <></>
   ) : (
     <div className="tab-wrapper">
-      {pagesInfo?.map((pageInfo) => (
-        <React.Fragment key={pageInfo.id}>
-          <ViewContextProvider viewInfo={pageInfo}>
-            <PageComponent pageInfo={pageInfo} />
+      {viewsInfo?.map((viewInfo) => (
+        <React.Fragment key={viewInfo.id}>
+          <ViewContextProvider viewInfo={viewInfo}>
+            <ViewComponent viewInfo={viewInfo} />
           </ViewContextProvider>
         </React.Fragment>
       ))}

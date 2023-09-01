@@ -4,8 +4,8 @@ import ModalContainer from "./core/components/containers/ModalContainer";
 import MasterTabContainer from "./core/components/containers/MasterTabContainer";
 import ToastContainer from "./core/components/containers/ToastContainer";
 import BottomSheetContainer from "./core/components/containers/BottomSheetContainer";
-import { openView } from "./core/utils/pageBuilder";
-import { ViewContainerType } from "./core/@types/page";
+import { openView } from "./core/utils/viewBuilder";
+import { ViewContainerType } from "./core/@types/view";
 
 function App() {
   useEffect(() => {

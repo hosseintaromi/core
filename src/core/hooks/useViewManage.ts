@@ -23,6 +23,7 @@ export const useViewManage = (
 ) => {
   const [viewsInfo, setViewsInfo] = useState<ViewInfo[]>([]);
   const activeViewIdRef = useRef<string>("");
+  const initRef = useRef<boolean>(false);
   const { requestAnimate } = useAnimate();
 
   const doAnimate = useCallback(
@@ -71,6 +72,11 @@ export const useViewManage = (
               (x) => x.id === activeViewIdRef.current,
             );
             activeViewIdRef.current = newView.id;
+            let immediate = false;
+            if (!initRef.current) {
+              initRef.current = true;
+              immediate = config?.disableFirstTimeAnimate || false;
+            }
             await doAnimate(
               {
                 view: newView,
@@ -83,6 +89,7 @@ export const useViewManage = (
                   }
                 : undefined,
               openConfig,
+              immediate,
             );
             if (currentViewInfo) {
               currentViewInfo.events?.onLeave?.({

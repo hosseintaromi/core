@@ -16,6 +16,7 @@ export enum ViewEventType {
 export interface ViewContainerConfig {
   moveBetweenViews?: boolean;
   disableBrowserHistory?: boolean;
+  disableFirstTimeAnimate?: boolean;
 }
 
 export interface ViewEventArg {

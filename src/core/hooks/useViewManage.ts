@@ -3,7 +3,6 @@ import {
   ChangeContainerEventType,
   ViewAnimationConfig,
   ViewContainerConfig,
-  ViewContainerType,
   ViewInfo,
   ViewRef,
   ViewType,
@@ -12,7 +11,7 @@ import { registerContainer, removeContainer } from "../utils/viewManager";
 import { useAnimate } from "./useAnimate";
 
 export const useViewManage = (
-  type: ViewContainerType | string,
+  type: string,
   containerOrder: number,
   config?: ViewContainerConfig,
   openConfig?: ViewAnimationConfig,

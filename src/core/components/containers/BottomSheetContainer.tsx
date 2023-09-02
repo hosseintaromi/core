@@ -1,11 +1,12 @@
 import React, { useRef } from "react";
-import { ViewAnimationConfig, ViewContainerType } from "../../@types/view";
+import { ViewAnimationConfig } from "../../@types/view";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import { activateTabConfig } from "../../utils/viewAnimations";
 import { bezier } from "../../utils/bezier";
 import { closeView } from "../../utils/viewManager";
+import { ViewContainerType } from "../../@types/commonView";
 
 const BottomSheetContainer = () => {
   const slideIn = bezier(0.25, 1, 0.5, 1);

@@ -1,11 +1,3 @@
-export enum ViewContainerType {
-  MasterTab = "MasterTab",
-  Tab = "Tab",
-  Modal = "Modal",
-  BottomSheet = "BottomSheet",
-  Toast = "Toast",
-}
-
 export enum ViewEventType {
   onInit = "onInit",
   onEnter = "onEnter",
@@ -72,7 +64,7 @@ export interface OpenViewOptions {
   onClickedBackdrop?: () => void;
 }
 export interface ViewType<T> {
-  type: ViewContainerType | string;
+  type: string;
   id: string;
   data?: T;
   className?: string;

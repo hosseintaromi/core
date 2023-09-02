@@ -5,7 +5,7 @@ import MasterTabContainer from "./core/components/containers/MasterTabContainer"
 import ToastContainer from "./core/components/containers/ToastContainer";
 import BottomSheetContainer from "./core/components/containers/BottomSheetContainer";
 import { openView } from "./core/utils/viewManager";
-import { ViewContainerType } from "./core/@types/view";
+import { ViewContainerType } from "./core/@types/commonView";
 
 function App() {
   useEffect(() => {

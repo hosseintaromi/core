@@ -5,7 +5,7 @@ import { useViewManage } from "../../hooks/useViewManage";
 import { ViewAnimationConfig } from "../../@types/view";
 import { bezier } from "../../utils/bezier";
 
-const LeftContainer = () => {
+const DesktopLeftContainer = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
   let closeConfig: ViewAnimationConfig = {
@@ -134,4 +134,4 @@ const LeftContainer = () => {
   );
 };
 
-export default LeftContainer;
+export default DesktopLeftContainer;

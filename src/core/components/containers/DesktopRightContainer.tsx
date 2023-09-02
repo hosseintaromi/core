@@ -5,7 +5,7 @@ import { ViewComponent } from "../ViewComponent";
 import { ViewAnimationConfig } from "../../@types/view";
 import { bezier } from "../../utils/bezier";
 
-const RightContainer = () => {
+const DesktopRightContainer = () => {
   const openConfig: ViewAnimationConfig = {
     duration: 300,
     start(newView, prevView) {
@@ -100,4 +100,4 @@ const RightContainer = () => {
   );
 };
 
-export default RightContainer;
+export default DesktopRightContainer;

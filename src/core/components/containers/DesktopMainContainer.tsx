@@ -3,7 +3,7 @@ import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 
-const MiddleMainContainer = () => {
+const DesktopMainContainer = () => {
   const { viewsInfo } = useViewManage(
     "MasterMiddle",
     0,
@@ -58,4 +58,4 @@ const MiddleMainContainer = () => {
   );
 };
 
-export default MiddleMainContainer;
+export default DesktopMainContainer;

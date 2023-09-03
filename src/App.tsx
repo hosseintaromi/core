@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import TabContainer from "./core/components/containers/TabContainer";
 import ModalContainer from "./core/components/containers/ModalContainer";
 import MasterTabContainer from "./core/components/containers/MasterTabContainer";
@@ -6,7 +6,9 @@ import ToastContainer from "./core/components/containers/ToastContainer";
 import BottomSheetContainer from "./core/components/containers/BottomSheetContainer";
 import { closeView, openView } from "./core/utils/viewManager";
 import { ViewContainerType } from "./core/@types/commonView";
-import OverlayInlineContainer from "./core/components/containers/OverlayInlineContainer";
+import OverlayInlineContainer, {
+  OverlayEventType,
+} from "./core/components/containers/OverlayInlineContainer";
 import { useView } from "./core/hooks/useView";
 
 function App() {
@@ -20,21 +22,21 @@ function App() {
   }, []);
 
   return (
-    <>
+    <div id="body">
       <MasterTabContainer />
       <TabContainer />
       <ModalContainer />
       <BottomSheetContainer />
       <ToastContainer />
-    </>
+    </div>
   );
 }
 
 function MenuSample() {
   const [selected, setSelected] = useState(-1);
-  const { close } = useView();
+  const { close, viewData } = useView();
   return (
-    <div style={{ backgroundColor: "red" }}>
+    <div id={viewData.id} style={{ backgroundColor: "red" }}>
       <ul>
         <li
           onClick={() => setSelected(0)}
@@ -68,23 +70,28 @@ function MenuSample() {
 }
 
 function Home() {
+  const elRef = useRef(null);
   const view = {
     id: "menu1",
     type: "inlineOverlay_1",
     data: {},
     component: MenuSample,
   };
-  const open = () => {
-    openView(view);
-  };
-  const close = () => {
-    closeView(view);
-  };
+
+  useEffect(() => {});
+
   return (
     <div>
-      <OverlayInlineContainer id="inlineOverlay_1" />
-      <button onClick={() => open()}>add menu</button>
-      <button onClick={() => close()}>close menu</button>
+      <OverlayInlineContainer
+        config={{
+          elRef: elRef,
+          event: OverlayEventType.Click,
+          component: MenuSample,
+        }}
+      />
+      <button ref={elRef} id="openMenu">
+        add menu
+      </button>
     </div>
   );
 }

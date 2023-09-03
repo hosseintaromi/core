@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import {
@@ -34,9 +34,10 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
   const slideIn = bezier(0.25, 1, 0.5, 1);
 
   const [viewInfo, setViewInfo] = useState<ViewInfo>();
-  const [hidden, setHidden] = useState<boolean>();
+  const [hidden, setHidden] = useState<boolean>(true);
 
   const containerIdRef = useRef<string>();
+  const providerRef = useRef(null);
   const { requestAnimate } = useAnimate();
 
   const doAnimate = useCallback(
@@ -132,33 +133,68 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
   );
 
   const toggleView = (show: boolean) => {
+    console.log(show);
     if (show) {
       openView({
         type: containerIdRef.current || "",
         component: config.component,
+        data: {
+          id: "menu11",
+        },
       });
     } else if (viewInfo?.view) {
       closeView(viewInfo.view);
     }
   };
 
+  const openMenuListener = () => {
+    if (config.elRef) {
+      switch (config.event as OverlayEventType) {
+        case OverlayEventType.Click:
+          {
+            (config.elRef.current as HTMLElement).addEventListener(
+              "click",
+              (event) => {
+                toggleView(true);
+              },
+            );
+          }
+          break;
+      }
+    }
+
+    document.getElementById("body")?.addEventListener("click", (event) => {
+      if (providerRef.current) {
+        console.log(providerRef.current as HTMLElement);
+        console.log(event.target as Node);
+        if (
+          event.target !== providerRef.current &&
+          !(providerRef.current as HTMLElement).contains(event.target as Node)
+        ) {
+          toggleView(false);
+        }
+      }
+    });
+  };
+
   useEffect(() => {
     const id = (containerIdRef.current = "overlay-inline-" + Date.now());
     registerContainer(id, 6, {}, openOverlayView, closeOverlayView);
+    openMenuListener();
     return () => {
       removeContainer(id);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return (
-    viewInfo && (
-      <div className={hidden ? "hidden" : "overlay-container"}>
-        <ViewContextProvider viewInfo={viewInfo}>
-          <ViewComponent viewInfo={viewInfo} />
-        </ViewContextProvider>
-      </div>
-    )
+  return viewInfo ? (
+    <div ref={providerRef} className={hidden ? "hidden" : "overlay-container"}>
+      <ViewContextProvider viewInfo={viewInfo}>
+        <ViewComponent viewInfo={viewInfo} />
+      </ViewContextProvider>
+    </div>
+  ) : (
+    <></>
   );
 };
 

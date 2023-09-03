@@ -16,8 +16,8 @@ export function registerContainer(
   config: ViewContainerConfig,
   openView: (view: ViewType<any>) => Promise<any>,
   closeView: (view: ViewType<any>, res?: any) => Promise<any>,
-  activateView: (view: ViewType<any>) => Promise<any>,
-  changeContainer: (
+  activateView?: (view: ViewType<any>) => Promise<any>,
+  changeContainer?: (
     fromView: ViewType<any>,
     eventType: ChangeContainerEventType,
   ) => Promise<any>,
@@ -70,7 +70,7 @@ export async function openView<T = any>(
     }
     if (topView && !isSameType) {
       const topViewContainer = viewContainers[topView.type];
-      topViewContainer.changeContainer(
+      topViewContainer.changeContainer?.(
         view as ViewType<T>,
         ChangeContainerEventType.onLeave,
       );
@@ -86,7 +86,7 @@ export async function openView<T = any>(
     }
 
     if (foundView) {
-      await container.activateView(foundView);
+      await container.activateView?.(foundView);
       moveViewToTop(foundView);
     } else {
       container.views.push(view as ViewType<T>);
@@ -116,7 +116,10 @@ export async function closeView<T>(view: ViewType<T>, res?: any) {
     const isSameType = topView?.type === view.type;
     if (topView && !isSameType) {
       const topViewContainer = viewContainers[topView.type];
-      topViewContainer.changeContainer(view, ChangeContainerEventType.onEnter);
+      topViewContainer.changeContainer?.(
+        view,
+        ChangeContainerEventType.onEnter,
+      );
     }
     if (!container.config?.disableBrowserHistory) {
       unlistenBack(view.id);

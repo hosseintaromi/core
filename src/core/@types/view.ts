@@ -38,8 +38,8 @@ export interface ViewContainerDataType {
     newActiveView?: ViewType<any>,
     res?: any,
   ) => Promise<any>;
-  activateView: (view: ViewType<any>) => Promise<any>;
-  changeContainer: (
+  activateView?: (view: ViewType<any>) => Promise<any>;
+  changeContainer?: (
     fromView: ViewType<any>,
     eventType: ChangeContainerEventType,
   ) => Promise<any>;

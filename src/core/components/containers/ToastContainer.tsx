@@ -1,5 +1,4 @@
 import React from "react";
-import { ViewContainerType } from "../../@types/view";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
@@ -7,6 +6,7 @@ import {
   onCloseToastConfig,
   onOpenToastConfig,
 } from "../../utils/viewAnimations";
+import { ViewContainerType } from "../../@types/commonView";
 
 const ToastContainer = () => {
   const { viewsInfo } = useViewManage(

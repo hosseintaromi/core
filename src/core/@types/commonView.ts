@@ -1,3 +1,11 @@
+export enum ViewContainerType {
+  MasterTab = "MasterTab",
+  Tab = "Tab",
+  Modal = "Modal",
+  BottomSheet = "BottomSheet",
+  Toast = "Toast",
+}
+
 export interface MessageConfirm {
   message: string;
   title?: string;

@@ -1,4 +1,3 @@
-import { ViewContainerType } from "../@types/view";
 import { openView } from "./viewManager";
 import {
   MessageAlert,
@@ -6,6 +5,7 @@ import {
   MessageLoading,
   MessageLoadingViewModel,
   MessageToast,
+  ViewContainerType,
 } from "../@types/commonView";
 import { Alert } from "../components/common-views/Alert";
 import { Confirm } from "../components/common-views/Confirm";

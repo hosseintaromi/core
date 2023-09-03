@@ -1,8 +1,8 @@
+import { ViewContainerType } from "../@types/commonView";
 import {
   ChangeContainerEventType,
   ViewContainerConfig,
   ViewContainerDataType,
-  ViewContainerType,
   ViewType,
 } from "../@types/view";
 import { listenBack, unlistenBack } from "./historyManager";

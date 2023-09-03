@@ -1,7 +1,12 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
-import { registerContainer, removeContainer } from "../../utils/viewManager";
+import {
+  closeView,
+  openView,
+  registerContainer,
+  removeContainer,
+} from "../../utils/viewManager";
 import {
   ViewAnimationConfig,
   ViewInfo,
@@ -25,13 +30,13 @@ interface OverlayParamsType {
   position: "TopLeft" | "TopRight" | "BottomLeft" | "BottomRight";
 }
 
-const OverlayInlineContainer = ({ id }: { id: string }) => {
+const OverlayInlineContainer = ({ config }: { config: any }) => {
   const slideIn = bezier(0.25, 1, 0.5, 1);
 
   const [viewInfo, setViewInfo] = useState<ViewInfo>();
   const [hidden, setHidden] = useState<boolean>();
 
-  const backDropRef = useRef<any>(null);
+  const containerIdRef = useRef<string>();
   const { requestAnimate } = useAnimate();
 
   const doAnimate = useCallback(
@@ -70,7 +75,7 @@ const OverlayInlineContainer = ({ id }: { id: string }) => {
     [],
   );
 
-  const openView = useCallback(async (newView: ViewType<any>) => {
+  const openOverlayView = useCallback(async (newView: ViewType<any>) => {
     if (!viewInfo) {
       await loadView(newView);
     }
@@ -98,7 +103,7 @@ const OverlayInlineContainer = ({ id }: { id: string }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const closeView = useCallback(
+  const closeOverlayView = useCallback(
     async (view?: ViewType<any>) => {
       if (!viewInfo) {
         return;
@@ -126,20 +131,20 @@ const OverlayInlineContainer = ({ id }: { id: string }) => {
     [],
   );
 
-  const closeModal = () => {
-    closeView(viewInfo?.view);
+  const toggleView = (show: boolean) => {
+    if (show) {
+      openView({
+        type: containerIdRef.current || "",
+        component: config.component,
+      });
+    } else if (viewInfo?.view) {
+      closeView(viewInfo.view);
+    }
   };
 
   useEffect(() => {
-    registerContainer(
-      id,
-      10,
-      {},
-      openView,
-      closeView,
-      async () => {},
-      async () => {},
-    );
+    const id = (containerIdRef.current = "overlay-inline-" + Date.now());
+    registerContainer(id, 6, {}, openOverlayView, closeOverlayView);
     return () => {
       removeContainer(id);
     };
@@ -149,7 +154,6 @@ const OverlayInlineContainer = ({ id }: { id: string }) => {
   return (
     viewInfo && (
       <div className={hidden ? "hidden" : "overlay-container"}>
-        <div ref={backDropRef} onClick={closeModal} className="backdrop" />
         <ViewContextProvider viewInfo={viewInfo}>
           <ViewComponent viewInfo={viewInfo} />
         </ViewContextProvider>

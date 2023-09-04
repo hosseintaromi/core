@@ -240,3 +240,7 @@ body {
 .overlay-inline-container .view-wrapper {
   inset: unset;
 }
+
+.hidden {
+  display: none;
+}

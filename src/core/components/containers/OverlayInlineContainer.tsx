@@ -33,11 +33,15 @@ interface OverlayParamsType {
 const OverlayInlineContainer = ({ config }: { config: any }) => {
   const slideIn = bezier(0.25, 1, 0.5, 1);
 
-  const [viewInfo, setViewInfo] = useState<ViewInfo>();
-  const [hidden, setHidden] = useState<boolean>(true);
+  const viewInfoRef = useRef<ViewInfo>();
+  const openedRef = useRef<boolean>();
+
+  const [viewInfoState, setViewInfoState] = useState<ViewInfo>();
+  const [hide, setHide] = useState<boolean>(true);
 
   const containerIdRef = useRef<string>();
-  const providerRef = useRef(null);
+  const viewRef = useRef<HTMLElement>();
+
   const { requestAnimate } = useAnimate();
 
   const doAnimate = useCallback(
@@ -46,7 +50,7 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
         config.start?.(newView);
         document.body.classList.add("animating");
         requestAnimate(
-          500,
+          config.duration || 0,
           (t: number) => {
             config.animate?.(t, newView);
           },
@@ -63,22 +67,25 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
 
   const loadView = useCallback(
     (newView: ViewType<any>) =>
-      new Promise((resolve, reject) => {
+      new Promise<ViewInfo>((resolve, reject) => {
         const newViewInfo: ViewInfo = {
           id: newView.id,
           view: newView,
           onInit: async (el: HTMLElement) => {
+            viewRef.current = el;
+            viewInfoRef.current = newViewInfo;
             resolve(newViewInfo);
           },
         };
-        setViewInfo(newViewInfo);
+        setViewInfoState(newViewInfo);
       }),
     [],
   );
 
   const openOverlayView = useCallback(async (newView: ViewType<any>) => {
+    let viewInfo = viewInfoRef.current;
     if (!viewInfo) {
-      await loadView(newView);
+      viewInfo = await loadView(newView);
     }
     if (!viewInfo) {
       return;
@@ -86,15 +93,25 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
     await doAnimate(
       {
         view: viewInfo.view,
-        ref: viewInfo?.elRef as any,
+        ref: viewInfo.elRef as any,
       },
       {
         duration: 500,
-        start: () => {
-          setHidden(false);
+        start(newView) {
+          setHide(false);
+          const newViewStyle = newView.ref.style;
+          newViewStyle.scale = "0.8";
+          newViewStyle.opacity = "0";
         },
-        animate: (t) => {},
-        end: () => {},
+        animate(t, newView) {
+          const p = slideIn(t);
+          const newViewStyle = newView.ref.style;
+          newViewStyle.scale = p * 0.8 + 0.2 + "";
+          newViewStyle.opacity = p + "";
+        },
+        end(newView, prevView) {
+          openedRef.current = true;
+        },
       },
     );
     viewInfo.events?.onEnter?.({
@@ -106,6 +123,7 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
 
   const closeOverlayView = useCallback(
     async (view?: ViewType<any>) => {
+      const viewInfo = viewInfoRef.current;
       if (!viewInfo) {
         return;
       }
@@ -120,10 +138,19 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
         },
         {
           duration: 500,
-          start: () => {},
-          animate: (t) => {},
-          end: () => {
-            setHidden(true);
+          start(newView) {
+            const newViewStyle = newView.ref.style;
+            newViewStyle.scale = "1";
+          },
+          animate(t, newView) {
+            const p = slideIn(t);
+            const newViewStyle = newView.ref.style;
+            newViewStyle.scale = 1 - p / 3 + "";
+            newViewStyle.opacity = 1 - p + "";
+          },
+          end(newView, prevView) {
+            openedRef.current = false;
+            setHide(true);
           },
         },
       );
@@ -132,65 +159,78 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
     [],
   );
 
-  const toggleView = (show: boolean) => {
-    console.log(show);
-    if (show) {
-      openView({
-        type: containerIdRef.current || "",
-        component: config.component,
-        data: {
-          id: "menu11",
-        },
-      });
-    } else if (viewInfo?.view) {
-      closeView(viewInfo.view);
-    }
-  };
+  const toggleView = useCallback(
+    (show: boolean) => {
+      if (show) {
+        openView({
+          id: "overlay-view",
+          type: containerIdRef.current || "",
+          component: config.component,
+          data: {
+            id: "menu11",
+          },
+        });
+      } else if (viewInfoRef.current?.view) {
+        closeView(viewInfoRef.current.view);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   const openMenuListener = () => {
     if (config.elRef) {
       switch (config.event as OverlayEventType) {
         case OverlayEventType.Click:
-          {
-            (config.elRef.current as HTMLElement).addEventListener(
-              "click",
-              (event) => {
-                toggleView(true);
-              },
-            );
-          }
+          (config.elRef.current as HTMLElement).addEventListener(
+            "click",
+            (event) => {
+              toggleView(true);
+            },
+          );
+
           break;
       }
     }
-
-    document.getElementById("body")?.addEventListener("click", (event) => {
-      if (providerRef.current) {
-        console.log(providerRef.current as HTMLElement);
-        console.log(event.target as Node);
-        if (
-          event.target !== providerRef.current &&
-          !(providerRef.current as HTMLElement).contains(event.target as Node)
-        ) {
-          toggleView(false);
-        }
-      }
-    });
   };
+
+  const closeListener = useCallback(
+    (event: any) => {
+      const viewEl = viewRef.current;
+      if (!openedRef.current || !viewEl) {
+        return;
+      }
+      if (event.target !== viewEl && !viewEl.contains(event.target as Node)) {
+        toggleView(false);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
 
   useEffect(() => {
     const id = (containerIdRef.current = "overlay-inline-" + Date.now());
     registerContainer(id, 6, {}, openOverlayView, closeOverlayView);
     openMenuListener();
+
     return () => {
       removeContainer(id);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  return viewInfo ? (
-    <div ref={providerRef} className={hidden ? "hidden" : "overlay-container"}>
-      <ViewContextProvider viewInfo={viewInfo}>
-        <ViewComponent viewInfo={viewInfo} />
+  useEffect(() => {
+    window.addEventListener("click", closeListener);
+
+    return () => {
+      window.removeEventListener("click", closeListener);
+    };
+  }, [closeListener]);
+
+  return viewInfoState ? (
+    <div className={hide ? "hidden" : "overlay-inline-container"}>
+      <ViewContextProvider viewInfo={viewInfoState}>
+        <ViewComponent viewInfo={viewInfoState} />
       </ViewContextProvider>
     </div>
   ) : (

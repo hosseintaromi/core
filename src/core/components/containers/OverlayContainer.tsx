@@ -48,7 +48,6 @@ const OverlayContainer = () => {
           }
         }
         break;
-
       case "BottomRight":
         // eslint-disable-next-line no-lone-blocks
         {
@@ -64,7 +63,6 @@ const OverlayContainer = () => {
           }
         }
         break;
-
       case "TopLeft":
         // eslint-disable-next-line no-lone-blocks
         {

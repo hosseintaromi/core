@@ -209,16 +209,16 @@ export const onOpenToastConfig: ViewAnimationConfig = {
 
 export const onCloseToastConfig: ViewAnimationConfig = {
   duration: 300,
-  start(closeView, activeView) {
+  start(closeView) {
     const closedViewStyle = closeView.ref.style;
     closedViewStyle.zIndex = "0";
   },
-  animate(t, closeView, activeView) {
+  animate(t, closeView) {
     const p = slideIn(t);
     const closedViewStyle = closeView.ref.style;
     closedViewStyle.opacity = 1 - t + "";
     const offsetHeight = closeView.ref.offsetHeight;
     closedViewStyle.marginTop = `${-offsetHeight * p}px`;
   },
-  end(closeView, activeView) {},
+  end() {},
 };

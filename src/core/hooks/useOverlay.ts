@@ -15,21 +15,13 @@ export interface OverlayData<T, U> {
   mapDataTo?: (data?: T) => any;
 }
 
-export interface OverlayConfig<T, U> {
-  event: OverlayEventType;
-  component: (props?: any) => JSX.Element;
-  backdrop?: boolean;
-  className?: string;
-  positionType?: "ByEvent" | "ByElement";
-  position?: "TopLeft" | "TopRight" | "BottomLeft" | "BottomRight";
-  onClose: (res?: U) => void;
-  mapDataTo?: (data?: T) => any;
-}
+export interface OverlayConfig<T, U>
+  extends Omit<OverlayData<T, U>, "getTargetElement"> {}
 
 export const useOverlay = <T, U>(overlayData: OverlayData<T, U>) => {
   const elRef: MutableRefObject<any> = { current: null };
 
-  const openMenu = (event: MouseEvent) => {
+  const openOverlay = (event: MouseEvent) => {
     openView<T>({
       type: "Overlay",
       component: overlayData.component,
@@ -53,12 +45,12 @@ export const useOverlay = <T, U>(overlayData: OverlayData<T, U>) => {
     switch (overlayData.event) {
       case OverlayEventType.Click:
         elRef.current.addEventListener("click", (event: MouseEvent) => {
-          openMenu(event);
+          openOverlay(event);
         });
         return;
       case OverlayEventType.DoubleClick:
         elRef.current.addEventListener("dblclick", (event: MouseEvent) => {
-          openMenu(event);
+          openOverlay(event);
         });
         return;
       case OverlayEventType.RightClick:

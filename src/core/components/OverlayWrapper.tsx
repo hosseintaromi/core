@@ -25,7 +25,7 @@ export function ContextMenuWrapper<T, U>({
     className: contextMenuConfig.className,
     onClose: (res?: U) => {
       onSelect?.(res);
-      contextMenuConfig.onClose(res);
+      contextMenuConfig.onClose?.(res);
     },
     position: contextMenuConfig.position,
     positionType: contextMenuConfig.positionType,

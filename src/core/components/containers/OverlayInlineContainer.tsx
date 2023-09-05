@@ -1,4 +1,10 @@
-import { MouseEvent, useCallback, useEffect, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useRef,
+  useState,
+  MutableRefObject,
+} from "react";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import {
@@ -15,22 +21,23 @@ import {
 } from "../../@types/view";
 import { bezier } from "../../utils/bezier";
 import { useAnimate } from "../../hooks/useAnimate";
+import { EventType, useEvent } from "../../hooks/useEvent";
 
-export enum OverlayEventType {
-  Click = "Click",
-  RightClick = "RightClick",
-  DoubleClick = "DoubleClick",
-  Press = "Press",
-  Hover = "Hover",
+export interface OverlayInlineData<T, U> {
+  event: EventType;
+  component: (props?: any) => JSX.Element;
+  elRef: MutableRefObject<HTMLElement>;
+  data?: T;
+  className?: string;
+  onClose?: (res?: U) => void;
+  mapDataTo?: (data?: T) => any;
 }
 
-interface OverlayParamsType {
-  target: HTMLElement;
-  event: MouseEvent;
-  position: "TopLeft" | "TopRight" | "BottomLeft" | "BottomRight";
-}
-
-const OverlayInlineContainer = ({ config }: { config: any }) => {
+const OverlayInlineContainer = <T, U>({
+  config,
+}: {
+  config: OverlayInlineData<T, U>;
+}) => {
   const slideIn = bezier(0.25, 1, 0.5, 1);
 
   const viewInfoRef = useRef<ViewInfo>();
@@ -41,6 +48,21 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
 
   const containerIdRef = useRef<string>();
   const viewRef = useRef<HTMLElement>();
+  useEvent({
+    event: config.event,
+    elRef: config.elRef,
+    handler: () => {
+      toggleView(true);
+    },
+  });
+
+  // useEvent({
+  //   event: config.event,
+  //   elRef: window,
+  //   handler: (event) => {
+  //     closeListener(event);
+  //   },
+  // });
 
   const { requestAnimate } = useAnimate();
 
@@ -100,16 +122,16 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
         start(newView) {
           setHide(false);
           const newViewStyle = newView.ref.style;
-          newViewStyle.scale = "0.8";
+          newViewStyle.scale = "0.7";
           newViewStyle.opacity = "0";
         },
         animate(t, newView) {
           const p = slideIn(t);
           const newViewStyle = newView.ref.style;
-          newViewStyle.scale = p * 0.8 + 0.2 + "";
+          newViewStyle.scale = p * 0.3 + 0.7 + "";
           newViewStyle.opacity = p + "";
         },
-        end(newView, prevView) {
+        end() {
           openedRef.current = true;
         },
       },
@@ -138,17 +160,17 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
         },
         {
           duration: 500,
-          start(newView) {
-            const newViewStyle = newView.ref.style;
-            newViewStyle.scale = "1";
+          start(closeView) {
+            const closeViewStyle = closeView.ref.style;
+            closeViewStyle.scale = "1";
           },
-          animate(t, newView) {
+          animate(t, closeView) {
             const p = slideIn(t);
-            const newViewStyle = newView.ref.style;
-            newViewStyle.scale = 1 - p / 3 + "";
-            newViewStyle.opacity = 1 - p + "";
+            const closeViewStyle = closeView.ref.style;
+            closeViewStyle.scale = 1 - p / 3 + "";
+            closeViewStyle.opacity = 1 - p + "";
           },
-          end(newView, prevView) {
+          end() {
             openedRef.current = false;
             setHide(true);
           },
@@ -161,6 +183,7 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
 
   const toggleView = useCallback(
     (show: boolean) => {
+      const viewInfoCurrent = viewInfoRef.current;
       if (show) {
         openView({
           id: "overlay-view",
@@ -170,8 +193,8 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
             id: "menu11",
           },
         });
-      } else if (viewInfoRef.current?.view) {
-        closeView(viewInfoRef.current.view);
+      } else if (viewInfoCurrent?.view) {
+        closeView(viewInfoCurrent.view);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -180,15 +203,20 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
 
   const openMenuListener = () => {
     if (config.elRef) {
-      switch (config.event as OverlayEventType) {
-        case OverlayEventType.Click:
-          (config.elRef.current as HTMLElement).addEventListener(
-            "click",
+      const configElRef = config.elRef.current;
+      switch (config.event as EventType) {
+        case EventType.Click:
+          (configElRef as HTMLElement).addEventListener("click", (event) => {
+            toggleView(true);
+          });
+          break;
+        case EventType.Hover:
+          (configElRef as HTMLElement).addEventListener(
+            "mouseenter",
             (event) => {
               toggleView(true);
             },
           );
-
           break;
       }
     }
@@ -211,8 +239,6 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
   useEffect(() => {
     const id = (containerIdRef.current = "overlay-inline-" + Date.now());
     registerContainer(id, 6, {}, openOverlayView, closeOverlayView);
-    openMenuListener();
-
     return () => {
       removeContainer(id);
     };
@@ -220,11 +246,10 @@ const OverlayInlineContainer = ({ config }: { config: any }) => {
   }, []);
 
   useEffect(() => {
-    window.addEventListener("click", closeListener);
-
-    return () => {
-      window.removeEventListener("click", closeListener);
-    };
+    // window.addEventListener("click", closeListener);
+    // return () => {
+    //   window.removeEventListener("click", closeListener);
+    // };
   }, [closeListener]);
 
   return viewInfoState ? (

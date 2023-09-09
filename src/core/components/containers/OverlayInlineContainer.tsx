@@ -223,12 +223,12 @@ const OverlayInlineContainer = <T, U>({
   };
 
   const closeListener = useCallback(
-    (event: any) => {
+    (event: Event) => {
       const viewEl = viewRef.current;
       if (!openedRef.current || !viewEl) {
         return;
       }
-      if (event.target !== viewEl && !viewEl.contains(event.target as Node)) {
+      if (!event.contains(viewEl)) {
         toggleView(false);
       }
     },
@@ -246,10 +246,11 @@ const OverlayInlineContainer = <T, U>({
   }, []);
 
   useEffect(() => {
-    // window.addEventListener("click", closeListener);
-    // return () => {
-    //   window.removeEventListener("click", closeListener);
-    // };
+    openMenuListener();
+    window.addEventListener("click", closeListener);
+    return () => {
+      window.removeEventListener("click", closeListener);
+    };
   }, [closeListener]);
 
   return viewInfoState ? (

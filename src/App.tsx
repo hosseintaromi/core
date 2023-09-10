@@ -6,6 +6,7 @@ import ToastContainer from "./core/components/containers/ToastContainer";
 import BottomSheetContainer from "./core/components/containers/BottomSheetContainer";
 import { openView } from "./core/utils/viewManager";
 import { ViewContainerType } from "./core/@types/commonView";
+import Home from "./core/components/samples/Home";
 
 function App() {
   useEffect(() => {
@@ -13,7 +14,7 @@ function App() {
       id: "Home",
       type: ViewContainerType.MasterTab,
       data: {},
-      component: () => <h1>Home</h1>,
+      component: Home,
     });
   }, []);
 

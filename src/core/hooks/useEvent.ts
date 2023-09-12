@@ -1,49 +1,33 @@
-import { MutableRefObject, useEffect, useRef } from "react";
-
+import { MutableRefObject, useEffect, useRef, useCallback } from "react";
+const MIN_PRESS_TIME = 500;
+const MAX_TAP_TIME = 300;
+const MIN_MOVE_TIME = 300;
 export enum EventType {
-  Click = "Click",
+  Tap = "Tap",
   RightClick = "RightClick",
   DoubleClick = "DoubleClick",
-  Press = "Press",
   Hover = "Hover",
-  MoveTopLeft = "MoveTopLeft",
-  MoveTopRight = "MoveTopBottom",
-  MoveBottomLeft = "MoveBottomLeft",
-  MoveBottomRight = "MoveBottomRight",
+  Press = "Press",
+  HorizontalSwipe = "HorizontalSwipe",
+  VerticalSwipe = "VerticalSwipe",
 }
 
-export enum MoveDirection {
-  TopLeft = "TopLeft",
-  TopRight = "TopBottom",
-  BottomLeft = "BottomLeft",
-  BottomRight = "BottomRight",
-  NoMove = "NoMove",
+export interface EventHandler {
+  onTouchStart?: (e: TouchEvent) => void;
+  onTouchMove?: (e: TouchEvent) => void;
+  onTouchEnd?: (e: TouchEvent) => void;
+  onTap?: (e: Event) => void;
+  onRightClick?: (e: Event) => void;
+  onDoubleClick?: (e: Event) => void;
+  onPress?: (e: Event) => void;
 }
 
-export interface Event {
-  onTouchStart?: (e: globalThis.MouseEvent | globalThis.TouchEvent) => void;
-  onTouchMove?: (e: globalThis.MouseEvent | globalThis.TouchEvent) => void;
-  onTouchEnd?: (e: globalThis.MouseEvent | globalThis.TouchEvent) => void;
-  onMouseDown?: (e: globalThis.MouseEvent | globalThis.TouchEvent) => void;
-  onMouseUp?: (e: globalThis.MouseEvent | globalThis.TouchEvent) => void;
-  onMousePress?: (e: globalThis.MouseEvent | globalThis.TouchEvent) => void;
-  onMouseMoveTopLeft?: (
-    e: globalThis.MouseEvent | globalThis.TouchEvent,
-  ) => void;
-  onMouseMoveTopRight?: (
-    e: globalThis.MouseEvent | globalThis.TouchEvent,
-  ) => void;
-  onMouseMoveBottomLeft?: (
-    e: globalThis.MouseEvent | globalThis.TouchEvent,
-  ) => void;
-  onMouseMoveBottomRight?: (
-    e: globalThis.MouseEvent | globalThis.TouchEvent,
-  ) => void;
-  onRightClick?: (e: globalThis.MouseEvent | globalThis.TouchEvent) => void;
-  onDoubleClick?: (e: globalThis.MouseEvent | globalThis.TouchEvent) => void;
-  onClick?: (e: globalThis.MouseEvent | globalThis.TouchEvent) => void;
-  windowMouseUp?: (e: globalThis.MouseEvent | globalThis.TouchEvent) => void;
-  windowMouseDown?: (e: globalThis.MouseEvent | globalThis.TouchEvent) => void;
+export interface TouchEvent {
+  x: number;
+  y: number;
+  moveX: number;
+  moveY: number;
+  e: Event;
 }
 
 export interface Position {
@@ -52,77 +36,246 @@ export interface Position {
 }
 
 export const useEvent = (
-  elRef: MutableRefObject<HTMLElement>,
+  elRef: MutableRefObject<HTMLElement | undefined>,
   eventType: EventType,
-  events: Event,
+  events: EventHandler,
 ) => {
-  const timeOut = useRef<NodeJS.Timeout | undefined>();
-  const startPosition = useRef<Position>();
+  const timeoutRef = useRef<NodeJS.Timeout>();
+  const startPositionRef = useRef<Position | undefined>();
+  const touchRef = useRef<number[]>([]);
+  const isTouchMoveRef = useRef(false);
+  const startSwipeRef = useRef<boolean>();
 
-  const calculateMoveDirection = (pos: Position) => {
-    if (startPosition.current) {
-      const dx = pos.x - startPosition.current.x;
-      const dy = pos.y - startPosition.current.y;
+  const getCurrentTime = () => Date.now();
 
-      if (Math.abs(dx) < 10 && Math.abs(dy) < 10) return MoveDirection.NoMove;
-      if (dx >= 0 && dy >= 0) return MoveDirection.TopRight;
-      if (dx >= 0 && dy < 0) return MoveDirection.BottomRight;
-      if (dx < 0 && dy >= 0) return MoveDirection.TopLeft;
-      if (dx < 0 && dy < 0) return MoveDirection.BottomLeft;
+  const getTouchEvent = (e: Event | any) => {
+    const startPosition = startPositionRef.current;
+    const touch = e.touches?.[e.touches.length - 1];
+    const x = e.clientX || touch.clientX;
+    const y = e.clientY || touch.clientY;
+    return {
+      x,
+      y,
+      moveX: x - (startPosition?.x || 0),
+      moveY: y - (startPosition?.y || 0),
+      e,
+    } as TouchEvent;
+  };
+
+  const handleTap = (e: Event) => {
+    const touches = touchRef.current;
+    if (touches.length !== 1 || isTouchMoveRef.current) {
+      resetTouchRef();
+      return;
+    }
+
+    resetTouchRef();
+    if (getCurrentTime() - touches[0] > MAX_TAP_TIME) {
+      return;
+    }
+    touchRef.current = [];
+    events?.onTap?.(e);
+  };
+
+  const handleDoubleClick = (e: Event) => {
+    const touches = touchRef.current;
+    if (
+      getCurrentTime() - touches[touches.length - 1] > MAX_TAP_TIME ||
+      isTouchMoveRef.current
+    ) {
+      resetTouchRef();
+      return;
+    }
+
+    if (touches.length < 2) {
+      return;
+    }
+    resetTouchRef();
+    if (touches.length === 2 && touches[1] - touches[0] < MAX_TAP_TIME) {
+      events?.onDoubleClick?.(e);
     }
   };
 
-  const handleMouseDown = (e: globalThis.MouseEvent) => {
-    startPosition.current = { x: e.clientX, y: e.clientY };
-    timeOut.current = setTimeout(() => {
-      if (eventType === EventType.Press) {
+  const handlePress = (e: Event) => {
+    clearTimer();
+    resetTouchRef();
+    timeoutRef.current = setTimeout(() => {
+      if (!isTouchMoveRef.current) {
+        events.onPress?.(e);
       }
-    }, 500);
+    }, MIN_PRESS_TIME);
   };
 
-  const handleMouseUp = (e: globalThis.MouseEvent) => {
-    if (timeOut.current) {
-      clearTimeout(timeOut.current);
-      timeOut.current = undefined;
-      if (eventType === EventType.Click) {
-        events.onClick?.(e);
+  const handleSwipe = (e: Event) => {
+    const touchEvent = getTouchEvent(e);
+    if (timeoutRef.current) {
+      if (startSwipeRef.current) {
+        events.onTouchMove?.(touchEvent);
       }
-    } else {
-      handleMouseMove(e);
+      return;
+    }
+    resetTouchRef();
+    const isVertical = eventType === EventType.VerticalSwipe;
+    timeoutRef.current = setTimeout(() => {
+      if (isTouchMoveRef.current) {
+        return;
+      }
+      const startPosition = startPositionRef.current;
+      if (!touchEvent || !startPosition) {
+        return;
+      }
+
+      const moveX = Math.abs(touchEvent.moveX);
+      const moveY = Math.abs(touchEvent.moveY);
+
+      if (moveX < moveY && isVertical) {
+        startSwipeRef.current = true;
+        events.onTouchStart?.({
+          ...touchEvent,
+          x: startPosition.x,
+          y: startPosition.y,
+        });
+        events.onTouchMove?.(touchEvent);
+      } else if (moveX > moveY && !isVertical) {
+        startSwipeRef.current = true;
+        events.onTouchStart?.({
+          ...touchEvent,
+          x: startPosition.x,
+          y: startPosition.y,
+        });
+        events.onTouchMove?.(touchEvent);
+      }
+    }, MIN_MOVE_TIME);
+  };
+
+  const resetTouchRef = () => {
+    touchRef.current = [];
+  };
+
+  const handleTouchStart = useCallback((e: Event) => {
+    const touches = touchRef.current;
+    if (touches.length > 2) {
+      touchRef.current.length = 0;
+    }
+    touches.push(getCurrentTime());
+    startPositionRef.current = getTouchEvent(e);
+    listenMove(true);
+    handleStartEvents(e);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleTouchEnd = useCallback((e: Event) => {
+    handleEndEvents(e);
+    listenMove(false);
+    clearTimer();
+    if (startSwipeRef.current) {
+      events.onTouchEnd?.(getTouchEvent(e));
+      startSwipeRef.current = undefined;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const clearTimer = () => {
+    const timer = timeoutRef.current;
+    if (!timer) {
+      return;
+    }
+    clearTimeout(timer);
+    timeoutRef.current = undefined;
+  };
+
+  const handleStartEvents = (e: Event) => {
+    switch (eventType) {
+      case EventType.Press:
+        handlePress(e);
+        break;
     }
   };
 
-  const handleMouseMove = (e: globalThis.MouseEvent) => {
-    const direction = calculateMoveDirection(e);
-    switch (direction) {
-      case MoveDirection.BottomLeft:
-        if (eventType === EventType.MoveBottomRight)
-          events.onMouseMoveBottomRight?.(e);
+  const handleEndEvents = (e: Event) => {
+    switch (eventType) {
+      case EventType.DoubleClick:
+        handleDoubleClick(e);
         break;
-      case MoveDirection.BottomRight:
-        if (eventType === EventType.MoveTopRight)
-          events.onMouseMoveTopRight?.(e);
+      case EventType.Tap:
+        handleTap(e);
         break;
-      case MoveDirection.TopLeft:
-        if (eventType === EventType.MoveTopLeft) events.onMouseMoveTopLeft?.(e);
-        break;
-      case MoveDirection.TopRight:
-        if (eventType === EventType.MoveBottomLeft)
-          events.onMouseMoveBottomLeft?.(e);
-        break;
-      case MoveDirection.NoMove:
-        if (eventType === EventType.Press) events.onMousePress?.(e);
+      default:
+        resetTouchRef();
         break;
     }
+  };
+
+  const detectMove = (e: Event) => true;
+
+  const handleTouchMove = useCallback((e: Event) => {
+    isTouchMoveRef.current = detectMove(e);
+    switch (eventType) {
+      case EventType.HorizontalSwipe:
+      case EventType.VerticalSwipe:
+        handleSwipe(e);
+        break;
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const listenMove = (listen: boolean) => {
+    if (listen && !isTouchMoveRef.current) {
+      addListener("mousemove", handleTouchMove);
+      addListener("touchmove", handleTouchMove);
+    } else if (!listen) {
+      isTouchMoveRef.current = false;
+      removeListener("mousemove", handleTouchMove);
+      removeListener("touchmove", handleTouchMove);
+    }
+  };
+
+  const removeListener = (
+    type: string,
+    handle: (e: Event) => void,
+    forElement?: boolean,
+  ) => {
+    if (!elRef.current) return;
+    (forElement ? elRef.current : window).removeEventListener(
+      type,
+      handle as EventListener,
+    );
+  };
+
+  const addListener = (
+    type: string,
+    handle: (e: Event) => void,
+    forElement?: boolean,
+  ) => {
+    if (!elRef.current) return;
+    (forElement ? elRef.current : window).addEventListener(
+      type,
+      handle as EventListener,
+    );
   };
 
   useEffect(() => {
-    elRef.current.addEventListener("mousedown", (e: globalThis.MouseEvent) => {
-      handleMouseDown(e);
-    });
-    elRef.current.addEventListener("mouseup", (e: globalThis.MouseEvent) => {
-      handleMouseUp(e);
-    });
-    return () => {};
+    if (eventType === EventType.Hover) {
+      addListener("mouseover", handleTouchEnd);
+      addListener("mouseout", handleTouchEnd);
+      return () => {
+        removeListener("mouseover", handleTouchEnd);
+        removeListener("mouseout", handleTouchEnd);
+      };
+    }
+    addListener("mousedown", handleTouchStart, true);
+    addListener("mouseup", handleTouchEnd);
+    addListener("touchstart", handleTouchStart, true);
+    addListener("touchend", handleTouchEnd);
+
+    return () => {
+      listenMove(false);
+      removeListener("mousedown", handleTouchStart, true);
+      removeListener("mouseup", handleTouchEnd);
+      removeListener("touchstart", handleTouchStart, true);
+      removeListener("touchend", handleTouchEnd);
+      clearTimer();
+    };
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 };

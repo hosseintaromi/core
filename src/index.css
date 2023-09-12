@@ -148,6 +148,7 @@ body {
   height: 100%;
   position: relative;
 }
+
 .tab-wrapper,
 .tab-container {
   position: absolute;
@@ -155,19 +156,24 @@ body {
   inset: 0;
   z-index: 0;
 }
+
 .tab-container {
   z-index: 1;
 }
+
 .tab-wrapper .view-wrapper,
 .tab-container .view-wrapper {
   position: absolute;
   overflow: hidden;
 }
+
 .tab-wrapper .view-wrapper,
 .tab-container .view-wrapper {
   inset: 0;
 }
+
 @media (min-width: 768px) {
+
   .tab-wrapper,
   .tab-container {
     max-width: 700px;
@@ -175,14 +181,17 @@ body {
     margin-right: auto;
   }
 }
+
 .modal-container .view-wrapper.passportHelp {
   padding: 0;
 }
+
 .modal-container .view-wrapper,
 .bottom-sheet-container .view-wrapper {
   margin-left: auto;
   margin-right: auto;
 }
+
 .modal-container .view-wrapper {
   position: absolute;
   top: 50%;
@@ -197,6 +206,7 @@ body {
   border-radius: 0.25rem;
   text-align: center;
 }
+
 .bottom-sheet-container .view-wrapper {
   position: absolute;
   bottom: 0;
@@ -213,6 +223,7 @@ body {
   color: #000;
   max-width: 700px;
 }
+
 .bottom-sheet-container .view-wrapper::before {
   content: "";
   width: 20%;
@@ -224,4 +235,23 @@ body {
   right: 0;
   margin-left: auto;
   margin-right: auto;
+}
+
+.overlay-inline-container .view-wrapper {
+  inset: unset;
+}
+
+.overlay-container {
+  .backdrop {
+    position: absolute;
+    background-color: rgba(0, 0, 0, 0.3);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+  }
+}
+
+.hidden {
+  display: none;
 }

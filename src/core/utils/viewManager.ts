@@ -137,10 +137,7 @@ function addToLoadedViewStack(view: ViewType<any>) {
 }
 
 function removeFromLoadedViewStack(view: ViewType<any>) {
-  const stackIndex = loadedViewsStack.findIndex((x) => x.id === view.id);
-  if (stackIndex > -1) {
-    loadedViewsStack.splice(stackIndex, 1);
-  }
+  loadedViewsStack.remove((x) => x.id === view.id);
 }
 
 function isMasterView() {
@@ -148,11 +145,9 @@ function isMasterView() {
 }
 
 function moveViewToTop(view: ViewType<any>) {
-  const index = loadedViewsStack.findIndex((x) => x.id === view.id);
-  if (index > -1) {
-    let temp = loadedViewsStack[index];
-    loadedViewsStack.splice(index, 1);
-    loadedViewsStack.push(temp);
+  const removed = loadedViewsStack.remove((x) => x.id === view.id);
+  if (removed) {
+    loadedViewsStack.push(removed);
   }
 }
 

@@ -5,10 +5,7 @@ export const useAnimate = () => {
   const cancelRef = useRef<(() => void)[]>([]);
 
   const removeCancelRequest = useCallback((request: () => void) => {
-    const index = cancelRef.current.findIndex((x) => x === request);
-    if (index >= 0) {
-      cancelRef.current.splice(index, 1);
-    }
+    cancelRef.current.remove((x) => x === request);
   }, []);
 
   const requestAnimate = useCallback(

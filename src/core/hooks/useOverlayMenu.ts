@@ -9,11 +9,11 @@ export const useOverlayMenu = (menuData: OverlayMenuConfig) => {
     event: menuData.event,
     component: Menu,
     data: menuData.data,
-    backdrop: menuData.backdrop === undefined || true ? true : false,
-    position: menuData.position ? menuData.position : "BottomRight",
+    backdrop: menuData.backdrop,
+    position: menuData.position,
     onClose: menuData.onClose,
     getTargetElement: menuData.getTargetElement,
-    mapDataTo: menuData.mapDataTo ? menuData.mapDataTo : (data) => data,
+    mapDataTo: menuData.mapDataTo,
   });
 
   return elRefMenu;

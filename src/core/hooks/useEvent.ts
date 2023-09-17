@@ -110,6 +110,11 @@ export const useEvent = (
     }, MIN_PRESS_TIME);
   };
 
+  const handleRightClick = (e: Event) => {
+    e.preventDefault();
+    events.onRightClick?.(e);
+  };
+
   const handleSwipe = (e: Event) => {
     const touchEvent = getTouchEvent(e);
     if (timeoutRef.current) {
@@ -273,6 +278,12 @@ export const useEvent = (
       return () => {
         removeListener("mouseover", handleMouseover, true);
         removeListener("mouseout", handleMouseout, true);
+      };
+    }
+    if (eventType === EventType.RightClick) {
+      addListener("contextmenu", handleRightClick, true);
+      return () => {
+        removeListener("contextmenu", handleDoubleClick, true);
       };
     }
     addListener("mousedown", handleTouchStart, true);

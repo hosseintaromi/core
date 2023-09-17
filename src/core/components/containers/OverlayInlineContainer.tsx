@@ -22,6 +22,10 @@ import {
 import { bezier } from "../../utils/bezier";
 import { useAnimate } from "../../hooks/useAnimate";
 import { EventType, useEvent } from "../../hooks/useEvent";
+import {
+  addEventListenerEl,
+  removeEventListenerEl,
+} from "../../utils/extensions";
 
 export interface OverlayInlineData<T, U> {
   event: EventType;
@@ -65,17 +69,20 @@ const OverlayInlineContainer = <T, U>({
     },
   });
 
-  const showByHover = useCallback((show: boolean) => {
-    if (hoverTimerRef.current) {
-      clearTimeout(hoverTimerRef.current);
-    }
-    hoverTimerRef.current = setTimeout(() => {
-      if (isHoverRef.current === show && hide === show) {
-        showView(show);
+  const showByHover = useCallback(
+    (show: boolean) => {
+      if (hoverTimerRef.current) {
+        clearTimeout(hoverTimerRef.current);
       }
-    }, 300);
+      hoverTimerRef.current = setTimeout(() => {
+        if (isHoverRef.current === show && openedRef.current !== show) {
+          showView(show);
+        }
+      }, 300);
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    [],
+  );
 
   const doAnimate = useCallback(
     (newView: ViewRef, config: ViewAnimationConfig) =>
@@ -215,14 +222,27 @@ const OverlayInlineContainer = <T, U>({
   );
 
   const handleMouseEvents = (el: HTMLElement) => {
-    //addEventListener()
+    addEventListenerEl(el, "mouseover", handleMouseOver);
+    addEventListenerEl(el, "mouseout", handleMouseOut);
   };
+
+  const handleMouseOver = useCallback(() => {
+    showByHover(true);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleMouseOut = useCallback(() => {
+    showByHover(false);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     const id = (containerIdRef.current = "overlay-inline-" + Date.now());
     registerContainer(id, 6, {}, openOverlayView, closeOverlayView);
     return () => {
       clearTimeout(hoverTimerRef.current);
+      removeEventListenerEl(viewRef.current, "mouseover", handleMouseOver);
+      removeEventListenerEl(viewRef.current, "mouseout", handleMouseOut);
       removeContainer(id);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps

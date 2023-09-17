@@ -8,6 +8,7 @@ import { openView } from "./core/utils/viewManager";
 import { ViewContainerType } from "./core/@types/commonView";
 import Home from "./core/components/samples/Home";
 import {} from "./core/utils/extensions";
+import OverlayContainer from "./core/components/containers/OverlayContainer";
 
 function App() {
   useEffect(() => {
@@ -26,6 +27,7 @@ function App() {
       <ModalContainer />
       <BottomSheetContainer />
       <ToastContainer />
+      <OverlayContainer />
     </>
   );
 }

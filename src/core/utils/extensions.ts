@@ -36,3 +36,19 @@ export function containsTargetEl(target: Node | null, container: Node) {
   }
   return target === container || container.contains(target);
 }
+
+export function addEventListenerEl(
+  target: HTMLElement | undefined,
+  event: string,
+  listener: (e: Event) => void,
+) {
+  target?.addEventListener(event, listener);
+}
+
+export function removeEventListenerEl(
+  target: HTMLElement | undefined,
+  event: string,
+  listener: (e: Event) => void,
+) {
+  target?.removeEventListener(event, listener);
+}

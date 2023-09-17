@@ -1,9 +1,9 @@
-import { MutableRefObject, useEffect } from "react";
+import { MutableRefObject } from "react";
 import { openView } from "../utils/viewManager";
-import { OverlayEventType } from "../components/containers/OverlayContainer";
+import { EventType, useEvent } from "./useEvent";
 
 export interface OverlayData<T, U> {
-  event: OverlayEventType;
+  event: EventType;
   component: (props?: any) => JSX.Element;
   data?: T;
   backdrop?: boolean;
@@ -16,7 +16,7 @@ export interface OverlayData<T, U> {
 }
 
 export interface OverlayConfig<T, U> {
-  event: OverlayEventType;
+  event: EventType;
   component: (props?: any) => JSX.Element;
   backdrop?: boolean;
   className?: string;
@@ -28,46 +28,41 @@ export interface OverlayConfig<T, U> {
 
 export const useOverlay = <T, U>(overlayData: OverlayData<T, U>) => {
   const elRef: MutableRefObject<any> = { current: null };
+  useEvent(elRef, overlayData.event, {
+    onPress: (e: Event) => openMenu(e),
+    onTap: (e: Event) => openMenu(e),
+    onDoubleClick: (e: Event) => openMenu(e),
+    onRightClick: (e: Event) => openMenu(e),
+    onMouseover: (e: Event) => {
+      openMenu(e);
+    },
+    onMouseout: (e: Event) => {
+      openMenu(e);
+    },
+  });
 
-  const openMenu = (event: MouseEvent) => {
+  const openMenu = (event: Event | TouchEvent) => {
     openView<T>({
       type: "Overlay",
       component: overlayData.component,
-      data: overlayData.mapDataTo?.(overlayData.data),
+      data: overlayData.mapDataTo
+        ? overlayData.mapDataTo(overlayData.data)
+        : overlayData.data,
       onClose: (res?: U) => {
         overlayData.onClose?.(res);
       },
       options: {
-        disableBackdrop: !overlayData.backdrop,
+        disableBackdrop:
+          overlayData.backdrop === undefined || true ? true : false,
         params: {
           event,
           target:
             overlayData.getTargetElement?.() || elRef.current || event.target,
-          position: overlayData.position,
+          position: overlayData.position ? overlayData.position : "BottomRight",
         },
       },
     });
   };
-
-  useEffect(() => {
-    switch (overlayData.event) {
-      case OverlayEventType.Click:
-        elRef.current.addEventListener("click", (event: MouseEvent) => {
-          openMenu(event);
-        });
-        return;
-      case OverlayEventType.DoubleClick:
-        elRef.current.addEventListener("dblclick", (event: MouseEvent) => {
-          openMenu(event);
-        });
-        return;
-      case OverlayEventType.RightClick:
-        return;
-      default:
-        return;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
 
   return elRef;
 };

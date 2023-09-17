@@ -2,6 +2,7 @@ import { useEffect, useRef } from "react";
 import OverlayInlineContainer from "../containers/OverlayInlineContainer";
 import MenuInlineSample from "./MenuInlineSample";
 import { EventType, useEvent } from "../../hooks/useEvent";
+import { useOverlayMenu } from "../../hooks/useOverlayMenu";
 
 function Home() {
   const elRef1 = useRef<HTMLInputElement>(null);
@@ -35,14 +36,28 @@ function Home() {
       console.log("Tap");
     },
   });
-  useEvent(elRef3 as any, EventType.Hover, {
-    onMouseover: () => {
-      console.log("Mouse over");
+  useEvent(elRef3 as any, EventType.RightClick, {
+    onRightClick: () => {
+      console.log("Right click");
     },
   });
-  useEvent(elRef3 as any, EventType.Hover, {
-    onMouseout: () => {
-      console.log("Mouse out");
+  const elRef4 = useOverlayMenu({
+    event: EventType.HorizontalSwipe,
+    data: {
+      options: [
+        {
+          label: "1",
+          value: "1",
+        },
+        {
+          label: "2",
+          value: "2",
+        },
+        {
+          label: "3",
+          value: "3",
+        },
+      ],
     },
   });
   useEffect(() => {}, []);
@@ -50,6 +65,7 @@ function Home() {
   return (
     <div style={{ overflowY: "scroll", height: "93vh" }}>
       <div style={{ display: "flex" }}>
+        <button ref={elRef4}>Context menu</button>
         <button
           ref={elRef as any}
           style={{ width: "80px", height: "40px" }}

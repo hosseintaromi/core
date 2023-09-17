@@ -3,16 +3,8 @@ import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import { closeView } from "../../utils/viewManager";
-import { ViewAnimationConfig } from "../../@types/view";
+import { ViewAnimationConfig, ViewRef } from "../../@types/view";
 import { bezier } from "../../utils/bezier";
-
-export enum OverlayEventType {
-  Click = "Click",
-  RightClick = "RightClick",
-  DoubleClick = "DoubleClick",
-  Press = "Press",
-  Hover = "Hover",
-}
 
 interface OverlayParamsType {
   target: HTMLElement;
@@ -24,36 +16,48 @@ const OverlayContainer = () => {
   const slideIn = bezier(0.25, 1, 0.5, 1);
 
   const backDropRef = useRef<any>(null);
+  const getPosition = (params: OverlayParamsType, newPage: ViewRef) => {
+    const offsetHeight = newPage.ref.offsetHeight;
+    const offsetWidth = newPage.ref.offsetWidth;
+    const clientX = params.event.clientX;
+    const clientY = params.event.clientY;
+    let left;
+    let top;
 
-  const getPosition = (params: OverlayParamsType) =>
-    // if (
-    //   window.innerWidth - viewInfo?.view.options?.params.posX <
-    //   newView.ref.offsetWidth
-    // ) {
-    //   newViewStyle.left =
-    //     viewInfo?.view.options?.params.posX - newView.ref.offsetWidth + "px";
-    // } else {
-    //   newViewStyle.left = viewInfo?.view.options?.params.posX + "px";
-    // }
+    if (params.position === "BottomLeft" || params.position === "BottomRight") {
+      if (window.innerHeight - clientY < offsetHeight) {
+        top = clientY - offsetHeight + 20;
+      } else {
+        top = clientY;
+      }
+    }
+    if (params.position === "TopLeft" || params.position === "TopRight") {
+      if (clientY < offsetHeight) {
+        top = clientY;
+      } else {
+        top = clientY - offsetHeight + 20;
+      }
+    }
+    if (params.position === "TopLeft" || params.position === "BottomLeft") {
+      if (clientX < offsetWidth) {
+        left = clientX;
+      } else {
+        left = clientX - offsetWidth;
+      }
+    }
+    if (params.position === "TopRight" || params.position === "BottomRight") {
+      if (window.innerWidth - clientX < offsetWidth) {
+        left = clientX - offsetWidth;
+      } else {
+        left = clientX;
+      }
+    }
+    return {
+      left: left,
+      top: top,
+    };
+  };
 
-    // if (
-    //   window.innerHeight - viewInfo?.view.options?.params.posY <
-    //   newView.ref.offsetHeight
-    // ) {
-    //   newViewStyle.top =
-    //     viewInfo?.view.options?.params.posY -
-    //     newView.ref.offsetHeight +
-    //     20 +
-    //     "px";
-    // } else {
-    //   newViewStyle.top = viewInfo?.view.options?.params.posY + "px";
-    // }
-
-    ({
-      left: params.event.clientX,
-
-      top: params.event.clientY,
-    });
   const { viewsInfo } = useViewManage(
     "Overlay",
     6,
@@ -67,7 +71,7 @@ const OverlayContainer = () => {
         }
         const newViewStyle = newView.ref.style;
         newViewStyle.position = "absolute";
-        const { left, top } = getPosition(params);
+        const { left, top } = getPosition(params, newView);
         newViewStyle.left = left + "px";
         newViewStyle.top = top + "px";
         newViewStyle.opacity = "0";

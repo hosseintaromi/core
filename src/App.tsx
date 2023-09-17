@@ -7,7 +7,7 @@ import BottomSheetContainer from "./core/components/containers/BottomSheetContai
 import { openView } from "./core/utils/viewManager";
 import { ViewContainerType } from "./core/@types/commonView";
 import Home from "./core/components/samples/Home";
-import {} from "./core/utils/event";
+import {} from "./core/utils/extensions";
 
 function App() {
   useEffect(() => {

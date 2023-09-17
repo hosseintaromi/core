@@ -54,9 +54,9 @@ export const useEvent = (
 
   const getTouchEvent = (e: Event | any) => {
     const startPosition = startPositionRef.current;
-    const touch = e.touches?.[e.touches.length - 1];
-    const x = e.clientX || touch?.clientX;
-    const y = e.clientY || touch?.clientY;
+    const touch = e.touches?.last();
+    const x = e.clientX || touch.clientX;
+    const y = e.clientY || touch.clientY;
     return {
       x,
       y,

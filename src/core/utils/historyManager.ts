@@ -29,10 +29,7 @@ export function listenBack(historyItem: HistoryItem) {
 }
 
 export function unlistenBack(viewId: string) {
-  const index = historyStack.findIndex((x) => x.id === viewId);
-  if (index >= 0) {
-    historyStack.splice(index, 1);
-  }
+  historyStack.remove((x) => x.id === viewId);
 }
 
 export function disableBrowserAction() {

@@ -38,10 +38,7 @@ const ViewContextProvider = ({
       return;
     }
     let listener: any[] = eventListeners.current[type];
-    const index = listener.findIndex((x) => x === event);
-    if (index > -1) {
-      listener.splice(index, 1);
-    }
+    listener.remove((x) => x === event);
   };
 
   const listenEvents = (events: ViewEvents) => {

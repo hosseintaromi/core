@@ -99,7 +99,7 @@ const BottomSheetContainer = () => {
     if (viewsInfo.length === 0) {
       return;
     }
-    const topViewInfo = viewsInfo[viewsInfo.length - 1];
+    const topViewInfo = viewsInfo.last();
     if (topViewInfo.view.options?.disableBackdrop) {
       topViewInfo.view.options.onClickedBackdrop?.();
       return;

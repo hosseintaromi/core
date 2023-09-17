@@ -1,18 +1,43 @@
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { useView } from "../../hooks/useView";
+import { EventType, useEvent } from "../../hooks/useEvent";
 
 function MenuInlineSample() {
+  const elRef = useRef<any>();
+  const isHoverRef = useRef<boolean>();
+  const hoverTimerRef = useRef<NodeJS.Timeout>();
+  const [hide, setHide] = useState<boolean>(true);
   const [selected, setSelected] = useState(-1);
   const { close } = useView();
 
-  function onSelect(index: number) {
+  const onSelect = (index: number) => {
     setSelected(index);
     close();
-  }
+  };
+
+  useEvent(elRef, EventType.Hover, {
+    onMouseover: () => {
+      if (hoverTimerRef.current) {
+        clearTimeout(hoverTimerRef.current);
+      }
+    },
+    onMouseout: () => {
+      if (hoverTimerRef.current) {
+        clearTimeout(hoverTimerRef.current);
+      }
+      hoverTimerRef.current = setTimeout(() => {
+        isHoverRef.current = false;
+        close();
+      }, 800);
+    },
+  });
 
   return (
-    <div style={{ backgroundColor: "red", width: "200px" }}>
-      <ul>
+    <div
+      ref={elRef}
+      style={{ backgroundColor: "red", width: "200px", height: "150px" }}
+    >
+      {/* <ul>
         <li
           onClick={() => onSelect(0)}
           style={{ color: selected === 0 ? "green" : "blue" }}
@@ -37,7 +62,7 @@ function MenuInlineSample() {
         >
           Option4
         </li>
-      </ul>
+      </ul> */}
     </div>
   );
 }

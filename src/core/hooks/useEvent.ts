@@ -1,7 +1,8 @@
 import { MutableRefObject, useEffect, useRef, useCallback } from "react";
+import { useDisableSelection } from "./useDisableSelection";
 const MIN_PRESS_TIME = 500;
 const MAX_TAP_TIME = 300;
-const MIN_MOVE_TIME = 300;
+const MIN_MOVE_TIME = 50;
 export enum EventType {
   Tap = "Tap",
   RightClick = "RightClick",
@@ -20,6 +21,8 @@ export interface EventHandler {
   onRightClick?: (e: Event) => void;
   onDoubleClick?: (e: Event) => void;
   onPress?: (e: Event) => void;
+  onMouseover?: (e: Event) => void;
+  onMouseout?: (e: Event) => void;
 }
 
 export interface TouchEvent {
@@ -45,14 +48,15 @@ export const useEvent = (
   const touchRef = useRef<number[]>([]);
   const isTouchMoveRef = useRef(false);
   const startSwipeRef = useRef<boolean>();
+  useDisableSelection();
 
   const getCurrentTime = () => Date.now();
 
   const getTouchEvent = (e: Event | any) => {
     const startPosition = startPositionRef.current;
     const touch = e.touches?.[e.touches.length - 1];
-    const x = e.clientX || touch.clientX;
-    const y = e.clientY || touch.clientY;
+    const x = e.clientX || touch?.clientX;
+    const y = e.clientY || touch?.clientY;
     return {
       x,
       y,
@@ -117,17 +121,15 @@ export const useEvent = (
     resetTouchRef();
     const isVertical = eventType === EventType.VerticalSwipe;
     timeoutRef.current = setTimeout(() => {
-      if (isTouchMoveRef.current) {
+      if (!isTouchMoveRef.current) {
         return;
       }
       const startPosition = startPositionRef.current;
       if (!touchEvent || !startPosition) {
         return;
       }
-
       const moveX = Math.abs(touchEvent.moveX);
       const moveY = Math.abs(touchEvent.moveY);
-
       if (moveX < moveY && isVertical) {
         startSwipeRef.current = true;
         events.onTouchStart?.({
@@ -136,7 +138,7 @@ export const useEvent = (
           y: startPosition.y,
         });
         events.onTouchMove?.(touchEvent);
-      } else if (moveX > moveY && !isVertical) {
+      } else if (moveX >= moveY && !isVertical) {
         startSwipeRef.current = true;
         events.onTouchStart?.({
           ...touchEvent,
@@ -219,6 +221,16 @@ export const useEvent = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleMouseover = useCallback((e: Event) => {
+    events?.onMouseover?.(e);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const handleMouseout = useCallback((e: Event) => {
+    events?.onMouseout?.(e);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const listenMove = (listen: boolean) => {
     if (listen && !isTouchMoveRef.current) {
       addListener("mousemove", handleTouchMove);
@@ -256,11 +268,11 @@ export const useEvent = (
 
   useEffect(() => {
     if (eventType === EventType.Hover) {
-      addListener("mouseover", handleTouchEnd);
-      addListener("mouseout", handleTouchEnd);
+      addListener("mouseover", handleMouseover, true);
+      addListener("mouseout", handleMouseout, true);
       return () => {
-        removeListener("mouseover", handleTouchEnd);
-        removeListener("mouseout", handleTouchEnd);
+        removeListener("mouseover", handleMouseover, true);
+        removeListener("mouseout", handleMouseout, true);
       };
     }
     addListener("mousedown", handleTouchStart, true);

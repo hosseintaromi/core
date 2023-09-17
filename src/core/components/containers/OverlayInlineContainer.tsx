@@ -43,16 +43,38 @@ const OverlayInlineContainer = <T, U>({
   const openedRef = useRef<boolean>();
   const containerIdRef = useRef<string>();
   const viewRef = useRef<HTMLElement>();
+  const hoverTimerRef = useRef<NodeJS.Timeout>();
+  const isHoverRef = useRef<boolean>();
+
   const [viewInfoState, setViewInfoState] = useState<ViewInfo>();
   const [hide, setHide] = useState<boolean>(true);
   const { requestAnimate } = useAnimate();
 
-  useEvent(config.elRef, EventType.Press, {
-    onPress: () => onPress(),
+  useEvent(config.elRef, config.event, {
+    onPress: () => showView(true),
+    onTap: () => showView(hide),
+    onDoubleClick: () => showView(true),
+    onRightClick: () => showView(true),
+    onMouseover: () => {
+      isHoverRef.current = true;
+      showByHover(true);
+    },
+    onMouseout: () => {
+      isHoverRef.current = false;
+      showByHover(false);
+    },
   });
 
-  const onPress = useCallback(() => {
-    console.log("Press");
+  const showByHover = useCallback((show: boolean) => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+    }
+    hoverTimerRef.current = setTimeout(() => {
+      if (isHoverRef.current === show && hide === show) {
+        showView(show);
+      }
+    }, 300);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const doAnimate = useCallback(
@@ -84,12 +106,16 @@ const OverlayInlineContainer = <T, U>({
           view: newView,
           onInit: async (el: HTMLElement) => {
             viewRef.current = el;
+            if (config.event === EventType.Hover) {
+              handleMouseEvents(el);
+            }
             viewInfoRef.current = newViewInfo;
             resolve(newViewInfo);
           },
         };
         setViewInfoState(newViewInfo);
       }),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
   );
 
@@ -170,7 +196,7 @@ const OverlayInlineContainer = <T, U>({
     [],
   );
 
-  const toggleView = useCallback(
+  const showView = useCallback(
     (show: boolean) => {
       const viewInfoCurrent = viewInfoRef.current;
       if (show) {
@@ -178,9 +204,7 @@ const OverlayInlineContainer = <T, U>({
           id: "overlay-view",
           type: containerIdRef.current || "",
           component: config.component,
-          data: {
-            id: "menu11",
-          },
+          data: config.data,
         });
       } else if (viewInfoCurrent?.view) {
         closeView(viewInfoCurrent.view);
@@ -190,30 +214,19 @@ const OverlayInlineContainer = <T, U>({
     [],
   );
 
-  const closeListener = useCallback(
-    (event: Event) => {
-      const viewEl = viewRef.current;
-      if (!openedRef.current || !viewEl) {
-        return;
-      }
-      if (!event.contains(viewEl)) {
-        toggleView(false);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  const handleMouseEvents = (el: HTMLElement) => {
+    //addEventListener()
+  };
 
   useEffect(() => {
     const id = (containerIdRef.current = "overlay-inline-" + Date.now());
     registerContainer(id, 6, {}, openOverlayView, closeOverlayView);
     return () => {
+      clearTimeout(hoverTimerRef.current);
       removeContainer(id);
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  useEffect(() => () => {}, [closeListener]);
 
   return viewInfoState ? (
     <div className={hide ? "hidden" : "overlay-inline-container"}>

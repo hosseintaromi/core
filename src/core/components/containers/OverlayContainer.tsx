@@ -21,31 +21,32 @@ const OverlayContainer = () => {
     const offsetWidth = newPage.ref.offsetWidth;
     const clientX = params.event.clientX;
     const clientY = params.event.clientY;
+    const position = params.position;
     let left;
     let top;
 
-    if (params.position === "BottomLeft" || params.position === "BottomRight") {
+    if (position === "BottomLeft" || position === "BottomRight") {
       if (window.innerHeight - clientY < offsetHeight) {
-        top = clientY - offsetHeight + 20;
+        top = clientY - offsetHeight - 12;
       } else {
         top = clientY;
       }
     }
-    if (params.position === "TopLeft" || params.position === "TopRight") {
+    if (position === "TopLeft" || position === "TopRight") {
       if (clientY < offsetHeight) {
         top = clientY;
       } else {
         top = clientY - offsetHeight + 20;
       }
     }
-    if (params.position === "TopLeft" || params.position === "BottomLeft") {
+    if (position === "TopLeft" || position === "BottomLeft") {
       if (clientX < offsetWidth) {
         left = clientX;
       } else {
         left = clientX - offsetWidth;
       }
     }
-    if (params.position === "TopRight" || params.position === "BottomRight") {
+    if (position === "TopRight" || position === "BottomRight") {
       if (window.innerWidth - clientX < offsetWidth) {
         left = clientX - offsetWidth;
       } else {

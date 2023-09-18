@@ -4,11 +4,11 @@ import { EventType, useEvent } from "../../hooks/useEvent";
 
 function MenuInlineSample() {
   const [selected, setSelected] = useState(-1);
+  const [counter, setCounter] = useState(0);
   const { close } = useView();
 
   const onSelect = (index: number) => {
     setSelected(index);
-    close();
   };
 
   return (
@@ -23,7 +23,15 @@ function MenuInlineSample() {
             backgroundColor: "green",
             marginLeft: "20px",
           }}
-        />
+        >
+          <button
+            onClick={() => {
+              setCounter(counter + 1);
+            }}
+          >
+            {counter}
+          </button>
+        </div>
       }
     </div>
   );

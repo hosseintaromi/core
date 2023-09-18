@@ -1,10 +1,17 @@
 import { useEffect, useRef } from "react";
-import OverlayInlineContainer from "../containers/OverlayInlineContainer";
+import OverlayInlineContainer, {
+  OverlayInlineData,
+} from "../containers/OverlayInlineContainer";
 import MenuInlineSample from "./MenuInlineSample";
 import { EventType, useEvent } from "../../hooks/useEvent";
 import { useOverlayMenu } from "../../hooks/useOverlayMenu";
 
 function Home() {
+  const menuConfigRef = useRef<OverlayInlineData<any, any>>({
+    event: EventType.None,
+    component: MenuInlineSample,
+  });
+
   const elRef1 = useRef<HTMLInputElement>(null);
   const elRef2 = useRef<HTMLInputElement>(null);
   const elRef3 = useRef<HTMLInputElement>(null);
@@ -42,7 +49,7 @@ function Home() {
     },
   });
   const elRef4 = useOverlayMenu({
-    event: EventType.HorizontalSwipe,
+    event: EventType.Hover,
     data: {
       options: [
         {
@@ -60,7 +67,14 @@ function Home() {
       ],
     },
   });
-  useEffect(() => {}, []);
+  useEffect(() => {
+    setTimeout(() => {
+      menuConfigRef.current.show?.(true);
+    }, 3000);
+    setTimeout(() => {
+      menuConfigRef.current.show?.(false);
+    }, 6000);
+  }, []);
 
   return (
     <div style={{ overflowY: "scroll", height: "93vh" }}>
@@ -73,13 +87,14 @@ function Home() {
         >
           add menu
         </button>
-        <OverlayInlineContainer
+        {/* <OverlayInlineContainer
           config={{
             event: EventType.Hover,
             component: MenuInlineSample,
             elRef: elRef ? elRef : ((<></>) as any),
           }}
-        />
+        /> */}
+        <OverlayInlineContainer config={menuConfigRef.current} />
       </div>
 
       <div ref={elRef1}>

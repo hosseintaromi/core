@@ -4,6 +4,7 @@ const MIN_PRESS_TIME = 500;
 const MAX_TAP_TIME = 300;
 const MIN_MOVE_TIME = 50;
 export enum EventType {
+  None = "None",
   Tap = "Tap",
   RightClick = "RightClick",
   DoubleClick = "DoubleClick",
@@ -272,6 +273,9 @@ export const useEvent = (
   };
 
   useEffect(() => {
+    if (eventType === EventType.None) {
+      return;
+    }
     if (eventType === EventType.Hover) {
       addListener("mouseover", handleMouseover, true);
       addListener("mouseout", handleMouseout, true);

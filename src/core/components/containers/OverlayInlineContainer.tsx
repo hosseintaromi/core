@@ -30,11 +30,12 @@ import {
 export interface OverlayInlineData<T, U> {
   event: EventType;
   component: (props?: any) => JSX.Element;
-  elRef: MutableRefObject<HTMLElement>;
+  elRef?: MutableRefObject<HTMLElement>;
   data?: T;
   className?: string;
   onClose?: (res?: U) => void;
   mapDataTo?: (data?: T) => any;
+  show?: (show: boolean) => void;
 }
 
 const OverlayInlineContainer = <T, U>({
@@ -54,7 +55,7 @@ const OverlayInlineContainer = <T, U>({
   const [hide, setHide] = useState<boolean>(true);
   const { requestAnimate } = useAnimate();
 
-  useEvent(config.elRef, config.event, {
+  useEvent(config.elRef || { current: undefined }, config.event, {
     onPress: () => showView(true),
     onTap: () => showView(hide),
     onDoubleClick: () => showView(true),
@@ -239,6 +240,7 @@ const OverlayInlineContainer = <T, U>({
   useEffect(() => {
     const id = (containerIdRef.current = "overlay-inline-" + Date.now());
     registerContainer(id, 6, {}, openOverlayView, closeOverlayView);
+    config.show = showView;
     return () => {
       clearTimeout(hoverTimerRef.current);
       removeEventListenerEl(viewRef.current, "mouseover", handleMouseOver);

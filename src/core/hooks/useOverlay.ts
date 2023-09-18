@@ -36,9 +36,6 @@ export const useOverlay = <T, U>(overlayData: OverlayData<T, U>) => {
     onMouseover: (e: Event) => {
       openMenu(e);
     },
-    onMouseout: (e: Event) => {
-      openMenu(e);
-    },
   });
 
   const openMenu = (event: Event | TouchEvent) => {

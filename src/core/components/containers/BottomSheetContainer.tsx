@@ -7,6 +7,7 @@ import { activateTabConfig } from "../../utils/viewAnimations";
 import { bezier } from "../../utils/bezier";
 import { closeView } from "../../utils/viewManager";
 import { ViewContainerType } from "../../@types/commonView";
+import { Scrollable } from "../Scrollable";
 
 const BottomSheetContainer = () => {
   const slideIn = bezier(0.25, 1, 0.5, 1);
@@ -117,7 +118,9 @@ const BottomSheetContainer = () => {
       {viewsInfo?.map((viewInfo) => (
         <React.Fragment key={viewInfo.id}>
           <ViewContextProvider viewInfo={viewInfo}>
-            <ViewComponent viewInfo={viewInfo} />
+            <Scrollable viewInfo={viewInfo}>
+              <ViewComponent viewInfo={viewInfo} />
+            </Scrollable>
           </ViewContextProvider>
         </React.Fragment>
       ))}

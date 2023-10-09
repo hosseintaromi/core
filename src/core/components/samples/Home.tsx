@@ -12,10 +12,12 @@ function Home() {
     component: MenuInlineSample,
   });
 
-  const elRef1 = useRef<HTMLInputElement>(null);
-  const elRef2 = useRef<HTMLInputElement>(null);
-  const elRef3 = useRef<HTMLInputElement>(null);
-  const elRef = useRef<HTMLInputElement>(null);
+  const delayRef = useRef<HTMLElement | undefined>();
+
+  const elRef1 = useRef<HTMLDivElement>(null);
+  const elRef2 = useRef<HTMLDivElement>(null);
+  const elRef3 = useRef<HTMLDivElement>(null);
+  const elRef = useRef<HTMLElement | undefined>();
   useEvent(elRef2 as any, EventType.HorizontalSwipe, {
     onTouchMove: () => {
       console.log("Move horizontal");
@@ -38,7 +40,7 @@ function Home() {
       console.log("End move Vertical");
     },
   });
-  useEvent(elRef1 as any, EventType.Tap, {
+  useEvent(elRef1 as any, EventType.DoubleClick, {
     onTap: () => {
       console.log("Tap");
     },
@@ -49,7 +51,7 @@ function Home() {
     },
   });
   const elRef4 = useOverlayMenu({
-    event: EventType.Hover,
+    event: EventType.RightClick,
     data: {
       options: [
         {
@@ -67,14 +69,6 @@ function Home() {
       ],
     },
   });
-  useEffect(() => {
-    setTimeout(() => {
-      menuConfigRef.current.show?.(true);
-    }, 3000);
-    setTimeout(() => {
-      menuConfigRef.current.show?.(false);
-    }, 6000);
-  }, []);
 
   return (
     <div style={{ overflowY: "scroll", height: "93vh" }}>
@@ -87,14 +81,14 @@ function Home() {
         >
           add menu
         </button>
-        {/* <OverlayInlineContainer
+        <OverlayInlineContainer
           config={{
-            event: EventType.Hover,
+            event: EventType.Tap,
             component: MenuInlineSample,
-            elRef: elRef ? elRef : ((<></>) as any),
+            elRef: elRef as any,
           }}
-        /> */}
-        <OverlayInlineContainer config={menuConfigRef.current} />
+        />
+        {/* <OverlayInlineContainer config={menuConfigRef.current} /> */}
       </div>
 
       <div ref={elRef1}>

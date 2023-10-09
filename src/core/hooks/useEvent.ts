@@ -272,8 +272,8 @@ export const useEvent = (
     );
   };
 
-  useEffect(() => {
-    if (eventType === EventType.None) {
+  const addListeners = () => {
+    if (!elRef.current || eventType === EventType.None) {
       return;
     }
     if (eventType === EventType.Hover) {
@@ -294,15 +294,31 @@ export const useEvent = (
     addListener("mouseup", handleTouchEnd);
     addListener("touchstart", handleTouchStart, true);
     addListener("touchend", handleTouchEnd);
+  };
 
-    return () => {
-      listenMove(false);
-      removeListener("mousedown", handleTouchStart, true);
-      removeListener("mouseup", handleTouchEnd);
-      removeListener("touchstart", handleTouchStart, true);
-      removeListener("touchend", handleTouchEnd);
-      clearTimer();
-    };
+  const removeListeners = () => {
+    listenMove(false);
+    removeListener("mousedown", handleTouchStart, true);
+    removeListener("mouseup", handleTouchEnd);
+    removeListener("touchstart", handleTouchStart, true);
+    removeListener("touchend", handleTouchEnd);
+    clearTimer();
+  };
+
+  useEffect(
+    () => {
+      addListeners();
+      return () => {
+        removeListeners();
+      };
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    [],
+  );
+
+  return {
+    updateRef: () => {
+      addListeners();
+    },
+  };
 };

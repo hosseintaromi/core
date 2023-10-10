@@ -1,6 +1,7 @@
 import { ViewContainerType } from "../@types/commonView";
 import {
   ChangeContainerEventType,
+  CloseType,
   ViewContainerConfig,
   ViewContainerDataType,
   ViewType,
@@ -97,38 +98,48 @@ export async function openView<T = any>(
   } catch (error) {}
 }
 
-export async function closeView<T>(view: ViewType<T>, res?: any) {
+export async function closeView<T>(info: CloseType) {
   try {
-    const container = viewContainers[view.type];
+    if (!info.type || !info.id) {
+      return;
+    }
+    const container = viewContainers[info.type];
     if (!container) {
       return;
     }
 
-    const index = container.views.findIndex((x) => x.id === view.id);
+    const index = container.views.findIndex((x) => x.id === info.id);
     if (index < 0) {
       return;
     }
     if (isMasterView()) {
       return;
     }
-    const topView = getTopViewFromStack(view.id);
-    const topViewWithSameType = getTopViewFromStack(view.id, view.type as any);
-    const isSameType = topView?.type === view.type;
+    const closingView = container.views[index];
+    const topView = getTopViewFromStack(closingView.id);
+    const topViewWithSameType = getTopViewFromStack(
+      closingView.id,
+      closingView.type as any,
+    );
+    const isSameType = topView?.type === closingView.type;
     if (topView && !isSameType) {
       const topViewContainer = viewContainers[topView.type];
       topViewContainer.changeContainer?.(
-        view,
+        closingView,
         ChangeContainerEventType.onEnter,
       );
     }
     if (!container.config?.disableBrowserHistory) {
-      unlistenBack(view.id);
+      unlistenBack(info.id);
     }
-    view.onClose?.(res);
-    await container.closeView(view, topViewWithSameType);
-    view.onClosed?.(res);
+    closingView.onClose?.(info.res);
+    await container.closeView(closingView, topViewWithSameType, {
+      res: info.res,
+      closeAll: info.all,
+    });
+    closingView.onClosed?.(info.res);
     container.views.splice(index, 1);
-    removeFromLoadedViewStack(view);
+    removeFromLoadedViewStack(closingView);
   } catch {}
 }
 

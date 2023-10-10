@@ -22,7 +22,7 @@ function Menu() {
     >
       <ul>
         {viewData.options.map((option: Option) => (
-          <li onClick={() => close(option)} key={option.value}>
+          <li onClick={() => close({ res: option })} key={option.value}>
             {option.label}
           </li>
         ))}

@@ -11,13 +11,16 @@ export function Confirm() {
         <div style={{ paddingRight: ".5rem", width: "50%" }}>
           <button
             className="btn btn-warning w-100"
-            onClick={() => close(false)}
+            onClick={() => close({ res: false })}
           >
             خیر
           </button>
         </div>
         <div style={{ paddingLeft: ".5rem", width: "50%" }}>
-          <button className="btn btn-primary w-100" onClick={() => close(true)}>
+          <button
+            className="btn btn-primary w-100"
+            onClick={() => close({ res: true })}
+          >
             بله
           </button>
         </div>

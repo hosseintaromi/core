@@ -1,38 +1,35 @@
-import { useCallback, useRef, useState } from "react";
 import { useView } from "../../hooks/useView";
-import { EventType, useEvent } from "../../hooks/useEvent";
+import MenuInlineSample2 from "./MenuInlineSample2";
 
 function MenuInlineSample() {
-  const [selected, setSelected] = useState(-1);
-  const [counter, setCounter] = useState(0);
-  const { close } = useView();
-
-  const onSelect = (index: number) => {
-    setSelected(index);
-  };
+  const { close, openView } = useView();
 
   return (
-    <div style={{ backgroundColor: "red", width: "200px", height: "150px" }}>
-      {
-        <div
-          onClick={() => onSelect(0)}
-          style={{
-            color: selected === 0 ? "green" : "blue",
-            width: "100px",
-            height: "100px",
-            backgroundColor: "green",
-            marginLeft: "20px",
+    <div>
+      <ul>
+        <li
+          onClick={() => {
+            openView({
+              id: "idSample2",
+              component: MenuInlineSample2,
+              className: "slide-menu",
+            });
           }}
         >
-          <button
-            onClick={() => {
-              setCounter(counter + 1);
-            }}
-          >
-            {counter}
-          </button>
-        </div>
-      }
+          Ambient mode
+        </li>
+        <li>Subtitles</li>
+        <li>closed</li>
+        <li>Subtitles/closed</li>
+        <li>Subtitles/closed</li>
+        <li>Subtitles/closed</li>
+        <li>Subtitles/closed</li>
+        <li>Subtitles/closed</li>
+        <li>Subtitles/closed</li>
+        <li onClick={close} style={{ color: "red" }}>
+          Close
+        </li>
+      </ul>
     </div>
   );
 }

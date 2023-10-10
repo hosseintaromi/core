@@ -50,7 +50,7 @@ export function LoadingDialog() {
           {loadingEnd.type === MessageLoadingResponseType.Confirm && (
             <button
               className="btn btn-primary w-100"
-              onClick={() => close(true)}
+              onClick={() => close({ res: true })}
             >
               {loadingEnd.confirmButtonCaption}
             </button>

@@ -5,8 +5,10 @@ import {
   ViewInfo,
   ViewEventArg,
   ViewContextType,
+  ViewType,
+  CloseType,
 } from "../@types/view";
-import { closeView } from "../utils/viewManager";
+import { closeView, openView } from "../utils/viewManager";
 
 export const ViewContext = createContext<ViewContextType>({} as any);
 
@@ -62,8 +64,14 @@ const ViewContextProvider = ({
 
   const getViewData = () => viewInfo.view.data;
 
-  const close = (res?: any) => {
-    closeView(viewInfo.view, res);
+  const close = (info?: CloseType) => {
+    const view = viewInfo.view;
+    closeView({ id: view.id, type: view.type, ...info });
+  };
+
+  const open = (view: ViewType<any>) => {
+    view.type = viewInfo.view.type;
+    openView(view);
   };
 
   useEffect(() => {
@@ -83,7 +91,13 @@ const ViewContextProvider = ({
 
   return (
     <ViewContext.Provider
-      value={{ listenEvents, emitEvent, close, getViewData: getViewData }}
+      value={{
+        listenEvents,
+        emitEvent,
+        close,
+        getViewData: getViewData,
+        openView: open as any,
+      }}
     >
       {children}
     </ViewContext.Provider>

@@ -100,6 +100,40 @@ body {
   }
 }
 
+.overlay-inline-container {
+  background-color: #61226f;
+  width: 200px;
+  overflow: hidden;
+  position: relative;
+
+  .view-wrapper {}
+
+  .overlay-inline-backdrop {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+.slide-menu {
+  width: 100%;
+}
+
+
+
+.slide-menu ul, .slide-menu ul li {
+  padding: 0;
+  margin: 0;
+
+}
+.slide-menu ul li {
+  display: block;
+  list-style: none;
+  padding: 15px 10px;
+  border-bottom: 1px solid #eee;
+}
 .bottom-sheet-container {
   position: absolute;
   inset: 0;

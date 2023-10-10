@@ -18,8 +18,7 @@ export function Overlay() {
           key={item.text}
           onClick={() => {
             close({
-              viewData,
-              value: item.value,
+              res: item.value,
             });
           }}
         >

@@ -25,7 +25,10 @@ export function Toast() {
     <div className="w-100">
       <div className="row">
         <h1 className="col-8">{viewData.message}</h1>
-        <button className="col-3 btn btn-success" onClick={() => close(true)}>
+        <button
+          className="col-3 btn btn-success"
+          onClick={() => close({ res: true })}
+        >
           delete
         </button>
       </div>

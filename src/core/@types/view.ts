@@ -28,6 +28,11 @@ export enum PartialTabContainerType {
   tab3 = "tab3",
 }
 
+export interface CloseOptions {
+  res?: boolean;
+  closeAll?: boolean;
+}
+
 export interface ViewContainerDataType {
   views: ViewType<any>[];
   containerOrder: number;
@@ -36,7 +41,7 @@ export interface ViewContainerDataType {
   closeView: (
     view: ViewType<any>,
     newActiveView?: ViewType<any>,
-    res?: any,
+    options?: CloseOptions,
   ) => Promise<any>;
   activateView?: (view: ViewType<any>) => Promise<any>;
   changeContainer?: (
@@ -55,7 +60,9 @@ export interface ViewContextType {
   listenEvents: (events: ViewEvents) => () => void;
   emitEvent: (type: ViewEventType, e: ViewEventArg) => void;
   getViewData: () => any;
-  close?: (res?: any) => void;
+  close?: (type?: CloseType) => void;
+  closeView?: (viewId: string) => void;
+  openView?: <T = any>(view: Omit<ViewType<T>, "type">) => void;
 }
 
 export interface OpenViewOptions {
@@ -73,6 +80,13 @@ export interface ViewType<T> {
   onClosed?: (res?: any) => void;
   onOpened?: () => void;
   options?: OpenViewOptions;
+}
+
+export interface CloseType {
+  type?: string;
+  id?: string;
+  all?: boolean;
+  res?: any;
 }
 
 export interface ViewInfo {

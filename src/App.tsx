@@ -14,7 +14,7 @@ function App() {
   useEffect(() => {
     openView({
       id: "Home",
-      type: ViewContainerType.BottomSheet,
+      type: ViewContainerType.MasterTab,
       data: {},
       component: Home,
     });

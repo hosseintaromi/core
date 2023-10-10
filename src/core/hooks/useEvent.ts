@@ -54,8 +54,11 @@ export const useEvent = (
   const getCurrentTime = () => Date.now();
 
   const getTouchEvent = (e: Event | any) => {
+    if (!e.touches) {
+      return;
+    }
     const startPosition = startPositionRef.current;
-    const touch = e.touches?.last();
+    const touch = e.touches[e.touches.length - 1];
     const x = e.clientX || touch.clientX;
     const y = e.clientY || touch.clientY;
     return {
@@ -120,7 +123,7 @@ export const useEvent = (
     const touchEvent = getTouchEvent(e);
     if (timeoutRef.current) {
       if (startSwipeRef.current) {
-        events.onTouchMove?.(touchEvent);
+        events.onTouchMove?.(touchEvent as any);
       }
       return;
     }
@@ -177,7 +180,7 @@ export const useEvent = (
     listenMove(false);
     clearTimer();
     if (startSwipeRef.current) {
-      events.onTouchEnd?.(getTouchEvent(e));
+      events.onTouchEnd?.(getTouchEvent(e) as any);
       startSwipeRef.current = undefined;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

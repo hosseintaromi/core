@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ChangeContainerEventType,
+  CloseOptions,
+  CloseType,
   ViewAnimationConfig,
   ViewContainerConfig,
   ViewInfo,
@@ -146,7 +148,11 @@ export const useViewManage = (
   }, []);
 
   const closeView = useCallback(
-    async (view: ViewType<any>, newActiveView?: ViewType<any>, res?: any) => {
+    async (
+      view: ViewType<any>,
+      newActiveView?: ViewType<any>,
+      options?: CloseOptions,
+    ) => {
       let activeViewInfo: ViewInfo | undefined;
       activeViewIdRef.current = "";
       if (newActiveView) {

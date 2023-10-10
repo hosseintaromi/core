@@ -133,7 +133,8 @@ const OverlaySlideContainer = <T, U>({
           if (show) {
             openConfigView();
           } else {
-            closeView(viewsInfo[0].view);
+            const view = viewsInfo[0].view;
+            closeView(view.id, view.type);
           }
         }
       }, 300);
@@ -160,7 +161,8 @@ const OverlaySlideContainer = <T, U>({
   useEvent({ current: window as any }, EventType.Tap, {
     onTap: (e: Event) => {
       if (viewsInfo.length > 0 && !e.contains(containerRef.current)) {
-        closeView(viewsInfo[0].view);
+        const view = viewsInfo[0].view;
+        closeView(view.id, view.type);
       }
     },
   });

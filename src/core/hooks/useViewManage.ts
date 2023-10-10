@@ -147,11 +147,21 @@ export const useViewManage = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const handleClose = (type: CloseType) => {
+    switch (type) {
+      case "All":
+        break;
+
+      default:
+        break;
+    }
+  };
+
   const closeView = useCallback(
     async (
       view: ViewType<any>,
       newActiveView?: ViewType<any>,
-      options?: CloseOptions,
+      options?: CloseOptions<any>,
     ) => {
       let activeViewInfo: ViewInfo | undefined;
       activeViewIdRef.current = "";
@@ -159,10 +169,14 @@ export const useViewManage = (
         activeViewIdRef.current = newActiveView.id;
         activeViewInfo = viewsInfo.find((x) => x.id === newActiveView.id);
       }
+      if (options?.type !== "Current") {
+        handleClose(options?.type!);
+      }
       const index = viewsInfo.findIndex((x) => x.id === view.id);
       if (index < 0) {
         return;
       }
+
       const closeViewInfo = viewsInfo[index];
       const immediate =
         !config?.moveBetweenViews && index < viewsInfo.length - 1;

@@ -83,11 +83,12 @@ const ModalContainer = () => {
       return;
     }
     const topViewInfo = viewsInfo.last();
-    if (topViewInfo.view.options?.disableBackdrop) {
-      topViewInfo.view.options.onClickedBackdrop?.();
+    const view = topViewInfo.view;
+    if (view.options?.disableBackdrop) {
+      view.options.onClickedBackdrop?.();
       return;
     }
-    closeView(topViewInfo.view);
+    closeView(view.id, view.type);
   };
 
   return (

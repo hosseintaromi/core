@@ -4,7 +4,7 @@ function MenuInlineSample2() {
   const { close } = useView();
   const closeAll = () => {
     close({
-      all: true,
+      type: "All",
     });
   };
   return (

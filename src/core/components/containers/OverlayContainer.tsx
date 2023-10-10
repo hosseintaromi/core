@@ -101,7 +101,8 @@ const OverlayContainer = () => {
 
   const closeModal = () => {
     if (viewsInfo.length > 0) {
-      closeView(viewsInfo[0].view);
+      const view = viewsInfo[0].view;
+      closeView(view.id, view.type);
     }
   };
 

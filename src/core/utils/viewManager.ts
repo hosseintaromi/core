@@ -1,7 +1,7 @@
 import { ViewContainerType } from "../@types/commonView";
 import {
   ChangeContainerEventType,
-  CloseType,
+  CloseOptions,
   ViewContainerConfig,
   ViewContainerDataType,
   ViewType,
@@ -16,7 +16,11 @@ export function registerContainer(
   containerOrder: number,
   config: ViewContainerConfig,
   openView: (view: ViewType<any>) => Promise<any>,
-  closeView: (view: ViewType<any>, res?: any) => Promise<any>,
+  closeView: (
+    view: ViewType<any>,
+    newActiveView?: ViewType<any>,
+    options?: CloseOptions<any>,
+  ) => Promise<any>,
   activateView?: (view: ViewType<any>) => Promise<any>,
   changeContainer?: (
     fromView: ViewType<any>,
@@ -81,7 +85,7 @@ export async function openView<T = any>(
       listenBack({
         id: view.id,
         back: () => {
-          closeView(view as ViewType<any>);
+          closeView(view.id!, view.type);
         },
       });
     }
@@ -98,17 +102,21 @@ export async function openView<T = any>(
   } catch (error) {}
 }
 
-export async function closeView<T>(info: CloseType) {
+export async function closeView<T>(
+  viewId: string,
+  type: string,
+  options?: CloseOptions<T>,
+) {
   try {
-    if (!info.type || !info.id) {
+    if (!viewId || !type) {
       return;
     }
-    const container = viewContainers[info.type];
+    const container = viewContainers[type];
     if (!container) {
       return;
     }
 
-    const index = container.views.findIndex((x) => x.id === info.id);
+    const index = container.views.findIndex((x) => x.id === viewId);
     if (index < 0) {
       return;
     }
@@ -130,14 +138,11 @@ export async function closeView<T>(info: CloseType) {
       );
     }
     if (!container.config?.disableBrowserHistory) {
-      unlistenBack(info.id);
+      unlistenBack(viewId);
     }
-    closingView.onClose?.(info.res);
-    await container.closeView(closingView, topViewWithSameType, {
-      res: info.res,
-      closeAll: info.all,
-    });
-    closingView.onClosed?.(info.res);
+    closingView.onClose?.(options?.res);
+    await container.closeView(closingView, topViewWithSameType, options);
+    closingView.onClosed?.(options?.res);
     container.views.splice(index, 1);
     removeFromLoadedViewStack(closingView);
   } catch {}

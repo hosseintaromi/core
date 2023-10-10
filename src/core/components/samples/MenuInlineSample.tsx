@@ -26,7 +26,7 @@ function MenuInlineSample() {
         <li>Subtitles/closed</li>
         <li>Subtitles/closed</li>
         <li>Subtitles/closed</li>
-        <li onClick={close} style={{ color: "red" }}>
+        <li onClick={() => close()} style={{ color: "red" }}>
           Close
         </li>
       </ul>

@@ -6,7 +6,7 @@ import {
   ViewEventArg,
   ViewContextType,
   ViewType,
-  CloseType,
+  CloseOptions,
 } from "../@types/view";
 import { closeView, openView } from "../utils/viewManager";
 
@@ -64,9 +64,9 @@ const ViewContextProvider = ({
 
   const getViewData = () => viewInfo.view.data;
 
-  const close = (info?: CloseType) => {
+  const close = (options?: CloseOptions<any>) => {
     const view = viewInfo.view;
-    closeView({ id: view.id, type: view.type, ...info });
+    closeView(view.id, view.type, options);
   };
 
   const open = (view: ViewType<any>) => {

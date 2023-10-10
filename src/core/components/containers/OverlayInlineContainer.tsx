@@ -207,6 +207,7 @@ const OverlayInlineContainer = <T, U>({
   const showView = useCallback(
     (show: boolean) => {
       const viewInfoCurrent = viewInfoRef.current;
+      const view = viewInfoCurrent?.view;
       if (show) {
         openView({
           id: "overlay-view",
@@ -214,8 +215,8 @@ const OverlayInlineContainer = <T, U>({
           component: config.component,
           data: config.data,
         });
-      } else if (viewInfoCurrent?.view) {
-        closeView(viewInfoCurrent.view);
+      } else if (view) {
+        closeView(view.id, view.type);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

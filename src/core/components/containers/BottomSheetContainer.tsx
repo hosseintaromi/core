@@ -105,7 +105,8 @@ const BottomSheetContainer = () => {
       topViewInfo.view.options.onClickedBackdrop?.();
       return;
     }
-    closeView(topViewInfo.view);
+    const view = topViewInfo.view;
+    closeView(view.id, view.type);
   };
 
   return (

@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { ViewAnimationConfig } from "../../@types/view";
+import { ViewEvent } from "../../@types/view";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
@@ -82,7 +82,7 @@ const OverlaySlideContainer = <T, U>({
         }
       },
       end(newView, prevView) {},
-    } as ViewAnimationConfig,
+    } as ViewEvent,
     {
       duration: 300,
       start(closeViewEl, activeViewEl) {
@@ -106,7 +106,7 @@ const OverlaySlideContainer = <T, U>({
         }
       },
       end(closeViewEl, activeViewEl) {},
-    } as ViewAnimationConfig,
+    } as ViewEvent,
   );
 
   const openConfigView = useCallback(

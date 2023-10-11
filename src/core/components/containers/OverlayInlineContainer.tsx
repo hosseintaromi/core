@@ -13,12 +13,7 @@ import {
   registerContainer,
   removeContainer,
 } from "../../utils/viewManager";
-import {
-  ViewAnimationConfig,
-  ViewInfo,
-  ViewRef,
-  ViewType,
-} from "../../@types/view";
+import { ViewEvent, ViewInfo, ViewRef, ViewType } from "../../@types/view";
 import { bezier } from "../../utils/bezier";
 import { useAnimate } from "../../hooks/useAnimate";
 import { EventType, useEvent } from "../../hooks/useEvent";
@@ -86,7 +81,7 @@ const OverlayInlineContainer = <T, U>({
   );
 
   const doAnimate = useCallback(
-    (newView: ViewRef, config: ViewAnimationConfig) =>
+    (newView: ViewRef, config: ViewEvent) =>
       new Promise<any>((resolve, reject) => {
         config.start?.(newView);
         document.body.classList.add("animating");

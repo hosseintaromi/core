@@ -78,7 +78,7 @@ export interface ViewType<T> {
   options?: ViewConfig;
 }
 export interface CloseOptions<T> {
-  type?: CloseType;
+  closeType?: CloseType;
   res?: T;
 }
 
@@ -90,11 +90,16 @@ export interface ViewInfo {
   onInit?: (el: HTMLElement) => void;
 }
 
-export interface ViewAnimationConfig {
+export interface ViewEvent {
   duration?: number;
-  start?: (newView: ViewRef, prevView?: ViewRef) => void;
-  end?: (newView: ViewRef, prevView?: ViewRef) => void;
-  animate?: (t: number, newView: ViewRef, prevView?: ViewRef) => void;
+  start?: (newView: ViewRef, prevView?: ViewRef, config?: any) => void;
+  end?: (newView: ViewRef, prevView?: ViewRef, config?: any) => void;
+  animate?: (
+    t: number,
+    newView: ViewRef,
+    prevView?: ViewRef,
+    config?: any,
+  ) => void;
 }
 
 export interface HistoryItem {

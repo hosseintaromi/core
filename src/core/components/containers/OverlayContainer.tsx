@@ -3,7 +3,7 @@ import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import { closeView } from "../../utils/viewManager";
-import { ViewAnimationConfig, ViewRef } from "../../@types/view";
+import { ViewEvent, ViewRef } from "../../@types/view";
 import { bezier } from "../../utils/bezier";
 
 interface OverlayParamsType {
@@ -87,7 +87,7 @@ const OverlayContainer = () => {
           backDropRef.current.style.opacity = p + "";
         }
       },
-    } as ViewAnimationConfig,
+    } as ViewEvent,
     {
       duration: 0,
       start(closeView) {
@@ -96,7 +96,7 @@ const OverlayContainer = () => {
           target.classList.remove("is-open");
         }
       },
-    } as ViewAnimationConfig,
+    } as ViewEvent,
   );
 
   const closeModal = () => {

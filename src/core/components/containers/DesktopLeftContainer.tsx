@@ -2,13 +2,13 @@ import React, { useRef } from "react";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
-import { ViewAnimationConfig } from "../../@types/view";
+import { ViewEvent } from "../../@types/view";
 import { bezier } from "../../utils/bezier";
 
 const DesktopLeftContainer = () => {
   const containerRef = useRef<HTMLDivElement>(null);
 
-  let closeConfig: ViewAnimationConfig = {
+  let closeConfig: ViewEvent = {
     duration: 400,
     start(closeViewEl, activeViewEl) {
       const containerEl = containerRef.current;
@@ -61,7 +61,7 @@ const DesktopLeftContainer = () => {
     },
   };
 
-  const openConfig: ViewAnimationConfig = {
+  const openConfig: ViewEvent = {
     duration: 400,
     start(newViewEl, prevViewEl) {
       const containerEl = containerRef.current;

@@ -2,11 +2,11 @@ import React from "react";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import { ViewComponent } from "../ViewComponent";
-import { ViewAnimationConfig } from "../../@types/view";
+import { ViewEvent } from "../../@types/view";
 import { bezier } from "../../utils/bezier";
 
 const DesktopRightContainer = () => {
-  const openConfig: ViewAnimationConfig = {
+  const openConfig: ViewEvent = {
     duration: 300,
     start(newView, prevView) {
       const newStyle = newView.ref.style;
@@ -40,7 +40,7 @@ const DesktopRightContainer = () => {
     },
   };
 
-  const closeConfig: ViewAnimationConfig = {
+  const closeConfig: ViewEvent = {
     duration: 300,
     start(closeView, activeView) {
       const closeStyle = closeView.ref.style;

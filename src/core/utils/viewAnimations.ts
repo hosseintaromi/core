@@ -1,9 +1,9 @@
-import { ViewAnimationConfig } from "../@types/view";
+import { ViewEvent } from "../@types/view";
 import { bezier } from "./bezier";
 
 const slideIn = bezier(0.25, 1, 0.5, 1);
 
-export const closeTabAnimationConfig: ViewAnimationConfig = {
+export const closeTabAnimationConfig: ViewEvent = {
   duration: 400,
   start(closeView, activeView) {
     const closeStyle = closeView.ref.style;
@@ -37,7 +37,7 @@ export const closeTabAnimationConfig: ViewAnimationConfig = {
   },
 };
 
-export const openTabAnimationConfig: ViewAnimationConfig = {
+export const openTabAnimationConfig: ViewEvent = {
   duration: 300,
   start(newView, prevView) {
     const newViewStyle = newView.ref.style;
@@ -61,7 +61,7 @@ export const openTabAnimationConfig: ViewAnimationConfig = {
   },
 };
 
-export const onEnterContainerConfig: ViewAnimationConfig = {
+export const onEnterContainerConfig: ViewEvent = {
   duration: 300,
   animate(t, activeView) {
     const activeViewStyle = activeView.ref.style;
@@ -69,14 +69,14 @@ export const onEnterContainerConfig: ViewAnimationConfig = {
   },
 };
 
-export const onLeaveContainerConfig: ViewAnimationConfig = {
+export const onLeaveContainerConfig: ViewEvent = {
   duration: 500,
   start(closeView, activeView) {},
   animate(t, closeView, activeView) {},
   end(closeView, activeView) {},
 };
 
-export const activateTabConfig: ViewAnimationConfig = {
+export const activateTabConfig: ViewEvent = {
   duration: 200,
   start(newView, prevView) {
     const newStyle = newView.ref.style;
@@ -99,7 +99,7 @@ export const activateTabConfig: ViewAnimationConfig = {
   },
 };
 
-export const openTabContainerConfig: ViewAnimationConfig = {
+export const openTabContainerConfig: ViewEvent = {
   duration: 400,
   start(newView, prevView) {
     const newStyle = newView.ref.style;
@@ -131,14 +131,14 @@ export const openTabContainerConfig: ViewAnimationConfig = {
   },
 };
 
-export const onEnterTabContainerConfig: ViewAnimationConfig = {
+export const onEnterTabContainerConfig: ViewEvent = {
   duration: 400,
   start(newView, prevView) {},
   animate(t, newView, prevView) {},
   end(newView, prevView) {},
 };
 
-export const openPartialTabAnimationConfig: ViewAnimationConfig = {
+export const openPartialTabAnimationConfig: ViewEvent = {
   duration: 300,
   start(newView, prevView) {
     const newStyle = newView.ref.style;
@@ -156,7 +156,7 @@ export const openPartialTabAnimationConfig: ViewAnimationConfig = {
   },
 };
 
-export const activePartialTabAnimationConfig: ViewAnimationConfig = {
+export const activePartialTabAnimationConfig: ViewEvent = {
   duration: 300,
   start(newView, prevView) {
     const newStyle = newView.ref.style;
@@ -174,7 +174,7 @@ export const activePartialTabAnimationConfig: ViewAnimationConfig = {
   },
 };
 
-export const leaveContainerMasterTabAnimationConfig: ViewAnimationConfig = {
+export const leaveContainerMasterTabAnimationConfig: ViewEvent = {
   duration: 300,
   start(newView, prevView) {
     const newStyle = newView.ref.style;
@@ -193,7 +193,7 @@ export const leaveContainerMasterTabAnimationConfig: ViewAnimationConfig = {
   },
 };
 
-export const onOpenToastConfig: ViewAnimationConfig = {
+export const onOpenToastConfig: ViewEvent = {
   duration: 300,
   start(newView, prevView) {
     const newViewStyle = newView.ref.style;
@@ -207,7 +207,7 @@ export const onOpenToastConfig: ViewAnimationConfig = {
   },
 };
 
-export const onCloseToastConfig: ViewAnimationConfig = {
+export const onCloseToastConfig: ViewEvent = {
   duration: 300,
   start(closeView, activeView) {
     const closedViewStyle = closeView.ref.style;

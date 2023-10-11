@@ -3,7 +3,7 @@ import {
   ChangeContainerEventType,
   CloseOptions,
   CloseType,
-  ViewAnimationConfig,
+  ViewEvent,
   ViewContainerConfig,
   ViewInfo,
   ViewRef,
@@ -16,43 +16,44 @@ export const useViewManage = (
   type: string,
   containerOrder: number,
   config?: ViewContainerConfig,
-  openConfig?: ViewAnimationConfig,
-  closeConfig?: ViewAnimationConfig,
-  activateConfig?: ViewAnimationConfig,
-  onEnterContainerConfig?: ViewAnimationConfig,
-  onLeaveContainerConfig?: ViewAnimationConfig,
+  openConfig?: ViewEvent,
+  closeConfig?: ViewEvent,
+  activateConfig?: ViewEvent,
+  onEnterContainerConfig?: ViewEvent,
+  onLeaveContainerConfig?: ViewEvent,
 ) => {
   const [viewsInfo, setViewsInfo] = useState<ViewInfo[]>([]);
   const activeViewIdRef = useRef<string>("");
   const initRef = useRef<boolean>(false);
   const { requestAnimate } = useAnimate();
 
-  const doAnimate = useCallback(
+  const handleEvent = useCallback(
     (
       newView: ViewRef,
       prevView?: ViewRef,
-      config?: ViewAnimationConfig,
+      event?: ViewEvent,
+      config?: any,
       immediate?: boolean,
     ) =>
       new Promise<any>((resolve, reject) => {
-        if (!config) {
+        if (!event) {
           resolve(true);
         }
-        config?.start?.(newView, prevView);
-        if (immediate || !config?.duration) {
-          config?.animate?.(1, newView, prevView);
-          config?.end?.(newView, prevView);
+        event?.start?.(newView, prevView, config);
+        if (immediate || !event?.duration) {
+          event?.animate?.(1, newView, prevView, config);
+          event?.end?.(newView, prevView, config);
           resolve(true);
           return;
         }
         document.body.classList.add("animating");
         requestAnimate(
-          config.duration,
+          event.duration,
           (t: number) => {
-            config?.animate?.(t, newView, prevView);
+            event?.animate?.(t, newView, prevView, config);
           },
           () => {
-            config?.end?.(newView, prevView);
+            event?.end?.(newView, prevView, config);
             document.body.classList.remove("animating");
             resolve(true);
           },
@@ -78,7 +79,7 @@ export const useViewManage = (
               initRef.current = true;
               immediate = config?.disableFirstTimeAnimate || false;
             }
-            await doAnimate(
+            await handleEvent(
               {
                 view: newView,
                 ref: newPgeInfo.elRef as any,
@@ -90,6 +91,7 @@ export const useViewManage = (
                   }
                 : undefined,
               openConfig,
+              null,
               immediate,
             );
             if (currentViewInfo) {
@@ -123,7 +125,7 @@ export const useViewManage = (
       (x) => x.id === activeViewIdRef.current,
     );
     activeViewIdRef.current = view.id;
-    await doAnimate(
+    await handleEvent(
       {
         view: viewInfo.view,
         ref: viewInfo.elRef as any,
@@ -190,7 +192,7 @@ export const useViewManage = (
         toView: newActiveView,
       });
 
-      await doAnimate(
+      await handleEvent(
         {
           view: viewsInfo[index].view,
           ref: viewsInfo[index].elRef as any,
@@ -202,6 +204,7 @@ export const useViewManage = (
             }
           : undefined,
         closeConfig,
+        options?.closeType ? { closeType: options?.closeType } : null,
         immediate,
       );
 
@@ -212,7 +215,7 @@ export const useViewManage = (
       }
 
       if (index > -1) {
-        handleClose(options?.type!, index);
+        handleClose(options?.closeType!, index);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -228,7 +231,7 @@ export const useViewManage = (
       if (!activeViewInfo) {
         return;
       }
-      await doAnimate(
+      await handleEvent(
         {
           view: activeViewInfo.view,
           ref: activeViewInfo.elRef as any,

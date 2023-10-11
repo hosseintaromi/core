@@ -28,6 +28,8 @@ export enum PartialTabContainerType {
   tab3 = "tab3",
 }
 
+export type CloseType = "Current" | "All" | "AllExceptFirst" | "AllExceptLast";
+
 export interface ViewContainerDataType {
   views: ViewType<any>[];
   containerOrder: number;
@@ -59,7 +61,7 @@ export interface ViewContextType {
   openView?: <T = any>(view: Omit<ViewType<T>, "type">) => void;
 }
 
-export interface OpenViewOptions {
+export interface ViewConfig {
   disableBackdrop?: boolean;
   params?: any;
   onClickedBackdrop?: () => void;
@@ -73,11 +75,8 @@ export interface ViewType<T> {
   onClose?: (res?: any) => void;
   onClosed?: (res?: any) => void;
   onOpened?: () => void;
-  options?: OpenViewOptions;
+  options?: ViewConfig;
 }
-
-export type CloseType = "Current" | "All" | "AllExceptFirst" | "AllExceptLast";
-
 export interface CloseOptions<T> {
   type?: CloseType;
   res?: T;

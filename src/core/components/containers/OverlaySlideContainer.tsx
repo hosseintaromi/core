@@ -167,7 +167,7 @@ const OverlaySlideContainer = <T, U>({
     onTap: (e: Event) => {
       if (viewsInfo.length > 0 && !e.contains(containerRef.current)) {
         const view = viewsInfo[0].view;
-        closeView(view.id, view.type);
+        closeView(view.id, view.type, "All");
       }
     },
   });

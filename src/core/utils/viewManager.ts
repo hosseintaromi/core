@@ -1,7 +1,6 @@
 import { ViewContainerType } from "../@types/commonView";
 import {
   ChangeContainerEventType,
-  CloseOptions,
   CloseType,
   ViewContainerConfig,
   ViewContainerDataType,
@@ -11,6 +10,7 @@ import { listenBack, unlistenBack } from "./historyManager";
 
 const viewContainers: { [name: string]: ViewContainerDataType } = {};
 const loadedViewsStack: ViewType<any>[] = [];
+const progressViews: { [containerType: string]: string[] } = {};
 
 export function registerContainer(
   containerName: string,
@@ -64,6 +64,10 @@ export async function openView<T = any>(
       return;
     }
 
+    if (isViewInProgress(view.type, view.id)) {
+      return;
+    }
+
     const foundView = container.views.find((x) => x.id === view.id);
     if (foundView && !container.config?.moveBetweenViews) {
       return;
@@ -91,6 +95,7 @@ export async function openView<T = any>(
       });
     }
 
+    setViewInProgress(view.type, view.id, true);
     if (foundView) {
       await container.activateView?.(foundView);
       moveViewToTop(foundView);
@@ -100,7 +105,10 @@ export async function openView<T = any>(
       view.onOpened?.();
       addToLoadedViewStack(view as ViewType<T>);
     }
-  } catch (error) {}
+    setViewInProgress(view.type, view.id, false);
+  } catch (error) {
+    setViewInProgress(view.type, view.id!, false);
+  }
 }
 
 export async function closeView<T>(
@@ -115,6 +123,10 @@ export async function closeView<T>(
     }
     const container = viewContainers[containerType];
     if (!container) {
+      return;
+    }
+
+    if (isViewInProgress(containerType, viewId)) {
       return;
     }
 
@@ -147,12 +159,16 @@ export async function closeView<T>(
     if (!container.config?.disableBrowserHistory) {
       unlistenBack(viewId);
     }
+    setViewInProgress(containerType, viewId, true);
     closingView.onClose?.(res);
     await container.closeView(closingView, topViewWithSameType, closeType);
     closingView.onClosed?.(res);
     updateViewsByCloseType(container.views, closeType, index);
     removeFromLoadedViewStack(closingView, closeType);
-  } catch {}
+    setViewInProgress(containerType, viewId, false);
+  } catch {
+    setViewInProgress(containerType, viewId, false);
+  }
 }
 
 export function updateViewsByCloseType(
@@ -181,11 +197,11 @@ export function getViewsByCloseType(
   const length = views.length;
   switch (type) {
     case "All":
-      return views.slice(0, length - 1);
+      return views.slice(0, length);
     case "AllExceptFirst":
-      return views.slice(1, length - 1);
+      return views.slice(1, length);
     case "AllExceptLast":
-      return views.slice(0, length - 2);
+      return views.slice(0, length - 1);
     case "Current":
       return views[index];
   }
@@ -233,5 +249,27 @@ function getTopViewFromStack(
     ) {
       return view;
     }
+  }
+}
+
+function isViewInProgress(containerType: string, viewId: string) {
+  return (
+    (progressViews[containerType] || []).findIndex((id) => id === viewId) > -1
+  );
+}
+
+function setViewInProgress(
+  containerType: string,
+  viewId: string,
+  progress: boolean,
+) {
+  let views = progressViews[containerType];
+  if (!views) {
+    views = progressViews[containerType] = [];
+  }
+  if (progress) {
+    views.safePush(viewId);
+  } else {
+    views.remove((id) => id === viewId);
   }
 }

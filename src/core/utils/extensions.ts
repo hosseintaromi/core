@@ -5,6 +5,7 @@ declare global {
 
   interface Array<T> {
     last(): T;
+    safePush(item: T): void;
     remove(predicate: (value: T) => boolean): T | undefined;
     removeAll(predicate: (value: T) => boolean): T | undefined;
   }
@@ -18,6 +19,14 @@ Event.prototype.contains = function (container: Node): boolean {
 Array.prototype.last = function <T>(): T {
   const arr: Array<T> = this || [];
   return arr[arr.length - 1];
+};
+
+// eslint-disable-next-line no-extend-native
+Array.prototype.safePush = function <T>(item: T) {
+  const arr: Array<T> = this || [];
+  if (!arr.find((x) => x === item)) {
+    arr.push(item);
+  }
 };
 
 // eslint-disable-next-line no-extend-native

@@ -147,14 +147,22 @@ export const useViewManage = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClose = (type: CloseType) => {
+  const handleClose = (type: CloseType, index: number) => {
     switch (type) {
       case "All":
+        viewsInfo.splice(0, viewsInfo.length);
         break;
-
-      default:
+      case "AllExceptFirst":
+        viewsInfo.splice(1, viewsInfo.length - 1);
+        break;
+      case "AllExceptLast":
+        viewsInfo.splice(0, viewsInfo.length - 1);
+        break;
+      case "Current":
+        viewsInfo.splice(index, 1);
         break;
     }
+    setViewsInfo([...viewsInfo]);
   };
 
   const closeView = useCallback(
@@ -169,9 +177,7 @@ export const useViewManage = (
         activeViewIdRef.current = newActiveView.id;
         activeViewInfo = viewsInfo.find((x) => x.id === newActiveView.id);
       }
-      if (options?.type !== "Current") {
-        handleClose(options?.type!);
-      }
+
       const index = viewsInfo.findIndex((x) => x.id === view.id);
       if (index < 0) {
         return;
@@ -206,8 +212,7 @@ export const useViewManage = (
       }
 
       if (index > -1) {
-        viewsInfo.splice(index, 1);
-        setViewsInfo([...viewsInfo]);
+        handleClose(options?.type!, index);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

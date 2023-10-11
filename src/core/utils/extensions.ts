@@ -6,6 +6,7 @@ declare global {
   interface Array<T> {
     last(): T;
     remove(predicate: (value: T) => boolean): T | undefined;
+    removeAll(predicate: (value: T) => boolean): T | undefined;
   }
 }
 
@@ -13,11 +14,13 @@ Event.prototype.contains = function (container: Node): boolean {
   return containsTargetEl(this.target as Node, container);
 };
 
+// eslint-disable-next-line no-extend-native
 Array.prototype.last = function <T>(): T {
   const arr: Array<T> = this || [];
   return arr[arr.length - 1];
 };
 
+// eslint-disable-next-line no-extend-native
 Array.prototype.remove = function <T>(
   predicate: (value: T) => boolean,
 ): T | undefined {
@@ -28,6 +31,22 @@ Array.prototype.remove = function <T>(
     arr.splice(index, 1);
     return removedItem;
   }
+};
+
+// eslint-disable-next-line no-extend-native
+Array.prototype.removeAll = function <T>(
+  predicate: (value: T) => boolean,
+): T[] | undefined {
+  let found = true;
+  const removedItems: T[] = [];
+  const arr: Array<T> = this || [];
+  while (found) {
+    if (!arr.remove(predicate)) {
+      found = false;
+      break;
+    }
+  }
+  return removedItems;
 };
 
 export function containsTargetEl(target: Node | null, container: Node) {

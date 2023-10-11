@@ -1,4 +1,4 @@
-import { CloseOptions, ViewEvents, ViewType } from "../@types/view";
+import { CloseOptions, CloseType, ViewEvents, ViewType } from "../@types/view";
 import { useContext, useEffect } from "react";
 import { ViewContext } from "../context/ViewContextProvider";
 
@@ -15,8 +15,12 @@ export const useView = <T = any>(events?: ViewEvents) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const close = (options?: CloseOptions<any>) => {
-    viewContext.close?.(options);
+  const close = (res?: any) => {
+    closeByType("Current", res);
+  };
+
+  const closeByType = (closeType: CloseType, res?: any) => {
+    viewContext.close?.(closeType, res);
   };
 
   const openView = (view: Omit<ViewType<T>, "type">) => {
@@ -25,6 +29,7 @@ export const useView = <T = any>(events?: ViewEvents) => {
 
   return {
     close,
+    closeByType,
     openView,
     viewData: viewContext.getViewData() as T,
   };

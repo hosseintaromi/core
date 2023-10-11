@@ -1,11 +1,9 @@
 import { useView } from "../../hooks/useView";
 
 function MenuInlineSample2() {
-  const { close } = useView();
+  const { closeByType, close } = useView();
   const closeAll = () => {
-    close({
-      closeType: "All",
-    });
+    closeByType("All");
   };
   return (
     <div>

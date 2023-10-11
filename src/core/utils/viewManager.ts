@@ -2,6 +2,7 @@ import { ViewContainerType } from "../@types/commonView";
 import {
   ChangeContainerEventType,
   CloseOptions,
+  CloseType,
   ViewContainerConfig,
   ViewContainerDataType,
   ViewType,
@@ -18,8 +19,8 @@ export function registerContainer(
   openView: (view: ViewType<any>) => Promise<any>,
   closeView: (
     view: ViewType<any>,
-    newActiveView?: ViewType<any>,
-    options?: CloseOptions<any>,
+    newActiveView: ViewType<any> | undefined,
+    closeType: CloseType,
   ) => Promise<any>,
   activateView?: (view: ViewType<any>) => Promise<any>,
   changeContainer?: (
@@ -104,14 +105,15 @@ export async function openView<T = any>(
 
 export async function closeView<T>(
   viewId: string,
-  type: string,
-  options?: CloseOptions<T>,
+  containerType: string,
+  closeType: CloseType = "Current",
+  res?: T,
 ) {
   try {
-    if (!viewId || !type) {
+    if (!viewId || !containerType) {
       return;
     }
-    const container = viewContainers[type];
+    const container = viewContainers[containerType];
     if (!container) {
       return;
     }
@@ -124,9 +126,14 @@ export async function closeView<T>(
       return;
     }
     const closingView = container.views[index];
-    const topView = getTopViewFromStack(closingView.id);
+    const topView = getTopViewFromStack([closingView.id]);
+    const ignoreViewsId = getViewsByCloseType(
+      container.views.map((x) => x.id),
+      closeType,
+      index,
+    );
     const topViewWithSameType = getTopViewFromStack(
-      closingView.id,
+      ignoreViewsId,
       closingView.type as any,
     );
     const isSameType = topView?.type === closingView.type;
@@ -140,20 +147,67 @@ export async function closeView<T>(
     if (!container.config?.disableBrowserHistory) {
       unlistenBack(viewId);
     }
-    closingView.onClose?.(options?.res);
-    await container.closeView(closingView, topViewWithSameType, options);
-    closingView.onClosed?.(options?.res);
-    container.views.splice(index, 1);
-    removeFromLoadedViewStack(closingView);
+    closingView.onClose?.(res);
+    await container.closeView(closingView, topViewWithSameType, closeType);
+    closingView.onClosed?.(res);
+    updateViewsByCloseType(container.views, closeType, index);
+    removeFromLoadedViewStack(closingView, closeType);
   } catch {}
+}
+
+export function updateViewsByCloseType(
+  views: any[],
+  type: CloseType,
+  index: number,
+) {
+  const length = views.length;
+  switch (type) {
+    case "All":
+      return views.splice(0, length);
+    case "AllExceptFirst":
+      return views.splice(1, length - 1);
+    case "AllExceptLast":
+      return views.splice(0, length - 1);
+    case "Current":
+      return views.splice(index, 1);
+  }
+}
+
+export function getViewsByCloseType(
+  views: any[],
+  type: CloseType,
+  index: number,
+) {
+  const length = views.length;
+  switch (type) {
+    case "All":
+      return views.slice(0, length - 1);
+    case "AllExceptFirst":
+      return views.slice(1, length - 1);
+    case "AllExceptLast":
+      return views.slice(0, length - 2);
+    case "Current":
+      return views[index];
+  }
 }
 
 function addToLoadedViewStack(view: ViewType<any>) {
   loadedViewsStack.push(view);
 }
 
-function removeFromLoadedViewStack(view: ViewType<any>) {
-  loadedViewsStack.remove((x) => x.id === view.id);
+function removeFromLoadedViewStack(view: ViewType<any>, closeType: CloseType) {
+  switch (closeType) {
+    case "All":
+      loadedViewsStack.removeAll((x) => x.type === view.type);
+      break;
+    case "AllExceptFirst":
+      break;
+    case "AllExceptLast":
+      break;
+    case "Current":
+      loadedViewsStack.remove((x) => x.id === view.id);
+      break;
+  }
 }
 
 function isMasterView() {
@@ -168,13 +222,13 @@ function moveViewToTop(view: ViewType<any>) {
 }
 
 function getTopViewFromStack(
-  ignoreViewId?: string,
+  ignoreViewsId?: string[],
   type?: ViewContainerType,
 ): ViewType<any> | undefined {
   for (let i = loadedViewsStack.length - 1; i >= 0; i--) {
     const view = loadedViewsStack[i];
     if (
-      view.id !== ignoreViewId &&
+      (ignoreViewsId || []).indexOf(view.id) < 0 &&
       (type === undefined || view.type === type)
     ) {
       return view;

@@ -9,7 +9,11 @@ import {
   ViewRef,
   ViewType,
 } from "../@types/view";
-import { registerContainer, removeContainer } from "../utils/viewManager";
+import {
+  registerContainer,
+  removeContainer,
+  updateViewsByCloseType,
+} from "../utils/viewManager";
 import { useAnimate } from "./useAnimate";
 
 export const useViewManage = (
@@ -149,29 +153,11 @@ export const useViewManage = (
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const handleClose = (type: CloseType, index: number) => {
-    switch (type) {
-      case "All":
-        viewsInfo.splice(0, viewsInfo.length);
-        break;
-      case "AllExceptFirst":
-        viewsInfo.splice(1, viewsInfo.length - 1);
-        break;
-      case "AllExceptLast":
-        viewsInfo.splice(0, viewsInfo.length - 1);
-        break;
-      case "Current":
-        viewsInfo.splice(index, 1);
-        break;
-    }
-    setViewsInfo([...viewsInfo]);
-  };
-
   const closeView = useCallback(
     async (
       view: ViewType<any>,
-      newActiveView?: ViewType<any>,
-      options?: CloseOptions<any>,
+      newActiveView: ViewType<any> | undefined,
+      closeType: CloseType,
     ) => {
       let activeViewInfo: ViewInfo | undefined;
       activeViewIdRef.current = "";
@@ -204,7 +190,7 @@ export const useViewManage = (
             }
           : undefined,
         closeConfig,
-        options?.closeType ? { closeType: options?.closeType } : null,
+        { closeType },
         immediate,
       );
 
@@ -215,7 +201,8 @@ export const useViewManage = (
       }
 
       if (index > -1) {
-        handleClose(options?.closeType!, index);
+        updateViewsByCloseType(viewsInfo, closeType, index);
+        setViewsInfo([...viewsInfo]);
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps

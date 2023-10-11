@@ -37,8 +37,8 @@ export interface ViewContainerDataType {
   openView: (newView: ViewType<any>) => Promise<any>;
   closeView: (
     view: ViewType<any>,
-    newActiveView?: ViewType<any>,
-    options?: CloseOptions<any>,
+    newActiveView: ViewType<any> | undefined,
+    closeType: CloseType,
   ) => Promise<any>;
   activateView?: (view: ViewType<any>) => Promise<any>;
   changeContainer?: (
@@ -57,7 +57,7 @@ export interface ViewContextType {
   listenEvents: (events: ViewEvents) => () => void;
   emitEvent: (type: ViewEventType, e: ViewEventArg) => void;
   getViewData: () => any;
-  close?: <T>(options?: CloseOptions<T>) => void;
+  close?: <T>(type: CloseType, res?: T) => void;
   openView?: <T = any>(view: Omit<ViewType<T>, "type">) => void;
 }
 

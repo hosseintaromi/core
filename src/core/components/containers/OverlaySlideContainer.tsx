@@ -5,7 +5,7 @@ import React, {
   useRef,
   useState,
 } from "react";
-import { ViewEvent } from "../../@types/view";
+import { CloseType, ViewEvent } from "../../@types/view";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
@@ -90,12 +90,17 @@ const OverlaySlideContainer = <T, U>({
           ? activeViewEl.ref.clientHeight - closeViewEl.ref.clientHeight
           : 0;
       },
-      animate(t, closeViewEl, activeViewEl) {
+      animate(
+        t,
+        closeViewEl,
+        activeViewEl,
+        { closeType }: { closeType: CloseType },
+      ) {
         const p = slideIn(t);
         const prevViewHeight = closeViewEl.ref.offsetHeight;
         const newViewStyle = activeViewEl?.ref.style;
         const prevViewStyle = closeViewEl.ref.style;
-        if (newViewStyle) {
+        if (newViewStyle && closeType === "Current") {
           setContainerHeight(prevViewHeight + heightDef * p);
           prevViewStyle.transform = `translateX(${p * 100}%)`;
           prevViewStyle.opacity = `${1 - p}`;

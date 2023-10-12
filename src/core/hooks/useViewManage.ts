@@ -1,13 +1,13 @@
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   ChangeContainerEventType,
-  CloseOptions,
   CloseType,
   ViewEvent,
   ViewContainerConfig,
   ViewInfo,
   ViewRef,
   ViewType,
+  ViewEventConfigArg,
 } from "../@types/view";
 import {
   registerContainer,
@@ -31,22 +31,21 @@ export const useViewManage = (
   const initRef = useRef<boolean>(false);
   const { requestAnimate } = useAnimate();
 
-  const handleEvent = useCallback(
+  const handleViewEvent = useCallback(
     (
       newView: ViewRef,
       prevView?: ViewRef,
       event?: ViewEvent,
-      config?: any,
-      immediate?: boolean,
+      args?: ViewEventConfigArg,
     ) =>
       new Promise<any>((resolve, reject) => {
         if (!event) {
           resolve(true);
         }
-        event?.start?.(newView, prevView, config);
-        if (immediate || !event?.duration) {
-          event?.animate?.(1, newView, prevView, config);
-          event?.end?.(newView, prevView, config);
+        event?.start?.(newView, prevView, args);
+        if (args?.disableAnimate || !event?.duration) {
+          event?.animate?.(1, newView, prevView, args);
+          event?.end?.(newView, prevView, args);
           resolve(true);
           return;
         }
@@ -54,10 +53,10 @@ export const useViewManage = (
         requestAnimate(
           event.duration,
           (t: number) => {
-            event?.animate?.(t, newView, prevView, config);
+            event?.animate?.(t, newView, prevView, args);
           },
           () => {
-            event?.end?.(newView, prevView, config);
+            event?.end?.(newView, prevView, args);
             document.body.classList.remove("animating");
             resolve(true);
           },
@@ -78,12 +77,12 @@ export const useViewManage = (
               (x) => x.id === activeViewIdRef.current,
             );
             activeViewIdRef.current = newView.id;
-            let immediate = false;
+            let disableAnimate = false;
             if (!initRef.current) {
               initRef.current = true;
-              immediate = config?.disableFirstTimeAnimate || false;
+              disableAnimate = config?.disableFirstTimeAnimate || false;
             }
-            await handleEvent(
+            await handleViewEvent(
               {
                 view: newView,
                 ref: newPgeInfo.elRef as any,
@@ -95,8 +94,7 @@ export const useViewManage = (
                   }
                 : undefined,
               openConfig,
-              null,
-              immediate,
+              { disableAnimate: disableAnimate },
             );
             if (currentViewInfo) {
               currentViewInfo.events?.onLeave?.({
@@ -129,7 +127,7 @@ export const useViewManage = (
       (x) => x.id === activeViewIdRef.current,
     );
     activeViewIdRef.current = view.id;
-    await handleEvent(
+    await handleViewEvent(
       {
         view: viewInfo.view,
         ref: viewInfo.elRef as any,
@@ -172,13 +170,13 @@ export const useViewManage = (
       }
 
       const closeViewInfo = viewsInfo[index];
-      const immediate =
+      const disableAnimate =
         !config?.moveBetweenViews && index < viewsInfo.length - 1;
       closeViewInfo.events?.onClosing?.({
         toView: newActiveView,
       });
 
-      await handleEvent(
+      await handleViewEvent(
         {
           view: viewsInfo[index].view,
           ref: viewsInfo[index].elRef as any,
@@ -190,8 +188,7 @@ export const useViewManage = (
             }
           : undefined,
         closeConfig,
-        { closeType },
-        immediate,
+        { disableAnimate: disableAnimate, closeType },
       );
 
       if (activeViewInfo) {
@@ -218,7 +215,7 @@ export const useViewManage = (
       if (!activeViewInfo) {
         return;
       }
-      await handleEvent(
+      await handleViewEvent(
         {
           view: activeViewInfo.view,
           ref: activeViewInfo.elRef as any,

@@ -7,13 +7,8 @@ import {
   onLeaveContainerConfig,
   openTabContainerConfig,
 } from "../../utils/viewAnimations";
-import { PartialTabContainerType } from "../../@types/view";
 
-const PartialTabContainer = ({
-  containerName,
-}: {
-  containerName: PartialTabContainerType;
-}) => {
+const PartialTabContainer = ({ containerName }: { containerName: string }) => {
   const { viewsInfo } = useViewManage(
     containerName,
     0,

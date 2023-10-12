@@ -22,12 +22,6 @@ export enum ChangeContainerEventType {
   onLeave = "onLeave",
 }
 
-export enum PartialTabContainerType {
-  tab1 = "tab1",
-  tab2 = "tab2",
-  tab3 = "tab3",
-}
-
 export type CloseType = "Current" | "All" | "AllExceptFirst" | "AllExceptLast";
 
 export interface ViewContainerDataType {
@@ -66,6 +60,7 @@ export interface ViewConfig {
   params?: any;
   onClickedBackdrop?: () => void;
 }
+
 export interface ViewType<T> {
   type: string;
   id: string;
@@ -76,10 +71,6 @@ export interface ViewType<T> {
   onClosed?: (res?: any) => void;
   onOpened?: () => void;
   options?: ViewConfig;
-}
-export interface CloseOptions<T> {
-  closeType?: CloseType;
-  res?: T;
 }
 
 export interface ViewInfo {
@@ -92,14 +83,27 @@ export interface ViewInfo {
 
 export interface ViewEvent {
   duration?: number;
-  start?: (newView: ViewRef, prevView?: ViewRef, config?: any) => void;
-  end?: (newView: ViewRef, prevView?: ViewRef, config?: any) => void;
+  start?: (
+    newView: ViewRef,
+    prevView?: ViewRef,
+    config?: ViewEventConfigArg,
+  ) => void;
+  end?: (
+    newView: ViewRef,
+    prevView?: ViewRef,
+    config?: ViewEventConfigArg,
+  ) => void;
   animate?: (
     t: number,
     newView: ViewRef,
     prevView?: ViewRef,
-    config?: any,
+    config?: ViewEventConfigArg,
   ) => void;
+}
+
+export interface ViewEventConfigArg {
+  disableAnimate?: boolean;
+  closeType?: CloseType;
 }
 
 export interface HistoryItem {

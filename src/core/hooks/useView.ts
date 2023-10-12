@@ -1,4 +1,4 @@
-import { CloseOptions, CloseType, ViewEvents, ViewType } from "../@types/view";
+import { CloseType, ViewEvents, ViewType } from "../@types/view";
 import { useContext, useEffect } from "react";
 import { ViewContext } from "../context/ViewContextProvider";
 

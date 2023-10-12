@@ -1,11 +1,5 @@
-import React, {
-  MutableRefObject,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from "react";
-import { CloseType, ViewEvent } from "../../@types/view";
+import React, { MutableRefObject, useCallback, useRef } from "react";
+import { ViewEvent } from "../../@types/view";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
@@ -30,7 +24,6 @@ const OverlaySlideContainer = <T, U>({
 }: {
   config: OverlayInlineData<T, U>;
 }) => {
-  const [hide, setHide] = useState<boolean>(true);
   const slideIn = bezier(0.25, 1, 0.5, 1);
   const containerRef = useRef<any>(null);
   const hoverTimerRef = useRef<NodeJS.Timeout>();
@@ -90,17 +83,12 @@ const OverlaySlideContainer = <T, U>({
           ? activeViewEl.ref.clientHeight - closeViewEl.ref.clientHeight
           : 0;
       },
-      animate(
-        t,
-        closeViewEl,
-        activeViewEl,
-        { closeType }: { closeType: CloseType },
-      ) {
+      animate(t, closeViewEl, activeViewEl, config) {
         const p = slideIn(t);
         const prevViewHeight = closeViewEl.ref.offsetHeight;
         const newViewStyle = activeViewEl?.ref.style;
         const prevViewStyle = closeViewEl.ref.style;
-        if (newViewStyle && closeType === "Current") {
+        if (newViewStyle && config?.closeType === "Current") {
           setContainerHeight(prevViewHeight + heightDef * p);
           prevViewStyle.transform = `translateX(${p * 100}%)`;
           prevViewStyle.opacity = `${1 - p}`;
@@ -171,8 +159,6 @@ const OverlaySlideContainer = <T, U>({
       }
     },
   });
-
-  useEffect(() => {}, []);
 
   return (
     <div

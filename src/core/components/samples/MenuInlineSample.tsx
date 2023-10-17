@@ -1,11 +1,26 @@
 import { useView } from "../../hooks/useView";
+import store, { Chat } from "../../stores/chat";
+import ChatItem from "./ChatItem";
 import MenuInlineSample2 from "./MenuInlineSample2";
+import { useEffect, useState } from "react";
 
 function MenuInlineSample() {
   const { close, openView } = useView();
+  const [chats, setChats] = useState<Chat[]>([]);
+
+  useEffect(() => {
+    const chats = store.getChats();
+    setChats(chats);
+    setTimeout(() => {
+      store.updateTest();
+    }, 3000);
+  }, []);
 
   return (
     <div>
+      {chats?.map((chat, index) => (
+        <ChatItem key={index} chat={chat} />
+      ))}
       <ul>
         <li
           onClick={() => {

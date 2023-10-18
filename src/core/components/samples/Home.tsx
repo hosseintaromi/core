@@ -2,6 +2,8 @@ import { useRef } from "react";
 import MenuInlineSample from "./MenuInlineSample";
 import { EventType } from "../../hooks/useEvent";
 import OverlaySlideContainer from "../containers/OverlaySlideContainer";
+import SlideContainer from "../containers/SlideContainer";
+import MenuInlineSample2 from "./MenuInlineSample2";
 
 function Home() {
   const elRef = useRef<HTMLElement | undefined>();
@@ -16,7 +18,15 @@ function Home() {
         >
           add menu
         </button>
-        <OverlaySlideContainer
+        <SlideContainer
+          config={{
+            event: EventType.Tap,
+            components: [MenuInlineSample, MenuInlineSample2],
+            elRef: elRef as any,
+            className: "slide-menu",
+          }}
+        />
+        {/* <OverlaySlideContainer
           config={{
             id: "setting1",
             event: EventType.Tap,
@@ -24,7 +34,7 @@ function Home() {
             elRef: elRef as any,
             className: "slide-menu",
           }}
-        />
+        /> */}
       </div>
     </div>
   );

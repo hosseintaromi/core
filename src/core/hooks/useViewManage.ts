@@ -78,10 +78,14 @@ export const useViewManage = (
               (x) => x.id === activeViewIdRef.current,
             );
             activeViewIdRef.current = newView.id;
-            let disableAnimate = false;
-            if (!initRef.current) {
+            const options = newView.options;
+            let disableAnimate = options?.disableAnimate;
+            if (!disableAnimate && !initRef.current) {
               initRef.current = true;
               disableAnimate = config?.disableFirstTimeAnimate || false;
+            }
+            if (options?.inBackground) {
+              return;
             }
             await handleViewEvent(
               {

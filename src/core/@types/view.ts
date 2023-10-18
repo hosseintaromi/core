@@ -57,6 +57,8 @@ export interface ViewContextType {
 
 export interface ViewConfig {
   disableBackdrop?: boolean;
+  disableAnimate?: boolean;
+  inBackground?: boolean;
   params?: any;
   onClickedBackdrop?: () => void;
 }

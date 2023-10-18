@@ -1,29 +1,16 @@
-import { Observable } from "./observable";
+import observables, { Chat } from "./observable-objects";
 
-export interface Chat {
-  id: string;
-  name: string;
+const chats: Chat[] = [
+  { id: "1", name: "ali" },
+  { id: "2", name: "reza" },
+];
+
+export function getChats() {
+  return chats;
 }
 
-class ChatStore extends Observable<Chat> {
-  private chats: Chat[] = [
-    { id: "1", name: "ali" },
-    { id: "2", name: "reza" },
-  ];
-
-  getId(subject: Chat): string {
-    return subject.id;
-  }
-
-  getChats() {
-    return this.chats;
-  }
-
-  updateTest() {
-    const chat = this.chats[1];
-    chat.name = "Hasan";
-    this.emit("Update", chat);
-  }
+export function updateTest() {
+  const chat = chats[1];
+  chat.name = "Hasan";
+  observables.chat.emit("Update", chat);
 }
-const store = new ChatStore();
-export default store;

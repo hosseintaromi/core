@@ -34,7 +34,7 @@ export abstract class Observable<T> implements IObservable<T> {
     }
   }
 
-  protected emit(action: ObservableActionType, subject: T) {
+  public emit(action: ObservableActionType, subject: T) {
     switch (action) {
       case "Update":
         this.update(subject);

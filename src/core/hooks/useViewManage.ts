@@ -7,7 +7,8 @@ import {
   ViewInfo,
   ViewRef,
   ViewType,
-  ViewEventConfigArg,
+  ViewEventConfigBase,
+  ViewEventConfigClose,
 } from "../@types/view";
 import {
   registerContainer,
@@ -32,20 +33,20 @@ export const useViewManage = (
   const { requestAnimate } = useAnimate();
 
   const handleViewEvent = useCallback(
-    (
+    <T extends ViewEventConfigBase>(
       newView: ViewRef,
       prevView?: ViewRef,
       event?: ViewEvent,
-      args?: ViewEventConfigArg,
+      config?: T,
     ) =>
       new Promise<any>((resolve, reject) => {
         if (!event) {
           resolve(true);
         }
-        event?.start?.(newView, prevView, args);
-        if (args?.disableAnimate || !event?.duration) {
-          event?.animate?.(1, newView, prevView, args);
-          event?.end?.(newView, prevView, args);
+        event?.start?.(newView, prevView, config);
+        if (config?.disableAnimate || !event?.duration) {
+          event?.animate?.(1, newView, prevView, config);
+          event?.end?.(newView, prevView, config);
           resolve(true);
           return;
         }
@@ -53,10 +54,10 @@ export const useViewManage = (
         requestAnimate(
           event.duration,
           (t: number) => {
-            event?.animate?.(t, newView, prevView, args);
+            event?.animate?.(t, newView, prevView, config);
           },
           () => {
-            event?.end?.(newView, prevView, args);
+            event?.end?.(newView, prevView, config);
             document.body.classList.remove("animating");
             resolve(true);
           },
@@ -115,6 +116,61 @@ export const useViewManage = (
     [],
   );
 
+  const closeView = useCallback(
+    async (
+      view: ViewType<any>,
+      newActiveView: ViewType<any> | undefined,
+      closeType: CloseType,
+    ) => {
+      let activeViewInfo: ViewInfo | undefined;
+      activeViewIdRef.current = "";
+      if (newActiveView) {
+        activeViewIdRef.current = newActiveView.id;
+        activeViewInfo = viewsInfo.find((x) => x.id === newActiveView.id);
+      }
+
+      const index = viewsInfo.findIndex((x) => x.id === view.id);
+      if (index < 0) {
+        return;
+      }
+
+      const closeViewInfo = viewsInfo[index];
+      const disableAnimate =
+        !config?.moveBetweenViews && index < viewsInfo.length - 1;
+      closeViewInfo.events?.onClosing?.({
+        toView: newActiveView,
+      });
+
+      await handleViewEvent<ViewEventConfigClose>(
+        {
+          view: viewsInfo[index].view,
+          ref: viewsInfo[index].elRef as any,
+        },
+        activeViewInfo
+          ? {
+              view: activeViewInfo.view,
+              ref: activeViewInfo.elRef as any,
+            }
+          : undefined,
+        closeConfig,
+        { disableAnimate: disableAnimate, closeType },
+      );
+
+      if (activeViewInfo) {
+        activeViewInfo.events?.onEnter?.({
+          fromView: closeViewInfo.view,
+        });
+      }
+
+      if (index > -1) {
+        updateViewsByCloseType(viewsInfo, closeType, index);
+        setViewsInfo([...viewsInfo]);
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [],
+  );
+
   const activateView = useCallback(async (view: ViewType<any>) => {
     const viewInfo = viewsInfo.find((x) => x.id === view.id);
     if (!viewInfo) {
@@ -150,61 +206,6 @@ export const useViewManage = (
     });
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  const closeView = useCallback(
-    async (
-      view: ViewType<any>,
-      newActiveView: ViewType<any> | undefined,
-      closeType: CloseType,
-    ) => {
-      let activeViewInfo: ViewInfo | undefined;
-      activeViewIdRef.current = "";
-      if (newActiveView) {
-        activeViewIdRef.current = newActiveView.id;
-        activeViewInfo = viewsInfo.find((x) => x.id === newActiveView.id);
-      }
-
-      const index = viewsInfo.findIndex((x) => x.id === view.id);
-      if (index < 0) {
-        return;
-      }
-
-      const closeViewInfo = viewsInfo[index];
-      const disableAnimate =
-        !config?.moveBetweenViews && index < viewsInfo.length - 1;
-      closeViewInfo.events?.onClosing?.({
-        toView: newActiveView,
-      });
-
-      await handleViewEvent(
-        {
-          view: viewsInfo[index].view,
-          ref: viewsInfo[index].elRef as any,
-        },
-        activeViewInfo
-          ? {
-              view: activeViewInfo.view,
-              ref: activeViewInfo.elRef as any,
-            }
-          : undefined,
-        closeConfig,
-        { disableAnimate: disableAnimate, closeType },
-      );
-
-      if (activeViewInfo) {
-        activeViewInfo.events?.onEnter?.({
-          fromView: closeViewInfo.view,
-        });
-      }
-
-      if (index > -1) {
-        updateViewsByCloseType(viewsInfo, closeType, index);
-        setViewsInfo([...viewsInfo]);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
 
   const changeContainer = useCallback(
     async (fromView: ViewType<any>, eventType: ChangeContainerEventType) => {

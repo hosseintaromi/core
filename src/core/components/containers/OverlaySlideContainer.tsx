@@ -1,5 +1,5 @@
 import React, { MutableRefObject, useCallback, useRef } from "react";
-import { ViewEvent } from "../../@types/view";
+import { ViewEvent, ViewEventConfigClose } from "../../@types/view";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
@@ -26,6 +26,7 @@ const OverlaySlideContainer = <T, U>({
 }) => {
   const slideIn = bezier(0.25, 1, 0.5, 1);
   const containerRef = useRef<any>(null);
+  const doingRef = useRef<boolean>(false);
   const hoverTimerRef = useRef<NodeJS.Timeout>();
   const isHoverRef = useRef<boolean>();
   const containerType = "overlay-inline-" + Date.now();
@@ -99,18 +100,27 @@ const OverlaySlideContainer = <T, U>({
         }
       },
       end(closeViewEl, activeViewEl) {},
-    } as ViewEvent,
+    } as ViewEvent<ViewEventConfigClose>,
   );
 
   const openConfigView = useCallback(
-    () => {
-      openView({
-        id: config.id,
-        type: containerType,
-        component: config.component,
-        data: config.data,
-        className: config.className,
-      });
+    async () => {
+      try {
+        if (doingRef.current) {
+          return;
+        }
+        doingRef.current = true;
+        await openView({
+          id: config.id,
+          type: containerType,
+          component: config.component,
+          data: config.data,
+          className: config.className,
+        });
+        doingRef.current = false;
+      } catch {
+        doingRef.current = false;
+      }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
     [],
@@ -152,10 +162,19 @@ const OverlaySlideContainer = <T, U>({
   });
 
   useEvent({ current: window as any }, EventType.Tap, {
-    onTap: (e: Event) => {
+    onTap: async (e: Event) => {
+      if (doingRef.current) {
+        return;
+      }
       if (viewsInfo.length > 0 && !e.contains(containerRef.current)) {
         const view = viewsInfo[0].view;
-        closeView(view.id, view.type, "All");
+        try {
+          doingRef.current = true;
+          await closeView(view.id, view.type, "All");
+          doingRef.current = false;
+        } catch {
+          doingRef.current = false;
+        }
       }
     },
   });

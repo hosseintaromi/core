@@ -81,29 +81,24 @@ export interface ViewInfo {
   onInit?: (el: HTMLElement) => void;
 }
 
-export interface ViewEvent {
+export interface ViewEventConfigBase {
+  disableAnimate?: boolean;
+}
+
+export interface ViewEventConfigClose extends ViewEventConfigBase {
+  closeType?: CloseType;
+}
+
+export interface ViewEvent<T = ViewEventConfigBase> {
   duration?: number;
-  start?: (
-    newView: ViewRef,
-    prevView?: ViewRef,
-    config?: ViewEventConfigArg,
-  ) => void;
-  end?: (
-    newView: ViewRef,
-    prevView?: ViewRef,
-    config?: ViewEventConfigArg,
-  ) => void;
+  start?: (newView: ViewRef, prevView?: ViewRef, config?: T) => void;
+  end?: (newView: ViewRef, prevView?: ViewRef, config?: T) => void;
   animate?: (
     t: number,
     newView: ViewRef,
     prevView?: ViewRef,
-    config?: ViewEventConfigArg,
+    config?: T,
   ) => void;
-}
-
-export interface ViewEventConfigArg {
-  disableAnimate?: boolean;
-  closeType?: CloseType;
 }
 
 export interface HistoryItem {

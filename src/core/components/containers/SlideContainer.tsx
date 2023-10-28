@@ -24,21 +24,24 @@ const SlideContainer = <T, U>({
 }: {
   config: SlideInlineData<T, U>;
 }) => {
-  const containerType = "slide-inline-" + Date.now();
+  const containerType = "slide-" + Date.now();
   const lastViewIndex = config.components.length - 1;
   const effectivePercent = 50;
-  const defaultSpeed = 500;
+  const maxDuration = 600;
+  const minDuration = 300;
   const slideIn = bezier(0.25, 1, 0.5, 1);
 
   const containerRef = useRef<any>(null);
   const viewIndexRef = useRef<number>(0);
   const startMoveXRef = useRef<number>(0);
+  const touchTimeRef = useRef<number>(0);
   const animateRequestRef = useRef<() => void>();
 
   const { requestAnimate, cancelAnimate } = useAnimate();
 
   useEvent(containerRef, EventType.HorizontalSwipe, {
     onTouchStart: (e: TouchEvent) => {
+      touchTimeRef.current = Date.now();
       const animateRequest = animateRequestRef.current;
       if (animateRequest) {
         cancelAnimate(animateRequest);
@@ -139,42 +142,45 @@ const SlideContainer = <T, U>({
 
   const animate = (moveX: number) => {
     const moveInfo = getNewXMove(viewIndexRef.current, moveX);
-    const percent = moveInfo.percent;
-    if (percent === 0) {
+    const basePercent = moveInfo.percent;
+    if (basePercent === 0) {
       startMoveXRef.current = 0;
       viewIndexRef.current = moveInfo.to;
       return;
     }
-    const durationSpeed =
-      (percent < effectivePercent ? percent : 100 - percent) / 100;
+    const backward = basePercent < effectivePercent;
+    const remainPercent = (backward ? basePercent : 100 - basePercent) / 100;
 
     const containerWidth = getContainerWidth();
+    const touchTime = Date.now() - touchTimeRef.current;
+    const touchDuration =
+      ((backward ? containerWidth - moveX : moveX) * touchTime) / moveX;
     startMoveXRef.current = moveInfo.totalXMove;
     animateRequestRef.current = requestAnimate(
-      durationSpeed * defaultSpeed,
+      Math.max(
+        remainPercent * minDuration,
+        Math.min(touchDuration, remainPercent * maxDuration),
+      ),
       (t) => {
-        const basePercent = moveInfo.percent;
-        const percent =
-          basePercent < effectivePercent
-            ? basePercent * (1 - t)
-            : basePercent + (100 - basePercent) * t;
+        const percent = backward
+          ? basePercent * (1 - t)
+          : basePercent + (100 - basePercent) * t;
         startMoveXRef.current = moveInfo.totalXMove;
         transform(percent, moveInfo.from, moveInfo.to, true);
       },
       () => {
         startMoveXRef.current = 0;
-        viewIndexRef.current =
-          moveInfo.percent >= effectivePercent ? moveInfo.to : moveInfo.from;
+        viewIndexRef.current = !backward ? moveInfo.to : moveInfo.from;
       },
     );
   };
 
-  const getNewXMove = (index: number, xMove: number) => {
+  const getNewXMove = (index: number, moveX: number) => {
     const containerWidth = getContainerWidth();
-    let totalXMove = startMoveXRef.current + xMove;
+    let totalXMove = startMoveXRef.current + moveX;
     if (totalXMove >= 0) {
-      const maxMove = index * containerWidth;
-      totalXMove = Math.min(maxMove, totalXMove);
+      const mamoveX = index * containerWidth;
+      totalXMove = Math.min(mamoveX, totalXMove);
     } else {
       const minMove = (index - lastViewIndex) * containerWidth;
       totalXMove = Math.max(minMove, totalXMove);
@@ -189,7 +195,7 @@ const SlideContainer = <T, U>({
       from: totalXMove < 0 ? to - 1 : to + 1,
       to,
       percent,
-      xMove: newXMove,
+      moveX: newXMove,
       totalXMove: totalXMove,
     };
   };

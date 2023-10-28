@@ -27,7 +27,6 @@ const DesktopRightContainer = () => {
       const newStyle = newView.ref.style;
       const prevStyle = prevView?.ref.style;
       newStyle.transform = `translateX(${(1 - p) * 100}%)`;
-      console.log((1 - p) * 100);
       if (prevStyle) {
         prevStyle.transform = `translateX(${-p * 100 * 0.2}%)`;
       }

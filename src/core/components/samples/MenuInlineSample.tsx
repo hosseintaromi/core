@@ -13,9 +13,9 @@ function MenuInlineSample() {
   useEffect(() => {
     const chats = getChats();
     setChats(chats);
-    setTimeout(() => {
-      updateTest();
-    }, 3000);
+    // setTimeout(() => {
+    //   updateTest();
+    // }, 3000);
   }, []);
 
   return (

@@ -49,6 +49,7 @@ export const useEvent = (
   const touchRef = useRef<number[]>([]);
   const isTouchMoveRef = useRef(false);
   const startSwipeRef = useRef<boolean>();
+  const touchEventRef = useRef<TouchEvent>();
   useDisableSelection();
 
   const getCurrentTime = () => Date.now();
@@ -121,6 +122,7 @@ export const useEvent = (
 
   const handleSwipe = (e: Event) => {
     const touchEvent = getTouchEvent(e);
+    touchEventRef.current = touchEvent;
     if (timeoutRef.current) {
       if (startSwipeRef.current) {
         events.onTouchMove?.(touchEvent as any);
@@ -169,7 +171,8 @@ export const useEvent = (
       touchRef.current.length = 0;
     }
     touches.push(getCurrentTime());
-    startPositionRef.current = getTouchEvent(e);
+    startPositionRef.current = touchEventRef.current = getTouchEvent(e);
+
     listenMove(true);
     handleStartEvents(e);
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -180,7 +183,7 @@ export const useEvent = (
     listenMove(false);
     clearTimer();
     if (startSwipeRef.current) {
-      events.onTouchEnd?.(getTouchEvent(e) as any);
+      events.onTouchEnd?.(touchEventRef.current!);
       startSwipeRef.current = undefined;
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

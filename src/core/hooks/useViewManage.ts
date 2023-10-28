@@ -85,6 +85,8 @@ export const useViewManage = (
               disableAnimate = config?.disableFirstTimeAnimate || false;
             }
             if (options?.inBackground) {
+              el.style.display = "none";
+              resolve(true);
               return;
             }
             await handleViewEvent(

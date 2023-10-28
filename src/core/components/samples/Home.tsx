@@ -4,6 +4,7 @@ import { EventType } from "../../hooks/useEvent";
 import OverlaySlideContainer from "../containers/OverlaySlideContainer";
 import SlideContainer from "../containers/SlideContainer";
 import MenuInlineSample2 from "./MenuInlineSample2";
+import MenuInlineSample3 from "./MenuInlineSample3";
 
 function Home() {
   const elRef = useRef<HTMLElement | undefined>();
@@ -21,7 +22,11 @@ function Home() {
         <SlideContainer
           config={{
             event: EventType.Tap,
-            components: [MenuInlineSample, MenuInlineSample2],
+            components: [
+              MenuInlineSample,
+              MenuInlineSample2,
+              MenuInlineSample3,
+            ],
             elRef: elRef as any,
             className: "slide-menu",
           }}

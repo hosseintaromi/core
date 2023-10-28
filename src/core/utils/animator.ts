@@ -14,6 +14,9 @@ export function requestAnimation(
   canceled?: () => void,
 ) {
   const currentTime = Date.now();
+  if (speed < 0) {
+    throw new Error("ANIMATION_SPEED_INVALID");
+  }
   speed = speed || 300;
   let isCanceled = false;
 

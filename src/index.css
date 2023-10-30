@@ -120,9 +120,10 @@ body {
 .slide-inline-container {
   background-color: #61226f;
   width: 100%;
-  height: 200px;
+  height: 300px;
   overflow: hidden;
   position: relative;
+
   .view-wrapper {
     display: none;
   }
@@ -135,17 +136,20 @@ body {
 
 
 
-.slide-menu ul, .slide-menu ul li {
+.slide-menu ul,
+.slide-menu ul li {
   padding: 0;
   margin: 0;
 
 }
+
 .slide-menu ul li {
   display: block;
   list-style: none;
   padding: 15px 10px;
   border-bottom: 1px solid #eee;
 }
+
 .bottom-sheet-container {
   position: absolute;
   inset: 0;
@@ -300,4 +304,29 @@ body {
 
 .hidden {
   display: none;
+}
+
+.slider-container {
+  position: relative;
+  height: 300px;
+}
+
+.slide-tabs {}
+
+.slide-tabs li {
+  display: inline-block;
+  list-style-type: none;
+  padding: 5px 10px 11px 10px;
+  position: relative;
+  overflow: hidden;
+}
+
+.slide-tabs .pointer {
+  position: absolute;
+  height: 4px;
+  bottom: 0;
+  background: #c59ece;
+  width: 100%;
+  border-radius: 3px 3px 0 0;
+  left: 0;
 }

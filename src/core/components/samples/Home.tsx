@@ -23,9 +23,9 @@ function Home() {
           config={{
             event: EventType.Tap,
             components: [
-              MenuInlineSample,
-              MenuInlineSample2,
-              MenuInlineSample3,
+              { title: "All", component: MenuInlineSample },
+              { title: "Groups", component: MenuInlineSample2 },
+              { title: "Private Chats", component: MenuInlineSample3 },
             ],
             elRef: elRef as any,
             className: "slide-menu",

@@ -2,18 +2,25 @@ import React, { MutableRefObject, useCallback, useEffect, useRef } from "react";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
-import { bezier } from "../../utils/bezier";
 import { openView } from "../../utils/viewManager";
 import { EventType, TouchEvent, useEvent } from "../../hooks/useEvent";
 import { useAnimate } from "../../hooks/useAnimate";
+import ElementRef from "./ElementRef";
+
+export interface SlideComponent {
+  title: string;
+  component: (props?: any) => JSX.Element;
+  ref?: HTMLElement;
+}
 
 export interface SlideInlineData<T, U> {
   id?: string;
   event: EventType;
   elRef?: MutableRefObject<HTMLElement>;
   data?: T;
+  title?: string;
   className?: string;
-  components: ((props?: any) => JSX.Element)[];
+  components: SlideComponent[];
   onClose?: (res?: U) => void;
   mapDataTo?: (data?: T) => any;
   show?: (show: boolean) => void;
@@ -29,12 +36,14 @@ const SlideContainer = <T, U>({
   const effectivePercent = 50;
   const maxDuration = 600;
   const minDuration = 300;
-  const slideIn = bezier(0.25, 1, 0.5, 1);
+  const components = config.components;
+  // const slideIn = bezier(0.25, 1, 0.5, 1);
 
   const containerRef = useRef<any>(null);
   const viewIndexRef = useRef<number>(0);
   const startMoveXRef = useRef<number>(0);
   const touchTimeRef = useRef<number>(0);
+  const transformPercentRef = useRef<number>(0);
   const animateRequestRef = useRef<() => void>();
 
   const { requestAnimate, cancelAnimate } = useAnimate();
@@ -72,7 +81,7 @@ const SlideContainer = <T, U>({
       await openView({
         id: index + "",
         type: containerType,
-        component: config.components[index],
+        component: config.components[index].component,
         data: config.data,
         className: config.className,
         options: { disableAnimate: true, inBackground: index > 0 },
@@ -99,15 +108,28 @@ const SlideContainer = <T, U>({
     return view?.elRef;
   };
 
-  const hideViews = () => {
-    viewsInfo.forEach((x) => {
-      if (x.elRef) {
-        x.elRef.style.display = "none";
+  const hideViews = (elements: (HTMLElement | any)[]) => {
+    elements.forEach((el) => {
+      if (el) {
+        el.style.display = "none";
       }
     });
   };
 
   const getContainerWidth = () => containerRef.current.clientWidth;
+
+  const setPointer = (index: number, percent: number, left: boolean) => {
+    const el = components[index].ref!;
+    el.style.display = "block";
+    const width = el.clientWidth;
+    el.style.left = "auto";
+    el.style.right = "auto";
+    const transforming = percent % 100 !== 0;
+    el.style.borderRadius = `${transforming && left ? 0 : 3}px ${
+      transforming && !left ? 0 : 3
+    }px 0 0`;
+    el.style[left ? "left" : "right"] = (percent * width) / 100 + "px";
+  };
 
   const transform = (
     percent: number,
@@ -115,10 +137,17 @@ const SlideContainer = <T, U>({
     toIndex: number,
     animate?: boolean,
   ) => {
+    console.log(transformPercentRef.current, percent);
+
+    if ((transformPercentRef.current || 0) === percent) {
+      return;
+    }
+    transformPercentRef.current = percent % 100;
     const from = getView(fromIndex);
     const to = getView(toIndex);
     let direction = fromIndex > toIndex ? 1 : -1;
-    hideViews();
+    hideViews(viewsInfo.map((x) => x.elRef));
+    hideViews(components.map((x) => x.ref));
     if (percent % 100 === 0) {
       direction = 0;
     }
@@ -127,16 +156,26 @@ const SlideContainer = <T, U>({
       const style = from.style;
       style.transform = `translateX(${direction * percent}%)`;
       style.display = "block";
+      setPointer(fromIndex, -percent, fromIndex > toIndex);
     }
     if (to && ((animate && percent !== 0) || (!animate && percent !== 100))) {
       const style = to.style;
       style.transform = `translateX(${direction * (percent - 100)}%)`;
       style.display = "block";
+      setPointer(toIndex, percent - 100, fromIndex < toIndex);
     }
   };
 
   const sweep = (e: TouchEvent) => {
     const moveInfo = getNewXMove(viewIndexRef.current, e.moveX);
+    if (
+      viewIndexRef.current === moveInfo.to &&
+      transformPercentRef.current === 0 &&
+      e.moveX === 0
+    ) {
+      return;
+    }
+
     transform(moveInfo.percent, moveInfo.from, moveInfo.to);
   };
 
@@ -179,8 +218,8 @@ const SlideContainer = <T, U>({
     const containerWidth = getContainerWidth();
     let totalXMove = startMoveXRef.current + moveX;
     if (totalXMove >= 0) {
-      const mamoveX = index * containerWidth;
-      totalXMove = Math.min(mamoveX, totalXMove);
+      const maxMoveX = index * containerWidth;
+      totalXMove = Math.min(maxMoveX, totalXMove);
     } else {
       const minMove = (index - lastViewIndex) * containerWidth;
       totalXMove = Math.max(minMove, totalXMove);
@@ -201,19 +240,36 @@ const SlideContainer = <T, U>({
   };
 
   useEffect(() => {
+    hideViews(components.map((x) => x.ref));
+    setPointer(0, 0, true);
     openConfigView(0);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   return (
     <div ref={containerRef} className="slide-inline-container">
-      {viewsInfo?.map((viewInfo) => (
-        <React.Fragment key={viewInfo.id}>
-          <ViewContextProvider viewInfo={viewInfo}>
-            <ViewComponent viewInfo={viewInfo} />
-          </ViewContextProvider>
-        </React.Fragment>
-      ))}
+      <ul className="slide-tabs">
+        {config.components?.map((component, index) => (
+          <li key={index}>
+            {component.title}
+            <ElementRef
+              className="pointer"
+              onLoad={(ref) => {
+                component.ref = ref;
+              }}
+            />
+          </li>
+        ))}
+      </ul>
+      <div className="slider-container">
+        {viewsInfo?.map((viewInfo) => (
+          <React.Fragment key={viewInfo.id}>
+            <ViewContextProvider viewInfo={viewInfo}>
+              <ViewComponent viewInfo={viewInfo} />
+            </ViewContextProvider>
+          </React.Fragment>
+        ))}
+      </div>
     </div>
   );
 };

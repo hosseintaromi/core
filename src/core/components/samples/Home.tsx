@@ -12,13 +12,6 @@ function Home() {
   return (
     <div style={{ overflowY: "scroll", height: "93vh" }}>
       <div style={{ display: "flex" }}>
-        <button
-          ref={elRef as any}
-          style={{ width: "80px", height: "40px" }}
-          id="openMenu"
-        >
-          add menu
-        </button>
         <SlideContainer
           config={{
             event: EventType.Tap,

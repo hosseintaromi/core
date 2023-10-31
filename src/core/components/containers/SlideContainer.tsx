@@ -7,6 +7,14 @@ import { EventType, TouchEvent, useEvent } from "../../hooks/useEvent";
 import { useAnimate } from "../../hooks/useAnimate";
 import ElementRef from "./ElementRef";
 
+interface MoveInfo {
+  from: number;
+  to: number;
+  percent: number;
+  moveX: number;
+  totalXMove: number;
+}
+
 export interface SlideComponent {
   title: string;
   component: (props?: any) => JSX.Element;
@@ -33,9 +41,9 @@ const SlideContainer = <T, U>({
 }) => {
   const containerType = "slide-" + Date.now();
   const lastViewIndex = config.components.length - 1;
-  const effectivePercent = 50;
-  const maxDuration = 600;
-  const minDuration = 300;
+  const effectivePercent = 35;
+  const maxDuration = 500;
+  const minDuration = 150;
   const components = config.components;
   // const slideIn = bezier(0.25, 1, 0.5, 1);
 
@@ -120,15 +128,16 @@ const SlideContainer = <T, U>({
 
   const setPointer = (index: number, percent: number, left: boolean) => {
     const el = components[index].ref!;
-    el.style.display = "block";
+    const elStyle = el.style;
+    elStyle.display = "block";
     const width = el.clientWidth;
-    el.style.left = "auto";
-    el.style.right = "auto";
+    elStyle.left = "auto";
+    elStyle.right = "auto";
     const transforming = percent % 100 !== 0;
-    el.style.borderRadius = `${transforming && left ? 0 : 3}px ${
+    elStyle.borderRadius = `${transforming && left ? 0 : 3}px ${
       transforming && !left ? 0 : 3
     }px 0 0`;
-    el.style[left ? "left" : "right"] = (percent * width) / 100 + "px";
+    elStyle[left ? "left" : "right"] = ((percent % 100) * width) / 100 + "px";
   };
 
   const transform = (
@@ -137,8 +146,6 @@ const SlideContainer = <T, U>({
     toIndex: number,
     animate?: boolean,
   ) => {
-    console.log(transformPercentRef.current, percent);
-
     if ((transformPercentRef.current || 0) === percent) {
       return;
     }
@@ -181,35 +188,39 @@ const SlideContainer = <T, U>({
 
   const animate = (moveX: number) => {
     const moveInfo = getNewXMove(viewIndexRef.current, moveX);
-    const basePercent = moveInfo.percent;
-    if (basePercent === 0) {
+    const currentPercent = moveInfo.percent;
+    if (currentPercent === 0) {
       startMoveXRef.current = 0;
       viewIndexRef.current = moveInfo.to;
       return;
     }
-    const backward = basePercent < effectivePercent;
-    const remainPercent = (backward ? basePercent : 100 - basePercent) / 100;
-
-    const containerWidth = getContainerWidth();
+    const effectiveMovement = currentPercent >= effectivePercent;
     const touchTime = Date.now() - touchTimeRef.current;
+    const sweeping = Math.abs(moveX) > 50 && touchTime < 100;
+    const backward = !sweeping && !effectiveMovement;
+    const remainPercent =
+      (backward ? currentPercent : 100 - currentPercent) / 100;
+    const containerWidth = getContainerWidth();
     const touchDuration =
       ((backward ? containerWidth - moveX : moveX) * touchTime) / moveX;
     startMoveXRef.current = moveInfo.totalXMove;
+    const duration = Math.max(
+      remainPercent * minDuration,
+      Math.min(touchDuration, remainPercent * maxDuration),
+    );
+
     animateRequestRef.current = requestAnimate(
-      Math.max(
-        remainPercent * minDuration,
-        Math.min(touchDuration, remainPercent * maxDuration),
-      ),
+      duration,
       (t) => {
         const percent = backward
-          ? basePercent * (1 - t)
-          : basePercent + (100 - basePercent) * t;
+          ? currentPercent * (1 - t)
+          : currentPercent + (100 - currentPercent) * t;
         startMoveXRef.current = moveInfo.totalXMove;
         transform(percent, moveInfo.from, moveInfo.to, true);
       },
       () => {
         startMoveXRef.current = 0;
-        viewIndexRef.current = !backward ? moveInfo.to : moveInfo.from;
+        viewIndexRef.current = backward ? moveInfo.from : moveInfo.to;
       },
     );
   };
@@ -235,8 +246,8 @@ const SlideContainer = <T, U>({
       to,
       percent,
       moveX: newXMove,
-      totalXMove: totalXMove,
-    };
+      totalXMove,
+    } as MoveInfo;
   };
 
   useEffect(() => {

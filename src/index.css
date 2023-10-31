@@ -310,6 +310,9 @@ body {
   position: relative;
   height: 300px;
 }
+.slider-container .view-wrapper{
+  display: none;
+}
 
 .slide-tabs {}
 

@@ -2,7 +2,7 @@ import { MutableRefObject, useEffect, useRef, useCallback } from "react";
 import { useDisableSelection } from "./useDisableSelection";
 const MIN_PRESS_TIME = 500;
 const MAX_TAP_TIME = 300;
-const MIN_MOVE_TIME = 50;
+const MIN_MOVE_TIME = 10;
 export enum EventType {
   None = "None",
   Tap = "Tap",

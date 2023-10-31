@@ -26,30 +26,6 @@ function MenuInlineSample() {
       {chats?.map((chat, index) => (
         <ChatItem2 key={index} chat={chat} />
       ))}
-      <ul>
-        <li
-          onClick={() => {
-            openView({
-              id: "idSample2",
-              component: MenuInlineSample2,
-              className: "slide-menu",
-            });
-          }}
-        >
-          Ambient mode
-        </li>
-        <li>Subtitles</li>
-        <li>closed</li>
-        <li>Subtitles/closed</li>
-        <li>Subtitles/closed</li>
-        <li>Subtitles/closed</li>
-        <li>Subtitles/closed</li>
-        <li>Subtitles/closed</li>
-        <li>Subtitles/closed</li>
-        <li onClick={() => close()} style={{ color: "red" }}>
-          Close
-        </li>
-      </ul>
     </div>
   );
 }

@@ -203,7 +203,7 @@ export function getViewsByCloseType(
     case "AllExceptLast":
       return views.slice(0, length - 1);
     case "Current":
-      return views[index];
+      return [views[index]];
   }
 }
 
@@ -244,7 +244,7 @@ function getTopViewFromStack(
   for (let i = loadedViewsStack.length - 1; i >= 0; i--) {
     const view = loadedViewsStack[i];
     if (
-      (ignoreViewsId || []).indexOf(view.id) < 0 &&
+      (ignoreViewsId || []).findIndex((id) => id == view.id) < 0 &&
       (type === undefined || view.type === type)
     ) {
       return view;

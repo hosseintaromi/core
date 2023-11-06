@@ -2,6 +2,7 @@ import { FC } from "react";
 import { ControlType } from "../@types/ControlTypes";
 import { shuffle } from "../utils/shuffle";
 import { MultipleOptionTypeEnum } from "../@types/MultipleOptionTypes";
+import ControlWrapper from "./ControlWrapper";
 
 type MultipleOptionPropsType = {
   item: ControlType;
@@ -15,8 +16,7 @@ const MultipleOption: FC<MultipleOptionPropsType> = ({ item }) => {
     : info?.options;
 
   return (
-    <div>
-      <label>{item.label_text}</label>
+    <ControlWrapper id={item.control_id} label={item.label_text}>
       {info?.multi_select ? (
         <>
           {options?.map((option) => (
@@ -42,7 +42,7 @@ const MultipleOption: FC<MultipleOptionPropsType> = ({ item }) => {
           ))}
         </>
       )}
-    </div>
+    </ControlWrapper>
   );
 };
 

@@ -1,15 +1,13 @@
 import { FC } from "react";
 import { ControlType } from "../@types/ControlTypes";
+import ControlWrapper from "./ControlWrapper";
 
 type DropDownPropsType = {
   item: ControlType;
 };
 
 const DropDown: FC<DropDownPropsType> = ({ item }) => (
-  <div>
-    {item.label_text && (
-      <label htmlFor={item.control_id}>{item.label_text}</label>
-    )}
+  <ControlWrapper id={item.control_id} label={item.label_text}>
     <select name="cars">
       {item.dropdown_info?.options?.map((option) => (
         <option key={option.value} value={option.value}>
@@ -17,7 +15,7 @@ const DropDown: FC<DropDownPropsType> = ({ item }) => (
         </option>
       ))}
     </select>
-  </div>
+  </ControlWrapper>
 );
 
 export default DropDown;

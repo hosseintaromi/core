@@ -2,6 +2,7 @@ import { FC, useEffect, useState } from "react";
 import { ControlType } from "../@types/ControlTypes";
 import { FieldValues, UseFormRegister } from "react-hook-form";
 import { TextBoxTypeEnum } from "../@types/TextBoxTypes";
+import ControlWrapper from "./ControlWrapper";
 
 type TextBoxPropsType = {
   item: ControlType;
@@ -38,12 +39,9 @@ const TextBox: FC<TextBoxPropsType> = ({ item, register }) => {
 
   if (item.control_id) {
     return (
-      <div>
-        {item.label_text && (
-          <label htmlFor={item.control_id}>{item.label_text}</label>
-        )}
+      <ControlWrapper label={item.label_text} id={item.control_id}>
         <input type={inputType} {...register(item.control_id)} />
-      </div>
+      </ControlWrapper>
     );
   }
   return <></>;

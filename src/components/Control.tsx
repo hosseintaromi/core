@@ -20,19 +20,19 @@ const Control: FC<ControlPropsType> = ({ item, register }) => {
     case ControlTypeEnum.TextBox:
       return TextBox({ item, register });
     case ControlTypeEnum.DatePicker:
-      return DatePicker({ item: item });
+      return DatePicker({ item });
     case ControlTypeEnum.DropDown:
-      return DropDown({ item: item });
+      return DropDown({ item });
     case ControlTypeEnum.FileUpload:
-      return FileUpload({ item: item });
+      return FileUpload({ item });
     case ControlTypeEnum.Group:
-      return Group({ item: item });
+      return Group({ item, register });
     case ControlTypeEnum.MultipleOption:
-      return MultipleOption({ item: item });
+      return MultipleOption({ item });
     case ControlTypeEnum.PlaceHolder:
-      return PlaceHolder({ item: item });
+      return PlaceHolder({ item });
     case ControlTypeEnum.TextArea:
-      return TextArea({ item: item });
+      return TextArea({ item });
     default:
       return null;
   }

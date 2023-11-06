@@ -1,4 +1,4 @@
-enum FileTypeEnum {
+export enum FileTypeEnum {
   Image = "Image",
   Video = "Video",
   Voice = "Voice",

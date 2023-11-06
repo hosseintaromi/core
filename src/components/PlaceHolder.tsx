@@ -5,7 +5,7 @@ import ControlWrapper from "./ControlWrapper";
 type PlaceHolderPropsType = {
   item: ControlType;
 };
-
+// TODO placeholder type
 const PlaceHolder: FC<PlaceHolderPropsType> = ({ item }) => (
   <ControlWrapper id={item.control_id} label={item.label_text}>
     <div>{item.placeholder_info?.description}</div>

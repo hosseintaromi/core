@@ -102,7 +102,7 @@
             "label_text": "کارت ملی",
             "file_upload_info": {
               "file_type": "Image",
-              "allowed_extensions": "jpg",
+              "allowed_extensions": ["jpg"],
               "max_size": 1000
             }
           }

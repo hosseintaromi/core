@@ -2,12 +2,12 @@ type ImageOptionType = { text?: string; value?: string; image_url?: string };
 
 export type TextOptionType = { text?: string; value?: string };
 
-enum MultipleOptionTypeEnum {
+export enum MultipleOptionTypeEnum {
   Text = "Text",
   Image = "Image",
 }
 
-enum ArrangeTypeEnum {
+export enum ArrangeTypeEnum {
   Horizontal = "Horizontal",
   Vertical = "Vertical",
 }

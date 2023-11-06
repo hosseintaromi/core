@@ -6,10 +6,16 @@ type TextAreaPropsType = {
 };
 
 const TextArea: FC<TextAreaPropsType> = ({ item }) => (
-  <textarea
-    rows={item.textarea_info?.line_count}
-    // maxLength={item.textarea_info?.max_line} // TODO
-  />
+  <div>
+    {item.label_text && (
+      <label htmlFor={item.control_id}>{item.label_text}</label>
+    )}
+    <textarea
+      name={item.control_id}
+      rows={item.textarea_info?.line_count}
+      // maxLength={item.textarea_info?.max_line} // TODO
+    />
+  </div>
 );
 
 export default TextArea;

@@ -21,7 +21,13 @@
       "control_id": "control_id_2",
       "type": "DropDown",
       "label_text": "جنسیت",
-      "dropdown_info": { "searchable": false, "options": ["زن", "مرد"] },
+      "dropdown_info": {
+        "searchable": false,
+        "options": [
+          { "value": 0, "text": "زن" },
+          { "value": 0, "text": "مرد" }
+        ]
+      },
       "conditions": [
         {
           "type": "ThenShow",

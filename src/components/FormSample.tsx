@@ -14,16 +14,16 @@ const FormSample = () => {
     formState: { errors },
   } = useForm();
 
-  useEffect(() => {
-    const yup = getYupObject(data as FormType);
-    yup
-      .validate({ control_id_1: "ddddd" })
-      .then((res) => console.log("ddddd", res));
-    yup
-      .validate({ control_id_1: "یمنلتیسلمتس" })
-      .then((res) => console.log("یمنلتیسلمتس", res));
-    yup.validate({ control_id_1: "" }).then((res) => console.log("", res));
-  }, []);
+  // useEffect(() => {
+  //   const yup = getYupObject(data as FormType);
+  //   yup
+  //     .validate({ control_id_1: "ddddd" })
+  //     .then((res) => console.log("ddddd", res));
+  //   yup
+  //     .validate({ control_id_1: "یمنلتیسلمتس" })
+  //     .then((res) => console.log("یمنلتیسلمتس", res));
+  //   yup.validate({ control_id_1: "" }).then((res) => console.log("", res));
+  // }, []);
 
   return (
     <>

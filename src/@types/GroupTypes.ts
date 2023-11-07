@@ -1,6 +1,6 @@
 import { ControlType } from "./ControlTypes";
 
-enum GroupTypesEnum {
+export enum GroupTypesEnum {
   FieldSet = "FieldSet",
   FormSet = "FormSet",
 }

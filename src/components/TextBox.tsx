@@ -1,19 +1,21 @@
 import { FC, useEffect, useState } from "react";
-import { ControlType } from "../@types/ControlTypes";
-import { FieldValues, UseFormRegister } from "react-hook-form";
+import { FieldValues, UseFormReturn } from "react-hook-form";
 import { TextBoxTypeEnum } from "../@types/TextBoxTypes";
 import ControlWrapper from "./ControlWrapper";
+import { FormType } from "../@types/FormTypes";
+import { getControl } from "../utils/getControl";
 
 type TextBoxPropsType = {
-  item: ControlType;
-  register: UseFormRegister<FieldValues>;
+  form: FormType;
+  formState: UseFormReturn<FieldValues, any, undefined>;
+  index: number[];
 };
 
-const TextBox: FC<TextBoxPropsType> = ({ item, register }) => {
+const TextBox: FC<TextBoxPropsType> = ({ form, formState, index }) => {
   const [inputType, setInputType] = useState("text");
-
+  const control = getControl(form?.controls || [], index);
   useEffect(() => {
-    switch (item.textbox_info?.type) {
+    switch (control?.textbox_info?.type) {
       case TextBoxTypeEnum.Email:
         setInputType("email");
         break;
@@ -35,12 +37,14 @@ const TextBox: FC<TextBoxPropsType> = ({ item, register }) => {
       default:
         break;
     }
-  }, [item.textbox_info?.type]);
+  }, [control?.textbox_info?.type]);
 
-  if (item.control_id) {
+  if (control?.control_id && formState) {
+    const { register } = formState;
+
     return (
-      <ControlWrapper label={item.label_text} id={item.control_id}>
-        <input type={inputType} {...register(item.control_id)} />
+      <ControlWrapper form={form} formState={formState} index={index}>
+        <input type={inputType} {...register(control.control_id)} />
       </ControlWrapper>
     );
   }

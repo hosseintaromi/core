@@ -1,14 +1,23 @@
 import { ChangeEvent, FC } from "react";
-import { ControlType } from "../@types/ControlTypes";
 import ControlWrapper from "./ControlWrapper";
 import { FileTypeEnum } from "../@types/FileUploadTypes";
+import { FormType } from "../@types/FormTypes";
+import { FieldValues, UseFormReturn } from "react-hook-form";
+import { getControl } from "../utils/getControl";
 
 type FileUploadPropsType = {
-  item: ControlType;
+  form: FormType;
+  formState: UseFormReturn<FieldValues, any, undefined>;
+  index: number[];
 };
 
-const FileUpload: FC<FileUploadPropsType> = ({ item }) => {
-  const info = item.file_upload_info;
+const FileUpload: FC<FileUploadPropsType> = ({ form, formState, index }) => {
+  const control = getControl(form.controls || [], index);
+  if (!control) {
+    return <></>;
+  }
+
+  const info = control.file_upload_info;
   let acceptType: string = "";
 
   switch (info?.file_type) {
@@ -49,7 +58,7 @@ const FileUpload: FC<FileUploadPropsType> = ({ item }) => {
   };
 
   return (
-    <ControlWrapper id={item.control_id} label={item.label_text}>
+    <ControlWrapper form={form} formState={formState} index={index}>
       <input
         type="file"
         accept={acceptType}

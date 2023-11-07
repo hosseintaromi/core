@@ -1,19 +1,26 @@
 import { FC } from "react";
-import { ControlType } from "../@types/ControlTypes";
 import ControlWrapper from "./ControlWrapper";
+import { FormType } from "../@types/FormTypes";
+import { FieldValues, UseFormReturn } from "react-hook-form";
+import { TextOptionType } from "../@types/MultipleOptionTypes";
+import { getControl } from "../utils/getControl";
 
 type DropDownPropsType = {
-  item: ControlType;
+  form: FormType;
+  formState: UseFormReturn<FieldValues, any, undefined>;
+  index: number[];
 };
 
-const DropDown: FC<DropDownPropsType> = ({ item }) => (
-  <ControlWrapper id={item.control_id} label={item.label_text}>
+const DropDown: FC<DropDownPropsType> = ({ form, formState, index }) => (
+  <ControlWrapper form={form} formState={formState} index={index}>
     <select name="cars">
-      {item.dropdown_info?.options?.map((option) => (
-        <option key={option.value} value={option.value}>
-          {option.text}
-        </option>
-      ))}
+      {getControl(form.controls || [], index)?.dropdown_info?.options?.map(
+        (option: TextOptionType) => (
+          <option key={option.value} value={option.value}>
+            {option.text}
+          </option>
+        ),
+      )}
     </select>
   </ControlWrapper>
 );

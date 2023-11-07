@@ -25,7 +25,7 @@
         "searchable": false,
         "options": [
           { "value": 0, "text": "زن" },
-          { "value": 0, "text": "مرد" }
+          { "value": 1, "text": "مرد" }
         ]
       },
       "conditions": [
@@ -46,7 +46,7 @@
       "control_id": "control_id_3",
       "type": "Group",
       "group_info": {
-        "type": "FieldSet",
+        "type": "FormSet",
         "title": "اطلاعات حقوقی",
         "controls": [
           {

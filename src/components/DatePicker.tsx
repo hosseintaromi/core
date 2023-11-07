@@ -1,13 +1,16 @@
 import { FC } from "react";
-import { ControlType } from "../@types/ControlTypes";
 import ControlWrapper from "./ControlWrapper";
+import { FormType } from "../@types/FormTypes";
+import { FieldValues, UseFormReturn } from "react-hook-form";
 
 type DatePickerPropsType = {
-  item: ControlType;
+  form: FormType;
+  formState: UseFormReturn<FieldValues, any, undefined>;
+  index: number[];
 };
 
-const DatePicker: FC<DatePickerPropsType> = ({ item }) => (
-  <ControlWrapper label={item.label_text} id={item.control_id}>
+const DatePicker: FC<DatePickerPropsType> = ({ form, index, formState }) => (
+  <ControlWrapper form={form} formState={formState} index={index}>
     <input type="date" />
   </ControlWrapper>
 );

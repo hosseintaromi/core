@@ -1,49 +1,51 @@
 import { FC, ReactNode } from "react";
-import { closeView, openView } from "../core/utils/viewManager";
+import { openView } from "../core/utils/viewManager";
 import { ViewContainerType } from "../core/@types/commonView";
-import Control from "./Control";
 import { FormType } from "../@types/FormTypes";
-import { FieldValues, UseFormReturn } from "react-hook-form";
 import { getControl, getNextIndex } from "../utils/getControl";
+import { useFBControl } from "../hooks/useFBControl";
+import { ControlType } from "../@types/ControlTypes";
+import FormPage from "./form-builder/FormPage";
 
 type PageWrapperPropsType = {
   form: FormType;
-  formState: UseFormReturn<FieldValues, any, undefined>;
+  control: ControlType;
   index: number[];
   children: ReactNode | Element;
 };
 
 const PageWrapper: FC<PageWrapperPropsType> = ({
   form,
-  formState,
+  control,
   index: _index,
   children,
 }) => {
-  const control = getControl(form?.controls || [], _index);
-  if (!control) {
-    return <></>;
-  }
-  const handleNext = () => {
+  const { handleSubmit } = useFBControl(control);
+
+  const gotoNext = () => {
     if (!control.control_id) {
       return;
     }
-    closeView(control.control_id, ViewContainerType.MasterTab);
+    //closeView(control.control_id, ViewContainerType.MasterTab);
     const nextIndex = getNextIndex(form, _index);
+    if (!nextIndex || !nextIndex.length) {
+      return;
+    }
     openView({
       id: getControl(form.controls || [], nextIndex || [])?.control_id,
       type: ViewContainerType.MasterTab,
       data: {
         form: form,
-        formState: formState,
         index: nextIndex,
       },
-      component: Control,
+      component: FormPage,
     });
   };
+
   return (
     <div>
       <>{children}</>
-      <button onClick={handleNext}>next</button>
+      <button onClick={handleSubmit(gotoNext)}>next</button>
     </div>
   );
 };

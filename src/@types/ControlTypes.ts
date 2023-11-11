@@ -21,9 +21,9 @@ export enum ControlTypeEnum {
 }
 
 export type ControlType = {
-  control_id?: string;
-  type?: ControlTypeEnum;
-  label_text?: string;
+  control_id: string;
+  type: ControlTypeEnum;
+  label_text: string;
   description?: string;
   textbox_info?: TextBoxType;
   textarea_info?: TextAreaType;

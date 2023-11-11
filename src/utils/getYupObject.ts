@@ -1,6 +1,8 @@
 import { FormType } from "../@types/FormTypes";
 import * as Yup from "yup";
 import { ValidationTypeEnum } from "../@types/ValidationTypes";
+import { ControlType } from "../@types/ControlTypes";
+import { FieldValues, RegisterOptions } from "react-hook-form";
 
 export const getYupObject = (data: FormType) => {
   let yupValidation: { [key: string]: any } = {};
@@ -33,4 +35,23 @@ export const getYupObject = (data: FormType) => {
   });
   console.log(yupValidation);
   return Yup.object(yupValidation);
+};
+
+export const getValidationObject = (control: ControlType) => {
+  const validationObj: RegisterOptions<FieldValues, string> = {};
+  const validation = control.validations;
+  validation?.forEach((item) => {
+    if (item.type === ValidationTypeEnum.Regex && item.regex_pattern) {
+      const regexPattern = item.regex_pattern.slice(1, -1);
+      const regex = new RegExp(regexPattern);
+      validationObj.pattern = {
+        value: regex,
+        message: "لطفا به پترن توجه کنید.",
+      };
+    }
+    if (item.type === ValidationTypeEnum.Required) {
+      validationObj.required = "پر کردن این فیلد الزامی است.";
+    }
+  });
+  return validationObj;
 };

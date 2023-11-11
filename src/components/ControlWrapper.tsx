@@ -1,6 +1,6 @@
 import { FC, ReactNode } from "react";
-import { useFBControl } from "../../hooks/useFBControl";
-import { ControlType } from "../../@types/ControlTypes";
+import { useFBControl } from "../hooks/useFBControl";
+import { ControlType } from "../@types/ControlTypes";
 
 type ControlWrapperPropsType = {
   control: ControlType;

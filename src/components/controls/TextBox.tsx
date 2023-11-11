@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import { TextBoxTypeEnum } from "../../../@types/TextBoxTypes";
-import { useFBRegisterControl } from "../../../hooks/useFBRegisterControl";
-import { ControlType } from "../../../@types/ControlTypes";
+import { TextBoxTypeEnum } from "../../@types/TextBoxTypes";
+import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
+import { ControlType } from "../../@types/ControlTypes";
 
 const TextBox = ({ control }: { control: ControlType }) => {
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
@@ -36,9 +36,9 @@ const TextBox = ({ control }: { control: ControlType }) => {
   return (
     <input
       ref={ref}
-      onChange={onChange} // assign onChange event
-      onBlur={onBlur} // assign onBlur event
-      name={name} // assign name prop
+      onChange={onChange}
+      onBlur={onBlur}
+      name={name}
       type={inputType}
     />
   );

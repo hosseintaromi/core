@@ -1,5 +1,3 @@
-import { ControlType, ControlTypeEnum } from "../../@types/ControlTypes";
-import TextBox from "./controls/TextBox";
 // import DatePicker from "../form-builder/controls/DatePicker";
 // import DropDown from "../form-builder/controls/DropDown";
 // import FileUpload from "../form-builder/controls/FileUpload";
@@ -7,6 +5,11 @@ import TextBox from "./controls/TextBox";
 // import MultipleOption from "../form-builder/controls/MultipleOption";
 // import PlaceHolder from "../form-builder/controls/PlaceHolder";
 // import TextArea from "../form-builder/controls/TextArea";
+
+import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
+import FormSetGroup from "./controls/FormSetGroup";
+import TextArea from "./controls/TextArea";
+import TextBox from "./controls/TextBox";
 
 const ControlSelector = ({ control }: { control: ControlType }) => {
   switch (control.type) {
@@ -39,8 +42,8 @@ const ControlSelector = ({ control }: { control: ControlType }) => {
     //       controlFormState={controlFormState}
     //     />
     //   );
-    // case ControlTypeEnum.Group:
-    //   return <Group form={form} formState={formState} index={index} />;
+    case ControlTypeEnum.Group:
+      return <FormSetGroup control={control} />;
     // case ControlTypeEnum.MultipleOption:
     //   return (
     //     <MultipleOption
@@ -52,15 +55,8 @@ const ControlSelector = ({ control }: { control: ControlType }) => {
     //   );
     // case ControlTypeEnum.PlaceHolder:
     //   return <PlaceHolder form={form} formState={formState} index={index} />;
-    // case ControlTypeEnum.TextArea:
-    //   return (
-    //     <TextArea
-    //       form={form}
-    //       formState={formState}
-    //       index={index}
-    //       controlFormState={controlFormState}
-    //     />
-    //   );
+    case ControlTypeEnum.TextArea:
+      return <TextArea control={control} />;
     default:
       return <></>;
   }

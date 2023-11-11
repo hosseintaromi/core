@@ -1,12 +1,12 @@
+import { useContext } from "react";
 import { ControlType } from "../@types/ControlTypes";
-import { useFBContextProvider } from "./useFBContextProvider";
+import { FBContext } from "../context/FBContextProvider";
 
 export const useFBControl = (control: ControlType) => {
-  const { handleSubmit, getControlErrors } = useFBContextProvider();
+  const { submitForm, getControlErrors } = useContext(FBContext);
 
-  console.log(getControlErrors(control.control_id));
   return {
-    handleSubmit: handleSubmit,
+    submitForm,
     getControlErrors: () => getControlErrors(control.control_id),
   };
 };

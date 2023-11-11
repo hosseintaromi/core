@@ -1,8 +1,9 @@
+import { useContext } from "react";
 import { ControlType } from "../@types/ControlTypes";
-import { useFBContextProvider } from "./useFBContextProvider";
+import { FBContext } from "../context/FBContextProvider";
 
 export const useFBRegisterControl = (control: ControlType) => {
-  const { registerControl } = useFBContextProvider();
+  const { registerControl } = useContext(FBContext);
 
   return registerControl(control);
 };

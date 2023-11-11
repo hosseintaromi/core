@@ -8,15 +8,19 @@ import { openView } from "./core/utils/viewManager";
 import { ViewContainerType } from "./core/@types/commonView";
 import {} from "./core/utils/extensions";
 import OverlayContainer from "./core/components/containers/OverlayContainer";
-import FormSample from "./components/FormSample";
+import fakeData from "./fakeData2.json";
+import FormPage from "./components/FormPage";
 
 function App() {
   useEffect(() => {
     openView({
-      id: "Home",
+      id: fakeData.controls[0].control_id,
       type: ViewContainerType.MasterTab,
-      data: {},
-      component: FormSample,
+      data: {
+        form: fakeData,
+        indexes: [0],
+      },
+      component: FormPage,
     });
   }, []);
 

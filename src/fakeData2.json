@@ -1,0 +1,136 @@
+{
+  "form_id": "form_id_1",
+  "type": "Form",
+  "hide_question_number": false,
+  "has_page_number": true,
+  "has_progress": false,
+  "locale": "Persian",
+  "values": [],
+  "controls": [
+    {
+      "control_id": "control_id_1",
+      "type": "TextBox",
+      "label_text": "نام و نام‌خانوادگی",
+      "textbox_info": { "type": "Text" },
+      "validations": [
+        { "type": "Required" },
+        { "type": "Regex", "regex_pattern": "/^[\u0600-\u06FFs]+$/" }
+      ]
+    },
+    {
+      "control_id": "control_id_2",
+      "type": "TextBox",
+      "label_text": "شماره موبایل",
+      "textbox_info": { "type": "Number" },
+      "validations": [{ "type": "Number", "regex_pattern": "/^[0-9]+$/" }],
+      "conditions": [
+        {
+          "type": "ThenShow",
+          "then_control_id": "control_id_4",
+          "conditions": [
+            {
+              "control_id": "control_id_2",
+              "condition_type": "Equal",
+              "condition_value": "زن"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "control_id_3",
+      "type": "Group",
+      "group_info": {
+        "type": "FieldSet",
+        "title": "اطلاعات حقوقی",
+        "controls": [
+          {
+            "control_id": "control_id_4",
+            "type": "TextBox",
+            "label_text": "نام و نام‌خانوادگی",
+            "textbox_info": { "type": "Text" }
+          },
+          {
+            "control_id": "control_id_5",
+            "type": "Group",
+            "group_info": {
+              "type": "FieldSet",
+              "title": "اطلاعات حقوقی",
+              "controls": [
+                {
+                  "control_id": "control_id_5_1",
+                  "type": "TextBox",
+                  "label_text": "control_id_5_1",
+                  "textbox_info": { "type": "Text" }
+                },
+                {
+                  "control_id": "control_id_5_2",
+                  "type": "Group",
+                  "group_info": {
+                    "type": "FormSet",
+                    "title": "آدرس",
+                    "controls": [
+                      {
+                        "control_id": "control_id_5_2_1",
+                        "type": "TextArea",
+                        "label_text": "توضیحات",
+                        "textarea_info": { "line_count": 3, "max_line": 4 },
+                        "validations": [{ "type": "Required" }]
+                      },
+                      {
+                        "control_id": "control_id_5_2_2",
+                        "type": "TextBox",
+                        "label_text": "نام و نام‌خانوادگی",
+                        "textbox_info": { "type": "Text" },
+                        "validations": []
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    },
+    {
+      "control_id": "control_id_6",
+      "type": "Group",
+      "group_info": {
+        "type": "FormSet",
+        "title": "آدرس",
+        "controls": [
+          {
+            "control_id": "control_id_7",
+            "type": "TextArea",
+            "label_text": "توضیحات",
+            "textarea_info": { "line_count": 3, "max_line": 4 },
+            "validations": [{ "type": "Required" }]
+          },
+          {
+            "control_id": "control_id_8",
+            "type": "Group",
+            "group_info": {
+              "type": "FieldSet",
+              "title": "اطلاعات حقوقی",
+              "controls": [
+                {
+                  "control_id": "control_id_8_1",
+                  "type": "TextBox",
+                  "label_text": "نام و نام‌خانوادگی",
+                  "textbox_info": { "type": "Text" }
+                },
+                {
+                  "control_id": "control_id_8_2",
+                  "type": "TextArea",
+                  "label_text": "توضیحات",
+                  "textarea_info": { "line_count": 3, "max_line": 4 }
+                }
+              ]
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

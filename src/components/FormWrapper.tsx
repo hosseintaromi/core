@@ -5,38 +5,41 @@ import { FormType } from "../@types/FormTypes";
 import { getControl, getNextIndex } from "../utils/getControl";
 import { useFBControl } from "../hooks/useFBControl";
 import { ControlType } from "../@types/ControlTypes";
-import FormPage from "./form-builder/FormPage";
+import FormPage from "./FormPage";
 
-type PageWrapperPropsType = {
+type FormWrapperPropsType = {
   form: FormType;
   control: ControlType;
-  index: number[];
+  indexes: number[];
   children: ReactNode | Element;
 };
 
-const PageWrapper: FC<PageWrapperPropsType> = ({
+const FormWrapper: FC<FormWrapperPropsType> = ({
   form,
   control,
-  index: _index,
+  indexes,
   children,
 }) => {
-  const { handleSubmit } = useFBControl(control);
+  const { submitForm } = useFBControl(control);
+
+  const nextIndex = getNextIndex(form, indexes);
 
   const gotoNext = () => {
     if (!control.control_id) {
       return;
     }
     //closeView(control.control_id, ViewContainerType.MasterTab);
-    const nextIndex = getNextIndex(form, _index);
     if (!nextIndex || !nextIndex.length) {
       return;
     }
+    console.log(nextIndex);
+
     openView({
       id: getControl(form.controls || [], nextIndex || [])?.control_id,
       type: ViewContainerType.MasterTab,
       data: {
         form: form,
-        index: nextIndex,
+        indexes: nextIndex,
       },
       component: FormPage,
     });
@@ -45,9 +48,15 @@ const PageWrapper: FC<PageWrapperPropsType> = ({
   return (
     <div>
       <>{children}</>
-      <button onClick={handleSubmit(gotoNext)}>next</button>
+      {nextIndex ? (
+        <button onClick={submitForm(gotoNext)}>next</button>
+      ) : (
+        <button onClick={submitForm((data) => console.log(data))}>
+          finish
+        </button>
+      )}
     </div>
   );
 };
 
-export default PageWrapper;
+export default FormWrapper;

@@ -1,4 +1,4 @@
-import { ReactNode, createContext, memo, useRef } from "react";
+import { ReactNode, createContext, memo } from "react";
 import { ControlType } from "../@types/ControlTypes";
 import {
   FieldError,
@@ -9,39 +9,24 @@ import {
   UseFormHandleSubmit,
   useForm,
 } from "react-hook-form";
-import { getValidationObject } from "../utils/getYupObject";
+import { getValidationObject } from "../utils/getValidationObject";
 
 export const FBContext = createContext<{
-  addControl: (control: ControlType) => void;
   registerControl: (control: ControlType) => any;
   getControlErrors: (
     id: string,
   ) => FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
-  handleSubmit: UseFormHandleSubmit<FieldValues, undefined>;
+  submitForm: UseFormHandleSubmit<FieldValues, undefined>;
 }>({} as any);
 
 export const FBContextProvider = memo(
   ({ children }: { children: ReactNode }) => {
     const formController = useForm();
 
-    const controllersRef = useRef<{
-      [control_id: string]: {
-        control: ControlType;
-      };
-    }>({});
-
-    const addControl = (control: ControlType) => {
-      if (control.control_id) {
-        controllersRef.current[control.control_id] = {
-          control,
-        };
-      }
-    };
-
     const registerControl = (control: ControlType) =>
-      formController.register("control_id_1", getValidationObject(control));
+      formController.register(control.control_id, getValidationObject(control));
 
-    const handleSubmit = (callback: SubmitHandler<FieldValues>) =>
+    const submitForm = (callback: SubmitHandler<FieldValues>) =>
       formController.handleSubmit(callback);
 
     const getControlErrors = (id: string) =>
@@ -51,10 +36,9 @@ export const FBContextProvider = memo(
       <>
         <FBContext.Provider
           value={{
-            addControl,
             registerControl,
             getControlErrors,
-            handleSubmit,
+            submitForm,
           }}
         >
           {children}

@@ -55,47 +55,48 @@ export async function openView<T = any>(
     id?: string;
   },
 ) {
+  if (!view.id) {
+    view.id = view.type + "-" + Date.now();
+  }
+  const container = viewContainers[view.type];
+  if (!container) {
+    return;
+  }
+
+  if (isViewInProgress(view.type, view.id)) {
+    return;
+  }
+
+  const foundView = container.views.find((x) => x.id === view.id);
+  if (foundView && !container.config?.moveBetweenViews) {
+    return;
+  }
+
+  const topView = getTopViewFromStack();
+  const isSameType = topView?.type === view.type;
+  if (isSameType && topView?.id === view.id) {
+    return;
+  }
+  if (topView && !isSameType) {
+    const topViewContainer = viewContainers[topView.type];
+    topViewContainer.changeContainer?.(
+      view as ViewType<T>,
+      ChangeContainerEventType.onLeave,
+    );
+  }
+
+  if (!container.config?.disableBrowserHistory) {
+    listenBack({
+      id: view.id,
+      back: () => {
+        closeView(view.id!, view.type);
+      },
+    });
+  }
+
+  const progressViewIds = [view.id, topView?.id!];
   try {
-    if (!view.id) {
-      view.id = view.type + "-" + Date.now();
-    }
-    const container = viewContainers[view.type];
-    if (!container) {
-      return;
-    }
-
-    if (isViewInProgress(view.type, view.id)) {
-      return;
-    }
-
-    const foundView = container.views.find((x) => x.id === view.id);
-    if (foundView && !container.config?.moveBetweenViews) {
-      return;
-    }
-
-    const topView = getTopViewFromStack();
-    const isSameType = topView?.type === view.type;
-    if (isSameType && topView?.id === view.id) {
-      return;
-    }
-    if (topView && !isSameType) {
-      const topViewContainer = viewContainers[topView.type];
-      topViewContainer.changeContainer?.(
-        view as ViewType<T>,
-        ChangeContainerEventType.onLeave,
-      );
-    }
-
-    if (!container.config?.disableBrowserHistory) {
-      listenBack({
-        id: view.id,
-        back: () => {
-          closeView(view.id!, view.type);
-        },
-      });
-    }
-
-    setViewInProgress(view.type, view.id, true);
+    setViewInProgress(view.type, progressViewIds, true);
     if (foundView) {
       await container.activateView?.(foundView);
       moveViewToTop(foundView);
@@ -105,9 +106,9 @@ export async function openView<T = any>(
       view.onOpened?.();
       addToLoadedViewStack(view as ViewType<T>);
     }
-    setViewInProgress(view.type, view.id, false);
+    setViewInProgress(view.type, progressViewIds, false);
   } catch (error) {
-    setViewInProgress(view.type, view.id!, false);
+    setViewInProgress(view.type, progressViewIds, false);
   }
 }
 
@@ -117,57 +118,59 @@ export async function closeView<T>(
   closeType: CloseType = "Current",
   res?: T,
 ) {
+  if (!viewId || !containerType) {
+    return;
+  }
+  const container = viewContainers[containerType];
+  if (!container) {
+    return;
+  }
+
+  if (isViewInProgress(containerType, viewId)) {
+    return;
+  }
+
+  const index = container.views.findIndex((x) => x.id === viewId);
+  if (index < 0) {
+    return;
+  }
+  if (isMasterView()) {
+    return;
+  }
+  const closingView = container.views[index];
+  const topView = getTopViewFromStack([closingView.id]);
+  const ignoreViewsId = getViewsByCloseType(
+    container.views.map((x) => x.id),
+    closeType,
+    index,
+  );
+  const topViewWithSameType = getTopViewFromStack(
+    ignoreViewsId,
+    closingView.type as any,
+  );
+  const isSameType = topView?.type === closingView.type;
+  if (topView && !isSameType) {
+    const topViewContainer = viewContainers[topView.type];
+    topViewContainer.changeContainer?.(
+      closingView,
+      ChangeContainerEventType.onEnter,
+    );
+  }
+  if (!container.config?.disableBrowserHistory) {
+    unlistenBack(viewId);
+  }
+
+  const progressViewIds = [viewId, topViewWithSameType?.id!];
   try {
-    if (!viewId || !containerType) {
-      return;
-    }
-    const container = viewContainers[containerType];
-    if (!container) {
-      return;
-    }
-
-    if (isViewInProgress(containerType, viewId)) {
-      return;
-    }
-
-    const index = container.views.findIndex((x) => x.id === viewId);
-    if (index < 0) {
-      return;
-    }
-    if (isMasterView()) {
-      return;
-    }
-    const closingView = container.views[index];
-    const topView = getTopViewFromStack([closingView.id]);
-    const ignoreViewsId = getViewsByCloseType(
-      container.views.map((x) => x.id),
-      closeType,
-      index,
-    );
-    const topViewWithSameType = getTopViewFromStack(
-      ignoreViewsId,
-      closingView.type as any,
-    );
-    const isSameType = topView?.type === closingView.type;
-    if (topView && !isSameType) {
-      const topViewContainer = viewContainers[topView.type];
-      topViewContainer.changeContainer?.(
-        closingView,
-        ChangeContainerEventType.onEnter,
-      );
-    }
-    if (!container.config?.disableBrowserHistory) {
-      unlistenBack(viewId);
-    }
-    setViewInProgress(containerType, viewId, true);
-    closingView.onClose?.(res);
+    setViewInProgress(containerType, progressViewIds, true);
+    closingView.onClosing?.(res);
     await container.closeView(closingView, topViewWithSameType, closeType);
     closingView.onClosed?.(res);
     updateViewsByCloseType(container.views, closeType, index);
     removeFromLoadedViewStack(closingView, closeType);
-    setViewInProgress(containerType, viewId, false);
+    setViewInProgress(containerType, progressViewIds, false);
   } catch {
-    setViewInProgress(containerType, viewId, false);
+    setViewInProgress(containerType, progressViewIds, false);
   }
 }
 
@@ -244,7 +247,7 @@ function getTopViewFromStack(
   for (let i = loadedViewsStack.length - 1; i >= 0; i--) {
     const view = loadedViewsStack[i];
     if (
-      (ignoreViewsId || []).findIndex((id) => id == view.id) < 0 &&
+      (ignoreViewsId || []).indexOf(view.id) < 0 &&
       (type === undefined || view.type === type)
     ) {
       return view;
@@ -260,16 +263,21 @@ function isViewInProgress(containerType: string, viewId: string) {
 
 function setViewInProgress(
   containerType: string,
-  viewId: string,
+  viewsId: string[],
   progress: boolean,
 ) {
   let views = progressViews[containerType];
   if (!views) {
     views = progressViews[containerType] = [];
   }
+  viewsId = viewsId.filter((id) => id);
   if (progress) {
-    views.safePush(viewId);
+    viewsId.forEach((viewId) => {
+      views.safePush(viewId);
+    });
   } else {
-    views.remove((id) => id === viewId);
+    viewsId.forEach((viewId) => {
+      views.remove((id) => id === viewId);
+    });
   }
 }

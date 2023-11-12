@@ -1,6 +1,6 @@
 import { ConditionType } from "./ConditionTypes";
 
-enum ControlConditionTypesEnum {
+export enum ControlConditionTypesEnum {
   ThenGo = "ThenGo",
   ThenShow = "ThenShow",
   ElseGo = "ElseGo",

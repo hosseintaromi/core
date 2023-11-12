@@ -2,7 +2,7 @@ import { FC, ReactNode } from "react";
 import { openView } from "../core/utils/viewManager";
 import { ViewContainerType } from "../core/@types/commonView";
 import { FormType } from "../@types/FormTypes";
-import { getControl, getNextIndex } from "../utils/getControl";
+import { getControl, getNextIndex } from "../utils/controlUtils";
 import { useFBControl } from "../hooks/useFBControl";
 import { ControlType } from "../@types/ControlTypes";
 import FormPage from "./FormPage";
@@ -32,8 +32,6 @@ const FormWrapper: FC<FormWrapperPropsType> = ({
     if (!nextIndex || !nextIndex.length) {
       return;
     }
-    console.log(nextIndex);
-
     openView({
       id: getControl(form.controls || [], nextIndex || [])?.control_id,
       type: ViewContainerType.MasterTab,

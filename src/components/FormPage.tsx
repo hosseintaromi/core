@@ -1,6 +1,6 @@
 import { FormType } from "../@types/FormTypes";
 import { useView } from "../core/hooks/useView";
-import { getControl } from "../utils/getControl";
+import { getControl } from "../utils/controlUtils";
 import ControlSelector from "./ControlSelector";
 import ControlWrapper from "./ControlWrapper";
 import { FBContextProvider } from "../context/FBContextProvider";
@@ -14,14 +14,13 @@ type ControlPropsType = {
 const FormPage = (props: ControlPropsType) => {
   const { viewData } = useView();
   const { form, indexes } = props || viewData;
-  console.log(form, indexes);
   const control = getControl(form?.controls || [], indexes || []);
 
   if (!form || !indexes || indexes.length < 1 || !control) {
     return <></>;
   }
   return (
-    <FBContextProvider>
+    <FBContextProvider control={control}>
       <FormWrapper form={form} indexes={indexes} control={control}>
         <ControlWrapper control={control}>
           <ControlSelector control={control} />

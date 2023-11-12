@@ -1,11 +1,11 @@
-enum ConditionTypeEnum {
+export enum ConditionTypeEnum {
   Equal = "Equal",
   NotEqual = "NotEqual",
   MoreThan = "MoreThan",
   LessThan = "LessThan",
 }
 
-enum ConditionCompositionEnum {
+export enum ConditionCompositionEnum {
   And = "And",
   Or = "Or",
 }

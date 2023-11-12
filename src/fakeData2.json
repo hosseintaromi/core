@@ -18,43 +18,74 @@
       ]
     },
     {
-      "control_id": "control_id_2",
-      "type": "TextBox",
-      "label_text": "شماره موبایل",
-      "textbox_info": { "type": "Number" },
-      "validations": [{ "type": "Number", "regex_pattern": "/^[0-9]+$/" }],
-      "conditions": [
-        {
-          "type": "ThenShow",
-          "then_control_id": "control_id_4",
-          "conditions": [
-            {
-              "control_id": "control_id_2",
-              "condition_type": "Equal",
-              "condition_value": "زن"
-            }
-          ]
-        }
-      ]
-    },
-    {
       "control_id": "control_id_3",
       "type": "Group",
       "group_info": {
-        "type": "FieldSet",
+        "type": "FormSet",
         "title": "اطلاعات حقوقی",
+        "is_hidden": false,
         "controls": [
           {
+            "control_id": "control_id_2",
+            "type": "TextBox",
+            "label_text": "سن",
+            "is_hidden": false,
+            "textbox_info": { "type": "Number" },
+            "validations": [
+              { "type": "Number", "regex_pattern": "/^[0-9]+$/" }
+            ],
+            "conditions": [
+              {
+                "type": "ThenShow",
+                "then_control_id": "control_id_4",
+                "when_control_id": "control_id_2",
+                "conditions": [
+                  {
+                    "control_id": "control_id_2",
+                    "condition_type": "NotEqual",
+                    "condition_value": "93",
+                    "composition_type": "And"
+                  },
+                  {
+                    "control_id": "control_id_2",
+                    "condition_type": "MoreThan",
+                    "condition_value": "90"
+                  }
+                ]
+              },
+              {
+                "type": "ThenShow",
+                "then_control_id": "control_id_5",
+                "when_control_id": "control_id_2",
+                "conditions": [
+                  {
+                    "control_id": "control_id_2",
+                    "condition_type": "NotEqual",
+                    "condition_value": "80",
+                    "composition_type": "And"
+                  },
+                  {
+                    "control_id": "control_id_2",
+                    "condition_type": "LessThan",
+                    "condition_value": "90"
+                  }
+                ]
+              }
+            ]
+          },
+          {
             "control_id": "control_id_4",
+            "is_hidden": false,
             "type": "TextBox",
             "label_text": "نام و نام‌خانوادگی",
             "textbox_info": { "type": "Text" }
           },
           {
             "control_id": "control_id_5",
+            "is_hidden": false,
             "type": "Group",
             "group_info": {
-              "type": "FieldSet",
+              "type": "FormSet",
               "title": "اطلاعات حقوقی",
               "controls": [
                 {
@@ -83,6 +114,13 @@
                         "label_text": "نام و نام‌خانوادگی",
                         "textbox_info": { "type": "Text" },
                         "validations": []
+                      },
+                      {
+                        "control_id": "control_id_9",
+                        "is_hidden": false,
+                        "type": "TextBox",
+                        "label_text": "2نام و نام‌خانوادگی",
+                        "textbox_info": { "type": "Text" }
                       }
                     ]
                   }

@@ -1,9 +1,9 @@
 import ControlWrapper from "../ControlWrapper";
 import ControlSelector from "../ControlSelector";
 import { ControlType } from "../../@types/ControlTypes";
-import { Fragment, useCallback, useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { FBContext } from "../../context/FBContextProvider";
-import { hideControlsWithConditionON } from "../../utils/controlUtils";
+import { hideControlsWithConditionOn } from "../../utils/controlUtils";
 
 type GroupPropsType = {
   control: ControlType;
@@ -14,14 +14,14 @@ const FormSetGroup = ({ control }: GroupPropsType) => {
 
   const { registerFormSet } = useContext(FBContext);
 
-  const listen = useCallback((newControls: ControlType[]) => {
+  const listenControlChanges = useCallback((newControls: ControlType[]) => {
     setControls([...newControls]);
   }, []);
 
   useEffect(() => {
-    registerFormSet(listen, control.control_id);
+    registerFormSet(listenControlChanges, control.control_id);
     setControls(
-      hideControlsWithConditionON(control.group_info?.controls || []),
+      hideControlsWithConditionOn(control.group_info?.controls || []),
     );
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

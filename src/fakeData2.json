@@ -11,10 +11,21 @@
       "control_id": "control_id_1",
       "type": "TextBox",
       "label_text": "نام و نام‌خانوادگی",
-      "textbox_info": { "type": "Text" },
-      "validations": [
-        { "type": "Required" },
-        { "type": "Regex", "regex_pattern": "/^[\u0600-\u06FFs]+$/" }
+      "textbox_info": { "type": "Number" },
+      "validations": [{ "type": "Required" }],
+      "conditions": [
+        {
+          "type": "ThenGo",
+          "then_control_id": "control_id_6",
+          "when_control_id": "control_id_1",
+          "conditions": [
+            {
+              "control_id": "control_id_1",
+              "condition_type": "NotEqual",
+              "condition_value": "1"
+            }
+          ]
+        }
       ]
     },
     {

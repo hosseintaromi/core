@@ -1,3 +1,4 @@
+import { FieldValues } from "react-hook-form";
 import {
   ConditionCompositionEnum,
   ConditionTypeEnum,
@@ -44,22 +45,58 @@ export const getControlById = (
 const getNextIndexFromConditions = (
   form: FormType,
   indexes: number[],
-  value: string,
+  values: FieldValues,
 ) => {
-  const currentControl = getControl(form.controls!, indexes);
-  // currentControl?.conditions?.map(condition => condition.)
+  let thenId: string | null | undefined;
+  const currentControl = getControl(form.controls, indexes);
+  if (
+    currentControl?.conditions &&
+    (currentControl?.type !== ControlTypeEnum.Group ||
+      (currentControl.group_info?.type === GroupTypesEnum.FieldSet &&
+        currentControl?.type === ControlTypeEnum.Group))
+  ) {
+    thenId = passCondition(
+      currentControl?.conditions,
+      values[currentControl.control_id],
+      ControlConditionTypesEnum.ThenGo,
+    );
+    if (!thenId) {
+      return null;
+    }
+    let thenIndex: number | undefined;
+    if (indexes.length === 1) {
+      thenIndex = form.controls.findIndex((item) => item.control_id === thenId);
+    } else {
+      const group = getControl(form.controls, indexes.slice(0, -1));
+      thenIndex = group?.group_info?.controls?.findIndex(
+        (item) => item.control_id === thenId,
+      );
+    }
+    return thenIndex ? indexes.slice(0, -1).concat(thenIndex) : [];
+  }
+  // currentControl?.conditions?.map(condition => {
+  //   if(condition.type !== )
+  // })
+  return indexes;
 };
 
 export const getNextIndex = (
   form: FormType,
   index: number[],
-  value?: string,
+  values?: FieldValues,
 ): number[] | null => {
   if (!form.controls?.length) {
     return null;
   }
-  if (value) {
-    getNextIndexFromConditions(form, index, value);
+  if (values) {
+    const nextIndexBaseOnCondition = getNextIndexFromConditions(
+      form,
+      index,
+      values,
+    );
+    if (nextIndexBaseOnCondition) {
+      return nextIndexBaseOnCondition;
+    }
   }
   const nextIndex = getParentWithLeftChildren(form.controls, [...index], 0);
   if (!nextIndex) {
@@ -112,10 +149,11 @@ const getParentWithLeftChildren = (
 export const passCondition = (
   conditions: ControlConditionType[],
   value: string,
+  controlConditionType: ControlConditionTypesEnum = ControlConditionTypesEnum.ThenShow,
 ) => {
   for (let j = 0; j < conditions.length; j++) {
     const condition = conditions[j];
-    if (condition.type !== ControlConditionTypesEnum.ThenShow) {
+    if (condition.type !== controlConditionType) {
       continue;
     }
     let overallValue: boolean | undefined = undefined;
@@ -161,7 +199,7 @@ export const passCondition = (
   return null;
 };
 
-export const hideControlsWithConditionON = (controls: ControlType[]) => {
+export const hideControlsWithConditionOn = (controls: ControlType[]) => {
   let filteredControls = [...controls];
   for (let i = 0; i < controls.length; i++) {
     const control = controls[i];

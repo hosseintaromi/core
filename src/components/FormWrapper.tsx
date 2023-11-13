@@ -6,6 +6,7 @@ import { getControl, getNextIndex } from "../utils/controlUtils";
 import { useFBControl } from "../hooks/useFBControl";
 import { ControlType } from "../@types/ControlTypes";
 import FormPage from "./FormPage";
+import { FieldValues } from "react-hook-form";
 
 type FormWrapperPropsType = {
   form: FormType;
@@ -22,12 +23,13 @@ const FormWrapper: FC<FormWrapperPropsType> = ({
 }) => {
   const { submitForm } = useFBControl(control);
 
-  const nextIndex = getNextIndex(form, indexes);
+  let nextIndex = getNextIndex(form, indexes);
 
-  const gotoNext = () => {
+  const gotoNext = (data: FieldValues) => {
     if (!control.control_id) {
       return;
     }
+    nextIndex = getNextIndex(form, indexes, data);
     //closeView(control.control_id, ViewContainerType.MasterTab);
     if (!nextIndex || !nextIndex.length) {
       return;
@@ -47,7 +49,7 @@ const FormWrapper: FC<FormWrapperPropsType> = ({
     <div>
       <>{children}</>
       {nextIndex ? (
-        <button onClick={submitForm(gotoNext)}>next</button>
+        <button onClick={submitForm((data) => gotoNext(data))}>next</button>
       ) : (
         <button onClick={submitForm((data) => console.log(data))}>
           finish

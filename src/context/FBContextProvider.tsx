@@ -13,7 +13,7 @@ import { getValidationObject } from "../utils/getValidationObject";
 import {
   getControlById,
   getControlParentById,
-  hideControlsWithConditionON,
+  hideControlsWithConditionOn,
   passCondition,
 } from "../utils/controlUtils";
 
@@ -24,65 +24,75 @@ export const FBContext = createContext<{
   ) => FieldError | Merge<FieldError, FieldErrorsImpl<any>> | undefined;
   submitForm: UseFormHandleSubmit<FieldValues, undefined>;
   registerFormSet: (
-    listen: (newControls: ControlType[]) => void,
+    listenControlChanges: (newControls: ControlType[]) => void,
     id: string,
   ) => void;
 }>({} as any);
 
 export const FBContextProvider = memo(
   ({ control, children }: { control: ControlType; children: ReactNode }) => {
-    const formSetControlsRef = useRef<ControlType>(control);
+    const mainControlRef = useRef<ControlType>(control);
     const formSetListenRef = useRef<{
-      [control_id: string]: { listen: (newControls: ControlType[]) => void };
+      [control_id: string]: {
+        listenControlChanges: (newControls: ControlType[]) => void;
+      };
     }>({});
 
     const formController = useForm();
+
+    const onChangedControlValue = (target: any) => {
+      let controls = mainControlRef.current.group_info?.controls;
+      if (!controls) {
+        return;
+      }
+      const thisControl = getControlById(controls, target.name);
+      if (!thisControl?.conditions) {
+        return;
+      }
+      const thenShowControlId = passCondition(
+        thisControl?.conditions,
+        target.value,
+      );
+      if (!thenShowControlId) {
+        return;
+      }
+      const formSet = getControlParentById(
+        mainControlRef.current,
+        controls,
+        target.name,
+      );
+      if (!formSet?.group_info?.controls) {
+        return;
+      }
+      let groupControls = hideControlsWithConditionOn(
+        formSet.group_info?.controls,
+      );
+
+      const thenControl = groupControls.find(
+        (item) => item.control_id === thenShowControlId,
+      );
+      if (thenControl) {
+        thenControl.is_hidden = false;
+      }
+
+      formSetListenRef.current[formSet.control_id]?.listenControlChanges(
+        groupControls,
+      );
+    };
 
     const registerControl = (control: ControlType) =>
       formController.register(control.control_id, {
         ...getValidationObject(control),
         onChange: (e) => {
-          let controls = formSetControlsRef.current.group_info?.controls;
-          if (!controls) {
-            return;
-          }
-          const target = e.target;
-          const thisControl = getControlById(controls, target.name);
-          if (!thisControl?.conditions) {
-            return;
-          }
-          const group = getControlParentById(
-            formSetControlsRef.current,
-            controls,
-            target.name,
-          );
-          if (!group?.group_info?.controls) {
-            return;
-          }
-          let groupControls = hideControlsWithConditionON(
-            group.group_info?.controls,
-          );
-          const thenControlId = passCondition(
-            thisControl?.conditions,
-            target.value,
-          );
-          if (target.value && thenControlId) {
-            groupControls.forEach((item) => {
-              if (item.control_id === thenControlId) {
-                item.is_hidden = false;
-              }
-            });
-          }
-
-          formSetListenRef.current[group.control_id].listen(groupControls);
+          onChangedControlValue(e.target);
         },
       });
 
     const registerFormSet = (
-      listen: (newControls: ControlType[]) => void,
+      listenControlChanges: (newControls: ControlType[]) => void,
       id: string,
     ) => {
-      formSetListenRef.current[id] = { listen };
+      formSetListenRef.current[id] = { listenControlChanges };
     };
 
     const submitForm = (callback: SubmitHandler<FieldValues>) =>

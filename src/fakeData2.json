@@ -31,6 +31,20 @@
     {
       "control_id": "control_id_3",
       "type": "Group",
+      "conditions": [
+        {
+          "type": "ThenGo",
+          "then_control_id": "control_id_7",
+          "when_control_id": "control_id_4",
+          "conditions": [
+            {
+              "control_id": "control_id_4",
+              "condition_type": "NotEqual",
+              "condition_value": "1"
+            }
+          ]
+        }
+      ],
       "group_info": {
         "type": "FormSet",
         "title": "اطلاعات حقوقی",
@@ -89,7 +103,7 @@
             "is_hidden": false,
             "type": "TextBox",
             "label_text": "نام و نام‌خانوادگی",
-            "textbox_info": { "type": "Text" }
+            "textbox_info": { "type": "Number" }
           },
           {
             "control_id": "control_id_5",
@@ -150,13 +164,6 @@
         "title": "آدرس",
         "controls": [
           {
-            "control_id": "control_id_7",
-            "type": "TextArea",
-            "label_text": "توضیحات",
-            "textarea_info": { "line_count": 3, "max_line": 4 },
-            "validations": [{ "type": "Required" }]
-          },
-          {
             "control_id": "control_id_8",
             "type": "Group",
             "group_info": {
@@ -180,6 +187,13 @@
           }
         ]
       }
+    },
+    {
+      "control_id": "control_id_7",
+      "type": "TextArea",
+      "label_text": "control_id_7",
+      "textarea_info": { "line_count": 3, "max_line": 4 },
+      "validations": [{ "type": "Required" }]
     }
   ]
 }

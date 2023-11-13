@@ -42,42 +42,75 @@ export const getControlById = (
   return null;
 };
 
+const findThenId = (form: FormType, indexes: number[], values: FieldValues) => {
+  let thenId: string | null | undefined;
+  const currentControl = getControl(form.controls, indexes);
+  // if (
+  //   currentControl?.conditions &&
+  //   (currentControl?.type !== ControlTypeEnum.Group ||
+  //     (currentControl.group_info?.type === GroupTypesEnum.FieldSet &&
+  //       currentControl?.type === ControlTypeEnum.Group))
+  // ) {
+  //   debugger;
+  //   thenId = passCondition(
+  //     currentControl?.conditions,
+  //     values[currentControl.control_id],
+  //     ControlConditionTypesEnum.ThenGo,
+  //   );
+  //   if (!thenId) {
+  //     thenId = passCondition(
+  //       currentControl?.conditions,
+  //       values[currentControl.control_id],
+  //       ControlConditionTypesEnum.ElseGo,
+  //     );
+  //   }
+  //   return thenId;
+  // } else
+  if (currentControl?.conditions) {
+    for (let i = 0; i < currentControl.conditions.length; i++) {
+      const condition = currentControl.conditions[i];
+      if (condition.when_control_id && values[condition.when_control_id]) {
+        thenId = passCondition(
+          [condition],
+          values[condition.when_control_id],
+          ControlConditionTypesEnum.ThenGo,
+        );
+        if (!thenId) {
+          thenId = passCondition(
+            currentControl?.conditions,
+            values[currentControl.control_id],
+            ControlConditionTypesEnum.ElseGo,
+          );
+        }
+        if (thenId) {
+          return thenId;
+        }
+      }
+    }
+  }
+  return null;
+};
+
 const getNextIndexFromConditions = (
   form: FormType,
   indexes: number[],
   values: FieldValues,
 ) => {
-  let thenId: string | null | undefined;
-  const currentControl = getControl(form.controls, indexes);
-  if (
-    currentControl?.conditions &&
-    (currentControl?.type !== ControlTypeEnum.Group ||
-      (currentControl.group_info?.type === GroupTypesEnum.FieldSet &&
-        currentControl?.type === ControlTypeEnum.Group))
-  ) {
-    thenId = passCondition(
-      currentControl?.conditions,
-      values[currentControl.control_id],
-      ControlConditionTypesEnum.ThenGo,
-    );
-    if (!thenId) {
-      return null;
-    }
-    let thenIndex: number | undefined;
-    if (indexes.length === 1) {
-      thenIndex = form.controls.findIndex((item) => item.control_id === thenId);
-    } else {
-      const group = getControl(form.controls, indexes.slice(0, -1));
-      thenIndex = group?.group_info?.controls?.findIndex(
-        (item) => item.control_id === thenId,
-      );
-    }
-    return thenIndex ? indexes.slice(0, -1).concat(thenIndex) : [];
+  let thenIndex: number | undefined;
+  let thenId = findThenId(form, indexes, values);
+  if (!thenId) {
+    return null;
   }
-  // currentControl?.conditions?.map(condition => {
-  //   if(condition.type !== )
-  // })
-  return indexes;
+  // find index
+  if (indexes.length === 1) {
+    thenIndex = form.controls.findIndex((item) => item.control_id === thenId);
+  } else {
+    const group = getControl(form.controls, indexes.slice(0, -1));
+    thenIndex = group?.group_info?.controls?.findIndex(
+      (item) => item.control_id === thenId,
+    );
+  }
+  return thenIndex ? indexes.slice(0, -1).concat(thenIndex) : null;
 };
 
 export const getNextIndex = (
@@ -98,7 +131,12 @@ export const getNextIndex = (
       return nextIndexBaseOnCondition;
     }
   }
-  const nextIndex = getParentWithLeftChildren(form.controls, [...index], 0);
+  const filteredControls = hideControlsWithConditionOn(form.controls);
+  const nextIndex = getParentWithLeftChildren(
+    filteredControls.filter((x) => !x.is_hidden),
+    [...index],
+    0,
+  );
   if (!nextIndex) {
     return null;
   }
@@ -192,7 +230,11 @@ export const passCondition = (
           : overallValue || currValue;
     }
 
-    if (overallValue) {
+    if (
+      overallValue ||
+      (!overallValue &&
+        controlConditionType === ControlConditionTypesEnum.ElseGo)
+    ) {
       return condition.then_control_id;
     }
   }

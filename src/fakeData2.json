@@ -8,7 +8,8 @@
   "values": [],
   "theme": {
     "theme_id": "dfdd",
-    "controls_style": {}
+    "controls_style": {},
+    "labels_style": {}
   },
   "controls": [
     {

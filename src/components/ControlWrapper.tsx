@@ -16,7 +16,11 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({ control, children }) => {
 
   return (
     <div>
-      {label && <InputLabel htmlFor={id}>{label}</InputLabel>}
+      {label && (
+        <InputLabel color="error" htmlFor={id}>
+          {label}
+        </InputLabel>
+      )}
       <>{children}</>
       <>
         {getControlErrors()?.type && (

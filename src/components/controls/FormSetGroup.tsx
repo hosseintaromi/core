@@ -4,6 +4,7 @@ import { ControlType } from "../../@types/ControlTypes";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { FBContext } from "../../context/FBContextProvider";
 import { hideControlsWithConditionOn } from "../../utils/controlUtils";
+import { Box } from "@mui/material";
 
 type GroupPropsType = {
   control: ControlType;
@@ -27,7 +28,7 @@ const FormSetGroup = ({ control }: GroupPropsType) => {
   }, []);
 
   return (
-    <div id="group">
+    <Box sx={{ display: "grid", gap: 2 }} id="group">
       {controls
         ?.filter((x) => !x.is_hidden)
         .map((controlItem: ControlType) => (
@@ -35,7 +36,7 @@ const FormSetGroup = ({ control }: GroupPropsType) => {
             <ControlSelector control={controlItem} />
           </ControlWrapper>
         ))}
-    </div>
+    </Box>
   );
 };
 

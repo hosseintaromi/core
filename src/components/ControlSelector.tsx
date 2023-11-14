@@ -1,12 +1,19 @@
 import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
+import { ThemeType } from "../@types/ThemeTypes";
 import FormSetGroup from "./controls/FormSetGroup";
 import TextArea from "./controls/TextArea";
 import TextBox from "./controls/TextBox";
 
-const ControlSelector = ({ control }: { control: ControlType }) => {
+const ControlSelector = ({
+  control,
+  theme,
+}: {
+  control: ControlType;
+  theme: ThemeType;
+}) => {
   switch (control.type) {
     case ControlTypeEnum.TextBox:
-      return <TextBox control={control} />;
+      return <TextBox control={control} theme={theme} />;
     // case ControlTypeEnum.DatePicker:
     //   return (
     //     <DatePicker
@@ -35,7 +42,7 @@ const ControlSelector = ({ control }: { control: ControlType }) => {
     //     />
     //   );
     case ControlTypeEnum.Group:
-      return <FormSetGroup control={control} />;
+      return <FormSetGroup control={control} theme={theme} />;
     // case ControlTypeEnum.MultipleOption:
     //   return (
     //     <MultipleOption

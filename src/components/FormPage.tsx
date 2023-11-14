@@ -5,6 +5,8 @@ import ControlSelector from "./ControlSelector";
 import ControlWrapper from "./ControlWrapper";
 import { FBContextProvider } from "../context/FBContextProvider";
 import FormWrapper from "./FormWrapper";
+import theme from "../utils/theme";
+import { ThemeProvider } from "@emotion/react";
 
 type ControlPropsType = {
   form?: FormType;
@@ -21,11 +23,13 @@ const FormPage = (props: ControlPropsType) => {
   }
   return (
     <FBContextProvider control={control}>
-      <FormWrapper form={form} indexes={indexes} control={control}>
-        <ControlWrapper control={control}>
-          <ControlSelector control={control} />
-        </ControlWrapper>
-      </FormWrapper>
+      <ThemeProvider theme={theme(form.theme)}>
+        <FormWrapper form={form} indexes={indexes} control={control}>
+          <ControlWrapper control={control}>
+            <ControlSelector control={control} theme={form.theme} />
+          </ControlWrapper>
+        </FormWrapper>
+      </ThemeProvider>
     </FBContextProvider>
   );
 };

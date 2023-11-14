@@ -1,10 +1,10 @@
 export type MarginSizeType = { horizontal: number; vertical: number };
 
 export type BorderStyleType = {
-  top: string;
-  right: string;
-  bottom: string;
-  left: string;
+  top?: string;
+  right?: string;
+  bottom?: string;
+  left?: string;
 };
 
 export enum ImageAlignEnum {

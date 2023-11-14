@@ -14,8 +14,6 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
-import { ThemeProvider } from "@mui/material";
-import theme from "./utils/theme";
 
 function App() {
   // Create rtl cache
@@ -39,14 +37,12 @@ function App() {
   return (
     <>
       <CacheProvider value={cacheRtl}>
-        <ThemeProvider theme={theme}>
-          <MasterTabContainer />
-          <TabContainer />
-          <ModalContainer />
-          <BottomSheetContainer />
-          <ToastContainer />
-          <OverlayContainer />
-        </ThemeProvider>
+        <MasterTabContainer />
+        <TabContainer />
+        <ModalContainer />
+        <BottomSheetContainer />
+        <ToastContainer />
+        <OverlayContainer />
       </CacheProvider>
     </>
   );

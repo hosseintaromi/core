@@ -7,6 +7,7 @@ import { useFBControl } from "../hooks/useFBControl";
 import { ControlType } from "../@types/ControlTypes";
 import FormPage from "./FormPage";
 import { FieldValues } from "react-hook-form";
+import { Container } from "@mui/material";
 
 type FormWrapperPropsType = {
   form: FormType;
@@ -46,7 +47,7 @@ const FormWrapper: FC<FormWrapperPropsType> = ({
   };
 
   return (
-    <div>
+    <Container>
       <>{children}</>
       {nextIndex ? (
         <button onClick={submitForm((data) => gotoNext(data))}>next</button>
@@ -55,7 +56,7 @@ const FormWrapper: FC<FormWrapperPropsType> = ({
           finish
         </button>
       )}
-    </div>
+    </Container>
   );
 };
 

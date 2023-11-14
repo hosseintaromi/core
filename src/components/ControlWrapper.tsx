@@ -1,6 +1,7 @@
 import { FC, ReactNode } from "react";
 import { useFBControl } from "../hooks/useFBControl";
 import { ControlType } from "../@types/ControlTypes";
+import { InputLabel } from "@mui/material";
 
 type ControlWrapperPropsType = {
   control: ControlType;
@@ -15,7 +16,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({ control, children }) => {
 
   return (
     <div>
-      {label && <label htmlFor={id}>{label}</label>}
+      {label && <InputLabel htmlFor={id}>{label}</InputLabel>}
       <>{children}</>
       <>
         {getControlErrors()?.type && (

@@ -2,8 +2,16 @@ import { useEffect, useState } from "react";
 import { TextBoxTypeEnum } from "../../@types/TextBoxTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 import { ControlType } from "../../@types/ControlTypes";
+import { ThemeType } from "../../@types/ThemeTypes";
+import { TextField } from "@mui/material";
 
-const TextBox = ({ control }: { control: ControlType }) => {
+const TextBox = ({
+  control,
+  theme,
+}: {
+  control: ControlType;
+  theme: ThemeType;
+}) => {
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
   const [inputType, setInputType] = useState("text");
 
@@ -34,7 +42,7 @@ const TextBox = ({ control }: { control: ControlType }) => {
   }, []);
 
   return (
-    <input
+    <TextField
       ref={ref}
       onChange={onChange}
       onBlur={onBlur}

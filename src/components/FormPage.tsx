@@ -26,7 +26,7 @@ const FormPage = (props: ControlPropsType) => {
       <ThemeProvider theme={theme(form.theme)}>
         <FormWrapper form={form} indexes={indexes} control={control}>
           <ControlWrapper control={control}>
-            <ControlSelector control={control} theme={form.theme} />
+            <ControlSelector control={control} />
           </ControlWrapper>
         </FormWrapper>
       </ThemeProvider>

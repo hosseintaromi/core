@@ -2,17 +2,12 @@ import { useEffect, useState } from "react";
 import { TextBoxTypeEnum } from "../../@types/TextBoxTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 import { ControlType } from "../../@types/ControlTypes";
-import { ThemeType } from "../../@types/ThemeTypes";
 import { TextField } from "@mui/material";
+import { useFBControl } from "../../hooks/useFBControl";
 
-const TextBox = ({
-  control,
-  theme,
-}: {
-  control: ControlType;
-  theme: ThemeType;
-}) => {
+const TextBox = ({ control }: { control: ControlType }) => {
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
+  const { getControlErrors } = useFBControl(control);
   const [inputType, setInputType] = useState("text");
 
   useEffect(() => {
@@ -43,6 +38,12 @@ const TextBox = ({
 
   return (
     <TextField
+      sx={{
+        "label + &": {
+          marginTop: 3,
+        },
+      }}
+      error={!!getControlErrors()?.type}
       ref={ref}
       onChange={onChange}
       onBlur={onBlur}

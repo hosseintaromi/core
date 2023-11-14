@@ -1,7 +1,7 @@
 import { FC, ReactNode } from "react";
 import { useFBControl } from "../hooks/useFBControl";
 import { ControlType } from "../@types/ControlTypes";
-import { InputLabel } from "@mui/material";
+import { FormControl, FormHelperText, InputLabel } from "@mui/material";
 
 type ControlWrapperPropsType = {
   control: ControlType;
@@ -13,21 +13,24 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({ control, children }) => {
 
   const id = control?.control_id;
   const label = control?.label_text;
+  const hasError = !!getControlErrors()?.type;
 
   return (
-    <div>
+    <FormControl error={hasError} variant="standard">
       {label && (
-        <InputLabel color="error" htmlFor={id}>
+        <InputLabel shrink htmlFor={id}>
           {label}
         </InputLabel>
       )}
       <>{children}</>
       <>
-        {getControlErrors()?.type && (
-          <span>{getControlErrors()?.message?.toString()}</span>
+        {hasError && (
+          <FormHelperText>
+            {getControlErrors()?.message?.toString()}
+          </FormHelperText>
         )}
       </>
-    </div>
+    </FormControl>
   );
 };
 

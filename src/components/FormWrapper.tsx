@@ -47,7 +47,7 @@ const FormWrapper: FC<FormWrapperPropsType> = ({
   };
 
   return (
-    <Container sx={{ display: "grid", gap: 2 }}>
+    <Container sx={{ display: "grid", gap: 2, justifyItems: "start" }}>
       <>{children}</>
       {nextIndex ? (
         <Button

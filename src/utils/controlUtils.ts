@@ -42,53 +42,98 @@ export const getControlById = (
   return null;
 };
 
-const findThenId = (form: FormType, indexes: number[], values: FieldValues) => {
-  let thenId: string | null | undefined;
-  const currentControl = getControl(form.controls, indexes);
-  // if (
-  //   currentControl?.conditions &&
-  //   (currentControl?.type !== ControlTypeEnum.Group ||
-  //     (currentControl.group_info?.type === GroupTypesEnum.FieldSet &&
-  //       currentControl?.type === ControlTypeEnum.Group))
-  // ) {
-  //   debugger;
-  //   thenId = passCondition(
-  //     currentControl?.conditions,
-  //     values[currentControl.control_id],
-  //     ControlConditionTypesEnum.ThenGo,
-  //   );
-  //   if (!thenId) {
-  //     thenId = passCondition(
-  //       currentControl?.conditions,
-  //       values[currentControl.control_id],
-  //       ControlConditionTypesEnum.ElseGo,
-  //     );
-  //   }
-  //   return thenId;
-  // } else
-  if (currentControl?.conditions) {
-    for (let i = 0; i < currentControl.conditions.length; i++) {
-      const condition = currentControl.conditions[i];
-      if (condition.when_control_id && values[condition.when_control_id]) {
-        thenId = passCondition(
-          [condition],
-          values[condition.when_control_id],
-          ControlConditionTypesEnum.ThenGo,
-        );
-        if (!thenId) {
-          thenId = passCondition(
-            currentControl?.conditions,
-            values[currentControl.control_id],
-            ControlConditionTypesEnum.ElseGo,
-          );
-        }
-        if (thenId) {
-          return thenId;
-        }
+export const passCondition = (
+  conditions: ControlConditionType[],
+  values: FieldValues,
+  controlConditionType: ControlConditionTypesEnum = ControlConditionTypesEnum.ThenShow,
+) => {
+  for (let j = 0; j < conditions.length; j++) {
+    const condition = conditions[j];
+    if (condition.type !== controlConditionType) {
+      continue;
+    }
+    let overallValue: boolean | undefined = undefined;
+    if (!condition.conditions) return null;
+    for (let i = 0; i < condition.conditions.length || 0; i++) {
+      const cond = condition.conditions[i];
+      if (!cond.control_id) {
+        continue;
       }
+      const value = values[cond.control_id];
+      const prevCond = i === 0 ? null : condition.conditions[i - 1];
+      let currValue;
+      if (!cond.condition_value) {
+        return null;
+      }
+      let conditionValue: string | number = parseInt(cond.condition_value);
+      conditionValue = isNaN(conditionValue)
+        ? cond.condition_value
+        : conditionValue;
+      let numberValue: string | number = parseInt(value);
+      numberValue = isNaN(numberValue) ? value : numberValue;
+
+      switch (cond.condition_type) {
+        case ConditionTypeEnum.Equal:
+          currValue = conditionValue === numberValue;
+          break;
+        case ConditionTypeEnum.MoreThan:
+          currValue = conditionValue < numberValue;
+          break;
+        case ConditionTypeEnum.LessThan:
+          currValue = conditionValue > numberValue;
+          break;
+        case ConditionTypeEnum.NotEqual:
+          currValue = conditionValue !== numberValue;
+          break;
+        default:
+          break;
+      }
+
+      if (
+        !currValue &&
+        cond.composition_type === ConditionCompositionEnum.And
+      ) {
+        overallValue = false;
+        break;
+      }
+      overallValue =
+        overallValue === undefined
+          ? currValue
+          : prevCond?.composition_type === ConditionCompositionEnum.And
+          ? overallValue && currValue
+          : overallValue || currValue;
+    }
+
+    if (
+      overallValue ||
+      (!overallValue &&
+        controlConditionType === ControlConditionTypesEnum.ElseGo)
+    ) {
+      return condition.then_control_id;
     }
   }
   return null;
+};
+
+const findThenId = (form: FormType, indexes: number[], values: FieldValues) => {
+  let thenId: string | null | undefined;
+
+  const currentControl = getControl(form.controls, indexes);
+  if (currentControl?.conditions) {
+    thenId = passCondition(
+      currentControl?.conditions,
+      values,
+      ControlConditionTypesEnum.ThenGo,
+    );
+    if (!thenId) {
+      thenId = passCondition(
+        currentControl?.conditions,
+        values,
+        ControlConditionTypesEnum.ElseGo,
+      );
+    }
+  }
+  return thenId;
 };
 
 const getNextIndexFromConditions = (
@@ -182,63 +227,6 @@ const getParentWithLeftChildren = (
   } else {
     return null;
   }
-};
-
-export const passCondition = (
-  conditions: ControlConditionType[],
-  value: string,
-  controlConditionType: ControlConditionTypesEnum = ControlConditionTypesEnum.ThenShow,
-) => {
-  for (let j = 0; j < conditions.length; j++) {
-    const condition = conditions[j];
-    if (condition.type !== controlConditionType) {
-      continue;
-    }
-    let overallValue: boolean | undefined = undefined;
-    if (!condition.conditions) return null;
-    for (let i = 0; i < condition.conditions.length || 0; i++) {
-      const cond = condition.conditions[i];
-      const prevCond = i === 0 ? null : condition.conditions[i - 1];
-      let currValue;
-      if (!cond.condition_value) {
-        return null;
-      }
-      const conditionValue = parseInt(cond.condition_value);
-      const numberValue = parseInt(value);
-      if (cond.condition_type === ConditionTypeEnum.Equal) {
-        currValue = conditionValue === numberValue;
-      } else if (cond.condition_type === ConditionTypeEnum.LessThan) {
-        currValue = conditionValue > numberValue;
-      } else if (cond.condition_type === ConditionTypeEnum.MoreThan) {
-        currValue = conditionValue < numberValue;
-      } else if (cond.condition_type === ConditionTypeEnum.NotEqual) {
-        currValue = conditionValue !== numberValue;
-      }
-
-      if (
-        !currValue &&
-        cond.composition_type === ConditionCompositionEnum.And
-      ) {
-        overallValue = false;
-        break;
-      }
-      overallValue =
-        overallValue === undefined
-          ? currValue
-          : prevCond?.composition_type === ConditionCompositionEnum.And
-          ? overallValue && currValue
-          : overallValue || currValue;
-    }
-
-    if (
-      overallValue ||
-      (!overallValue &&
-        controlConditionType === ControlConditionTypesEnum.ElseGo)
-    ) {
-      return condition.then_control_id;
-    }
-  }
-  return null;
 };
 
 export const hideControlsWithConditionOn = (controls: ControlType[]) => {

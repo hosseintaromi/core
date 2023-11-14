@@ -49,10 +49,9 @@ export const FBContextProvider = memo(
       if (!thisControl?.conditions) {
         return;
       }
-      const thenShowControlId = passCondition(
-        thisControl?.conditions,
-        target.value,
-      );
+      const thenShowControlId = passCondition(thisControl?.conditions, {
+        [target.name]: target.value,
+      });
       if (!thenShowControlId) {
         return;
       }

@@ -1,11 +1,3 @@
-// import DatePicker from "../form-builder/controls/DatePicker";
-// import DropDown from "../form-builder/controls/DropDown";
-// import FileUpload from "../form-builder/controls/FileUpload";
-// import Group from "../form-builder/controls/Group";
-// import MultipleOption from "../form-builder/controls/MultipleOption";
-// import PlaceHolder from "../form-builder/controls/PlaceHolder";
-// import TextArea from "../form-builder/controls/TextArea";
-
 import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
 import FormSetGroup from "./controls/FormSetGroup";
 import TextArea from "./controls/TextArea";

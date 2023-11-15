@@ -50,7 +50,7 @@ const ControlSelector = ({
     case ControlTypeEnum.MultipleOption:
       return <MultipleOption control={control} />;
     case ControlTypeEnum.PlaceHolder:
-      return <PlaceHolder control={control} />;
+      return <PlaceHolder control={control} theme={theme} />;
     case ControlTypeEnum.TextArea:
       return <TextArea control={control} isFloatingBox={isFloatingBox} />;
     default:

@@ -8,7 +8,9 @@
   "values": [],
   "theme": {
     "theme_id": "dfdd",
-    "controls_style": {
+    "controls_style": {},
+    "labels_style": {},
+    "placeholders_style": {
       "border": { "right": "2px solid blue" },
       "shadow": "10px 10px 5px lightblue inset",
       "padding": { "horizontal": 10, "vertical": 5 },
@@ -16,8 +18,7 @@
       "background_color": "#fffff0",
       "font_weight": "700",
       "text_color": "blue"
-    },
-    "labels_style": {}
+    }
   },
   "layout": { "floating_box": true },
   "controls": [

@@ -1,25 +1,18 @@
 import { FC } from "react";
 import { ControlType } from "../../@types/ControlTypes";
 import { Box, Typography } from "@mui/material";
-import { PlaceHolderTypeEnum } from "../../@types/PlaceHolderTypes";
+import { ThemeType } from "../../@types/ThemeTypes";
+import placeHolderStyle from "../../utils/theme/placeHolderStyle";
 
 type PlaceHolderPropsType = {
   control: ControlType;
+  theme: ThemeType;
 };
 
-const PlaceHolder: FC<PlaceHolderPropsType> = ({ control }) => {
+const PlaceHolder: FC<PlaceHolderPropsType> = ({ control, theme }) => {
   const placeHolderInfo = control.placeholder_info;
-  const type = placeHolderInfo?.type;
   return (
-    <Box
-      textAlign={
-        type === PlaceHolderTypeEnum.End
-          ? "end"
-          : type === PlaceHolderTypeEnum.Start
-          ? "start"
-          : "center"
-      }
-    >
+    <Box sx={placeHolderStyle(theme.placeholders_style)}>
       <Typography>{placeHolderInfo?.description}</Typography>
     </Box>
   );

@@ -38,11 +38,6 @@ const TextBox = ({ control }: { control: ControlType }) => {
 
   return (
     <TextField
-      sx={{
-        "label + &": {
-          marginTop: 3,
-        },
-      }}
       error={!!getControlErrors()?.type}
       ref={ref}
       onChange={onChange}

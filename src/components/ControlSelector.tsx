@@ -1,4 +1,6 @@
 import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
+import DatePicker from "./controls/DatePicker";
+import DropDown from "./controls/DropDown";
 import FormSetGroup from "./controls/FormSetGroup";
 import TextArea from "./controls/TextArea";
 import TextBox from "./controls/TextBox";
@@ -7,24 +9,10 @@ const ControlSelector = ({ control }: { control: ControlType }) => {
   switch (control.type) {
     case ControlTypeEnum.TextBox:
       return <TextBox control={control} />;
-    // case ControlTypeEnum.DatePicker:
-    //   return (
-    //     <DatePicker
-    //       form={form}
-    //       formState={formState}
-    //       index={index}
-    //       controlFormState={controlFormState}
-    //     />
-    //   );
-    // case ControlTypeEnum.DropDown:
-    //   return (
-    //     <DropDown
-    //       form={form}
-    //       formState={formState}
-    //       index={index}
-    //       controlFormState={controlFormState}
-    //     />
-    //   );
+    case ControlTypeEnum.DatePicker:
+      return <DatePicker control={control} />;
+    case ControlTypeEnum.DropDown:
+      return <DropDown control={control} />;
     // case ControlTypeEnum.FileUpload:
     //   return (
     //     <FileUpload

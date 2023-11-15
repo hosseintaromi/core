@@ -1,4 +1,4 @@
-enum PlaceHolderTypeEnum {
+export enum PlaceHolderTypeEnum {
   Start = "Start",
   End = "End",
   Note = "Note",

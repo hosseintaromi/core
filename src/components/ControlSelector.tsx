@@ -3,6 +3,7 @@ import DatePicker from "./controls/DatePicker";
 import DropDown from "./controls/DropDown";
 import FormSetGroup from "./controls/FormSetGroup";
 import MultipleOption from "./controls/MultipleOption";
+import PlaceHolder from "./controls/PlaceHolder";
 import TextArea from "./controls/TextArea";
 import TextBox from "./controls/TextBox";
 
@@ -27,8 +28,8 @@ const ControlSelector = ({ control }: { control: ControlType }) => {
       return <FormSetGroup control={control} />;
     case ControlTypeEnum.MultipleOption:
       return <MultipleOption control={control} />;
-    // case ControlTypeEnum.PlaceHolder:
-    //   return <PlaceHolder form={form} formState={formState} index={index} />;
+    case ControlTypeEnum.PlaceHolder:
+      return <PlaceHolder control={control} />;
     case ControlTypeEnum.TextArea:
       return <TextArea control={control} />;
     default:

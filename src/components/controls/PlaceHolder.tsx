@@ -1,20 +1,28 @@
 import { FC } from "react";
 import { ControlType } from "../../@types/ControlTypes";
+import { Box, Typography } from "@mui/material";
+import { PlaceHolderTypeEnum } from "../../@types/PlaceHolderTypes";
 
 type PlaceHolderPropsType = {
   control: ControlType;
 };
-// TODO placeholder type
+
 const PlaceHolder: FC<PlaceHolderPropsType> = ({ control }) => {
-  if (!control) {
-    return <></>;
-  }
-  // return (
-  //   <ControlWrapper form={form} formState={formState} index={index}>
-  //     <div>{control.placeholder_info?.description}</div>
-  //   </ControlWrapper>
-  // );
-  return <></>;
+  const placeHolderInfo = control.placeholder_info;
+  const type = placeHolderInfo?.type;
+  return (
+    <Box
+      textAlign={
+        type === PlaceHolderTypeEnum.End
+          ? "end"
+          : type === PlaceHolderTypeEnum.Start
+          ? "start"
+          : "center"
+      }
+    >
+      <Typography>{placeHolderInfo?.description}</Typography>
+    </Box>
+  );
 };
 
 export default PlaceHolder;

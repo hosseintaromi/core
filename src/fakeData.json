@@ -10,7 +10,8 @@
     "theme_id": "dfdd",
     "controls_style": {},
     "labels_style": {},
-    "placeholders_style": {
+    "placeholders_style": {},
+    "groups_style": {
       "border": { "right": "2px solid blue" },
       "shadow": "10px 10px 5px lightblue inset",
       "padding": { "horizontal": 10, "vertical": 5 },

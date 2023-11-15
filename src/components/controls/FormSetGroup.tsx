@@ -6,6 +6,7 @@ import { FBContext } from "../../context/FBContextProvider";
 import { hideControlsWithConditionOn } from "../../utils/controlUtils";
 import { Box } from "@mui/material";
 import { ThemeType } from "../../@types/ThemeTypes";
+import groupStyle from "../../utils/theme/groupStyle";
 
 type GroupPropsType = {
   control: ControlType;
@@ -31,7 +32,10 @@ const FormSetGroup = ({ control, isFloatingBox, theme }: GroupPropsType) => {
   }, []);
 
   return (
-    <Box sx={{ display: "grid", gap: 2 }} id="group">
+    <Box
+      sx={{ display: "grid", gap: 2, ...groupStyle(theme.groups_style) }}
+      id="group"
+    >
       {controls
         ?.filter((x) => !x.is_hidden)
         .map((controlItem: ControlType) => (

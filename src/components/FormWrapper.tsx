@@ -4,11 +4,10 @@ import { ViewContainerType } from "../core/@types/commonView";
 import { FormType } from "../@types/FormTypes";
 import { getControl, getNextIndex } from "../utils/controlUtils";
 import { useFBControl } from "../hooks/useFBControl";
-import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
+import { ControlType } from "../@types/ControlTypes";
 import FormPage from "./FormPage";
 import { FieldValues } from "react-hook-form";
 import { Button, Container } from "@mui/material";
-import groupStyle from "../utils/theme/groupStyle";
 
 type FormWrapperPropsType = {
   form: FormType;
@@ -53,8 +52,6 @@ const FormWrapper: FC<FormWrapperPropsType> = ({
         display: "grid",
         gap: 2,
         justifyItems: "start",
-        ...(control.type === ControlTypeEnum.Group &&
-          groupStyle(form.theme.groups_style)),
       }}
     >
       <>{children}</>

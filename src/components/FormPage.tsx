@@ -32,6 +32,7 @@ const FormPage = (props: ControlPropsType) => {
             <ControlSelector
               control={control}
               isFloatingBox={form.layout.floating_box}
+              theme={form.theme}
             />
           </ControlWrapper>
         </FormWrapper>

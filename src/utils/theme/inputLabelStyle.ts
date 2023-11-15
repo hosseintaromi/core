@@ -5,10 +5,10 @@ const inputLabelStyle = (labelStyle?: ControlStyleType) => {
   return {
     styleOverrides: {
       root: {
-        marginBlock: labelStyle?.margin?.horizontal,
-        marginInline: labelStyle?.margin?.vertical,
+        marginBlock: labelStyle?.margin?.horizontal + "px",
+        marginInline: labelStyle?.margin?.vertical + "px",
         backgroundColor: labelStyle?.background_color,
-        fontSize: labelStyle?.font_size,
+        fontSize: labelStyle?.font_size + "px",
         fontWeight: labelStyle?.font_weight,
         color: labelStyle?.text_color,
         borderTop: border?.top,
@@ -17,8 +17,8 @@ const inputLabelStyle = (labelStyle?: ControlStyleType) => {
         borderLeft: border?.left,
         borderRadius: labelStyle?.radius,
         boxShadow: labelStyle?.shadow,
-        paddingBlock: labelStyle?.padding?.horizontal,
-        paddingInline: labelStyle?.padding?.vertical,
+        paddingBlock: labelStyle?.padding?.horizontal + "px",
+        paddingInline: labelStyle?.padding?.vertical + "px",
       },
     },
   };

@@ -1,4 +1,5 @@
 import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
+import { ThemeType } from "../@types/ThemeTypes";
 import DatePicker from "./controls/DatePicker";
 import DropDown from "./controls/DropDown";
 import FormSetGroup from "./controls/FormSetGroup";
@@ -10,15 +11,23 @@ import TextBox from "./controls/TextBox";
 const ControlSelector = ({
   control,
   isFloatingBox,
+  theme,
 }: {
   control: ControlType;
   isFloatingBox?: boolean;
+  theme: ThemeType;
 }) => {
   switch (control.type) {
     case ControlTypeEnum.TextBox:
       return <TextBox control={control} isFloatingBox={isFloatingBox} />;
     case ControlTypeEnum.DatePicker:
-      return <DatePicker control={control} isFloatingBox={isFloatingBox} />;
+      return (
+        <DatePicker
+          control={control}
+          isFloatingBox={isFloatingBox}
+          theme={theme}
+        />
+      );
     case ControlTypeEnum.DropDown:
       return <DropDown control={control} isFloatingBox={isFloatingBox} />;
     // case ControlTypeEnum.FileUpload:
@@ -31,7 +40,13 @@ const ControlSelector = ({
     //     />
     //   );
     case ControlTypeEnum.Group:
-      return <FormSetGroup control={control} isFloatingBox={isFloatingBox} />;
+      return (
+        <FormSetGroup
+          control={control}
+          isFloatingBox={isFloatingBox}
+          theme={theme}
+        />
+      );
     case ControlTypeEnum.MultipleOption:
       return <MultipleOption control={control} />;
     case ControlTypeEnum.PlaceHolder:

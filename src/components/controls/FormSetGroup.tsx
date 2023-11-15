@@ -5,13 +5,15 @@ import { useCallback, useContext, useEffect, useState } from "react";
 import { FBContext } from "../../context/FBContextProvider";
 import { hideControlsWithConditionOn } from "../../utils/controlUtils";
 import { Box } from "@mui/material";
+import { ThemeType } from "../../@types/ThemeTypes";
 
 type GroupPropsType = {
   control: ControlType;
   isFloatingBox?: boolean;
+  theme: ThemeType;
 };
 
-const FormSetGroup = ({ control, isFloatingBox }: GroupPropsType) => {
+const FormSetGroup = ({ control, isFloatingBox, theme }: GroupPropsType) => {
   const [controls, setControls] = useState<ControlType[]>([]);
 
   const { registerFormSet } = useContext(FBContext);
@@ -41,6 +43,7 @@ const FormSetGroup = ({ control, isFloatingBox }: GroupPropsType) => {
             <ControlSelector
               control={controlItem}
               isFloatingBox={isFloatingBox}
+              theme={theme}
             />
           </ControlWrapper>
         ))}

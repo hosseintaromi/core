@@ -5,13 +5,20 @@ import { useFBControl } from "../../hooks/useFBControl";
 import { AdapterDateFnsJalali } from "@mui/x-date-pickers/AdapterDateFnsJalali";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import dateTimePickerStyle from "../../utils/theme/dateTimePickerStyle";
+import { ThemeType } from "../../@types/ThemeTypes";
 
 type DatePickerPropsType = {
   control: ControlType;
+  theme: ThemeType;
   isFloatingBox?: boolean;
 };
 
-const DatePicker: FC<DatePickerPropsType> = ({ control, isFloatingBox }) => {
+const DatePicker: FC<DatePickerPropsType> = ({
+  control,
+  isFloatingBox,
+  theme,
+}) => {
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
   const { getControlErrors } = useFBControl(control);
 
@@ -30,6 +37,7 @@ const DatePicker: FC<DatePickerPropsType> = ({ control, isFloatingBox }) => {
             error: !!getControlErrors()?.type,
           },
         }}
+        sx={dateTimePickerStyle(theme.controls_style)}
       />
     </LocalizationProvider>
   );

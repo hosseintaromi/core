@@ -5,11 +5,11 @@ const textFieldStyleOverride = (controlStyle?: ControlStyleType) => {
   return {
     styleOverrides: {
       root: {
-        marginBlock: controlStyle?.margin?.horizontal,
-        marginInline: controlStyle?.margin?.vertical,
+        marginBlock: controlStyle?.margin?.horizontal + "px",
+        marginInline: controlStyle?.margin?.vertical + "px",
         backgroundColor: controlStyle?.background_color,
         ".MuiOutlinedInput-input": {
-          fontSize: controlStyle?.font_size,
+          fontSize: controlStyle?.font_size + "px",
           fontWeight: controlStyle?.font_weight,
           color: controlStyle?.text_color,
         },
@@ -20,8 +20,8 @@ const textFieldStyleOverride = (controlStyle?: ControlStyleType) => {
           borderLeft: border?.left,
           borderRadius: controlStyle?.radius,
           boxShadow: controlStyle?.shadow,
-          paddingBlock: controlStyle?.padding?.horizontal,
-          paddingInline: controlStyle?.padding?.vertical,
+          paddingBlock: controlStyle?.padding?.horizontal + "px",
+          paddingInline: controlStyle?.padding?.vertical + "px",
         },
       },
     },

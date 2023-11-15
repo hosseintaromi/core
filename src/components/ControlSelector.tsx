@@ -7,14 +7,20 @@ import PlaceHolder from "./controls/PlaceHolder";
 import TextArea from "./controls/TextArea";
 import TextBox from "./controls/TextBox";
 
-const ControlSelector = ({ control }: { control: ControlType }) => {
+const ControlSelector = ({
+  control,
+  isFloatingBox,
+}: {
+  control: ControlType;
+  isFloatingBox?: boolean;
+}) => {
   switch (control.type) {
     case ControlTypeEnum.TextBox:
-      return <TextBox control={control} />;
+      return <TextBox control={control} isFloatingBox={isFloatingBox} />;
     case ControlTypeEnum.DatePicker:
-      return <DatePicker control={control} />;
+      return <DatePicker control={control} isFloatingBox={isFloatingBox} />;
     case ControlTypeEnum.DropDown:
-      return <DropDown control={control} />;
+      return <DropDown control={control} isFloatingBox={isFloatingBox} />;
     // case ControlTypeEnum.FileUpload:
     //   return (
     //     <FileUpload
@@ -25,13 +31,13 @@ const ControlSelector = ({ control }: { control: ControlType }) => {
     //     />
     //   );
     case ControlTypeEnum.Group:
-      return <FormSetGroup control={control} />;
+      return <FormSetGroup control={control} isFloatingBox={isFloatingBox} />;
     case ControlTypeEnum.MultipleOption:
       return <MultipleOption control={control} />;
     case ControlTypeEnum.PlaceHolder:
       return <PlaceHolder control={control} />;
     case ControlTypeEnum.TextArea:
-      return <TextArea control={control} />;
+      return <TextArea control={control} isFloatingBox={isFloatingBox} />;
     default:
       return <></>;
   }

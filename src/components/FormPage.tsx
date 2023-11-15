@@ -25,8 +25,14 @@ const FormPage = (props: ControlPropsType) => {
     <FBContextProvider control={control}>
       <ThemeProvider theme={theme(form.theme)}>
         <FormWrapper form={form} indexes={indexes} control={control}>
-          <ControlWrapper control={control}>
-            <ControlSelector control={control} />
+          <ControlWrapper
+            control={control}
+            isFloatingBox={form.layout.floating_box}
+          >
+            <ControlSelector
+              control={control}
+              isFloatingBox={form.layout.floating_box}
+            />
           </ControlWrapper>
         </FormWrapper>
       </ThemeProvider>

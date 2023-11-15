@@ -8,9 +8,10 @@ import { Box } from "@mui/material";
 
 type GroupPropsType = {
   control: ControlType;
+  isFloatingBox?: boolean;
 };
 
-const FormSetGroup = ({ control }: GroupPropsType) => {
+const FormSetGroup = ({ control, isFloatingBox }: GroupPropsType) => {
   const [controls, setControls] = useState<ControlType[]>([]);
 
   const { registerFormSet } = useContext(FBContext);
@@ -32,8 +33,15 @@ const FormSetGroup = ({ control }: GroupPropsType) => {
       {controls
         ?.filter((x) => !x.is_hidden)
         .map((controlItem: ControlType) => (
-          <ControlWrapper key={controlItem.control_id} control={controlItem}>
-            <ControlSelector control={controlItem} />
+          <ControlWrapper
+            key={controlItem.control_id}
+            control={controlItem}
+            isFloatingBox={isFloatingBox}
+          >
+            <ControlSelector
+              control={controlItem}
+              isFloatingBox={isFloatingBox}
+            />
           </ControlWrapper>
         ))}
     </Box>

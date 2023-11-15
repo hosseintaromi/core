@@ -5,7 +5,13 @@ import { ControlType } from "../../@types/ControlTypes";
 import { TextField } from "@mui/material";
 import { useFBControl } from "../../hooks/useFBControl";
 
-const TextBox = ({ control }: { control: ControlType }) => {
+const TextBox = ({
+  control,
+  isFloatingBox,
+}: {
+  control: ControlType;
+  isFloatingBox?: boolean;
+}) => {
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
   const { getControlErrors } = useFBControl(control);
   const [inputType, setInputType] = useState("text");
@@ -44,6 +50,7 @@ const TextBox = ({ control }: { control: ControlType }) => {
       onBlur={onBlur}
       name={name}
       type={inputType}
+      label={isFloatingBox ? control.label_text : ""}
     />
   );
 };

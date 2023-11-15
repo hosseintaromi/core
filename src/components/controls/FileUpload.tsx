@@ -1,15 +1,15 @@
 import { ChangeEvent, FC } from "react";
 import { ControlType } from "../../@types/ControlTypes";
 import { FileTypeEnum } from "../../@types/FileUploadTypes";
+import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
+import { Box, Typography } from "@mui/material";
 
 type FileUploadPropsType = {
   control: ControlType;
 };
 
 const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
-  if (!control?.control_id) {
-    return <></>;
-  }
+  const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
 
   const info = control.file_upload_info;
   let acceptType: string = "";
@@ -51,20 +51,22 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
     }
   };
 
-  // return (
-  //   <ControlWrapper form={form} formState={formState} index={index}>
-  //     <input
-  //       type="file"
-  //       accept={acceptType}
-  //       {...register(control.control_id, getValidationObject(control))}
-  //       {...controlRegister(control.control_id, {
-  //         ...getValidationObject(control),
-  //         onChange: handleChange,
-  //       })}
-  //     />
-  //   </ControlWrapper>
-  // );
-  return <></>;
+  return (
+    <>
+      <Box>
+        <img src="" alt="" />
+        <Typography>فایل خود را انتخاب کنید.</Typography>
+      </Box>
+      <input
+        type="file"
+        accept={acceptType}
+        ref={ref}
+        onChange={onChange}
+        onBlur={onBlur}
+        name={name}
+      />
+    </>
+  );
 };
 
 export default FileUpload;

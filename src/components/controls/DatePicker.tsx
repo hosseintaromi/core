@@ -8,9 +8,10 @@ import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 
 type DatePickerPropsType = {
   control: ControlType;
+  isFloatingBox?: boolean;
 };
 
-const DatePicker: FC<DatePickerPropsType> = ({ control }) => {
+const DatePicker: FC<DatePickerPropsType> = ({ control, isFloatingBox }) => {
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
   const { getControlErrors } = useFBControl(control);
 
@@ -23,6 +24,7 @@ const DatePicker: FC<DatePickerPropsType> = ({ control }) => {
         ref={ref}
         slotProps={{
           textField: {
+            label: isFloatingBox ? control.label_text : "",
             onBlur,
             name,
             error: !!getControlErrors()?.type,

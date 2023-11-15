@@ -1,82 +1,77 @@
-import { FC } from "react";
+import { FC, Fragment } from "react";
 import { ControlType } from "../../@types/ControlTypes";
 import { shuffle } from "../../utils/shuffle";
+import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
+import {
+  Checkbox,
+  FormControlLabel,
+  FormGroup,
+  Radio,
+  RadioGroup,
+} from "@mui/material";
+import { MultipleOptionTypeEnum } from "../../@types/MultipleOptionTypes";
 
 type MultipleOptionPropsType = {
   control: ControlType;
 };
 
 const MultipleOption: FC<MultipleOptionPropsType> = ({ control }) => {
-  if (!control?.control_id) {
-    return <></>;
-  }
+  const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
+
   const info = control.multiple_option_info;
 
   const options = info?.randomize_option_number
     ? shuffle(info.options || [])
     : info?.options;
 
-  // return (
-  //   <ControlWrapper form={form} formState={formState} index={index}>
-  //     {info?.multi_select ? (
-  //       <>
-  //         {options?.map((option, i) => (
-  //           <Fragment key={i}>
-  //             <input
-  //               type="checkbox"
-  //               {...register(
-  //                 control.control_id || "",
-  //                 getValidationObject(control),
-  //               )}
-  //               {...controlRegister(
-  //                 control.control_id || "",
-  //                 getValidationObject(control),
-  //               )}
-  //             />
-  //             <label htmlFor={option.value}>{option.text}</label>
-  //             {info.type === MultipleOptionTypeEnum.Image && (
-  //               <img alt={option.text} src={option.image_url} />
-  //             )}
-  //           </Fragment>
-  //         ))}
-  //         <>
-  //           {errors?.[control.control_id]?.type && (
-  //             <span>{errors?.[control.control_id]?.message?.toString()}</span>
-  //           )}
-  //         </>
-  //       </>
-  //     ) : (
-  //       <>
-  //         {options?.map((option, i) => (
-  //           <Fragment key={i}>
-  //             <input
-  //               type="radio"
-  //               id={option.value}
-  //               {...register(
-  //                 control.control_id || "",
-  //                 getValidationObject(control),
-  //               )}
-  //               {...controlRegister(
-  //                 control.control_id || "",
-  //                 getValidationObject(control),
-  //               )}
-  //             />
-  //             <label htmlFor={option.value}>{option.text}</label>
-  //             {info?.type === MultipleOptionTypeEnum.Image && (
-  //               <img alt={option.text} src={option.image_url} />
-  //             )}
-  //           </Fragment>
-  //         ))}
-  //         <>
-  //           {errors?.[control.control_id]?.type && (
-  //             <span>{errors?.[control.control_id]?.message?.toString()}</span>
-  //           )}
-  //         </>
-  //       </>
-  //     )}
-  //   </ControlWrapper>
-  // );
-  return <></>;
+  const ControlledCheckBox = ({ value }: { value: any }) => (
+    <Checkbox
+      ref={ref}
+      onChange={onChange}
+      onBlur={onBlur}
+      name={name}
+      value={value}
+    />
+  );
+
+  return (
+    <>
+      {info?.multi_select ? (
+        <FormGroup>
+          {options?.map((option) => (
+            <Fragment key={option.value}>
+              {info.type === MultipleOptionTypeEnum.Image ? (
+                <FormControlLabel
+                  control={<ControlledCheckBox value={option.value} />}
+                  label={<img alt={option.text} src={option.image_url} />}
+                />
+              ) : (
+                <FormControlLabel
+                  control={<ControlledCheckBox value={option.value} />}
+                  label={option.text}
+                />
+              )}
+            </Fragment>
+          ))}
+        </FormGroup>
+      ) : (
+        <RadioGroup>
+          {options?.map((option) => (
+            <FormControlLabel
+              name={name}
+              onChange={onChange}
+              onBlur={onBlur}
+              ref={ref}
+              key={option.value}
+              value={option.value}
+              control={<Radio />}
+              label={option.text}
+            />
+          ))}
+        </RadioGroup>
+      )}
+    </>
+  );
 };
 
 export default MultipleOption;

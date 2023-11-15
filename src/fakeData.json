@@ -35,13 +35,14 @@
       },
       "conditions": [
         {
-          "type": "ThenShow",
+          "type": "ThenGo",
           "then_control_id": "control_id_4",
+          "when_control_id": "control_id_2",
           "conditions": [
             {
               "control_id": "control_id_2",
               "condition_type": "Equal",
-              "condition_value": "زن"
+              "condition_value": 0
             }
           ]
         }
@@ -57,8 +58,7 @@
           {
             "control_id": "control_id_5",
             "type": "DatePicker",
-            "label_text": "تاریخ تولد",
-            "validations": [{ "type": "Required" }]
+            "label_text": "تاریخ تولد"
           },
           {
             "control_id": "control_id_6",
@@ -66,15 +66,15 @@
             "label_text": "مقطع تحصیلی",
             "multiple_option_info": {
               "type": "Text",
-              "multi_select": false,
-              "randomize_option_number": true,
+              "multi_select": true,
+              "randomize_option_number": false,
               "options": [
                 { "text": "دیپلم", "value": 0 },
                 { "text": "کارشناسی", "value": 1 },
                 { "text": "ارشد", "value": 2 }
               ]
             },
-            "validations": []
+            "validations": [{ "type": "Required" }]
           }
         ]
       }

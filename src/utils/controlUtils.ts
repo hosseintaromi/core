@@ -62,7 +62,7 @@ export const passCondition = (
       const value = values[cond.control_id];
       const prevCond = i === 0 ? null : condition.conditions[i - 1];
       let currValue;
-      if (!cond.condition_value) {
+      if (cond.condition_value === undefined) {
         return null;
       }
       let conditionValue: string | number = parseInt(cond.condition_value);

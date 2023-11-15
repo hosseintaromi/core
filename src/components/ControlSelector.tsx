@@ -2,6 +2,7 @@ import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
 import DatePicker from "./controls/DatePicker";
 import DropDown from "./controls/DropDown";
 import FormSetGroup from "./controls/FormSetGroup";
+import MultipleOption from "./controls/MultipleOption";
 import TextArea from "./controls/TextArea";
 import TextBox from "./controls/TextBox";
 
@@ -24,15 +25,8 @@ const ControlSelector = ({ control }: { control: ControlType }) => {
     //   );
     case ControlTypeEnum.Group:
       return <FormSetGroup control={control} />;
-    // case ControlTypeEnum.MultipleOption:
-    //   return (
-    //     <MultipleOption
-    //       form={form}
-    //       formState={formState}
-    //       index={index}
-    //       controlFormState={controlFormState}
-    //     />
-    //   );
+    case ControlTypeEnum.MultipleOption:
+      return <MultipleOption control={control} />;
     // case ControlTypeEnum.PlaceHolder:
     //   return <PlaceHolder form={form} formState={formState} index={index} />;
     case ControlTypeEnum.TextArea:

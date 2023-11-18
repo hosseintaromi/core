@@ -10,12 +10,15 @@ import {
   RadioGroup,
 } from "@mui/material";
 import { MultipleOptionTypeEnum } from "../../@types/MultipleOptionTypes";
+import groupStyle from "../../utils/theme/groupStyle";
+import { ThemeType } from "../../@types/ThemeTypes";
 
 type MultipleOptionPropsType = {
   control: ControlType;
+  theme: ThemeType;
 };
 
-const MultipleOption: FC<MultipleOptionPropsType> = ({ control }) => {
+const MultipleOption: FC<MultipleOptionPropsType> = ({ control, theme }) => {
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
 
   const info = control.multiple_option_info;
@@ -37,7 +40,7 @@ const MultipleOption: FC<MultipleOptionPropsType> = ({ control }) => {
   return (
     <>
       {info?.multi_select ? (
-        <FormGroup>
+        <FormGroup sx={groupStyle(theme.controls_style)}>
           {options?.map((option) => (
             <Fragment key={option.value}>
               {info.type === MultipleOptionTypeEnum.Image ? (
@@ -55,7 +58,7 @@ const MultipleOption: FC<MultipleOptionPropsType> = ({ control }) => {
           ))}
         </FormGroup>
       ) : (
-        <RadioGroup>
+        <RadioGroup sx={groupStyle(theme.controls_style)}>
           {options?.map((option) => (
             <FormControlLabel
               name={name}

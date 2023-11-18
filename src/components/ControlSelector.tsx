@@ -48,7 +48,7 @@ const ControlSelector = ({
         />
       );
     case ControlTypeEnum.MultipleOption:
-      return <MultipleOption control={control} />;
+      return <MultipleOption control={control} theme={theme} />;
     case ControlTypeEnum.PlaceHolder:
       return <PlaceHolder control={control} theme={theme} />;
     case ControlTypeEnum.TextArea:

@@ -22,7 +22,8 @@ type MultipleOptionPropsType = {
 };
 
 const MultipleOption: FC<MultipleOptionPropsType> = ({ control, theme }) => {
-  const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
+  const { onChange, onBlur, name, ref, defaultValue } =
+    useFBRegisterControl(control);
 
   const info = control.multiple_option_info;
 
@@ -37,6 +38,7 @@ const MultipleOption: FC<MultipleOptionPropsType> = ({ control, theme }) => {
       onBlur={onBlur}
       name={name}
       value={value}
+      defaultChecked={defaultValue?.includes(value)}
     />
   );
 
@@ -77,6 +79,7 @@ const MultipleOption: FC<MultipleOptionPropsType> = ({ control, theme }) => {
                 : "column",
             ...groupStyle(theme.controls_style),
           }}
+          defaultValue={defaultValue}
         >
           {options?.map((option) => (
             <FormControlLabel

@@ -2,6 +2,7 @@ html,
 body {
   height: 100%;
   overflow: hidden;
+  margin: 0;
 }
 
 .alert-card {
@@ -106,7 +107,8 @@ body {
   overflow: hidden;
   position: relative;
 
-  .view-wrapper {}
+  .view-wrapper {
+  }
 
   .overlay-inline-backdrop {
     position: absolute;
@@ -127,20 +129,16 @@ body {
   .view-wrapper {
     display: none;
   }
-
 }
 
 .slide-menu {
   width: 100%;
 }
 
-
-
 .slide-menu ul,
 .slide-menu ul li {
   padding: 0;
   margin: 0;
-
 }
 
 .slide-menu ul li {
@@ -223,7 +221,6 @@ body {
 }
 
 @media (min-width: 768px) {
-
   .tab-wrapper,
   .tab-container {
     max-width: 700px;
@@ -310,11 +307,12 @@ body {
   position: relative;
   height: 300px;
 }
-.slider-container .view-wrapper{
+.slider-container .view-wrapper {
   display: none;
 }
 
-.slide-tabs {}
+.slide-tabs {
+}
 
 .slide-tabs li {
   display: inline-block;

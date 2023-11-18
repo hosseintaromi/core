@@ -7,6 +7,7 @@ import { FBContextProvider } from "../context/FBContextProvider";
 import FormWrapper from "./FormWrapper";
 import theme from "../utils/theme";
 import { ThemeProvider } from "@emotion/react";
+import BackgroundStyle from "./styles/BackgroundStyle";
 
 type ControlPropsType = {
   form?: FormType;
@@ -24,6 +25,7 @@ const FormPage = (props: ControlPropsType) => {
   return (
     <FBContextProvider control={control}>
       <ThemeProvider theme={theme(form.theme)}>
+        <BackgroundStyle backgroundStyles={form.theme.background} />
         <FormWrapper form={form} indexes={indexes} control={control}>
           <ControlWrapper
             control={control}

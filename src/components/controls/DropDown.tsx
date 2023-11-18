@@ -6,7 +6,8 @@ import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 type DropDownPropsType = { control: ControlType; isFloatingBox?: boolean };
 
 const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
-  const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
+  const { onChange, onBlur, name, ref, defaultValue } =
+    useFBRegisterControl(control);
 
   const options = control.dropdown_info?.options;
 
@@ -19,7 +20,7 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
       name={name}
       sx={{ minWidth: 100 }}
       label={isFloatingBox ? control.label_text : ""}
-      // defaultValue={options?.[0].value}
+      defaultValue={defaultValue || options?.[0].value}
     >
       {control.dropdown_info?.options?.map((option) => (
         <MenuItem key={option.value} value={option.value}>

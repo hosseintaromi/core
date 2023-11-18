@@ -28,6 +28,7 @@ export const FBContext = createContext<{
     listenControlChanges: (newControls: ControlType[]) => void,
     id: string,
   ) => void;
+  getDefaultValue: (controlId: string) => void;
 }>({} as any);
 
 export const FBContextProvider = memo(
@@ -41,6 +42,9 @@ export const FBContextProvider = memo(
     children: ReactNode;
   }) => {
     const mainControlRef = useRef<ControlType>(control);
+    const controlDefaultValues = useRef<{ [controlId: string]: string }>(
+      getDefaultValues(control, defaultValues),
+    );
     const formSetListenRef = useRef<{
       [control_id: string]: {
         listenControlChanges: (newControls: ControlType[]) => void;
@@ -48,7 +52,7 @@ export const FBContextProvider = memo(
     }>({});
 
     const formController = useForm({
-      defaultValues: getDefaultValues(control, defaultValues),
+      defaultValues: controlDefaultValues.current,
     });
 
     const onChangedControlValue = (target: any) => {
@@ -112,6 +116,9 @@ export const FBContextProvider = memo(
     const getControlErrors = (id: string) =>
       formController.formState.errors[id];
 
+    const getDefaultValue = (controlId: string) =>
+      controlDefaultValues.current[controlId];
+
     return (
       <>
         <FBContext.Provider
@@ -120,6 +127,7 @@ export const FBContextProvider = memo(
             getControlErrors,
             submitForm,
             registerFormSet,
+            getDefaultValue,
           }}
         >
           {children}

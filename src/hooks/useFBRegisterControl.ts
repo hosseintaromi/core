@@ -3,7 +3,10 @@ import { ControlType } from "../@types/ControlTypes";
 import { FBContext } from "../context/FBContextProvider";
 
 export const useFBRegisterControl = (control: ControlType) => {
-  const { registerControl } = useContext(FBContext);
+  const { registerControl, getDefaultValue } = useContext(FBContext);
 
-  return registerControl(control);
+  return {
+    ...registerControl(control),
+    defaultValue: getDefaultValue(control.control_id),
+  };
 };

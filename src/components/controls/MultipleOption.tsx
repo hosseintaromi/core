@@ -9,7 +9,10 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import { MultipleOptionTypeEnum } from "../../@types/MultipleOptionTypes";
+import {
+  ArrangeTypeEnum,
+  MultipleOptionTypeEnum,
+} from "../../@types/MultipleOptionTypes";
 import groupStyle from "../../utils/theme/groupStyle";
 import { ThemeType } from "../../@types/ThemeTypes";
 
@@ -40,7 +43,15 @@ const MultipleOption: FC<MultipleOptionPropsType> = ({ control, theme }) => {
   return (
     <>
       {info?.multi_select ? (
-        <FormGroup sx={groupStyle(theme.controls_style)}>
+        <FormGroup
+          sx={{
+            flexDirection:
+              info.arrange_type === ArrangeTypeEnum.Horizontal
+                ? "row"
+                : "column",
+            ...groupStyle(theme.controls_style),
+          }}
+        >
           {options?.map((option) => (
             <Fragment key={option.value}>
               {info.type === MultipleOptionTypeEnum.Image ? (
@@ -58,7 +69,15 @@ const MultipleOption: FC<MultipleOptionPropsType> = ({ control, theme }) => {
           ))}
         </FormGroup>
       ) : (
-        <RadioGroup sx={groupStyle(theme.controls_style)}>
+        <RadioGroup
+          sx={{
+            flexDirection:
+              info?.arrange_type === ArrangeTypeEnum.Horizontal
+                ? "row"
+                : "column",
+            ...groupStyle(theme.controls_style),
+          }}
+        >
           {options?.map((option) => (
             <FormControlLabel
               name={name}

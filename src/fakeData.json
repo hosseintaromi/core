@@ -76,8 +76,9 @@
             "label_text": "مقطع تحصیلی",
             "multiple_option_info": {
               "type": "Text",
-              "multi_select": false,
+              "multi_select": true,
               "randomize_option_number": false,
+              "arrange_type": "Vertical",
               "options": [
                 { "text": "دیپلم", "value": 0 },
                 { "text": "کارشناسی", "value": 1 },

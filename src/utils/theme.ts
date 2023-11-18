@@ -8,7 +8,10 @@ const theme = (formTheme: ThemeType) =>
   createTheme({
     direction: "rtl",
     components: {
-      MuiTextField: textFieldStyleOverride(formTheme?.controls_style),
+      MuiTextField: textFieldStyleOverride(
+        formTheme?.controls_style,
+        formTheme.answer_color,
+      ),
       MuiInputLabel: inputLabelStyle(formTheme.labels_style),
       MuiSelect: selectStyleOverride(formTheme.controls_style),
     },

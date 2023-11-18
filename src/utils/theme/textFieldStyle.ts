@@ -1,6 +1,9 @@
 import { ControlStyleType } from "../../@types/ThemeTypes";
 
-const textFieldStyleOverride = (controlStyle?: ControlStyleType) => {
+const textFieldStyleOverride = (
+  controlStyle?: ControlStyleType,
+  answerColor?: string,
+) => {
   const border = controlStyle?.border;
   return {
     styleOverrides: {
@@ -11,7 +14,7 @@ const textFieldStyleOverride = (controlStyle?: ControlStyleType) => {
         ".MuiOutlinedInput-input": {
           fontSize: controlStyle?.font_size + "px",
           fontWeight: controlStyle?.font_weight,
-          color: controlStyle?.text_color,
+          color: controlStyle?.text_color || answerColor,
         },
         ".MuiOutlinedInput-notchedOutline": {
           borderTop: border?.top,

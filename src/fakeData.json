@@ -16,8 +16,9 @@
       "color": "red",
       "image_url": "https://img.freepik.com/free-vector/topographic-contour-lines-map-seamless-pattern_1284-52862.jpg?w=1800&t=st=1700290846~exp=1700291446~hmac=553e44205efddc5e23d9b80da819822b18d4bfa1bd6f9fb2f414c078d8b46479",
       "image_align": "Fit",
-      "image_opacity": 0.5
-    }
+      "image_opacity": 0.05
+    },
+    "answer_color": ""
   },
   "layout": { "floating_box": false },
   "controls": [

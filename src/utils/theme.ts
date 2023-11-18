@@ -12,6 +12,10 @@ const theme = (formTheme: ThemeType) =>
       MuiInputLabel: inputLabelStyle(formTheme.labels_style),
       MuiSelect: selectStyleOverride(formTheme.controls_style),
     },
+    typography: {
+      fontSize: formTheme.font_size,
+      fontFamily: formTheme.font_name,
+    },
   });
 
 export default theme;

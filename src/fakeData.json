@@ -43,7 +43,7 @@
       "type": "DropDown",
       "label_text": "جنسیت",
       "dropdown_info": {
-        "searchable": false,
+        "searchable": true,
         "options": [
           { "value": 0, "text": "زن" },
           { "value": 1, "text": "مرد" }

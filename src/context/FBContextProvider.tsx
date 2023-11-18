@@ -119,6 +119,8 @@ export const FBContextProvider = memo(
     const getDefaultValue = (controlId: string) =>
       controlDefaultValues.current[controlId];
 
+    console.log(formController.getValues());
+
     return (
       <>
         <FBContext.Provider

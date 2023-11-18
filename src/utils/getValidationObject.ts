@@ -1,6 +1,7 @@
 import { ValidationTypeEnum } from "../@types/ValidationTypes";
 import { ControlType } from "../@types/ControlTypes";
 import { FieldValues, RegisterOptions } from "react-hook-form";
+import { globalLocales } from "./global";
 
 export const getValidationObject = (control: ControlType) => {
   const validationObj: RegisterOptions<FieldValues, string> = {};
@@ -14,41 +15,41 @@ export const getValidationObject = (control: ControlType) => {
     if (item.type === ValidationTypeEnum.Regex) {
       validationObj.pattern = {
         value: regex,
-        message: "لطفا به پترن توجه کنید.",
+        message: globalLocales.VALIDATION_REGEX,
       };
     }
     if (item.type === ValidationTypeEnum.Email) {
       validationObj.pattern = {
         value: regex,
-        message: "لطفا ایمیل خود را به درستی وارد کنید",
+        message: globalLocales.VALIDATION_EMAIL,
       };
     }
     if (item.type === ValidationTypeEnum.Length) {
       validationObj.pattern = {
         value: regex,
-        message: "اندازه ورودی از حد مجاز خارج است",
+        message: globalLocales.VALIDATION_LENGTH,
       };
     }
     if (item.type === ValidationTypeEnum.Number) {
       validationObj.pattern = {
         value: regex,
-        message: "ورودی باید عدد باشد.",
+        message: globalLocales.VALIDATION_NUMBER,
       };
     }
     if (item.type === ValidationTypeEnum.Range) {
       validationObj.pattern = {
         value: regex,
-        message: "ورودی در بازه مورد نظر نمی باشد.",
+        message: globalLocales.VALIDATION_RANGE,
       };
     }
     if (item.type === ValidationTypeEnum.Url) {
       validationObj.pattern = {
         value: regex,
-        message: "ورودی صحیح نمی‌باشد.",
+        message: globalLocales.VALIDATION_URL,
       };
     }
     if (item.type === ValidationTypeEnum.Required) {
-      validationObj.required = "پر کردن این فیلد الزامی است.";
+      validationObj.required = globalLocales.VALIDATION_REQUIRED;
     }
   });
   return validationObj;

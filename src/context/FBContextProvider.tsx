@@ -13,6 +13,7 @@ import { getValidationObject } from "../utils/getValidationObject";
 import {
   getControlById,
   getControlParentById,
+  getDefaultValues,
   hideControlsWithConditionOn,
   passCondition,
 } from "../utils/controlUtils";
@@ -30,7 +31,15 @@ export const FBContext = createContext<{
 }>({} as any);
 
 export const FBContextProvider = memo(
-  ({ control, children }: { control: ControlType; children: ReactNode }) => {
+  ({
+    control,
+    defaultValues,
+    children,
+  }: {
+    control: ControlType;
+    defaultValues: { [controlId: string]: string };
+    children: ReactNode;
+  }) => {
     const mainControlRef = useRef<ControlType>(control);
     const formSetListenRef = useRef<{
       [control_id: string]: {
@@ -38,7 +47,9 @@ export const FBContextProvider = memo(
       };
     }>({});
 
-    const formController = useForm();
+    const formController = useForm({
+      defaultValues: getDefaultValues(control, defaultValues),
+    });
 
     const onChangedControlValue = (target: any) => {
       console.log(formController.getValues());

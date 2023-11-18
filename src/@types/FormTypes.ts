@@ -7,4 +7,5 @@ export type FormType = {
   controls: ControlType[];
   layout: LayoutType;
   theme: ThemeType;
+  values: { [controlId: string]: string };
 };

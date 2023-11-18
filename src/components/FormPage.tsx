@@ -23,7 +23,7 @@ const FormPage = (props: ControlPropsType) => {
     return <></>;
   }
   return (
-    <FBContextProvider control={control}>
+    <FBContextProvider control={control} defaultValues={form.values}>
       <ThemeProvider theme={theme(form.theme)}>
         <BackgroundStyle backgroundStyles={form.theme.background} />
         <FormWrapper form={form} indexes={indexes} control={control}>

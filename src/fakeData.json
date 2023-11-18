@@ -5,7 +5,6 @@
   "has_page_number": true,
   "has_progress": false,
   "locale": "Persian",
-  "values": [],
   "theme": {
     "theme_id": "dfdd",
     "controls_style": {},
@@ -19,6 +18,11 @@
       "image_opacity": 0.05
     },
     "answer_color": ""
+  },
+  "values": {
+    "control_id_1": "ریحانه",
+    "control_id_2": 1,
+    "control_id_7": "هلتنسی مبسیمبتسی بسیمنبتسی بتمن ینبت بین."
   },
   "layout": { "floating_box": false },
   "controls": [

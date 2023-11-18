@@ -263,3 +263,20 @@ export const getControlParentById = (
   }
   return null;
 };
+
+export const getDefaultValues = (
+  control: ControlType,
+  defaultValues: { [controlId: string]: string },
+) => {
+  let defaults: { [controlId: string]: string } = {};
+  if (defaultValues[control.control_id]) {
+    defaults[control.control_id] = defaultValues[control.control_id];
+  }
+  if (control.type === ControlTypeEnum.Group) {
+    control.group_info?.controls?.forEach(
+      (item) =>
+        (defaults = { ...defaults, ...getDefaultValues(item, defaultValues) }),
+    );
+  }
+  return defaults;
+};

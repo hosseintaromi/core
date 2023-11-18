@@ -19,12 +19,14 @@ const DatePicker: FC<DatePickerPropsType> = ({
   isFloatingBox,
   theme,
 }) => {
-  const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
+  const { onChange, onBlur, name, ref, defaultValue } =
+    useFBRegisterControl(control);
   const { getControlErrors } = useFBControl(control);
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
       <DateTimePicker
+        defaultValue={defaultValue}
         onChange={(value) =>
           onChange({ target: { value, name: control.control_id } })
         }

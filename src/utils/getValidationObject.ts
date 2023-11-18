@@ -12,44 +12,47 @@ export const getValidationObject = (control: ControlType) => {
       const regexPattern = item.regex_pattern.slice(1, -1);
       regex = new RegExp(regexPattern);
     }
-    if (item.type === ValidationTypeEnum.Regex) {
-      validationObj.pattern = {
-        value: regex,
-        message: globalLocales.VALIDATION_REGEX,
-      };
-    }
-    if (item.type === ValidationTypeEnum.Email) {
-      validationObj.pattern = {
-        value: regex,
-        message: globalLocales.VALIDATION_EMAIL,
-      };
-    }
-    if (item.type === ValidationTypeEnum.Length) {
-      validationObj.pattern = {
-        value: regex,
-        message: globalLocales.VALIDATION_LENGTH,
-      };
-    }
-    if (item.type === ValidationTypeEnum.Number) {
-      validationObj.pattern = {
-        value: regex,
-        message: globalLocales.VALIDATION_NUMBER,
-      };
-    }
-    if (item.type === ValidationTypeEnum.Range) {
-      validationObj.pattern = {
-        value: regex,
-        message: globalLocales.VALIDATION_RANGE,
-      };
-    }
-    if (item.type === ValidationTypeEnum.Url) {
-      validationObj.pattern = {
-        value: regex,
-        message: globalLocales.VALIDATION_URL,
-      };
-    }
-    if (item.type === ValidationTypeEnum.Required) {
-      validationObj.required = globalLocales.VALIDATION_REQUIRED;
+    switch (item.type) {
+      case ValidationTypeEnum.Regex:
+        validationObj.pattern = {
+          value: regex,
+          message: globalLocales.VALIDATION_REGEX,
+        };
+        break;
+      case ValidationTypeEnum.Email:
+        validationObj.pattern = {
+          value: regex,
+          message: globalLocales.VALIDATION_EMAIL,
+        };
+        break;
+      case ValidationTypeEnum.Length:
+        validationObj.pattern = {
+          value: regex,
+          message: globalLocales.VALIDATION_LENGTH,
+        };
+        break;
+      case ValidationTypeEnum.Number:
+        validationObj.pattern = {
+          value: regex,
+          message: globalLocales.VALIDATION_NUMBER,
+        };
+        break;
+      case ValidationTypeEnum.Range:
+        validationObj.pattern = {
+          value: regex,
+          message: globalLocales.VALIDATION_RANGE,
+        };
+        break;
+      case ValidationTypeEnum.Url:
+        validationObj.pattern = {
+          value: regex,
+          message: globalLocales.VALIDATION_URL,
+        };
+        break;
+      case ValidationTypeEnum.Required:
+        validationObj.required = globalLocales.VALIDATION_REQUIRED;
+
+        break;
     }
   });
   return validationObj;

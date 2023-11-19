@@ -8,7 +8,7 @@
   "theme": {
     "theme_id": "dfdd",
     "controls_style": {
-      "border": { "bottom": "2px solid blue" }
+      "border": {}
     },
     "labels_style": {},
     "placeholders_style": {},

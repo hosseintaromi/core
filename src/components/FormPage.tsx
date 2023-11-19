@@ -8,6 +8,8 @@ import FormWrapper from "./FormWrapper";
 import theme from "../utils/theme";
 import { ThemeProvider } from "@emotion/react";
 import BackgroundStyle from "./styles/BackgroundStyle";
+import LinearProgressStyle from "./styles/LInearProgressStyle";
+import { getProgress } from "../utils/progressUtils";
 
 type ControlPropsType = {
   form?: FormType;
@@ -22,6 +24,7 @@ const FormPage = (props: ControlPropsType) => {
   if (!form || !indexes || indexes.length < 1 || !control) {
     return <></>;
   }
+  console.log(form);
   return (
     <FBContextProvider control={control} defaultValues={form.values}>
       <ThemeProvider theme={theme(form.theme)}>
@@ -29,15 +32,19 @@ const FormPage = (props: ControlPropsType) => {
         <FormWrapper form={form} indexes={indexes} control={control}>
           <ControlWrapper
             control={control}
-            isFloatingBox={form.layout.floating_box}
+            isFloatingBox={form.layout?.floating_box}
           >
             <ControlSelector
               control={control}
-              isFloatingBox={form.layout.floating_box}
+              isFloatingBox={form.layout?.floating_box}
               theme={form.theme}
             />
           </ControlWrapper>
         </FormWrapper>
+        <LinearProgressStyle
+          variant="determinate"
+          value={getProgress(form, indexes)}
+        />
       </ThemeProvider>
     </FBContextProvider>
   );

@@ -12,9 +12,15 @@ type GroupPropsType = {
   control: ControlType;
   isFloatingBox?: boolean;
   theme: ThemeType;
+  hideQuestionNumber?: boolean;
 };
 
-const FormSetGroup = ({ control, isFloatingBox, theme }: GroupPropsType) => {
+const FormSetGroup = ({
+  control,
+  isFloatingBox,
+  theme,
+  hideQuestionNumber,
+}: GroupPropsType) => {
   const [controls, setControls] = useState<ControlType[]>([]);
 
   const { registerFormSet } = useContext(FBContext);
@@ -43,6 +49,7 @@ const FormSetGroup = ({ control, isFloatingBox, theme }: GroupPropsType) => {
             key={controlItem.control_id}
             control={controlItem}
             isFloatingBox={isFloatingBox}
+            hideQuestionNumber={hideQuestionNumber}
           >
             <ControlSelector
               control={controlItem}

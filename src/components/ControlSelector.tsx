@@ -12,10 +12,12 @@ const ControlSelector = ({
   control,
   isFloatingBox,
   theme,
+  hideQuestionNumber,
 }: {
   control: ControlType;
   isFloatingBox?: boolean;
   theme: ThemeType;
+  hideQuestionNumber?: boolean;
 }) => {
   switch (control.type) {
     case ControlTypeEnum.TextBox:
@@ -45,6 +47,7 @@ const ControlSelector = ({
           control={control}
           isFloatingBox={isFloatingBox}
           theme={theme}
+          hideQuestionNumber={hideQuestionNumber}
         />
       );
     case ControlTypeEnum.MultipleOption:

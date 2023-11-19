@@ -7,5 +7,6 @@ export type FormType = {
   controls: ControlType[];
   layout?: LayoutType;
   theme: ThemeType;
+  hide_question_number?: boolean;
   values: { [controlId: string]: string };
 };

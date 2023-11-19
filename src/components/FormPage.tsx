@@ -31,11 +31,13 @@ const FormPage = (props: ControlPropsType) => {
           <ControlWrapper
             control={control}
             isFloatingBox={form.layout?.floating_box}
+            hideQuestionNumber={form.hide_question_number}
           >
             <ControlSelector
               control={control}
               isFloatingBox={form.layout?.floating_box}
               theme={form.theme}
+              hideQuestionNumber={form.hide_question_number}
             />
           </ControlWrapper>
         </FormWrapper>

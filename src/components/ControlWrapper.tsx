@@ -1,18 +1,13 @@
 import { FC, ReactNode, useMemo } from "react";
 import { useFBControl } from "../hooks/useFBControl";
 import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
-import {
-  Box,
-  FormControl,
-  FormHelperText,
-  InputLabel,
-  Typography,
-} from "@mui/material";
+import { Box, FormControl, FormHelperText, InputLabel } from "@mui/material";
 import { questionCounter } from "../utils/progressUtils";
 
 type ControlWrapperPropsType = {
   control: ControlType;
   isFloatingBox?: boolean;
+  hideQuestionNumber?: boolean;
   children?: ReactNode | Element;
 };
 
@@ -20,6 +15,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   control,
   children,
   isFloatingBox,
+  hideQuestionNumber,
 }) => {
   const { getControlErrors } = useFBControl(control);
 
@@ -40,7 +36,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   return (
     <Box display="flex" flexDirection="row" marginTop={3}>
       <Box paddingBlockStart={-2} position="relative" top={-8}>
-        {questionNumber !== 0 && <>{questionNumber}. </>}
+        {questionNumber !== 0 && !hideQuestionNumber && <>{questionNumber}. </>}
       </Box>
       <FormControl error={hasError}>
         {(label &&

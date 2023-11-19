@@ -3,7 +3,7 @@
   "type": "Form",
   "hide_question_number": false,
   "has_page_number": true,
-  "has_progress": false,
+  "has_progress": true,
   "locale": "Persian",
   "theme": {
     "theme_id": "dfdd",

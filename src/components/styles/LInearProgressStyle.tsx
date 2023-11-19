@@ -19,6 +19,9 @@ function LinearProgressWithLabel({
   const allPages = hideControlsWithConditionOn(form.controls).filter(
     (x) => !x.is_hidden,
   ).length;
+
+  if (!form.has_progress) return <></>;
+
   return (
     <Box
       sx={{

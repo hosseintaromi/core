@@ -8,8 +8,7 @@ import FormWrapper from "./FormWrapper";
 import theme from "../utils/theme";
 import { ThemeProvider } from "@emotion/react";
 import BackgroundStyle from "./styles/BackgroundStyle";
-import LinearProgressStyle from "./styles/LInearProgressStyle";
-import { getProgress } from "../utils/progressUtils";
+import LinearProgressWithLabel from "./styles/LinearProgressStyle";
 
 type ControlPropsType = {
   form?: FormType;
@@ -41,10 +40,7 @@ const FormPage = (props: ControlPropsType) => {
             />
           </ControlWrapper>
         </FormWrapper>
-        <LinearProgressStyle
-          variant="determinate"
-          value={getProgress(form, indexes)}
-        />
+        <LinearProgressWithLabel form={form} indexes={indexes} />
       </ThemeProvider>
     </FBContextProvider>
   );

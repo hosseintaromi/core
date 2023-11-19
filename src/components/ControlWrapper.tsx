@@ -1,7 +1,13 @@
 import { FC, ReactNode, useMemo } from "react";
 import { useFBControl } from "../hooks/useFBControl";
 import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
-import { Box, FormControl, FormHelperText, InputLabel } from "@mui/material";
+import {
+  Box,
+  FormControl,
+  FormHelperText,
+  InputLabel,
+  Typography,
+} from "@mui/material";
 import { questionCounter } from "../utils/progressUtils";
 
 type ControlWrapperPropsType = {
@@ -56,7 +62,15 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
               {label}
             </InputLabel>
           ))}
-        <Box marginTop={isFloatingDropDown ? 0 : 3}>
+        <Box
+          display="flex"
+          flexDirection="column"
+          gap={2}
+          marginTop={isFloatingDropDown ? 0 : 3}
+        >
+          <Box>
+            <Typography variant="subtitle2">{control.description}</Typography>
+          </Box>
           <>{children}</>
         </Box>
         <>

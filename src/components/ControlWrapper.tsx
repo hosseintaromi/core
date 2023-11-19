@@ -25,7 +25,8 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   const hasError = !!getControlErrors()?.type;
 
   const questionNumber = useMemo(() => {
-    if (type !== ControlTypeEnum.Group) return questionCounter();
+    if (type !== ControlTypeEnum.Group && type !== ControlTypeEnum.PlaceHolder)
+      return questionCounter();
     return 0;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [control]);

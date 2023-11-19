@@ -23,7 +23,6 @@ const FormPage = (props: ControlPropsType) => {
   if (!form || !indexes || indexes.length < 1 || !control) {
     return <></>;
   }
-  console.log(form);
   return (
     <FBContextProvider control={control} defaultValues={form.values}>
       <ThemeProvider theme={theme(form.theme)}>

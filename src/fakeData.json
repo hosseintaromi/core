@@ -28,7 +28,7 @@
     "control_id_6": [1, 0],
     "control_id_5": 1700305220701
   },
-  "layout": { "floating_box": false },
+  "layout": { "floating_box": true },
   "controls": [
     {
       "control_id": "control_id_1",

@@ -32,7 +32,7 @@ function LinearProgressWithLabel({
     >
       <Box sx={{}}>
         <Typography variant="body2" color="text.secondary">
-          {indexes[0] + 1}/{allPages}
+          {indexes[0] + 1}/{Math.max(indexes[0] + 1, allPages)}
         </Typography>
       </Box>
       <Box sx={{ width: "100%" }}>

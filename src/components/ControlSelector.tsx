@@ -3,7 +3,7 @@ import { ThemeType } from "../@types/ThemeTypes";
 import DatePicker from "./controls/DatePicker";
 import DropDown from "./controls/DropDown";
 import FormSetGroup from "./controls/FormSetGroup";
-import MultipleOption from "./controls/MultipleOption";
+import MultipleOption from "./controls/multipleOption/MultipleOption";
 import PlaceHolder from "./controls/PlaceHolder";
 import TextArea from "./controls/TextArea";
 import TextBox from "./controls/TextBox";

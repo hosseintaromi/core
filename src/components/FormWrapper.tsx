@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { FC, ReactNode, memo } from "react";
 import { openView } from "../core/utils/viewManager";
 import { ViewContainerType } from "../core/@types/commonView";
 import { FormType } from "../@types/FormTypes";
@@ -76,4 +76,4 @@ const FormWrapper: FC<FormWrapperPropsType> = ({
   );
 };
 
-export default FormWrapper;
+export default memo(FormWrapper);

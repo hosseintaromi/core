@@ -25,7 +25,7 @@
     "control_id_1": "ریحانه",
     "control_id_2": 1,
     "control_id_7": "هلتنسی مبسیمبتسی بسیمنبتسی بتمن ینبت بین.",
-    "control_id_6": [1, 0],
+    "control_id_6": "0",
     "control_id_5": 1700305220701
   },
   "layout": { "floating_box": true },
@@ -84,7 +84,7 @@
             "label_text": "مقطع تحصیلی",
             "multiple_option_info": {
               "type": "Text",
-              "multi_select": true,
+              "multi_select": false,
               "randomize_option_number": false,
               "arrange_type": "Vertical",
               "options": [

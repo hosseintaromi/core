@@ -80,9 +80,9 @@ body {
   z-index: 1;
 
   .view-wrapper {
-    background-color: #8613cf;
-    width: 100%;
-    border: 5px dashed #f2ff04;
+    /* background-color: #8613cf; */
+    /* width: 100%; */
+    /* border: 5px dashed #f2ff04; */
   }
 }
 
@@ -211,7 +211,7 @@ body {
 
 .tab-wrapper .view-wrapper,
 .tab-container .view-wrapper {
-  position: absolute;
+  /* position: absolute; */
   overflow: hidden;
 }
 
@@ -223,9 +223,9 @@ body {
 @media (min-width: 768px) {
   .tab-wrapper,
   .tab-container {
-    max-width: 700px;
+    /* max-width: 700px;
     margin-left: auto;
-    margin-right: auto;
+    margin-right: auto; */
   }
 }
 

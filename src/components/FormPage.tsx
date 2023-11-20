@@ -1,49 +1,100 @@
-import { FormType } from "../@types/FormTypes";
-import { useView } from "../core/hooks/useView";
-import { getControl } from "../utils/controlUtils";
-import ControlSelector from "./ControlSelector";
-import ControlWrapper from "./ControlWrapper";
-import { FBContextProvider } from "../context/FBContextProvider";
-import FormWrapper from "./FormWrapper";
+import { useEffect, useRef, useState } from "react";
+import { openView } from "../core/utils/viewManager";
+import { getControl, getNextIndex } from "../utils/controlUtils";
+import { FieldValues } from "react-hook-form";
+import { Button, Container, ThemeProvider } from "@mui/material";
+import PartialTabContainer from "../core/components/containers/PartialTabContainer";
 import theme from "../utils/theme";
-import { ThemeProvider } from "@emotion/react";
 import BackgroundStyle from "./styles/BackgroundStyle";
+import FormPageItem, { ControlPropsType } from "./FormPageItem";
+import form from "../fakeData.json";
+import { ThemeType } from "../@types/ThemeTypes";
+import { ControlType } from "../@types/ControlTypes";
+import { FormType } from "../@types/FormTypes";
 import LinearProgressWithLabel from "./styles/LinearProgressStyle";
 
-type ControlPropsType = {
-  form?: FormType;
-  indexes?: number[];
-};
+const FormPage = () => {
+  const [isFinish, setIsFinish] = useState(false);
+  const [indexes, setIndexes] = useState<number[] | null>([0]);
+  // const indexesRef = useRef<number[] | null>([0]);
+  const viewDataRef = useRef<ControlPropsType>();
+  const control = form.controls[0] as ControlType;
+  const formData = form as any as FormType;
 
-const FormPage = (props: ControlPropsType) => {
-  const { viewData } = useView();
-  const { form, indexes } = props || viewData;
-  const control = getControl(form?.controls || [], indexes || []);
+  const openPage = (indexes: number[]) => {
+    viewDataRef.current = {
+      form: formData,
+      indexes,
+    };
+    openView({
+      id: getControl(formData.controls || [], indexes || [])?.control_id,
+      type: "FormContainer",
+      data: viewDataRef.current,
+      component: FormPageItem,
+    });
+  };
 
-  if (!form || !indexes || indexes.length < 1 || !control) {
-    return <></>;
-  }
+  const gotoNext = (data: FieldValues) => {
+    console.log("submitNext");
+
+    if (!control.control_id) {
+      return;
+    }
+    let nextIndexes = getNextIndex(formData, indexes || [], data);
+    //closeView(control.control_id, ViewContainerType.MasterTab);
+    setIndexes(nextIndexes);
+    if (!nextIndexes || !nextIndexes.length) {
+      return;
+    }
+    openPage(nextIndexes);
+  };
+
+  const submitNext = () =>
+    viewDataRef.current?.submitHandler?.((data) => gotoNext(data))();
+
+  const submitForm = () =>
+    viewDataRef.current?.submitHandler?.((data) => console.log(data))();
+
+  useEffect(() => {
+    openPage([0]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  console.log(indexes);
+
+  const formTheme = form.theme as ThemeType;
+
   return (
-    <FBContextProvider control={control} defaultValues={form.values}>
-      <ThemeProvider theme={theme(form.theme)}>
-        <BackgroundStyle backgroundStyles={form.theme.background} />
-        <FormWrapper form={form} indexes={indexes} control={control}>
-          <ControlWrapper
-            control={control}
-            isFloatingBox={form.layout?.floating_box}
-            hideQuestionNumber={form.hide_question_number}
+    <Container
+      sx={{
+        display: "grid",
+        gap: 3,
+        justifyItems: "start",
+      }}
+    >
+      <ThemeProvider theme={theme(formTheme)}>
+        <BackgroundStyle backgroundStyles={formTheme.background} />
+        <PartialTabContainer containerName="FormContainer" />
+        {indexes ? (
+          <Button
+            variant="outlined"
+            sx={{ justifySelf: "flex-end" }}
+            onClick={() => submitNext()}
           >
-            <ControlSelector
-              control={control}
-              isFloatingBox={form.layout?.floating_box}
-              theme={form.theme}
-              hideQuestionNumber={form.hide_question_number}
-            />
-          </ControlWrapper>
-        </FormWrapper>
-        <LinearProgressWithLabel form={form} indexes={indexes} />
+            next
+          </Button>
+        ) : (
+          <Button
+            variant="contained"
+            sx={{ justifySelf: "flex-end" }}
+            onClick={() => submitForm()}
+          >
+            finish
+          </Button>
+        )}
+        <LinearProgressWithLabel form={formData} indexes={indexes || []} />
       </ThemeProvider>
-    </FBContextProvider>
+    </Container>
   );
 };
 

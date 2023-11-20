@@ -20,7 +20,7 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
     <>
       {control.dropdown_info?.searchable ? (
         <Autocomplete
-          disablePortal
+          // disablePortal
           ref={ref}
           defaultValue={selectedValues?.[0]?.text}
           onChange={(event: any, value: any) => {

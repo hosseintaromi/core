@@ -28,13 +28,14 @@
     "control_id_6": "0",
     "control_id_5": 1700305220701
   },
-  "layout": { "floating_box": true },
+  "layout": { "floating_box": false },
   "controls": [
     {
       "control_id": "control_id_1",
       "type": "TextBox",
       "label_text": "نام و نام‌خانوادگی",
       "textbox_info": { "type": "Text" },
+      "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
       "validations": [
         { "type": "Required" },
         { "type": "Regex", "regex_pattern": "/^[\u0600-\u06FFs]+$/" }
@@ -43,6 +44,7 @@
     {
       "control_id": "control_id_2",
       "type": "DropDown",
+      "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
       "label_text": "جنسیت",
       "dropdown_info": {
         "searchable": true,
@@ -76,11 +78,13 @@
           {
             "control_id": "control_id_5",
             "type": "DatePicker",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
             "label_text": "تاریخ تولد"
           },
           {
             "control_id": "control_id_6",
             "type": "MultipleOption",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
             "label_text": "مقطع تحصیلی",
             "multiple_option_info": {
               "type": "Text",
@@ -107,6 +111,7 @@
         "controls": [
           {
             "control_id": "control_id_7",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
             "type": "TextArea",
             "label_text": "توضیحات",
             "textarea_info": { "line_count": 3, "max_line": 4 }
@@ -114,6 +119,7 @@
           {
             "control_id": "control_id_8",
             "type": "PlaceHolder",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
             "label_text": "قوانین",
             "placeholder_info": {
               "description": "قوانین را خوانده و تایید می‌نمایم.",

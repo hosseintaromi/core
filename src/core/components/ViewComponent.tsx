@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { Suspense, useEffect, useRef } from "react";
 import { ViewInfo } from "../@types/view";
 
 export function ViewComponent({ viewInfo }: { viewInfo: ViewInfo }) {
@@ -11,12 +11,16 @@ export function ViewComponent({ viewInfo }: { viewInfo: ViewInfo }) {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  const View = viewInfo.view.component;
+
   return (
     <div
       ref={elRef}
       className={"view-wrapper" + (className ? ` ${className}` : "")}
     >
-      {viewInfo.view.component()}
+      <Suspense fallback="loading...">
+        <View />
+      </Suspense>
     </div>
   );
 }

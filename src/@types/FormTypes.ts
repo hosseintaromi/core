@@ -4,6 +4,7 @@ import { ThemeType } from "./ThemeTypes";
 
 export type FormType = {
   form_id: string;
+  title?: string;
   controls: ControlType[];
   layout?: LayoutType;
   theme: ThemeType;

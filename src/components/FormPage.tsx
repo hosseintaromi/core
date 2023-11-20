@@ -60,6 +60,7 @@ const FormPage = () => {
     viewDataRef.current?.submitHandler?.((data) => console.log(data))();
 
   useEffect(() => {
+    document.title = formData.title || "Form Builder";
     openPage([0]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);

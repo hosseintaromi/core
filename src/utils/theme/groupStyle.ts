@@ -15,8 +15,8 @@ const groupStyle = (groupStyle?: ControlStyleType) => {
     borderLeft: border?.left,
     borderRadius: groupStyle?.radius,
     boxShadow: groupStyle?.shadow,
-    paddingBlock: groupStyle?.padding?.horizontal + "px",
-    paddingInline: groupStyle?.padding?.vertical + "px",
+    paddingInline: groupStyle?.padding?.horizontal + "px",
+    paddingBlock: groupStyle?.padding?.vertical + "px",
   };
 };
 

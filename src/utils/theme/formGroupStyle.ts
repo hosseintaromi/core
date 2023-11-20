@@ -15,7 +15,7 @@ const formGroupStyleOverride = (controlsStyle?: ControlStyleType) =>
     // borderLeft: border?.left,
     // borderRadius: controlsStyle?.radius,
     // boxShadow: controlsStyle?.shadow,
-    paddingBlock: controlsStyle?.padding?.horizontal + "px",
-    paddingInline: controlsStyle?.padding?.vertical + "px",
+    paddingInline: controlsStyle?.padding?.horizontal + "px",
+    paddingBlock: controlsStyle?.padding?.vertical + "px",
   });
 export default formGroupStyleOverride;

@@ -18,8 +18,8 @@ const dateTimePickerStyle = (controlStyle?: ControlStyleType) => {
       borderLeft: border?.left,
       borderRadius: controlStyle?.radius,
       boxShadow: controlStyle?.shadow,
-      paddingBlock: controlStyle?.padding?.horizontal + "px",
-      paddingInline: controlStyle?.padding?.vertical + "px",
+      paddingInline: controlStyle?.padding?.horizontal + "px",
+      paddingBlock: controlStyle?.padding?.vertical + "px",
     },
   };
 };

@@ -15,8 +15,8 @@ const placeHolderStyle = (placeHoldersStyle?: ControlStyleType) => {
     borderLeft: border?.left,
     borderRadius: placeHoldersStyle?.radius,
     boxShadow: placeHoldersStyle?.shadow,
-    paddingBlock: placeHoldersStyle?.padding?.horizontal + "px",
-    paddingInline: placeHoldersStyle?.padding?.vertical + "px",
+    paddingInline: placeHoldersStyle?.padding?.horizontal + "px",
+    paddingBlock: placeHoldersStyle?.padding?.vertical + "px",
   };
 };
 

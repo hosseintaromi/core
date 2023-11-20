@@ -14,18 +14,21 @@ import { FormType } from "../@types/FormTypes";
 import LinearProgressWithLabel from "./styles/LinearProgressStyle";
 
 const FormPage = () => {
-  const [isFinish, setIsFinish] = useState(false);
+  // const [isFinish, setIsFinish] = useState(false);
   const [indexes, setIndexes] = useState<number[] | null>([0]);
   // const indexesRef = useRef<number[] | null>([0]);
   const viewDataRef = useRef<ControlPropsType>();
   const control = form.controls[0] as ControlType;
   const formData = form as any as FormType;
 
+  const isFinish = getNextIndex(formData, indexes || []);
+
   const openPage = (indexes: number[]) => {
     viewDataRef.current = {
       form: formData,
       indexes,
     };
+    console.log(viewDataRef.current);
     openView({
       id: getControl(formData.controls || [], indexes || [])?.control_id,
       type: "FormContainer",
@@ -42,10 +45,11 @@ const FormPage = () => {
     }
     let nextIndexes = getNextIndex(formData, indexes || [], data);
     //closeView(control.control_id, ViewContainerType.MasterTab);
-    setIndexes(nextIndexes);
+    console.log(nextIndexes);
     if (!nextIndexes || !nextIndexes.length) {
       return;
     }
+    setIndexes(nextIndexes);
     openPage(nextIndexes);
   };
 
@@ -75,7 +79,7 @@ const FormPage = () => {
       <ThemeProvider theme={theme(formTheme)}>
         <BackgroundStyle backgroundStyles={formTheme.background} />
         <PartialTabContainer containerName="FormContainer" />
-        {indexes ? (
+        {isFinish ? (
           <Button
             variant="outlined"
             sx={{ justifySelf: "flex-end" }}

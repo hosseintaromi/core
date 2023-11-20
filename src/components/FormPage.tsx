@@ -14,12 +14,14 @@ import { FormType } from "../@types/FormTypes";
 import LinearProgressWithLabel from "./styles/LinearProgressStyle";
 
 const FormPage = () => {
-  const [isFinish, setIsFinish] = useState(false);
+  // const [isFinish, setIsFinish] = useState(false);
   const [indexes, setIndexes] = useState<number[] | null>([0]);
   // const indexesRef = useRef<number[] | null>([0]);
   const viewDataRef = useRef<ControlPropsType>();
   const control = form.controls[0] as ControlType;
   const formData = form as any as FormType;
+
+  const isFinish = getNextIndex(formData, indexes || []);
 
   const openPage = (indexes: number[]) => {
     viewDataRef.current = {
@@ -35,17 +37,15 @@ const FormPage = () => {
   };
 
   const gotoNext = (data: FieldValues) => {
-    console.log("submitNext");
-
     if (!control.control_id) {
       return;
     }
     let nextIndexes = getNextIndex(formData, indexes || [], data);
     //closeView(control.control_id, ViewContainerType.MasterTab);
-    setIndexes(nextIndexes);
     if (!nextIndexes || !nextIndexes.length) {
       return;
     }
+    setIndexes(nextIndexes);
     openPage(nextIndexes);
   };
 
@@ -56,11 +56,10 @@ const FormPage = () => {
     viewDataRef.current?.submitHandler?.((data) => console.log(data))();
 
   useEffect(() => {
+    document.title = formData.title || "Form Builder";
     openPage([0]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(indexes);
 
   const formTheme = form.theme as ThemeType;
 
@@ -75,7 +74,7 @@ const FormPage = () => {
       <ThemeProvider theme={theme(formTheme)}>
         <BackgroundStyle backgroundStyles={formTheme.background} />
         <PartialTabContainer containerName="FormContainer" />
-        {indexes ? (
+        {isFinish ? (
           <Button
             variant="outlined"
             sx={{ justifySelf: "flex-end" }}

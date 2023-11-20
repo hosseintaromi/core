@@ -56,7 +56,6 @@ export const FBContextProvider = memo(
     });
 
     const onChangedControlValue = (target: any) => {
-      console.log(formController.getValues());
       let controls = mainControlRef.current.group_info?.controls;
       if (!controls) {
         return;
@@ -118,8 +117,6 @@ export const FBContextProvider = memo(
 
     const getDefaultValue = (controlId: string) =>
       controlDefaultValues.current[controlId];
-
-    console.log(formController.getValues());
 
     return (
       <>

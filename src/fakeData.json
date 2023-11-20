@@ -1,25 +1,65 @@
 {
   "form_id": "form_id_1",
   "type": "Form",
+  "title": "فرم ثبت نام",
   "hide_question_number": false,
   "has_page_number": true,
   "has_progress": true,
   "locale": "Persian",
   "theme": {
     "theme_id": "dfdd",
-    "controls_style": {
-      "border": {}
-    },
-    "labels_style": {},
-    "placeholders_style": {},
-    "groups_style": {},
+    "name": "پیش فرض 1",
+    "is_default": true,
     "background": {
-      "color": "red",
-      "image_url": "https://img.freepik.com/free-vector/topographic-contour-lines-map-seamless-pattern_1284-52862.jpg?w=1800&t=st=1700290846~exp=1700291446~hmac=553e44205efddc5e23d9b80da819822b18d4bfa1bd6f9fb2f414c078d8b46479",
-      "image_align": "Fit",
-      "image_opacity": 0.05
+      "color": "#F1F1F1"
     },
-    "answer_color": ""
+    "font_name": "IRANSans",
+    "font_size": 14,
+
+    "labels_style": {
+      "font-size": 32,
+      "font-weight": 600,
+      "text_color": "#333"
+    },
+
+    "controls_style": {
+      "border": {
+      "top": "1px solid #333",
+      "left": "1px solid #333",
+      "right": "1px solid #333",
+      "bottom": "1px solid #333"
+    },
+    "shadow": "none",
+    "padding": {
+      "horizontal": 20,
+      "vertical": 10
+    },
+    "margin": {
+      "horizontal": 20,
+      "vertical": 10
+    },
+    "background_color": "rgba(51,51,51,0.1)",
+    "radius": 18,
+    "text_color": "#333"
+    },
+    
+    "placeholders_style": {
+      "text_color": "red"
+    },
+
+    "groups_style": {
+    },
+
+    "buttons_style": {
+      "border": {
+        "top": "1px solid #118EB7",
+        "left": "1px solid #118EB7",
+        "right": "1px solid #118EB7",
+        "bottom": "1px solid #118EB7"
+      },
+      "shadow": "none",
+      "background_color": "#118EB7"
+    }
   },
   "values": {
     "control_id_1": "ریحانه",

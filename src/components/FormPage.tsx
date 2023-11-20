@@ -28,7 +28,6 @@ const FormPage = () => {
       form: formData,
       indexes,
     };
-    console.log(viewDataRef.current);
     openView({
       id: getControl(formData.controls || [], indexes || [])?.control_id,
       type: "FormContainer",
@@ -38,14 +37,11 @@ const FormPage = () => {
   };
 
   const gotoNext = (data: FieldValues) => {
-    console.log("submitNext");
-
     if (!control.control_id) {
       return;
     }
     let nextIndexes = getNextIndex(formData, indexes || [], data);
     //closeView(control.control_id, ViewContainerType.MasterTab);
-    console.log(nextIndexes);
     if (!nextIndexes || !nextIndexes.length) {
       return;
     }
@@ -64,8 +60,6 @@ const FormPage = () => {
     openPage([0]);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
-
-  console.log(indexes);
 
   const formTheme = form.theme as ThemeType;
 

@@ -29,7 +29,6 @@ const FormPageItem = () => {
   const { viewData } = useView<ControlPropsType>();
   const { form, indexes } = viewData;
   const control = getControl(form?.controls || [], indexes || []);
-  console.log(control);
   if (!form || !indexes || indexes.length < 1 || !control) {
     return <></>;
   }

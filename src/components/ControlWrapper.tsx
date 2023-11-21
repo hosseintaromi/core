@@ -45,8 +45,11 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   return (
     <Box display="flex" flexDirection="row" marginTop={3}>
       <Box paddingBlockStart={-2} position="relative" top={-8}>
+        {" "}
         {questionNumber !== 0 && !hideQuestionNumber && (
-          <>{getQuestionNumber()}. </>
+          <InputLabel shrink sx={{ position: "relative" }}>
+            {getQuestionNumber()}.{" "}
+          </InputLabel>
         )}
       </Box>
       <FormControl error={hasError}>

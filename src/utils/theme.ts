@@ -4,6 +4,7 @@ import textFieldStyleOverride from "./theme/textFieldStyle";
 import inputLabelStyle from "./theme/inputLabelStyle";
 import selectStyleOverride from "./theme/selectStyle";
 import buttonStyleOverride from "./theme/buttonStyle";
+import descriptionStyle from "./theme/descriptionStyle";
 
 const theme = (formTheme: ThemeType) =>
   createTheme({
@@ -17,6 +18,7 @@ const theme = (formTheme: ThemeType) =>
     typography: {
       fontSize: formTheme.font_size,
       fontFamily: formTheme.font_name,
+      subtitle2: descriptionStyle(formTheme),
     },
   });
 

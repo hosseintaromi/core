@@ -38,6 +38,7 @@ export type ThemeType = {
   theme_id: string;
   name?: string;
   is_default?: boolean;
+  padding?: MarginSizeType;
   background?: ThemeBackgroundType;
   font_name?: string;
   font_size?: number;

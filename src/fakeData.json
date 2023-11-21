@@ -7,11 +7,15 @@
   "has_progress": true,
   "locale": "Persian",
   "theme": {
+    "padding": {
+      "horizontal": 20,
+      "vertical": 10
+    },
     "theme_id": "dfdd",
     "name": "پیش فرض 1",
     "is_default": true,
     "background": {
-      "color": "red"
+      "color": "#f1f1f1"
     },
     "font_name": "IRANSans",
     "font_size": 14,

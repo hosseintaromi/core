@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Button } from "@mui/material";
+import { Box, Button } from "@mui/material";
 import { useFormPage } from "../hooks/useFormPage";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import { getNextIndex } from "../utils/controlUtils";
@@ -14,17 +14,22 @@ const NextButton = () => {
   });
 
   return (
-    <>
+    <Box>
       {isFinish ? (
-        <Button variant="contained" onClick={() => submitForm()}>
-          <ExpandLessIcon />
-        </Button>
+        <Box display="flex" gap={2}>
+          <Button variant="outlined" disabled onClick={() => submitForm()}>
+            <ExpandLessIcon />
+          </Button>
+          <Button variant="outlined" onClick={() => submitForm()}>
+            ارسال
+          </Button>
+        </Box>
       ) : (
         <Button variant="outlined" onClick={() => submitNext()}>
           <ExpandLessIcon />
         </Button>
       )}
-    </>
+    </Box>
   );
 };
 

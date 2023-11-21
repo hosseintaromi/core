@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext, useEffect, useRef } from "react";
 import {
   FormPageContext,
   IndexListenersType,
@@ -11,18 +11,11 @@ export const useFormPage = ({
   onIndexChanged?: IndexListenersType;
   id?: string;
 }) => {
-  const {
-    addIndexListener,
-    form,
-    submitForm,
-    submitNext,
-    addNewQuestion,
-    getQuestionNumber,
-  } = useContext(FormPageContext);
+  const { addIndexListener, form, submitForm, submitNext, addNewQuestion } =
+    useContext(FormPageContext);
 
   useEffect(() => {
     onIndexChanged && addIndexListener(onIndexChanged);
-    id && addNewQuestion(id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -30,6 +23,6 @@ export const useFormPage = ({
     form,
     submitForm,
     submitNext,
-    getQuestionNumber: () => id && getQuestionNumber(id),
+    getQuestionNumber: () => id && addNewQuestion(id),
   };
 };

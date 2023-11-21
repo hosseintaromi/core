@@ -10,7 +10,6 @@ export type IndexListenersType = (indexes: PageIndexesType) => void;
 
 export const FormPageContext = createContext<{
   addNewQuestion: (id: string) => number;
-  getQuestionNumber: (id: string) => number;
   addIndexListener: (listener: IndexListenersType) => void;
   form: FormType;
   submitNext: () => Promise<void> | undefined;
@@ -39,9 +38,6 @@ export const FormPageContextProvider = memo(
       }
       return pagesStack.length;
     };
-
-    const getQuestionNumber = (id: string) =>
-      questionStackRef.current.findIndex((item) => item === id) + 1;
 
     const openPage = (indexes: number[]) => {
       viewDataRef.current = {
@@ -94,7 +90,6 @@ export const FormPageContextProvider = memo(
         <FormPageContext.Provider
           value={{
             addNewQuestion,
-            getQuestionNumber,
             addIndexListener,
             form,
             submitNext,

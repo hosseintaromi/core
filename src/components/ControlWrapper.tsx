@@ -42,29 +42,41 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
 
   return (
     <Box display="flex" flexDirection="row" marginTop={3}>
-      <Box paddingBlockStart={-2} position="relative">
-        {type !== ControlTypeEnum.Group && !hideQuestionNumber && (
-          <InputLabel shrink sx={{ position: "relative", maxWidth: "unset" }}>
-            {questionNumber}.{" "}
-          </InputLabel>
-        )}
-      </Box>
       <FormControl error={hasError}>
-        {(label &&
-          [
-            ControlTypeEnum.Group,
-            ControlTypeEnum.MultipleOption,
-            ControlTypeEnum.PlaceHolder,
-            ControlTypeEnum.DropDown,
-          ].includes(control.type)) ||
-          (!isFloatingBox && (
+        <Box display="flex" alignItems="center">
+          {type !== ControlTypeEnum.Group && !hideQuestionNumber && (
             <InputLabel
-              shrink={isFloatingDropDown ? undefined : true}
-              htmlFor={id}
+              shrink
+              sx={{
+                position: "static",
+                maxWidth: "unset",
+                display: "inline-block",
+              }}
             >
-              {label}
+              {questionNumber}.{" "}
             </InputLabel>
-          ))}
+          )}
+          {(label &&
+            [
+              ControlTypeEnum.Group,
+              ControlTypeEnum.MultipleOption,
+              ControlTypeEnum.PlaceHolder,
+              ControlTypeEnum.DropDown,
+            ].includes(control.type)) ||
+            (!isFloatingBox && (
+              <InputLabel
+                sx={{
+                  position: "static",
+                  display: "inline-block",
+                  maxWidth: "unset",
+                }}
+                shrink={isFloatingDropDown ? undefined : true}
+                htmlFor={id}
+              >
+                {label}
+              </InputLabel>
+            ))}
+        </Box>
         <Box
           display="flex"
           flexDirection="column"

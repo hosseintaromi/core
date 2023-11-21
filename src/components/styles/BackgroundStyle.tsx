@@ -11,9 +11,9 @@ const BackgroundStyle = styled(Container, {
   const imageAlign = backgroundStyles?.image_align;
 
   return {
-    display: "grid",
-    gap: 3,
-    justifyItems: "start",
+    " .partial-tab-container": {
+      backgroundColor: backgroundStyles?.color || "#fff",
+    },
     " .view-wrapper": {
       backgroundColor: backgroundStyles?.color || "#fff",
       paddingInline: formTheme?.padding?.horizontal + "px",

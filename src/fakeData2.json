@@ -1,42 +1,107 @@
 {
   "form_id": "form_id_1",
   "type": "Form",
+  "title": "فرم ثبت نام",
   "hide_question_number": false,
   "has_page_number": true,
-  "has_progress": false,
+  "has_progress": true,
   "locale": "Persian",
-  "values": [],
   "theme": {
     "theme_id": "dfdd",
-    "controls_style": {},
-    "labels_style": {
-      "border": { "right": "2px solid blue" },
-      "shadow": "10px 10px 5px lightblue inset",
-      "padding": { "horizontal": 10, "vertical": 5 },
-      "margin": { "horizontal": 10, "vertical": 5 },
-      "background_color": "#fffff0",
-      "font_weight": "700",
-      "text_color": "blue"
+    "name": "پیش فرض 1",
+    "is_default": true,
+    "background": {
+      "color": "#f5fdff"
     },
-    "groups_style": {}
+    "font_name": "IRANSans",
+    "font_size": 14,
+    "labels_style": {
+      "font_size": 32,
+      "font_weight": "600",
+      "text_color": "#f15976"
+    },
+
+    "controls_style": {
+      "border": {
+        "top": "1px solid #67cae0",
+        "left": "1px solid #67cae0",
+        "right": "1px solid #67cae0",
+        "bottom": "1px solid #67cae0"
+      },
+      "shadow": "inset 0 0 0 .125rem #67cae0",
+      "padding": {
+        "horizontal": 20,
+        "vertical": 10
+      },
+      "margin": {
+        "horizontal": 20,
+        "vertical": 10
+      },
+      "background_color": "#f5fdff",
+      "radius": 18,
+      "text_color": "#f15976"
+    },
+
+    "placeholders_style": {
+      "text_color": "#f15976"
+    },
+
+    "groups_style": {},
+
+    "buttons_style": {
+      "border": {
+        "top": "1px solid #67cae0",
+        "left": "1px solid #67cae0",
+        "right": "1px solid #67cae0",
+        "bottom": "1px solid #67cae0"
+      },
+      "shadow": "none",
+      "background_color": "#67cae0",
+      "text_color": "#000"
+    }
+  },
+  "layout": { "floating_box": false },
+  "values": {
+    "control_id_1": "ریحانه",
+    "control_id_2": 1,
+    "control_id_7": "هلتنسی مبسیمبتسی بسیمنبتسی بتمن ینبت بین.",
+    "control_id_6": "0",
+    "control_id_5": 1700305220701
   },
   "controls": [
     {
       "control_id": "control_id_1",
       "type": "TextBox",
       "label_text": "نام و نام‌خانوادگی",
-      "textbox_info": { "type": "Number" },
-      "validations": [{ "type": "Required" }],
+      "textbox_info": { "type": "Text" },
+      "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+      "validations": [
+        { "type": "Required" },
+        { "type": "Regex", "regex_pattern": "/^[\u0600-\u06FFs]+$/" }
+      ]
+    },
+    {
+      "control_id": "control_id_2",
+      "type": "DropDown",
+      "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+      "label_text": "جنسیت",
+      "dropdown_info": {
+        "searchable": true,
+        "options": [
+          { "value": 0, "text": "زن" },
+          { "value": 1, "text": "مرد" }
+        ]
+      },
       "conditions": [
         {
           "type": "ThenGo",
-          "then_control_id": "control_id_6",
-          "when_control_id": "control_id_1",
+          "then_control_id": "control_id_4",
+          "when_control_id": "control_id_2",
           "conditions": [
             {
-              "control_id": "control_id_1",
-              "condition_type": "NotEqual",
-              "condition_value": "1"
+              "control_id": "control_id_2",
+              "condition_type": "Equal",
+              "condition_value": 0
             }
           ]
         }
@@ -45,169 +110,73 @@
     {
       "control_id": "control_id_3",
       "type": "Group",
-      "conditions": [
-        {
-          "type": "ThenGo",
-          "then_control_id": "control_id_7",
-          "when_control_id": "control_id_4",
-          "conditions": [
-            {
-              "control_id": "control_id_4",
-              "condition_type": "NotEqual",
-              "condition_value": "1"
-            }
-          ]
-        }
-      ],
       "group_info": {
         "type": "FormSet",
         "title": "اطلاعات حقوقی",
-        "is_hidden": false,
         "controls": [
           {
-            "control_id": "control_id_2",
-            "type": "TextBox",
-            "label_text": "سن",
-            "is_hidden": false,
-            "textbox_info": { "type": "Number" },
-            "validations": [
-              { "type": "Number", "regex_pattern": "/^[0-9]+$/" }
-            ],
-            "conditions": [
-              {
-                "type": "ThenShow",
-                "then_control_id": "control_id_4",
-                "when_control_id": "control_id_2",
-                "conditions": [
-                  {
-                    "control_id": "control_id_2",
-                    "condition_type": "NotEqual",
-                    "condition_value": "93",
-                    "composition_type": "And"
-                  },
-                  {
-                    "control_id": "control_id_2",
-                    "condition_type": "MoreThan",
-                    "condition_value": "90"
-                  }
-                ]
-              },
-              {
-                "type": "ThenShow",
-                "then_control_id": "control_id_5",
-                "when_control_id": "control_id_2",
-                "conditions": [
-                  {
-                    "control_id": "control_id_2",
-                    "condition_type": "NotEqual",
-                    "condition_value": "80",
-                    "composition_type": "And"
-                  },
-                  {
-                    "control_id": "control_id_2",
-                    "condition_type": "LessThan",
-                    "condition_value": "90"
-                  }
-                ]
-              }
-            ]
-          },
-          {
-            "control_id": "control_id_4",
-            "is_hidden": false,
-            "type": "TextBox",
-            "label_text": "نام و نام‌خانوادگی",
-            "textbox_info": { "type": "Number" }
-          },
-          {
             "control_id": "control_id_5",
-            "is_hidden": false,
-            "type": "Group",
-            "group_info": {
-              "type": "FormSet",
-              "title": "اطلاعات حقوقی",
-              "controls": [
-                {
-                  "control_id": "control_id_5_1",
-                  "type": "TextBox",
-                  "label_text": "control_id_5_1",
-                  "textbox_info": { "type": "Text" }
-                },
-                {
-                  "control_id": "control_id_5_2",
-                  "type": "Group",
-                  "group_info": {
-                    "type": "FormSet",
-                    "title": "آدرس",
-                    "controls": [
-                      {
-                        "control_id": "control_id_5_2_1",
-                        "type": "TextArea",
-                        "label_text": "توضیحات",
-                        "textarea_info": { "line_count": 3, "max_line": 4 },
-                        "validations": [{ "type": "Required" }]
-                      },
-                      {
-                        "control_id": "control_id_5_2_2",
-                        "type": "TextBox",
-                        "label_text": "نام و نام‌خانوادگی",
-                        "textbox_info": { "type": "Text" },
-                        "validations": []
-                      },
-                      {
-                        "control_id": "control_id_9",
-                        "is_hidden": false,
-                        "type": "TextBox",
-                        "label_text": "2نام و نام‌خانوادگی",
-                        "textbox_info": { "type": "Text" }
-                      }
-                    ]
-                  }
-                }
+            "type": "DatePicker",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+            "label_text": "تاریخ تولد"
+          },
+          {
+            "control_id": "control_id_6",
+            "type": "MultipleOption",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+            "label_text": "مقطع تحصیلی",
+            "multiple_option_info": {
+              "type": "Text",
+              "multi_select": false,
+              "randomize_option_number": false,
+              "arrange_type": "Vertical",
+              "options": [
+                { "text": "دیپلم", "value": 0 },
+                { "text": "کارشناسی", "value": 1 },
+                { "text": "ارشد", "value": 2 }
               ]
-            }
+            },
+            "validations": [{ "type": "Required" }]
           }
         ]
       }
     },
     {
-      "control_id": "control_id_6",
+      "control_id": "control_id_4",
       "type": "Group",
       "group_info": {
         "type": "FormSet",
         "title": "آدرس",
         "controls": [
           {
+            "control_id": "control_id_7",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+            "type": "TextArea",
+            "label_text": "توضیحات",
+            "textarea_info": { "line_count": 3, "max_line": 4 }
+          },
+          {
             "control_id": "control_id_8",
-            "type": "Group",
-            "group_info": {
-              "type": "FieldSet",
-              "title": "اطلاعات حقوقی",
-              "controls": [
-                {
-                  "control_id": "control_id_8_1",
-                  "type": "TextBox",
-                  "label_text": "نام و نام‌خانوادگی",
-                  "textbox_info": { "type": "Text" }
-                },
-                {
-                  "control_id": "control_id_8_2",
-                  "type": "TextArea",
-                  "label_text": "توضیحات",
-                  "textarea_info": { "line_count": 3, "max_line": 4 }
-                }
-              ]
+            "type": "PlaceHolder",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+            "label_text": "قوانین",
+            "placeholder_info": {
+              "description": "قوانین را خوانده و تایید می‌نمایم.",
+              "type": "End"
+            }
+          },
+          {
+            "control_id": "control_id_9",
+            "type": "FileUpload",
+            "label_text": "کارت ملی",
+            "file_upload_info": {
+              "file_type": "Image",
+              "allowed_extensions": ["jpg"],
+              "max_size": 1000
             }
           }
         ]
       }
-    },
-    {
-      "control_id": "control_id_7",
-      "type": "TextArea",
-      "label_text": "control_id_7",
-      "textarea_info": { "line_count": 3, "max_line": 4 },
-      "validations": [{ "type": "Required" }]
     }
   ]
 }

@@ -15,7 +15,7 @@
     "name": "پیش فرض 1",
     "is_default": true,
     "background": {
-      "color": "#f1f1f1"
+      "color": "#f5f5f5"
     },
     "font_name": "IRANSans",
     "font_size": 14,
@@ -47,7 +47,7 @@
     },
 
     "placeholders_style": {
-      "text_color": "red"
+      "text_color": "#333"
     },
 
     "groups_style": {},
@@ -63,6 +63,7 @@
       "background_color": "#118EB7"
     }
   },
+  "layout": { "floating_box": false },
   "values": {
     "control_id_1": "ریحانه",
     "control_id_2": 1,
@@ -70,7 +71,6 @@
     "control_id_6": "0",
     "control_id_5": 1700305220701
   },
-  "layout": { "floating_box": false },
   "controls": [
     {
       "control_id": "control_id_1",

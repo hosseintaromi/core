@@ -1,8 +1,8 @@
-import { ThemeProvider } from "@mui/material";
+import { Box, ThemeProvider } from "@mui/material";
 import PartialTabContainer from "../core/components/containers/PartialTabContainer";
 import theme from "../utils/theme";
 import BackgroundStyle from "./styles/BackgroundStyle";
-import form from "../fakeData.json";
+import form from "../fakeData2.json";
 import { ThemeType } from "../@types/ThemeTypes";
 import { FormType } from "../@types/FormTypes";
 import { FormPageContextProvider } from "../context/FormPageContextProvider";
@@ -15,8 +15,18 @@ const FormPage = () => {
   return (
     <ThemeProvider theme={theme(formTheme)}>
       <FormPageContextProvider form={formData}>
-        <BackgroundStyle formTheme={formTheme}>
-          <PartialTabContainer containerName="FormContainer" />
+        <BackgroundStyle
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            p: 0,
+          }}
+          formTheme={formTheme}
+        >
+          <Box position="relative" flex="1 1 50px" height="100%">
+            <PartialTabContainer containerName="FormContainer" />
+          </Box>
           <Footer theme={formTheme} />
         </BackgroundStyle>
       </FormPageContextProvider>

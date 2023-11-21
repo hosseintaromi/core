@@ -8,7 +8,6 @@ import {
   InputLabel,
   Typography,
 } from "@mui/material";
-import { questionCounter } from "../utils/progressUtils";
 import { useFormPage } from "../hooks/useFormPage";
 
 type ControlWrapperPropsType = {
@@ -33,8 +32,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   const hasError = !!getControlErrors()?.type;
 
   const questionNumber = useMemo(() => {
-    if (type !== ControlTypeEnum.Group && type !== ControlTypeEnum.PlaceHolder)
-      return getQuestionNumber();
+    if (type !== ControlTypeEnum.Group) return getQuestionNumber();
     return 0;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [control]);

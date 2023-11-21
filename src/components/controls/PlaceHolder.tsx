@@ -12,7 +12,7 @@ type PlaceHolderPropsType = {
 const PlaceHolder: FC<PlaceHolderPropsType> = ({ control, theme }) => {
   const placeHolderInfo = control.placeholder_info;
   return (
-    <Box sx={placeHolderStyle(theme.placeholders_style)}>
+    <Box sx={placeHolderStyle(theme)}>
       <Typography>{placeHolderInfo?.description}</Typography>
     </Box>
   );

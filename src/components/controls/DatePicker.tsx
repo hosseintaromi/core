@@ -39,7 +39,7 @@ const DatePicker: FC<DatePickerPropsType> = ({
             error: !!getControlErrors()?.type,
           },
         }}
-        sx={dateTimePickerStyle(theme.controls_style)}
+        sx={dateTimePickerStyle(theme)}
       />
     </LocalizationProvider>
   );

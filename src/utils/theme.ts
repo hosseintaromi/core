@@ -10,7 +10,7 @@ const theme = (formTheme: ThemeType) =>
     components: {
       MuiTextField: textFieldStyleOverride(formTheme),
       MuiInputLabel: inputLabelStyle(formTheme),
-      MuiSelect: selectStyleOverride(formTheme.controls_style),
+      MuiSelect: selectStyleOverride(formTheme),
     },
     typography: {
       fontSize: formTheme.font_size,

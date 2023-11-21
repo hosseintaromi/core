@@ -13,7 +13,7 @@ const groupStyle = (groupStyle?: ControlStyleType) => {
     borderBottom: border?.bottom,
     borderRight: border?.right,
     borderLeft: border?.left,
-    borderRadius: groupStyle?.radius,
+    borderRadius: groupStyle?.radius + "px",
     boxShadow: groupStyle?.shadow,
     paddingInline: groupStyle?.padding?.horizontal + "px",
     paddingBlock: groupStyle?.padding?.vertical + "px",

@@ -33,7 +33,7 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
           }}
           onBlur={onBlur}
           options={options?.map((option) => option?.text) || []}
-          sx={{ minWidth: 100 }}
+          sx={{ minWidth: 100, ">div": { width: "unset", minWidth: 100 } }}
           renderInput={(params) => (
             <TextField
               // name={name}

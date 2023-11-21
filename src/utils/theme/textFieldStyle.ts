@@ -24,7 +24,7 @@ const textFieldStyleOverride = ({
           borderBottom: border?.bottom,
           borderRight: border?.right,
           borderLeft: border?.left,
-          borderRadius: controls_style?.radius,
+          borderRadius: controls_style?.radius + "px",
           boxShadow: controls_style?.shadow,
           paddingInline: controls_style?.padding?.horizontal + "px",
           paddingBlock: controls_style?.padding?.vertical + "px",

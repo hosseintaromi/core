@@ -8,7 +8,7 @@
   "locale": "Persian",
   "theme": {
     "padding": {
-      "horizontal": 20,
+      "horizontal": 10,
       "vertical": 10
     },
     "theme_id": "dfdd",

@@ -14,6 +14,7 @@ const dateTimePickerStyle = ({
       fontSize: controls_style?.font_size || font_size + "px",
       fontFamily: font_name,
       fontWeight: controls_style?.font_weight,
+      zIndex: 1,
       color: controls_style?.text_color || answer_color,
     },
     ".MuiOutlinedInput-notchedOutline": {

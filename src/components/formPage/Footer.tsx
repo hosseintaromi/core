@@ -10,6 +10,7 @@ const Footer = ({ theme }: { theme?: ThemeType }) => {
       display="flex"
       alignItems="center"
       justifyContent="space-between"
+      height="50px"
       p={2}
       position="absolute"
       left={0}

@@ -56,26 +56,26 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
               {questionNumber}.{" "}
             </InputLabel>
           )}
-          {(label &&
+          {((label &&
             [
               ControlTypeEnum.Group,
               ControlTypeEnum.MultipleOption,
               ControlTypeEnum.PlaceHolder,
               ControlTypeEnum.DropDown,
             ].includes(control.type)) ||
-            (!isFloatingBox && (
-              <InputLabel
-                sx={{
-                  position: "static",
-                  display: "inline-block",
-                  maxWidth: "unset",
-                }}
-                shrink={isFloatingDropDown ? undefined : true}
-                htmlFor={id}
-              >
-                {label}
-              </InputLabel>
-            ))}
+            !isFloatingBox) && (
+            <InputLabel
+              sx={{
+                position: "static",
+                display: "inline-block",
+                maxWidth: "unset",
+              }}
+              shrink={isFloatingDropDown ? undefined : true}
+              htmlFor={id}
+            >
+              {label}
+            </InputLabel>
+          )}
         </Box>
         <Box
           display="flex"

@@ -7,6 +7,8 @@ import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dateTimePickerStyle from "../../utils/theme/dateTimePickerStyle";
 import { ThemeType } from "../../@types/ThemeTypes";
+import { ThemeProvider } from "@emotion/react";
+import { createTheme } from "@mui/material";
 
 type DatePickerPropsType = {
   control: ControlType;
@@ -23,25 +25,34 @@ const DatePicker: FC<DatePickerPropsType> = ({
     useFBRegisterControl(control);
   const { getControlErrors } = useFBControl(control);
 
+  const datePickerTheme = createTheme({
+    direction: "rtl",
+  });
+
   return (
-    <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
-      <DateTimePicker
-        defaultValue={defaultValue}
-        onChange={(value) =>
-          onChange({ target: { value, name: control.control_id } })
-        }
-        ref={ref}
-        slotProps={{
-          textField: {
-            label: isFloatingBox ? control.label_text : "",
-            onBlur,
-            name,
-            error: !!getControlErrors()?.type,
-          },
-        }}
-        sx={dateTimePickerStyle(theme)}
-      />
-    </LocalizationProvider>
+    <ThemeProvider theme={datePickerTheme}>
+      <LocalizationProvider dateAdapter={AdapterDateFnsJalali}>
+        <DateTimePicker
+          sx={{
+            ...dateTimePickerStyle(theme),
+            MuiButton: { backgroundColor: "#ffffff" },
+          }}
+          defaultValue={defaultValue}
+          onChange={(value) =>
+            onChange({ target: { value, name: control.control_id } })
+          }
+          ref={ref}
+          slotProps={{
+            textField: {
+              label: isFloatingBox ? control.label_text : "",
+              onBlur,
+              name,
+              error: !!getControlErrors()?.type,
+            },
+          }}
+        />
+      </LocalizationProvider>
+    </ThemeProvider>
   );
 };
 

@@ -25,7 +25,7 @@ function LinearProgressWithLabel() {
   ).length;
 
   return (
-    <Stack spacing={1} width="50%" textAlign="right">
+    <Stack spacing={1} width="50%">
       <Box>
         <Typography variant="body2" color="text.secondary">
           {indexes[0] + 1 || 1}/{Math.max(indexes[0] + 1, allPages) || allPages}

@@ -2,7 +2,7 @@ import { ThemeProvider, Box } from "@mui/material";
 import PartialTabContainer from "../core/components/containers/PartialTabContainer";
 import theme from "../utils/theme";
 import BackgroundStyle from "./styles/BackgroundStyle";
-import form from "../fakeData.json";
+import form from "../fakeData2.json";
 import { ThemeType } from "../@types/ThemeTypes";
 import { FormType } from "../@types/FormTypes";
 import LinearProgressWithLabel from "./LinearProgressStyle";
@@ -16,21 +16,27 @@ const FormPage = () => {
   return (
     <ThemeProvider theme={theme(formTheme)}>
       <FormPageContextProvider form={formData}>
-        <BackgroundStyle backgroundStyles={formTheme.background}>
-          <PartialTabContainer containerName="FormContainer" />
+        <BackgroundStyle
+          sx={{
+            display: "flex",
+            flexDirection: "column",
+            height: "100%",
+            p: 0,
+          }}
+          backgroundStyles={formTheme.background}
+        >
+          <Box position="relative" flex="1 1 50px" height="100%">
+            <PartialTabContainer containerName="FormContainer" />
+          </Box>
           <Box
             display="flex"
             alignItems="center"
             justifyContent="space-between"
-            p={2}
-            position="absolute"
-            left={0}
-            right={0}
-            bottom={0}
-            zIndex={1}
+            height="50px"
+            px={1}
           >
-            <NextButton />
             <LinearProgressWithLabel />
+            <NextButton />
           </Box>
         </BackgroundStyle>
       </FormPageContextProvider>

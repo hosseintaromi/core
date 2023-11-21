@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Button } from "@mui/material";
 import { useFormPage } from "../hooks/useFormPage";
+import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 
 const NextButton = () => {
   const [isFinish, setIsFinish] = useState(false);
@@ -14,20 +15,12 @@ const NextButton = () => {
   return (
     <>
       {isFinish ? (
-        <Button
-          variant="contained"
-          sx={{ justifySelf: "flex-end" }}
-          onClick={() => submitForm()}
-        >
-          finish
+        <Button variant="contained" onClick={() => submitForm()}>
+          <ExpandLessIcon />
         </Button>
       ) : (
-        <Button
-          variant="outlined"
-          sx={{ justifySelf: "flex-end" }}
-          onClick={() => submitNext()}
-        >
-          next
+        <Button variant="outlined" onClick={() => submitNext()}>
+          <ExpandLessIcon />
         </Button>
       )}
     </>

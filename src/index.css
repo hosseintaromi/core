@@ -201,22 +201,13 @@ body {
 
 .tab-wrapper .view-wrapper,
 .tab-container .view-wrapper {
-  /* position: absolute; */
+  position: absolute;
   overflow: hidden;
 }
 
 .tab-wrapper .view-wrapper,
 .tab-container .view-wrapper {
   inset: 0;
-}
-
-@media (min-width: 768px) {
-  .tab-wrapper,
-  .tab-container {
-    /* max-width: 700px;
-    margin-left: auto;
-    margin-right: auto; */
-  }
 }
 
 .modal-container .view-wrapper.passportHelp {

@@ -37,7 +37,6 @@ export const FormPageContextProvider = memo(
       // } else {
       pagesStack.push(id);
       // }
-      console.log(pagesStack);
       return pagesStack.length;
     };
 

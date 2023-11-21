@@ -61,7 +61,6 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
             <InputLabel
               shrink={isFloatingDropDown ? undefined : true}
               htmlFor={id}
-              sx={isFloatingDropDown ? {} : { fontSize: 20 }}
             >
               {label}
             </InputLabel>

@@ -5,13 +5,13 @@ const dateTimePickerStyle = (controlStyle?: ControlStyleType) => {
   return {
     marginBlock: controlStyle?.margin?.horizontal + "px",
     marginInline: controlStyle?.margin?.vertical + "px",
-    backgroundColor: controlStyle?.background_color,
     ".MuiOutlinedInput-input": {
       fontSize: controlStyle?.font_size + "px",
       fontWeight: controlStyle?.font_weight,
       color: controlStyle?.text_color,
     },
     ".MuiOutlinedInput-notchedOutline": {
+      backgroundColor: controlStyle?.background_color,
       borderTop: border?.top,
       borderBottom: border?.bottom,
       borderRight: border?.right,

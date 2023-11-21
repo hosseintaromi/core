@@ -1,30 +1,33 @@
-import { ControlStyleType } from "../../@types/ThemeTypes";
+import { ThemeType } from "../../@types/ThemeTypes";
 
-const textFieldStyleOverride = (
-  controlStyle?: ControlStyleType,
-  answerColor?: string,
-) => {
-  const border = controlStyle?.border;
+const textFieldStyleOverride = ({
+  controls_style,
+  answer_color,
+  font_size,
+  font_name,
+}: ThemeType) => {
+  const border = controls_style?.border;
   return {
     styleOverrides: {
       root: {
-        marginBlock: controlStyle?.margin?.horizontal + "px",
-        marginInline: controlStyle?.margin?.vertical + "px",
-        backgroundColor: controlStyle?.background_color,
+        marginBlock: controls_style?.margin?.horizontal + "px",
+        marginInline: controls_style?.margin?.vertical + "px",
         ".MuiOutlinedInput-input": {
-          fontSize: controlStyle?.font_size + "px",
-          fontWeight: controlStyle?.font_weight,
-          color: controlStyle?.text_color || answerColor,
+          fontSize: controls_style?.font_size || font_size + "px",
+          fontWeight: controls_style?.font_weight,
+          fontFamily: font_name,
+          color: controls_style?.text_color || answer_color,
         },
         ".MuiOutlinedInput-notchedOutline": {
+          backgroundColor: controls_style?.background_color,
           borderTop: border?.top,
           borderBottom: border?.bottom,
           borderRight: border?.right,
           borderLeft: border?.left,
-          borderRadius: controlStyle?.radius,
-          boxShadow: controlStyle?.shadow,
-          paddingInline: controlStyle?.padding?.horizontal + "px",
-          paddingBlock: controlStyle?.padding?.vertical + "px",
+          borderRadius: controls_style?.radius,
+          boxShadow: controls_style?.shadow,
+          paddingInline: controls_style?.padding?.horizontal + "px",
+          paddingBlock: controls_style?.padding?.vertical + "px",
         },
       },
     },

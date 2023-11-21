@@ -16,7 +16,7 @@ const NextButton = () => {
       {isFinish ? (
         <Button
           variant="contained"
-          sx={{ justifySelf: "flex-end" }}
+          sx={{ justifySelf: "flex-end", zIndex: 10 }}
           onClick={() => submitForm()}
         >
           finish
@@ -24,7 +24,7 @@ const NextButton = () => {
       ) : (
         <Button
           variant="outlined"
-          sx={{ justifySelf: "flex-end" }}
+          sx={{ justifySelf: "flex-end", zIndex: 10 }}
           onClick={() => submitNext()}
         >
           next

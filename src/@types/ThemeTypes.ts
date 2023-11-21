@@ -29,7 +29,7 @@ export type ControlStyleType = {
   margin?: MarginSizeType;
   background_color?: string;
   radius?: number;
-  font_size?: string;
+  font_size?: number;
   font_weight?: string;
   text_color?: string;
 };

@@ -34,7 +34,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
 
   const questionNumber = useMemo(() => {
     if (type !== ControlTypeEnum.Group && type !== ControlTypeEnum.PlaceHolder)
-      return questionCounter();
+      return getQuestionNumber();
     return 0;
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [control]);
@@ -47,7 +47,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
       <Box paddingBlockStart={-2} position="relative">
         {type !== ControlTypeEnum.Group && !hideQuestionNumber && (
           <InputLabel shrink sx={{ position: "relative", maxWidth: "unset" }}>
-            {getQuestionNumber()}.{" "}
+            {questionNumber}.{" "}
           </InputLabel>
         )}
       </Box>

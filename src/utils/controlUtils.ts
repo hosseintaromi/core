@@ -155,7 +155,10 @@ const getNextIndexFromConditions = (
       (item) => item.control_id === thenId,
     );
   }
-  return thenIndex ? indexes.slice(0, -1).concat(thenIndex) : null;
+  console.log(thenIndex, indexes);
+  return thenIndex !== undefined && thenIndex !== -1
+    ? indexes.slice(0, -1).concat(thenIndex)
+    : null;
 };
 
 export const getNextIndex = (

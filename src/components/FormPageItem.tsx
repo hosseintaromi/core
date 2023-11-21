@@ -7,17 +7,11 @@ import { FBContextProvider } from "../context/FBContextProvider";
 import { useFBControl } from "../hooks/useFBControl";
 import { useEffect } from "react";
 import { ControlType } from "../@types/ControlTypes";
-import { FieldValues, UseFormHandleSubmit } from "react-hook-form";
-
-export type ControlPropsType = {
-  form?: FormType;
-  indexes?: number[];
-  submitHandler?: UseFormHandleSubmit<FieldValues, undefined>;
-};
+import { FormPageViewDataType } from "../@types/FormPageTypes";
 
 const NavigationHandler = ({ control }: { control: ControlType }) => {
   const { submitForm } = useFBControl(control);
-  const { viewData } = useView<ControlPropsType>();
+  const { viewData } = useView<FormPageViewDataType>();
 
   useEffect(() => {
     viewData.submitHandler = submitForm;
@@ -26,7 +20,7 @@ const NavigationHandler = ({ control }: { control: ControlType }) => {
 };
 
 const FormPageItem = () => {
-  const { viewData } = useView<ControlPropsType>();
+  const { viewData } = useView<FormPageViewDataType>();
   const { form, indexes } = viewData;
   const control = getControl(form?.controls || [], indexes || []);
   if (!form || !indexes || indexes.length < 1 || !control) {

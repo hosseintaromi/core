@@ -1,26 +1,29 @@
 import { Box, LinearProgress, Typography, styled } from "@mui/material";
-import { FormType } from "../../@types/FormTypes";
-import { getProgress } from "../../utils/progressUtils";
-import { hideControlsWithConditionOn } from "../../utils/controlUtils";
+import { getProgress } from "../utils/progressUtils";
+import { hideControlsWithConditionOn } from "../utils/controlUtils";
+import { useFormPage } from "../hooks/useFormPage";
+import { useState } from "react";
+import { PageIndexesType } from "../@types/FormPageTypes";
 
 const LinearProgressStyle = styled(LinearProgress)({
   width: "60%",
   left: "20%",
 });
 
-function LinearProgressWithLabel({
-  form,
-  indexes,
-}: {
-  form: FormType;
-  indexes: number[];
-}) {
-  const value = getProgress(form, indexes);
+function LinearProgressWithLabel() {
+  const [indexes, setIndexes] = useState<PageIndexesType>([]);
+
+  const { form } = useFormPage({
+    onIndexChanged: (indexes: number[]) => {
+      setIndexes(indexes);
+    },
+  });
+
+  const progress = getProgress(form, indexes);
+
   const allPages = hideControlsWithConditionOn(form.controls).filter(
     (x) => !x.is_hidden,
   ).length;
-
-  if (!form.has_progress) return <></>;
 
   return (
     <Box
@@ -39,7 +42,7 @@ function LinearProgressWithLabel({
         </Typography>
       </Box>
       <Box sx={{ width: "100%" }}>
-        <LinearProgressStyle variant="determinate" value={value} />
+        <LinearProgressStyle variant="determinate" value={progress} />
       </Box>
     </Box>
   );

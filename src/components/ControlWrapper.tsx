@@ -9,6 +9,7 @@ import {
   Typography,
 } from "@mui/material";
 import { questionCounter } from "../utils/progressUtils";
+import { useFormPage } from "../hooks/useFormPage";
 
 type ControlWrapperPropsType = {
   control: ControlType;
@@ -24,6 +25,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   hideQuestionNumber,
 }) => {
   const { getControlErrors } = useFBControl(control);
+  const { getQuestionNumber } = useFormPage({ id: control.control_id });
 
   const id = control?.control_id;
   const label = control?.label_text;
@@ -43,7 +45,9 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   return (
     <Box display="flex" flexDirection="row" marginTop={3}>
       <Box paddingBlockStart={-2} position="relative" top={-8}>
-        {questionNumber !== 0 && !hideQuestionNumber && <>{questionNumber}. </>}
+        {questionNumber !== 0 && !hideQuestionNumber && (
+          <>{getQuestionNumber()}. </>
+        )}
       </Box>
       <FormControl error={hasError}>
         {(label &&

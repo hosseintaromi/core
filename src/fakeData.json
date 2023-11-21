@@ -11,7 +11,7 @@
     "name": "پیش فرض 1",
     "is_default": true,
     "background": {
-      "color": "#F1F1F1"
+      "color": "red"
     },
     "font_name": "IRANSans",
     "font_size": 14,

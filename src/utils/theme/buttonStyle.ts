@@ -25,8 +25,7 @@ const buttonStyleOverride = ({
   };
   return {
     styleOverrides: {
-      root: { ...styles, ":hover": styles },
-      focusVisible: styles,
+      root: { ...styles, ":hover": styles, focusVisible: styles },
     },
   };
 };

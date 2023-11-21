@@ -208,7 +208,6 @@ body {
 .tab-wrapper .view-wrapper,
 .tab-container .view-wrapper {
   inset: 0;
-  background-color: white;
 }
 
 .modal-container .view-wrapper.passportHelp {

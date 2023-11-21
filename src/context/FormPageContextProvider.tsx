@@ -67,8 +67,10 @@ export const FormPageContextProvider = memo(
       indexListenersRef.current.push(listener);
     };
 
-    const submitNext = () =>
-      viewDataRef.current?.submitHandler?.((data) => gotoNext(data))();
+    const submitNext = () => {
+      console.log("first");
+      return viewDataRef.current?.submitHandler?.((data) => gotoNext(data))();
+    };
 
     const submitForm = () =>
       viewDataRef.current?.submitHandler?.((data) => console.log(data))();

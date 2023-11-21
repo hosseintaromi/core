@@ -29,13 +29,15 @@ export const FormPageContextProvider = memo(
     const viewDataRef = useRef<FormPageViewDataType>({});
 
     const addNewQuestion = (id: string) => {
-      const pagesStack = questionStackRef.current;
-      if (pagesStack.includes(id)) {
-        const index = pagesStack.findIndex((item) => item === id);
-        pagesStack.slice(0, index + 1);
-      } else {
-        pagesStack.push(id);
-      }
+      let pagesStack = questionStackRef.current;
+      // if (pagesStack.includes(id)) {
+      //   const index = pagesStack.findIndex((item) => item === id);
+      //   console.log(index);
+      //   pagesStack = pagesStack.slice(0, index + 1);
+      // } else {
+      pagesStack.push(id);
+      // }
+      console.log(pagesStack);
       return pagesStack.length;
     };
 
@@ -51,14 +53,9 @@ export const FormPageContextProvider = memo(
       });
     };
 
-    const gotoNext = (data: FieldValues, indexes: number[] | null) => {
-      // if (!control.control_id) {
-      //   return;
-      // }
+    const gotoNext = (data: FieldValues) => {
       console.log(indexesRef.current);
       let nextIndexes = getNextIndex(form, indexesRef.current || [], data);
-      // console.log(nextIndexes);
-      //closeView(control.control_id, ViewContainerType.MasterTab);
       if (!nextIndexes || !nextIndexes.length) {
         return;
       }
@@ -72,9 +69,7 @@ export const FormPageContextProvider = memo(
     };
 
     const submitNext = () =>
-      viewDataRef.current?.submitHandler?.((data) =>
-        gotoNext(data, indexesRef.current),
-      )();
+      viewDataRef.current?.submitHandler?.((data) => gotoNext(data))();
 
     const submitForm = () =>
       viewDataRef.current?.submitHandler?.((data) => console.log(data))();

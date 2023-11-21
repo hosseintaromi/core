@@ -10,7 +10,7 @@ const LinearProgressStyle = styled(LinearProgress)({
 });
 
 function LinearProgressWithLabel() {
-  const [indexes, setIndexes] = useState<PageIndexesType>([]);
+  const [indexes, setIndexes] = useState<PageIndexesType>([0]);
 
   const { form } = useFormPage({
     onIndexChanged: (indexes: number[]) => {
@@ -28,7 +28,7 @@ function LinearProgressWithLabel() {
     <Stack spacing={1} width="50%" textAlign="right">
       <Box>
         <Typography variant="body2" color="text.secondary">
-          {indexes[0] + 1}/{Math.max(indexes[0] + 1, allPages)}
+          {indexes[0] + 1 || 1}/{Math.max(indexes[0] + 1, allPages) || allPages}
         </Typography>
       </Box>
       <LinearProgressStyle variant="determinate" value={progress} />

@@ -1,4 +1,5 @@
 import { Suspense, useEffect, useRef } from "react";
+import { ErrorBoundaryWrapper } from "./common-views/ErrorBoundaryWrapper";
 import { ViewInfo } from "../@types/view";
 
 export function ViewComponent({ viewInfo }: { viewInfo: ViewInfo }) {
@@ -18,9 +19,11 @@ export function ViewComponent({ viewInfo }: { viewInfo: ViewInfo }) {
       ref={elRef}
       className={"view-wrapper" + (className ? ` ${className}` : "")}
     >
-      <Suspense fallback="loading...">
-        <View />
-      </Suspense>
+      <ErrorBoundaryWrapper>
+        <Suspense fallback="loading...">
+          <View />
+        </Suspense>
+      </ErrorBoundaryWrapper>
     </div>
   );
 }

@@ -1,0 +1,132 @@
+{
+  "form_id": "form_id_1",
+  "type": "Form",
+  "title": "اطلاعات توسعه‌دهنده",
+  "hide_question_number": false,
+  "has_page_number": true,
+  "has_progress": true,
+  "locale": "Persian",
+  "theme": {
+    "padding": {
+      "horizontal": 10,
+      "vertical": 10
+    },
+    "theme_id": "dfdd",
+    "name": "پیش فرض 1",
+    "is_default": true,
+    "background": {
+      "color": "#f5f5f5"
+    },
+    "font_name": "IRANSans",
+    "font_size": 14,
+    "labels_style": {
+      "font_size": 20,
+      "font_weight": "600",
+      "text_color": "#333333"
+    },
+    "controls_style": {
+      "border": {
+        "top": "1px solid #333",
+        "left": "1px solid #333",
+        "right": "1px solid #333",
+        "bottom": "1px solid #333"
+      },
+      "shadow": "none",
+      "padding": {
+        "horizontal": 20,
+        "vertical": 10
+      },
+      "margin": {
+        "horizontal": 20,
+        "vertical": 10
+      },
+      "background_color": "rgba(51,51,51,0.1)",
+      "radius": 18,
+      "text_color": "#333"
+    },
+
+    "placeholders_style": {
+      "text_color": "#333"
+    },
+
+    "groups_style": {},
+
+    "buttons_style": {
+      "border": {
+        "top": "1px solid #118EB7",
+        "left": "1px solid #118EB7",
+        "right": "1px solid #118EB7",
+        "bottom": "1px solid #118EB7"
+      },
+      "shadow": "none",
+      "background_color": "#118EB7"
+    }
+  },
+  "layout": { "floating_box": false },
+  "values": {},
+  "controls": [
+    {
+      "control_id": "control_id_1",
+      "type": "Group",
+      "group_info": {
+        "type": "FormSet",
+        "title": "اطلاعات شخصی",
+        "description": "لطفا اطلاعات شخصی توسعه‌دهنده را تکمیل کنید.",
+        "controls": [
+          {
+            "control_id": "control_id_1_1",
+            "type": "TextBox",
+            "label_text": "ایمیل",
+            "textbox_info": { "type": "Email" },
+            "validations": [
+              { "type": "Required" },
+              {
+                "type": "Email",
+                "regex_pattern": "^[w.-]+@[a-zA-Z_-]+?(?:.[a-zA-Z]{2,6})+$/"
+              }
+            ]
+          },
+          {
+            "control_id": "control_id_1_2",
+            "type": "DropDown",
+            "label_text": "نوع اکانت کاربری",
+            "dropdown_info": {
+              "searchable": false,
+              "options": [
+                { "value": 0, "text": "حقوقی" },
+                { "value": 1, "text": "حقیقی" }
+              ]
+            },
+            "validations": [{ "type": "Required" }]
+          },
+          {
+            "control_id": "control_id_1_3",
+            "type": "TextBox",
+            "label_text": "نام",
+            "textbox_info": { "type": "Persian" },
+            "validations": [
+              { "type": "Required" },
+              {
+                "type": "Persian",
+                "regex_pattern": "^[\u0600-\u06FFs]+$"
+              }
+            ]
+          },
+          {
+            "control_id": "control_id_1_4",
+            "type": "TextBox",
+            "label_text": "نام خانوادگی",
+            "textbox_info": { "type": "Persian" },
+            "validations": [
+              { "type": "Required" },
+              {
+                "type": "Persian",
+                "regex_pattern": "^[\u0600-\u06FFs]+$"
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

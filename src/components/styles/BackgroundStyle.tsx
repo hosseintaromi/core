@@ -15,6 +15,8 @@ const BackgroundStyle = styled(Container, {
       backgroundColor: backgroundStyles?.color || "#fff",
     },
     " .view-wrapper": {
+      overflowY: "scroll",
+      bottom: 67,
       backgroundColor: backgroundStyles?.color || "#fff",
       paddingInline: formTheme?.padding?.horizontal + "px",
       paddingBlock: formTheme?.padding?.vertical + "px",

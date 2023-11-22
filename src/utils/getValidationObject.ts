@@ -53,7 +53,41 @@ export const getValidationObject = (control: ControlType) => {
         validationObj.required = convertLocale({
           key: "VALIDATION_REQUIRED",
         }).text;
-
+        break;
+      case ValidationTypeEnum.Latin:
+        validationObj.pattern = {
+          value: regex,
+          message: convertLocale({ key: "VALIDATION_LATIN" }).text,
+        };
+        break;
+      case ValidationTypeEnum.Mobile:
+        validationObj.pattern = {
+          value: regex,
+          message: convertLocale({ key: "VALIDATION_MOBILE" }).text,
+        };
+        break;
+      case ValidationTypeEnum.NationalId:
+        validationObj.pattern = {
+          value: regex,
+          message: convertLocale({ key: "VALIDATION_NATIONAL_ID" }).text,
+        };
+        break;
+      case ValidationTypeEnum.Persian:
+        validationObj.pattern = {
+          value: regex,
+          message: convertLocale({ key: "VALIDATION_PERSIAN" }).text,
+        };
+        break;
+      case ValidationTypeEnum.PostalCode:
+        validationObj.pattern = {
+          value: regex,
+          message: convertLocale({ key: "VALIDATION_POSTAL_CODE" }).text,
+        };
+        break;
+      default:
+        validationObj.required = convertLocale({
+          key: "VALIDATION_REGEX",
+        }).text;
         break;
     }
   });

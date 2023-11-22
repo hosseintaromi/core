@@ -36,6 +36,7 @@ const DatePicker: FC<DatePickerPropsType> = ({
           sx={{
             ...dateTimePickerStyle(theme),
             MuiButton: { backgroundColor: "#ffffff" },
+            fontSize: "2rem",
           }}
           defaultValue={defaultValue}
           onChange={(value) =>
@@ -48,6 +49,19 @@ const DatePicker: FC<DatePickerPropsType> = ({
               onBlur,
               name,
               error: !!getControlErrors()?.type,
+            },
+            toolbar: {
+              sx: {
+                ".MuiDateTimePickerToolbar-dateContainer": {
+                  ".MuiTypography-h4": { fontSize: "2rem" },
+                },
+                ".MuiDateTimePickerToolbar-timeDigitsContainer": {
+                  "button, span": { fontSize: "2.5rem" },
+                },
+                ".MuiDateTimePickerToolbar-ampmSelection": {
+                  "button, span": { fontSize: "14px" },
+                },
+              },
             },
           }}
         />

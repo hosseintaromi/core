@@ -20,8 +20,8 @@ const Footer = ({ theme }: { theme?: ThemeType }) => {
       borderTop={border?.top}
       sx={{ backgroundColor: theme?.background?.color + "90" }}
     >
-      <NextButton />
       <LinearProgressWithLabel />
+      <NextButton />
     </Box>
   );
 };

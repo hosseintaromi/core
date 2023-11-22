@@ -5,6 +5,8 @@ import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 import { Box, Typography, Button, styled } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Localizer } from "../Localizer";
+import { useFormPage } from "../../hooks/useFormPage";
+import fileUploadStyle from "../../utils/theme/fileUploadStyle";
 
 type FileUploadPropsType = {
   control: ControlType;
@@ -13,9 +15,11 @@ type FileUploadPropsType = {
 
 const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
+  const { form } = useFormPage({});
 
   const info = control.file_upload_info;
   let acceptType: string = "";
+  const controlStyles = form.theme.controls_style;
 
   switch (info?.file_type) {
     case FileTypeEnum.Image:
@@ -67,10 +71,6 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
 
   return (
     <>
-      <Box>
-        <img src="" alt="" />
-        <Typography>فایل خود را انتخاب کنید.</Typography>
-      </Box>
       <Box
         display="flex"
         flexDirection="column"
@@ -79,12 +79,7 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
         maxWidth="18.4375rem"
         minWidth="12.5rem"
         height="7.5rem"
-        sx={{
-          borderRadius: "0.5rem",
-          border: "0.0625rem solid rgba(241,89,118,0.4)",
-          backgroundColor: "rgba(241,89,118,0.1)",
-          marginBottom: "0.5rem",
-        }}
+        sx={fileUploadStyle(form.theme)}
       >
         <Button
           component="label"
@@ -94,17 +89,15 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
           <Typography variant="caption" component="span">
             <Localizer localeKey="CHOOSE_FILE" />
           </Typography>
-          <VisuallyHiddenInput type="file" />
+          <VisuallyHiddenInput
+            type="file"
+            accept={acceptType}
+            ref={ref}
+            onChange={onChange}
+            onBlur={onBlur}
+            name={name}
+          />
         </Button>
-        {/* <input
-          style={{ display: "none" }}
-          type="file"
-          accept={acceptType}
-          ref={ref}
-          onChange={onChange}
-          onBlur={onBlur}
-          name={name}
-        /> */}
       </Box>
     </>
   );

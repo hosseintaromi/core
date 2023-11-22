@@ -43,9 +43,9 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   return (
     <Box
       display="flex"
-      flexDirection="row"
+      flexDirection="column"
       width="100%"
-      maxWidth="1200px"
+      maxWidth="600px"
       margin="0 auto"
     >
       <FormControl error={hasError}>
@@ -86,15 +86,12 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
             </InputLabel>
           )}
         </Box>
-        <Box
-          display="flex"
-          flexDirection="column"
-          gap={2}
-          marginTop={isFloatingDropDown ? 0 : 3}
-        >
-          <Box>
-            <Typography variant="subtitle2">{control.description}</Typography>
-          </Box>
+        <Box display="flex" flexDirection="column" gap={2}>
+          {control.description && (
+            <Box marginTop={isFloatingDropDown ? 0 : 3}>
+              <Typography variant="subtitle2">{control.description}</Typography>
+            </Box>
+          )}
           <>{children}</>
         </Box>
         <>

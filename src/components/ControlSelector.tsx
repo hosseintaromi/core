@@ -2,6 +2,7 @@ import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
 import { ThemeType } from "../@types/ThemeTypes";
 import DatePicker from "./controls/DatePicker";
 import DropDown from "./controls/DropDown";
+import FileUpload from "./controls/FileUpload";
 import FormSetGroup from "./controls/FormSetGroup";
 import MultipleOption from "./controls/multipleOption/MultipleOption";
 import PlaceHolder from "./controls/PlaceHolder";
@@ -32,15 +33,8 @@ const ControlSelector = ({
       );
     case ControlTypeEnum.DropDown:
       return <DropDown control={control} isFloatingBox={isFloatingBox} />;
-    // case ControlTypeEnum.FileUpload:
-    //   return (
-    //     <FileUpload
-    //       form={form}
-    //       formState={formState}
-    //       index={index}
-    //       controlFormState={controlFormState}
-    //     />
-    //   );
+    case ControlTypeEnum.FileUpload:
+      return <FileUpload control={control} isFloatingBox={isFloatingBox} />;
     case ControlTypeEnum.Group:
       return (
         <FormSetGroup

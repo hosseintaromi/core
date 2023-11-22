@@ -6,6 +6,7 @@ import { Box, Typography } from "@mui/material";
 
 type FileUploadPropsType = {
   control: ControlType;
+  isFloatingBox?: boolean;
 };
 
 const FileUpload: FC<FileUploadPropsType> = ({ control }) => {

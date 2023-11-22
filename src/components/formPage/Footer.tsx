@@ -12,11 +12,6 @@ const Footer = ({ theme }: { theme?: ThemeType }) => {
       justifyContent="space-between"
       height="50px"
       p={2}
-      position="absolute"
-      left={0}
-      right={0}
-      bottom={0}
-      zIndex={1}
       borderTop={border?.top}
       sx={{ backgroundColor: theme?.background?.color + "90" }}
     >

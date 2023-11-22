@@ -10,4 +10,5 @@ export const globalLocales: GlobalLocalesType = {
   VALIDATION_REQUIRED: "پر کردن این فیلد الزامی است.",
   CALENDAR_OK_BUTTON: "تایید",
   CALENDAR_CANCEL_BUTTON: "انصراف",
+  CHOOSE_FILE: "انتخاب فایل",
 };

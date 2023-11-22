@@ -4,6 +4,11 @@ body {
   overflow: hidden;
   margin: 0;
 }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
 .alert-card {
   align-items: center;
@@ -188,10 +193,16 @@ body {
 }
 
 .tab-wrapper,
-.tab-container {
+.tab-container,
+.tab-wrapper .view-wrapper,
+.tab-container .view-wrapper {
   position: absolute;
   overflow: hidden;
   inset: 0;
+}
+
+.tab-wrapper,
+.tab-container {
   z-index: 0;
 }
 
@@ -201,13 +212,7 @@ body {
 
 .tab-wrapper .view-wrapper,
 .tab-container .view-wrapper {
-  position: absolute;
-  overflow: hidden;
-}
-
-.tab-wrapper .view-wrapper,
-.tab-container .view-wrapper {
-  inset: 0;
+  overflow-y: auto;
 }
 
 .modal-container .view-wrapper.passportHelp {

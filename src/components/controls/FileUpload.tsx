@@ -2,7 +2,9 @@ import { ChangeEvent, FC } from "react";
 import { ControlType } from "../../@types/ControlTypes";
 import { FileTypeEnum } from "../../@types/FileUploadTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
-import { Box, Typography } from "@mui/material";
+import { Box, Typography, Button, styled } from "@mui/material";
+import CloudUploadIcon from "@mui/icons-material/CloudUpload";
+import { Localizer } from "../Localizer";
 
 type FileUploadPropsType = {
   control: ControlType;
@@ -51,6 +53,17 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
       console.error("max size");
     }
   };
+  const VisuallyHiddenInput = styled("input")({
+    clip: "rect(0 0 0 0)",
+    clipPath: "inset(50%)",
+    height: 1,
+    overflow: "hidden",
+    position: "absolute",
+    bottom: 0,
+    left: 0,
+    whiteSpace: "nowrap",
+    width: 1,
+  });
 
   return (
     <>
@@ -58,14 +71,41 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
         <img src="" alt="" />
         <Typography>فایل خود را انتخاب کنید.</Typography>
       </Box>
-      <input
-        type="file"
-        accept={acceptType}
-        ref={ref}
-        onChange={onChange}
-        onBlur={onBlur}
-        name={name}
-      />
+      <Box
+        display="flex"
+        flexDirection="column"
+        justifyContent="center"
+        alignItems="center"
+        maxWidth="18.4375rem"
+        minWidth="12.5rem"
+        height="7.5rem"
+        sx={{
+          borderRadius: "0.5rem",
+          border: "0.0625rem solid rgba(241,89,118,0.4)",
+          backgroundColor: "rgba(241,89,118,0.1)",
+          marginBottom: "0.5rem",
+        }}
+      >
+        <Button
+          component="label"
+          variant="contained"
+          startIcon={<CloudUploadIcon />}
+        >
+          <Typography variant="caption" component="span">
+            <Localizer localeKey="CHOOSE_FILE" />
+          </Typography>
+          <VisuallyHiddenInput type="file" />
+        </Button>
+        {/* <input
+          style={{ display: "none" }}
+          type="file"
+          accept={acceptType}
+          ref={ref}
+          onChange={onChange}
+          onBlur={onBlur}
+          name={name}
+        /> */}
+      </Box>
     </>
   );
 };

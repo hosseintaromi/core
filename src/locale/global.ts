@@ -8,4 +8,6 @@ export const globalLocales: GlobalLocalesType = {
   VALIDATION_RANGE: "ورودی در بازه مورد نظر نمی باشد.",
   VALIDATION_URL: "ورودی صحیح نمی‌باشد.",
   VALIDATION_REQUIRED: "پر کردن این فیلد الزامی است.",
+  CALENDAR_OK_BUTTON: "تایید",
+  CALENDAR_CANCEL_BUTTON: "انصراف",
 };

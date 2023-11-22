@@ -20,11 +20,12 @@ const FormPage = () => {
             display: "flex",
             flexDirection: "column",
             height: "100%",
-            p: 0,
+            p: "0 !important",
+            maxWidth: "100% !important",
           }}
           formTheme={formTheme}
         >
-          <Box position="relative" flex="1 1 50px" height="100%">
+          <Box position="relative" flex="1 1 auto" height="100%">
             <PartialTabContainer containerName="FormContainer" />
           </Box>
           <Footer theme={formTheme} />

@@ -11,14 +11,15 @@ const selectStyleOverride = ({
       root: {
         marginBlock: controls_style?.margin?.horizontal + "px",
         marginInline: controls_style?.margin?.vertical + "px",
-        backgroundColor: controls_style?.background_color,
         ".MuiOutlinedInput-input": {
           fontSize: controls_style?.font_size || font_size + "px",
           fontWeight: controls_style?.font_weight,
           fontFamily: font_name,
           color: controls_style?.text_color,
+          zIndex: 1,
         },
         ".MuiOutlinedInput-notchedOutline": {
+          backgroundColor: controls_style?.background_color,
           borderTop: border?.top,
           borderBottom: border?.bottom,
           borderRight: border?.right,
@@ -28,6 +29,7 @@ const selectStyleOverride = ({
           paddingInline: controls_style?.padding?.horizontal + "px",
           paddingBlock: controls_style?.padding?.vertical + "px",
         },
+        "& input": { borderRadius: controls_style?.radius + "px" },
       },
     },
   };

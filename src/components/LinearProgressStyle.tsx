@@ -7,6 +7,7 @@ import { PageIndexesType } from "../@types/FormPageTypes";
 
 const LinearProgressStyle = styled(LinearProgress)({
   width: "100%",
+  marginTop: "0 !important",
 });
 
 function LinearProgressWithLabel() {
@@ -25,9 +26,14 @@ function LinearProgressWithLabel() {
   ).length;
 
   return (
-    <Stack spacing={1} width="50%">
+    <Stack spacing={1} maxWidth="50%" width="100px">
       <Box>
-        <Typography variant="body2" color={form.theme.labels_style?.text_color}>
+        <Typography
+          sx={{ fontSize: "small" }}
+          variant="body2"
+          component="span"
+          color={form.theme.labels_style?.text_color}
+        >
           {indexes[0] + 1 || 1}/{Math.max(indexes[0] + 1, allPages) || allPages}
         </Typography>
       </Box>

@@ -10,8 +10,8 @@ const Footer = ({ theme }: { theme?: ThemeType }) => {
       display="flex"
       alignItems="center"
       justifyContent="space-between"
-      height="50px"
-      p={2}
+      height="60px"
+      px={2}
       borderTop={border?.top}
       sx={{ backgroundColor: theme?.background?.color + "90" }}
     >

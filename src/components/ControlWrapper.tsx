@@ -41,7 +41,13 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
     control.type === ControlTypeEnum.DropDown && isFloatingBox;
 
   return (
-    <Box display="flex" flexDirection="column" marginTop={3}>
+    <Box
+      display="flex"
+      flexDirection="row"
+      width="100%"
+      maxWidth="1200px"
+      margin="0 auto"
+    >
       <FormControl error={hasError}>
         <Box display="flex" alignItems="center">
           {type !== ControlTypeEnum.Group && !hideQuestionNumber && (
@@ -51,6 +57,8 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
                 position: "static",
                 maxWidth: "unset",
                 display: "inline-block",
+                transform: "none",
+                pr: 0.75,
               }}
             >
               {questionNumber}.{" "}
@@ -69,6 +77,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
                 position: "static",
                 display: "inline-block",
                 maxWidth: "unset",
+                transform: "none",
               }}
               shrink={isFloatingDropDown ? undefined : true}
               htmlFor={id}

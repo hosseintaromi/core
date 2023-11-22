@@ -5,6 +5,7 @@ import inputLabelStyle from "./theme/inputLabelStyle";
 import selectStyleOverride from "./theme/selectStyle";
 import buttonStyleOverride from "./theme/buttonStyle";
 import descriptionStyle from "./theme/descriptionStyle";
+import progressStyleOverride from "./theme/progressStyle";
 
 const theme = (formTheme: ThemeType) =>
   createTheme({
@@ -14,6 +15,7 @@ const theme = (formTheme: ThemeType) =>
       MuiInputLabel: inputLabelStyle(formTheme),
       MuiSelect: selectStyleOverride(formTheme),
       MuiButton: buttonStyleOverride(formTheme),
+      MuiLinearProgress: progressStyleOverride(formTheme),
     },
     typography: {
       fontSize: formTheme.font_size,

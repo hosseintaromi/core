@@ -27,7 +27,7 @@ function LinearProgressWithLabel() {
   return (
     <Stack spacing={1} width="50%">
       <Box>
-        <Typography variant="body2" color="text.secondary">
+        <Typography variant="body2" color={form.theme.labels_style?.text_color}>
           {indexes[0] + 1 || 1}/{Math.max(indexes[0] + 1, allPages) || allPages}
         </Typography>
       </Box>

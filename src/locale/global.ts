@@ -15,4 +15,5 @@ export const globalLocales: GlobalLocalesType = {
   VALIDATION_POSTAL_CODE: "لطفا کدپستی خود را به درستی وارد کنید.",
   CALENDAR_OK_BUTTON: "تایید",
   CALENDAR_CANCEL_BUTTON: "انصراف",
+  CHOOSE_FILE: "انتخاب فایل",
 };

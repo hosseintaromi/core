@@ -6,6 +6,8 @@ import selectStyleOverride from "./theme/selectStyle";
 import buttonStyleOverride from "./theme/buttonStyle";
 import descriptionStyle from "./theme/descriptionStyle";
 import progressStyleOverride from "./theme/progressStyle";
+import autoCompleteListStyle from "./theme/autoCompleteListStyle";
+import selectListStyleOverride from "./theme/selectListStyle";
 
 const theme = (formTheme: ThemeType) =>
   createTheme({
@@ -16,6 +18,8 @@ const theme = (formTheme: ThemeType) =>
       MuiSelect: selectStyleOverride(formTheme),
       MuiButton: buttonStyleOverride(formTheme),
       MuiLinearProgress: progressStyleOverride(formTheme),
+      MuiAutocomplete: autoCompleteListStyle(formTheme),
+      MuiList: selectListStyleOverride(formTheme),
     },
     typography: {
       fontSize: formTheme.font_size,

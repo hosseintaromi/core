@@ -90,7 +90,7 @@
       "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
       "label_text": "جنسیت",
       "dropdown_info": {
-        "searchable": true,
+        "searchable": false,
         "options": [
           { "value": 0, "text": "زن" },
           { "value": 1, "text": "مرد" }

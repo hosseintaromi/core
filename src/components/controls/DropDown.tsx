@@ -1,6 +1,12 @@
 import React, { FC } from "react";
 import { ControlType } from "../../@types/ControlTypes";
-import { Autocomplete, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  MenuItem,
+  Popper,
+  Select,
+  TextField,
+} from "@mui/material";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 
 type DropDownPropsType = { control: ControlType; isFloatingBox?: boolean };
@@ -21,6 +27,7 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
       {control.dropdown_info?.searchable ? (
         <Autocomplete
           // disablePortal
+
           ref={ref}
           defaultValue={selectedValues?.[0]?.text}
           onChange={(event: any, value: any) => {
@@ -41,6 +48,7 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
               label={isFloatingBox ? control.label_text : ""}
             />
           )}
+          // slotProps={{ popper: { sx:{backgroundColor: theme} } }}
         />
       ) : (
         <Select

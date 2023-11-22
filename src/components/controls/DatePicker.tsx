@@ -84,6 +84,29 @@ const DatePicker: FC<DatePickerPropsType> = ({
                 ".MuiPickersDay-root": {
                   fontSize: "16px",
                 },
+                ".muirtl-j6lryb-MuiButtonBase-root-MuiTab-root.Mui-selected": {
+                  color: "#000",
+                },
+                ".muirtl-1aquho2-MuiTabs-indicator": {
+                  backgroundColor: "#000",
+                },
+                ".muirtl-ia2qij-MuiButtonBase-root-MuiPickersDay-root.Mui-selected":
+                  {
+                    backgroundColor: "#999 !important",
+                  },
+                ".muirtl-umzx0k-MuiClock-pin": {
+                  backgroundColor: "#999 !important",
+                },
+                ".muirtl-d0vs79-MuiClockPointer-root": {
+                  backgroundColor: "#999 !important",
+                },
+                ".muirtl-eg3pzz-MuiClockPointer-thumb": {
+                  backgroundColor: "#999 !important",
+                  borderColor: "#999 !important",
+                },
+                ".muirtl-xsbr3j-MuiButtonBase-root-MuiButton-root": {
+                  color: "#000",
+                },
               },
             },
           }}

@@ -11,7 +11,8 @@ const Footer = ({ theme }: { theme?: ThemeType }) => {
       alignItems="center"
       justifyContent="space-between"
       height="50px"
-      p={2}
+      px={2}
+      py={1}
       position="absolute"
       left={0}
       right={0}

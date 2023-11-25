@@ -13,13 +13,6 @@ const BackgroundStyle = styled(Container, {
   return {
     " .partial-tab-container": {
       backgroundColor: backgroundStyles?.color || "#fff",
-    },
-    " .view-wrapper": {
-      overflowY: "scroll",
-      bottom: 67,
-      backgroundColor: backgroundStyles?.color || "#fff",
-      paddingInline: formTheme?.padding?.horizontal + "px",
-      paddingBlock: formTheme?.padding?.vertical + "px",
       backgroundImage: `url(${backgroundStyles?.image_url})`,
       opacity: backgroundStyles?.image_opacity,
       ...(imageAlign && imageAlign === ImageAlignEnum.Left
@@ -33,6 +26,11 @@ const BackgroundStyle = styled(Container, {
         : imageAlign === ImageAlignEnum.Fit
         ? { backgroundSize: "cover" }
         : {}),
+    },
+    " .view-wrapper": {
+      overflowY: "scroll",
+      paddingInline: formTheme?.padding?.horizontal + "px",
+      paddingBlock: formTheme?.padding?.vertical + "px",
     },
   };
 });

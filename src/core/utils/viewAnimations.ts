@@ -1,7 +1,7 @@
 import { ViewEvent } from "../@types/view";
 import { bezier } from "./bezier";
 
-const slideIn = bezier(0.25, 1, 0.5, 1);
+export const slideIn = bezier(0.25, 1, 0.5, 1);
 
 export const closeTabAnimationConfig: ViewEvent = {
   duration: 400,
@@ -21,7 +21,7 @@ export const closeTabAnimationConfig: ViewEvent = {
     const p = slideIn(t);
     closeStyle.transform = `translateX(${p * 100}%)`;
     if (activeStyle) {
-      activeStyle.filter = `brightness(${t * 20 + 80}%)`;
+      //activeStyle.filter = `brightness(${t * 20 + 80}%)`;
       activeStyle.transform = `translateX(${(p - 1) * 0.2 * 100}%)`;
     }
   },
@@ -120,7 +120,7 @@ export const openTabContainerConfig: ViewEvent = {
 
     if (prevStyle) {
       prevStyle.transform = `translateX(${-p * 100 * 0.2}%)`;
-      prevStyle.filter = `brightness(${(1 - t) * 20 + 80}%)`;
+      //prevStyle.filter = `brightness(${(1 - t) * 20 + 80}%)`;
     }
   },
   end(newView, prevView) {

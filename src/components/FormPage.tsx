@@ -26,7 +26,10 @@ const FormPage = () => {
           formTheme={formTheme}
         >
           <Box position="relative" flex="1 1 auto" height="100%">
-            <PartialTabContainer containerName="FormContainer" />
+            <PartialTabContainer
+              className="form-wrapper"
+              containerName="FormContainer"
+            />
           </Box>
           <Footer theme={formTheme} />
         </BackgroundStyle>

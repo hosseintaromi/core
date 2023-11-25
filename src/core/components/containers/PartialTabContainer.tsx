@@ -6,14 +6,50 @@ import {
   closeTabAnimationConfig,
   onLeaveContainerConfig,
   openTabContainerConfig,
+  slideIn,
 } from "../../utils/viewAnimations";
 
-const PartialTabContainer = ({ containerName }: { containerName: string }) => {
+const PartialTabContainer = ({
+  containerName,
+  className,
+}: {
+  containerName: string;
+  className: string;
+}) => {
   const { viewsInfo } = useViewManage(
     containerName,
     0,
     {},
-    openTabContainerConfig,
+    {
+      duration: 400,
+      start(newView, prevView) {
+        const newStyle = newView.ref.style;
+        const prevStyle = prevView?.ref?.style;
+        newStyle.display = "block";
+        newStyle.zIndex = "2";
+
+        if (prevStyle) {
+          prevStyle.zIndex = "1";
+        }
+      },
+      animate(t, newView, prevView) {
+        const p = slideIn(t);
+        const newStyle = newView.ref.style;
+        const prevStyle = prevView?.ref?.style;
+        newStyle.opacity = `${p}`;
+
+        if (prevStyle) {
+          prevStyle.opacity = `${1 - p}`;
+          //prevStyle.filter = `brightness(${(1 - t) * 20 + 80}%)`;
+        }
+      },
+      end(newView, prevView) {
+        const prevStyle = prevView?.ref?.style;
+        if (prevStyle) {
+          prevStyle.display = "none";
+        }
+      },
+    },
     closeTabAnimationConfig,
     openTabContainerConfig,
     openTabContainerConfig,
@@ -23,7 +59,7 @@ const PartialTabContainer = ({ containerName }: { containerName: string }) => {
   return viewsInfo.length === 0 ? (
     <></>
   ) : (
-    <div className="partial-tab-container">
+    <div className={"partial-tab-container " + className}>
       {viewsInfo?.map((viewInfo) => (
         <React.Fragment key={viewInfo.id}>
           <ViewContextProvider viewInfo={viewInfo}>

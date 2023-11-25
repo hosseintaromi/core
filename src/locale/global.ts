@@ -16,4 +16,5 @@ export const globalLocales: GlobalLocalesType = {
   CALENDAR_OK_BUTTON: "تایید",
   CALENDAR_CANCEL_BUTTON: "انصراف",
   CHOOSE_FILE: "انتخاب فایل",
+  YOU_ANSWARED: "پاسخ داده اید",
 };

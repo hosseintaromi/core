@@ -27,7 +27,7 @@ function LinearProgressWithLabel() {
   ).length;
 
   return (
-    <Stack spacing={1} maxWidth="50%" width="100px">
+    <Stack spacing={1} maxWidth="50%" width="120px">
       <Box
         mb={0.5}
         display="inline-flex"

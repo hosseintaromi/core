@@ -29,10 +29,10 @@ function LinearProgressWithLabel() {
   return (
     <Stack spacing={1} maxWidth="50%" width="120px">
       <Box
-        mb={0.5}
         display="inline-flex"
         alignItems="center"
         color={form.theme.labels_style?.text_color}
+        sx={{ mb: ".15rem !important" }}
       >
         <Typography
           variant="body2"

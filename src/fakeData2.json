@@ -46,7 +46,10 @@
     },
 
     "placeholders_style": {
-      "text_color": "#f15976"
+      "text_color": "#f15976",
+      "margin": {
+        "horizontal": 20
+      }
     },
 
     "groups_style": {},
@@ -161,7 +164,6 @@
           {
             "control_id": "control_id_8",
             "type": "PlaceHolder",
-            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
             "label_text": "قوانین",
             "placeholder_info": {
               "description": "قوانین را خوانده و تایید می‌نمایم.",

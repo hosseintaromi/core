@@ -50,7 +50,39 @@ const PartialTabContainer = ({
         }
       },
     },
-    closeTabAnimationConfig,
+    {
+      duration: 400,
+      start(closeView, activeView) {
+        const closeStyle = closeView.ref.style;
+        const activeStyle = activeView?.ref.style;
+        closeStyle.display = "1";
+        if (activeStyle) {
+          activeStyle.display = "block";
+          activeStyle.opacity = "1";
+        }
+      },
+      animate(t, closeView, activeView) {
+        const closeStyle = closeView.ref.style;
+        const activeStyle = activeView?.ref.style;
+
+        const p = slideIn(t);
+        closeStyle.opacity = `${1 - p}`;
+        if (activeStyle) {
+          //activeStyle.filter = `brightness(${t * 20 + 80}%)`;
+          activeStyle.opacity = `${p}`;
+        }
+      },
+      end(closeView, activeView) {
+        const closeStyle = closeView.ref.style;
+        const activeStyle = activeView?.ref.style;
+
+        closeStyle.opacity = "0";
+        closeStyle.display = "none";
+        if (activeStyle) {
+          activeStyle.opacity = "1";
+        }
+      },
+    },
     openTabContainerConfig,
     openTabContainerConfig,
     onLeaveContainerConfig,

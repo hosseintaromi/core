@@ -47,7 +47,10 @@
     },
 
     "placeholders_style": {
-      "text_color": "#39383a"
+      "text_color": "#39383a",
+      "margin": {
+        "horizontal": 20
+      }
     },
     "groups_style": {},
     "buttons_style": {

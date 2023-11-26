@@ -35,6 +35,7 @@ const FormPage = () => {
               minHeight: "2.5rem",
               height: "2.5rem",
               color: "#fff",
+              userSelect: "none",
             }}
           >
             <Typography sx={{ fontSize: "14px" }}>

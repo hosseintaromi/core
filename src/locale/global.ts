@@ -16,5 +16,6 @@ export const globalLocales: GlobalLocalesType = {
   CALENDAR_OK_BUTTON: "تایید",
   CALENDAR_CANCEL_BUTTON: "انصراف",
   CHOOSE_FILE: "انتخاب فایل",
-  YOU_ANSWARED: "پاسخ داده اید",
+  YOU_ANSWERED: "پاسخ داده اید",
+  FORM_DISABLED: "این پرسشنامه غیر‌فعال است و امکان ثبت پاسخ ندارد.",
 };

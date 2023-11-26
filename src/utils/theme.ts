@@ -25,6 +25,7 @@ const theme = (formTheme: ThemeType) =>
       fontSize: formTheme.font_size,
       fontFamily: formTheme.font_name,
       subtitle2: descriptionStyle(formTheme),
+      body2: descriptionStyle(formTheme),
     },
   });
 

@@ -1,12 +1,13 @@
-import { Box, ThemeProvider } from "@mui/material";
+import { Box, ThemeProvider, Typography } from "@mui/material";
 import PartialTabContainer from "../core/components/containers/PartialTabContainer";
 import theme from "../utils/theme";
 import BackgroundStyle from "./styles/BackgroundStyle";
-import form from "../fakeData2.json";
+import form from "../fakeData3.json";
 import { ThemeType } from "../@types/ThemeTypes";
 import { FormType } from "../@types/FormTypes";
 import { FormPageContextProvider } from "../context/FormPageContextProvider";
 import Footer from "./formPage/Footer";
+import { Localizer } from "./Localizer";
 
 const FormPage = () => {
   const formData = form as any as FormType;
@@ -25,6 +26,21 @@ const FormPage = () => {
           }}
           formTheme={formTheme}
         >
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            sx={{
+              backgroundColor: "#3390ec",
+              minHeight: "2.5rem",
+              height: "2.5rem",
+              color: "#fff",
+            }}
+          >
+            <Typography sx={{ fontSize: "14px" }}>
+              <Localizer localeKey="FORM_DISABLED" />
+            </Typography>
+          </Box>
           <Box position="relative" flex="1 1 auto" height="100%">
             <PartialTabContainer
               className="form-wrapper"

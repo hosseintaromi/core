@@ -43,7 +43,7 @@ function LinearProgressWithLabel() {
           {indexes[0] + 1 || 1}/{Math.max(indexes[0] + 1, allPages) || allPages}{" "}
         </Typography>
         <Typography variant="body2" component="span" sx={{ fontSize: "small" }}>
-          <Localizer localeKey="YOU_ANSWARED" />
+          <Localizer localeKey="YOU_ANSWERED" />
         </Typography>
       </Box>
       <LinearProgressStyle variant="determinate" value={progress} />

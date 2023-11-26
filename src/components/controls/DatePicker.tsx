@@ -4,12 +4,12 @@ import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 import { useFBControl } from "../../hooks/useFBControl";
 import { AdapterDateFnsJalali } from "@mui/x-date-pickers/AdapterDateFnsJalali";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
 import dateTimePickerStyle from "../../utils/theme/dateTimePickerStyle";
 import { ThemeType } from "../../@types/ThemeTypes";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
 import { useGlobalLocales } from "../../hooks/useGlobalLocales";
+import { MobileDatePicker } from "@mui/x-date-pickers";
 
 type DatePickerPropsType = {
   control: ControlType;
@@ -45,7 +45,7 @@ const DatePicker: FC<DatePickerPropsType> = ({
             .text,
         }}
       >
-        <DateTimePicker
+        <MobileDatePicker
           sx={{
             ...dateTimePickerStyle(theme),
           }}
@@ -55,12 +55,17 @@ const DatePicker: FC<DatePickerPropsType> = ({
           }
           ref={ref}
           slotProps={{
-            textField: {
+            textField: (params) => ({
               label: isFloatingBox ? control.label_text : "",
               onBlur,
               name,
               error: !!getControlErrors()?.type,
-            },
+              ...params,
+              sx: {
+                ...(params?.sx || {}),
+                direction: "rtl",
+              },
+            }),
             toolbar: {
               hidden: true,
               sx: {

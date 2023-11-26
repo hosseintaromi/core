@@ -86,17 +86,21 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
             </InputLabel>
           )}
         </Box>
-        <Box display="flex" flexDirection="column" gap={2}>
+        <Box display="flex" flexDirection="column">
           {control.description && (
-            <Box marginTop={isFloatingDropDown ? 0 : 3}>
-              <Typography variant="subtitle2">{control.description}</Typography>
+            <Box marginTop={isFloatingDropDown ? 0 : 1}>
+              <Typography variant="body2">{control.description}</Typography>
             </Box>
           )}
           <>{children}</>
         </Box>
         <>
           {hasError && (
-            <FormHelperText>
+            <FormHelperText
+              sx={{
+                margin: 0,
+              }}
+            >
               {getControlErrors()?.message?.toString()}
             </FormHelperText>
           )}

@@ -38,7 +38,13 @@ const FormSetGroup = ({
   }, []);
 
   return (
-    <Box sx={{ ...groupStyle(theme.groups_style) }} id="group">
+    <Box
+      sx={{ ...groupStyle(theme.groups_style) }}
+      display="flex"
+      flexDirection="column"
+      gap={3}
+      id="group"
+    >
       {controls
         ?.filter((x) => !x.is_hidden)
         .map((controlItem: ControlType) => (

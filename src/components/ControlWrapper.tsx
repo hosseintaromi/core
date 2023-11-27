@@ -48,7 +48,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
       maxWidth="600px"
       margin="0 auto"
     >
-      <FormControl error={hasError}>
+      <FormControl error={hasError} sx={{ gap: 1 }}>
         <Box display="flex" alignItems="center">
           {type !== ControlTypeEnum.Group && !hideQuestionNumber && (
             <InputLabel

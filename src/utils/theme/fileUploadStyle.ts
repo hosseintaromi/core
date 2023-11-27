@@ -6,8 +6,6 @@ const fileUploadStyle = ({
   font_size,
   answer_color,
 }: ThemeType) => ({
-  marginBlock: controls_style?.margin?.horizontal + "px",
-  marginInline: controls_style?.margin?.vertical + "px",
   fontSize: controls_style?.font_size || font_size + "px",
   fontWeight: controls_style?.font_weight,
   fontFamily: font_name,

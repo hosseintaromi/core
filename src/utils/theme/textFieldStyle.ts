@@ -17,8 +17,6 @@ const textFieldStyleOverride = ({
           borderLeft: border?.left,
           borderWidth: 2,
         },
-        marginBlock: controls_style?.margin?.horizontal + "px",
-        marginInline: controls_style?.margin?.vertical + "px",
         ".MuiOutlinedInput-input": {
           fontSize: controls_style?.font_size || font_size + "px",
           fontWeight: controls_style?.font_weight,

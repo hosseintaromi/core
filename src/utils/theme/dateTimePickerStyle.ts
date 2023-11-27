@@ -8,8 +8,6 @@ const dateTimePickerStyle = ({
 }: ThemeType) => {
   const border = controls_style?.border;
   return {
-    marginBlock: controls_style?.margin?.horizontal + "px",
-    marginInline: controls_style?.margin?.vertical + "px",
     ".MuiOutlinedInput-input": {
       fontSize: controls_style?.font_size || font_size + "px",
       fontFamily: font_name,

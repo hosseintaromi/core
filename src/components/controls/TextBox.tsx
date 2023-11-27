@@ -36,6 +36,12 @@ const TextBox = ({
       case TextBoxTypeEnum.Url:
         setInputType("url");
         break;
+      case TextBoxTypeEnum.NationalId:
+        setInputType("tel");
+        break;
+      case TextBoxTypeEnum.PostalCode:
+        setInputType("tel");
+        break;
       default:
         break;
     }

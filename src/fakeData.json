@@ -74,184 +74,76 @@
     "control_id_6": "0",
     "control_id_5": 1700305220701
   },
-
   "controls": [
     {
       "control_id": "control_id_1",
-      "type": "Group",
-      "group_info": {
-        "type": "FormSet",
-        "title": "اطلاعات شخصی",
-        "description": "لطفا اطلاعات شخصی توسعه‌دهنده را تکمیل کنید.",
-        "controls": [
-          {
-            "control_id": "control_id_1_1",
-            "type": "TextBox",
-            "label_text": "ایمیل",
-            "textbox_info": { "type": "Email" },
-            "validations": [
-              { "type": "Required" },
-              {
-                "type": "Email",
-                "regex_pattern": "/^[w.[a-z0-9]+@[a-z]+.[a-z]{2,3}/"
-              }
-            ]
-          },
-          {
-            "control_id": "control_id_1_2",
-            "type": "DropDown",
-            "label_text": "نوع اکانت کاربری",
-            "dropdown_info": {
-              "searchable": false,
-              "options": [
-                { "value": 0, "text": "حقوقی" },
-                { "value": 1, "text": "حقیقی" }
-              ]
-            },
-            "validations": [{ "type": "Required" }]
-          },
-          {
-            "control_id": "control_id_1_3",
-            "type": "TextBox",
-            "label_text": "نام",
-            "textbox_info": { "type": "Persian" },
-            "validations": [
-              { "type": "Required" },
-              {
-                "type": "Persian",
-                "regex_pattern": "/^[\u0600-\u06FF\\s]+$/"
-              }
-            ]
-          },
-          {
-            "control_id": "control_id_1_4",
-            "type": "TextBox",
-            "label_text": "نام خانوادگی",
-            "textbox_info": { "type": "Persian" },
-            "validations": [
-              { "type": "Required" },
-              {
-                "type": "Persian",
-                "regex_pattern": "/^[\u0600-\u06FF\\s]+$/"
-              }
-            ]
-          }
-        ]
-      }
+      "type": "TextBox",
+      "label_text": "نام و نام‌خانوادگی",
+      "textbox_info": { "type": "Text" },
+      "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+      "validations": [
+        { "type": "Required" },
+        { "type": "Regex", "regex_pattern": "/^[\u0600-\u06FFs]+$/" }
+      ]
     },
     {
       "control_id": "control_id_2",
-      "type": "Group",
-      "group_info": {
-        "type": "FormSet",
-        "title": "اطلاعات آدرس",
-        "description": "اطلاعات آدرس خود را وارد کنید.",
-        "controls": [
-          {
-            "control_id": "control_id_2_1",
-            "type": "DropDown",
-            "label_text": "استان",
-            "dropdown_info": {
-              "searchable": false,
-              "options": [
-                { "value": 0, "text": "آذربایجان شرقی" },
-                { "value": 1, "text": "آذربایجان غربی" },
-                { "value": 2, "text": "اردبیل" },
-                { "value": 3, "text": "اصفهان" },
-                { "value": 4, "text": "البرز" },
-                { "value": 5, "text": "ایلام" },
-                { "value": 6, "text": "بوشهر" },
-                { "value": 7, "text": "تهران" },
-                { "value": 8, "text": "چهارمحال و بختیاری" },
-                { "value": 9, "text": "خراسان جنوبی" },
-                { "value": 10, "text": "خراسان رضوی" }
-              ]
-            },
-            "validations": [{ "type": "Required" }]
-          },
-          {
-            "control_id": "control_id_2_2",
-            "type": "DropDown",
-            "label_text": "شهر",
-            "dropdown_info": {
-              "searchable": false,
-              "options": [
-                { "value": 0, "text": "تهران" },
-                { "value": 1, "text": "ورامین" },
-                { "value": 2, "text": "ری" },
-                { "value": 3, "text": "پاکدشت" },
-                { "value": 4, "text": "شهریار" },
-                { "value": 5, "text": "قدس" },
-                { "value": 6, "text": "پردیس" },
-                { "value": 7, "text": "فیروزکوه" },
-                { "value": 8, "text": "رباط‌کریم" },
-                { "value": 9, "text": "بهارستان" }
-              ]
-            },
-            "validations": [{ "type": "Required" }]
-          },
-          {
-            "control_id": "control_id_2_3",
-            "type": "TextBox",
-            "label_text": "آدرس",
-            "textbox_info": { "type": "Persian" },
-            "validations": [
-              { "type": "Required" },
-              {
-                "type": "Persian",
-                "regex_pattern": "/^[\u0600-\u06FF\\s]+$/"
-              }
-            ]
-          },
-          {
-            "control_id": "control_id_2_4",
-            "type": "TextBox",
-            "label_text": "کدپستی",
-            "textbox_info": { "type": "Number" },
-            "validations": [
-              { "type": "Required" },
-              {
-                "type": "Number",
-                "regex_pattern": "/^\\d+$/"
-              }
-            ]
-          }
+      "type": "DropDown",
+      "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+      "label_text": "جنسیت",
+      "dropdown_info": {
+        "searchable": false,
+        "options": [
+          { "value": 0, "text": "زن" },
+          { "value": 1, "text": "مرد" }
         ]
-      }
+      },
+      "conditions": [
+        {
+          "type": "ThenGo",
+          "then_control_id": "control_id_4",
+          "when_control_id": "control_id_2",
+          "conditions": [
+            {
+              "control_id": "control_id_2",
+              "condition_type": "Equal",
+              "condition_value": 0
+            }
+          ]
+        }
+      ]
     },
     {
       "control_id": "control_id_3",
       "type": "Group",
       "group_info": {
         "type": "FormSet",
-        "title": "اطلاعات تماس",
-        "description": "اطلاعات تماس خود را وارد کنید.",
+        "title": "اطلاعات حقوقی",
         "controls": [
           {
-            "control_id": "control_id_3_3",
-            "type": "TextBox",
-            "label_text": "شماره تلفن همراه",
-            "textbox_info": { "type": "Mobile" },
-            "validations": [
-              { "type": "Required" },
-              {
-                "type": "Mobile",
-                "regex_pattern": "/^\\d+$/"
-              }
-            ]
+            "control_id": "control_id_5",
+            "type": "DatePicker",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+            "label_text": "تاریخ تولد",
+            "date_picker_info": { "type": "Jalali" }
           },
           {
-            "control_id": "control_id_3_4",
-            "type": "TextBox",
-            "label_text": "شماره تماس اضطراری",
-            "textbox_info": { "type": "Number" },
-            "validations": [
-              { "type": "Required" },
-              {
-                "type": "Number",
-                "regex_pattern": "/^\\d+$/"
-              }
-            ]
+            "control_id": "control_id_6",
+            "type": "MultipleOption",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+            "label_text": "مقطع تحصیلی",
+            "multiple_option_info": {
+              "type": "Text",
+              "multi_select": false,
+              "randomize_option_number": false,
+              "arrange_type": "Vertical",
+              "options": [
+                { "text": "دیپلم", "value": 0 },
+                { "text": "کارشناسی", "value": 1 },
+                { "text": "ارشد", "value": 2 }
+              ]
+            },
+            "validations": [{ "type": "Required" }]
           }
         ]
       }
@@ -261,32 +153,33 @@
       "type": "Group",
       "group_info": {
         "type": "FormSet",
-        "title": "تصاویر کارت ملی",
+        "title": "آدرس",
         "controls": [
           {
-            "control_id": "control_id_4_3",
-            "type": "TextBox",
-            "label_text": "کدملی",
-            "textbox_info": { "type": "Number" },
-            "validations": [
-              { "type": "Required" },
-              {
-                "type": "Number",
-                "regex_pattern": "/^\\d+$/"
-              }
-            ]
+            "control_id": "control_id_7",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+            "type": "TextArea",
+            "label_text": "توضیحات",
+            "textarea_info": { "line_count": 3, "max_line": 4 }
+          },
+          {
+            "control_id": "control_id_8",
+            "type": "PlaceHolder",
+            "label_text": "قوانین",
+            "placeholder_info": {
+              "description": "قوانین را خوانده و تایید می‌نمایم.",
+              "type": "End"
+            }
           },
           {
             "control_id": "control_id_9",
             "type": "FileUpload",
-            "label_text": "تصویر روی کارت ملی",
-            "description": "شما می‌توانید با کلیک کردن رو این قسمت فایل خود را انتخاب کنید .",
+            "label_text": "کارت ملی",
             "file_upload_info": {
               "file_type": "Image",
               "allowed_extensions": ["jpg"],
               "max_size": 1000
-            },
-            "validations": [{ "type": "Required" }]
+            }
           }
         ]
       }

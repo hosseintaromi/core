@@ -1,4 +1,4 @@
-enum DatePickerTypeEnum {
+export enum DatePickerTypeEnum {
   Christian = "Christian",
   Jalali = "Jalali",
   Time = "Time",

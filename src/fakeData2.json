@@ -68,11 +68,16 @@
   },
   "layout": { "floating_box": false },
   "values": {
-    "control_id_1": "ریحانه",
-    "control_id_2": 1,
-    "control_id_7": "هلتنسی مبسیمبتسی بسیمنبتسی بتمن ینبت بین.",
-    "control_id_6": "0",
-    "control_id_5": 1700305220701
+    "control_id_1_1": "r.sadatshokouhi@gmail.com",
+    "control_id_1_2": 1,
+    "control_id_1_3": "ریحانه",
+    "control_id_1_4": "سادات شکوهی",
+    "control_id_2_1": 7,
+    "control_id_2_3": "میدان ونک خیابان برزیل",
+    "control_id_2_4": 123456789,
+    "control_id_3_3": "09307580142",
+    "control_id_3_4": "098765432123456",
+    "control_id_4_3": "34567812345"
   },
 
   "controls": [
@@ -174,7 +179,7 @@
             "type": "DropDown",
             "label_text": "شهر",
             "dropdown_info": {
-              "searchable": false,
+              "searchable": true,
               "options": [
                 { "value": 0, "text": "تهران" },
                 { "value": 1, "text": "ورامین" },

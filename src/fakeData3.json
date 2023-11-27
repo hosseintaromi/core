@@ -155,7 +155,7 @@
             "type": "DropDown",
             "label_text": "استان",
             "dropdown_info": {
-              "searchable": false,
+              "searchable": true,
               "options": [
                 { "value": 0, "text": "آذربایجان شرقی" },
                 { "value": 1, "text": "آذربایجان غربی" },

@@ -27,6 +27,9 @@ const selectStyleOverride = ({
           paddingInline: controls_style?.padding?.horizontal + "px",
           paddingBlock: controls_style?.padding?.vertical + "px",
         },
+        ".MuiSvgIcon-root": {
+          zIndex: 1,
+        },
         "& input": { borderRadius: controls_style?.radius + "px" },
       },
     },

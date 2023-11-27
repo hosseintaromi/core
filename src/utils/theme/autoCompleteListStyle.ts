@@ -8,6 +8,11 @@ const autoCompleteListStyle = ({
     paper: {
       backgroundColor: controls_style?.background_color,
       color: controls_style?.text_color || answer_color,
+      opacity: 1,
+    },
+    popper: {
+      backgroundColor: "#FFFFFF",
+      opacity: 1,
     },
     root: { ".MuiAutocomplete-endAdornment": { zIndex: 1 } },
   },

@@ -20,6 +20,7 @@ const LinearProgressWithLabel = ({
   form,
 }: LinearProgressWithLabelProps) => {
   const progress = getProgress(form, indexes);
+  console.log(progress);
 
   const allPages = hideControlsWithConditionOn(form.controls).filter(
     (x) => !x.is_hidden,

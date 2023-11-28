@@ -109,17 +109,21 @@ export const FormPageContextProvider = memo(
         });
       })();
 
-    useEffect(() => {
-      document.title = form.title || "Form Builder";
+    const addLastPage = () => {
       form.controls.push({
         control_id: "control_id_10",
         type: ControlTypeEnum.PlaceHolder,
-        label_text: "قوانین",
+        label_text: "ارسال",
         placeholder_info: {
-          description: "قوانین را خوانده و تایید می‌نمایم.",
+          description: "آیا از اتمام پرسشنامه اطمینان دارید؟",
           type: PlaceHolderTypeEnum.End,
         },
       });
+    };
+
+    useEffect(() => {
+      document.title = form.title || "Form Builder";
+      addLastPage();
       openPage([0]);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

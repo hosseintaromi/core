@@ -1,4 +1,3 @@
-import { FormType } from "../@types/FormTypes";
 import { useView } from "../core/hooks/useView";
 import { getControl } from "../utils/controlUtils";
 import ControlSelector from "./ControlSelector";
@@ -15,6 +14,7 @@ const NavigationHandler = ({ control }: { control: ControlType }) => {
 
   useEffect(() => {
     viewData.submitHandler = submitForm;
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return <></>;
 };

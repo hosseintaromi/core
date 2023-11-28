@@ -10,6 +10,7 @@ import {
 import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
 import { FormType } from "../@types/FormTypes";
 import { GroupTypesEnum } from "../@types/GroupTypes";
+import { PageIndexesType } from "../@types/FormPageTypes";
 
 export const getControl = (
   controls: ControlType[],
@@ -180,18 +181,21 @@ export const getNextIndex = (
     }
   }
   const filteredControls = hideControlsWithConditionOn(form.controls);
-  const nextIndex = getParentWithLeftChildren(
-    filteredControls.filter((x) => !x.is_hidden),
-    [...index],
-    0,
-  );
-  if (!nextIndex) {
-    return null;
+  let nextControl;
+  let nextIndex: PageIndexesType | null = [];
+  let isHidden: boolean | undefined = true;
+  while (isHidden) {
+    nextIndex = getParentWithLeftChildren(
+      filteredControls,
+      [...(nextIndex?.length ? nextIndex : index)],
+      0,
+    );
+    if (!nextIndex) {
+      return null;
+    }
+    nextControl = getControl(filteredControls, nextIndex);
+    isHidden = nextControl?.is_hidden;
   }
-  const nextControl = getControl(
-    filteredControls.filter((x) => !x.is_hidden),
-    nextIndex,
-  );
   if (!nextControl) {
     return null;
   }
@@ -200,9 +204,9 @@ export const getNextIndex = (
     nextControl.group_info?.type === GroupTypesEnum.FieldSet &&
     nextControl.group_info.controls?.length
   ) {
-    return nextIndex.concat(0);
+    return nextIndex?.concat(0) || null;
   }
-  return nextIndex;
+  return nextIndex || null;
 };
 
 const getParentWithLeftChildren = (

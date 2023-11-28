@@ -2,7 +2,7 @@ import { Box, ThemeProvider, Typography } from "@mui/material";
 import PartialTabContainer from "../core/components/containers/PartialTabContainer";
 import theme from "../utils/theme";
 import BackgroundStyle from "./styles/BackgroundStyle";
-import form from "../fakeData2.json";
+import form from "../fakeData.json";
 import { ThemeType } from "../@types/ThemeTypes";
 import { FormType } from "../@types/FormTypes";
 import { FormPageContextProvider } from "../context/FormPageContextProvider";
@@ -24,7 +24,7 @@ const FormPage = () => {
             p: "0 !important",
             maxWidth: "100% !important",
           }}
-          formTheme={formTheme}
+          formtheme={formTheme}
         >
           <Box
             display="flex"

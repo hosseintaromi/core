@@ -1,12 +1,13 @@
 import { Container, ContainerProps, styled } from "@mui/material";
 import { ImageAlignEnum, ThemeType } from "../../@types/ThemeTypes";
 interface BackgroundStyleProps extends ContainerProps {
-  formTheme?: ThemeType;
+  formtheme?: ThemeType;
 }
 
 const BackgroundStyle = styled(Container, {
   shouldForwardProp: (prop: any) => prop !== "containerStyles",
-})<BackgroundStyleProps>(({ formTheme }) => {
+})<BackgroundStyleProps>((props) => {
+  const formTheme = props.formtheme;
   const backgroundStyles = formTheme?.background;
   const imageAlign = backgroundStyles?.image_align;
 

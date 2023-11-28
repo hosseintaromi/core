@@ -10,11 +10,7 @@ import { ThemeType } from "../../@types/ThemeTypes";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
 import { useGlobalLocales } from "../../hooks/useGlobalLocales";
-import {
-  MobileDatePicker,
-  MobileDateTimePicker,
-  MobileTimePicker,
-} from "@mui/x-date-pickers";
+import { MobileDateTimePicker, MobileTimePicker } from "@mui/x-date-pickers";
 import { DatePickerTypeEnum } from "../../@types/DatePickerTypes";
 
 type DatePickerPropsType = {

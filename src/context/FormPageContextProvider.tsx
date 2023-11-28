@@ -12,6 +12,7 @@ import {
 } from "../@types/AxiosApiTypes";
 import { ControlTypeEnum } from "../@types/ControlTypes";
 import { PlaceHolderTypeEnum } from "../@types/PlaceHolderTypes";
+import { convertLocale } from "../hooks/useGlobalLocales";
 
 export type IndexListenersType = (indexes: PageIndexesType) => void;
 
@@ -113,16 +114,29 @@ export const FormPageContextProvider = memo(
       form.controls.push({
         control_id: "control_id_10",
         type: ControlTypeEnum.PlaceHolder,
-        label_text: "ارسال",
+        label_text: convertLocale({ key: "LAST_PAGE_LABEL" }).text,
         placeholder_info: {
-          description: "آیا از اتمام پرسشنامه اطمینان دارید؟",
+          description: convertLocale({ key: "LAST_PAGE_DESCRIPTION" }).text,
           type: PlaceHolderTypeEnum.End,
+        },
+      });
+    };
+
+    const addFirstPage = () => {
+      form.controls.unshift({
+        control_id: "control_id_0",
+        type: ControlTypeEnum.PlaceHolder,
+        label_text: convertLocale({ key: "FIRST_PAGE_LABEL" }).text,
+        placeholder_info: {
+          description: convertLocale({ key: "FIRST_PAGE_DESCRIPTION" }).text,
+          type: PlaceHolderTypeEnum.Start,
         },
       });
     };
 
     useEffect(() => {
       document.title = form.title || "Form Builder";
+      addFirstPage();
       addLastPage();
       openPage([0]);
       // eslint-disable-next-line react-hooks/exhaustive-deps

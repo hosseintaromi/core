@@ -88,7 +88,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
         </Box>
         <Box display="flex" flexDirection="column">
           {control.description && (
-            <Box marginTop={isFloatingDropDown ? 0 : 1}>
+            <Box marginBlock={isFloatingDropDown ? 0 : 1}>
               <Typography variant="body2">{control.description}</Typography>
             </Box>
           )}

@@ -183,6 +183,13 @@
           }
         ]
       }
+    },
+    {
+      "control_id": "control_id_11",
+      "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+      "type": "TextArea",
+      "label_text": "توضیحات",
+      "textarea_info": { "line_count": 3, "max_line": 4 }
     }
   ]
 }

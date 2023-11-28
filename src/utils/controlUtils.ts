@@ -188,7 +188,10 @@ export const getNextIndex = (
   if (!nextIndex) {
     return null;
   }
-  const nextControl = getControl(form.controls, nextIndex);
+  const nextControl = getControl(
+    filteredControls.filter((x) => !x.is_hidden),
+    nextIndex,
+  );
   if (!nextControl) {
     return null;
   }

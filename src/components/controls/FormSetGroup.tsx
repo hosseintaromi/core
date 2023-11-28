@@ -1,6 +1,6 @@
-import ControlWrapper from "../ControlWrapper";
-import ControlSelector from "../ControlSelector";
-import { ControlType } from "../../@types/ControlTypes";
+import ControlWrapper from "../formPage/ControlWrapper";
+import ControlSelector from "../formPage/ControlSelector";
+import { ControlType } from "../../@types/controls/ControlTypes";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { FBContext } from "../../context/FBContextProvider";
 import { hideControlsWithConditionOn } from "../../utils/controlUtils";

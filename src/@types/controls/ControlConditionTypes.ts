@@ -1,4 +1,4 @@
-import { ConditionType } from "./ConditionTypes";
+import { ConditionType } from "../ConditionTypes";
 
 export enum ControlConditionTypesEnum {
   ThenGo = "ThenGo",

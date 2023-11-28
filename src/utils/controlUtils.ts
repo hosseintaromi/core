@@ -6,10 +6,10 @@ import {
 import {
   ControlConditionType,
   ControlConditionTypesEnum,
-} from "../@types/ControlConditionTypes";
-import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
+} from "../@types/controls/ControlConditionTypes";
+import { ControlType, ControlTypeEnum } from "../@types/controls/ControlTypes";
 import { FormType } from "../@types/FormTypes";
-import { GroupTypesEnum } from "../@types/GroupTypes";
+import { GroupTypesEnum } from "../@types/controls/GroupTypes";
 import { PageIndexesType } from "../@types/FormPageTypes";
 
 export const getControl = (

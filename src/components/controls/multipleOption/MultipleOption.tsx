@@ -1,5 +1,5 @@
 import { FC, memo } from "react";
-import { ControlType } from "../../../@types/ControlTypes";
+import { ControlType } from "../../../@types/controls/ControlTypes";
 import { ThemeType } from "../../../@types/ThemeTypes";
 import MultiSelect from "./MultiSelect";
 import UniSelect from "./UniSelect";

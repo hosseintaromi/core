@@ -1,5 +1,5 @@
 import { FormType } from "../@types/FormTypes";
-import { PlaceHolderTypeEnum } from "../@types/PlaceHolderTypes";
+import { PlaceHolderTypeEnum } from "../@types/controls/PlaceHolderTypes";
 
 export const getProgress = (form: FormType, indexes: number[]) => {
   let leftControls = 0;

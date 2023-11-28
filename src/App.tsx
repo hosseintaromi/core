@@ -12,7 +12,7 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
-import FormPage from "./components/FormPage";
+import FormPage from "./components/formPage/FormPage";
 
 function App() {
   // Create rtl cache

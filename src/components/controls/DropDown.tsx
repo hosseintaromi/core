@@ -1,5 +1,5 @@
 import React, { FC } from "react";
-import { ControlType } from "../../@types/ControlTypes";
+import { ControlType } from "../../@types/controls/ControlTypes";
 import { Autocomplete, MenuItem, Select, TextField } from "@mui/material";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 

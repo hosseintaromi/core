@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ControlType } from "../../@types/ControlTypes";
+import { ControlType } from "../../@types/controls/ControlTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 import { TextField } from "@mui/material";
 

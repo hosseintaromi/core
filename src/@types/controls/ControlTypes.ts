@@ -3,11 +3,11 @@ import { DatePickerType } from "./DatePickerTypes";
 import { DropDownType } from "./DropDownTypes";
 import { FileUploadType } from "./FileUploadTypes";
 import { GroupType } from "./GroupTypes";
-import { MultipleOptionType } from "./MultipleOptionTypes";
+import { MultipleOptionType } from "../MultipleOptionTypes";
 import { PlaceHolderType } from "./PlaceHolderTypes";
 import { TextAreaType } from "./TextAreaTypes";
 import { TextBoxType } from "./TextBoxTypes";
-import { ValidationType } from "./ValidationTypes";
+import { ValidationType } from "../ValidationTypes";
 
 export enum ControlTypeEnum {
   TextBox = "TextBox",

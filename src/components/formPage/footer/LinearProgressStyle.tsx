@@ -1,9 +1,9 @@
 import { Box, LinearProgress, Typography, styled, Stack } from "@mui/material";
-import { getProgress } from "../utils/progressUtils";
-import { hideControlsWithConditionOn } from "../utils/controlUtils";
-import { PageIndexesType } from "../@types/FormPageTypes";
-import { Localizer } from "./Localizer";
-import { FormType } from "../@types/FormTypes";
+import { getProgress } from "../../../utils/progressUtils";
+import { hideControlsWithConditionOn } from "../../../utils/controlUtils";
+import { PageIndexesType } from "../../../@types/FormPageTypes";
+import { Localizer } from "../../Localizer";
+import { FormType } from "../../../@types/FormTypes";
 
 const LinearProgressStyle = styled(LinearProgress)({
   width: "100%",

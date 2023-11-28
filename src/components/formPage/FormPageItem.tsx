@@ -1,12 +1,12 @@
-import { useView } from "../core/hooks/useView";
-import { getControl } from "../utils/controlUtils";
+import { useView } from "../../core/hooks/useView";
+import { getControl } from "../../utils/controlUtils";
 import ControlSelector from "./ControlSelector";
 import ControlWrapper from "./ControlWrapper";
-import { FBContextProvider } from "../context/FBContextProvider";
-import { useFBControl } from "../hooks/useFBControl";
+import { FBContextProvider } from "../../context/FBContextProvider";
+import { useFBControl } from "../../hooks/useFBControl";
 import { useEffect } from "react";
-import { ControlType } from "../@types/ControlTypes";
-import { FormPageViewDataType } from "../@types/FormPageTypes";
+import { ControlType } from "../../@types/controls/ControlTypes";
+import { FormPageViewDataType } from "../../@types/FormPageTypes";
 
 const NavigationHandler = ({ control }: { control: ControlType }) => {
   const { submitForm } = useFBControl(control);

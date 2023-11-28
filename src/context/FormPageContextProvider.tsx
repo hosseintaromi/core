@@ -8,14 +8,14 @@ import {
 } from "../utils/controlUtils";
 import { FieldValues } from "react-hook-form";
 import { openView } from "../core/utils/viewManager";
-import FormPageItem from "../components/FormPageItem";
+import FormPageItem from "../components/formPage/FormPageItem";
 import {
   QuestionAnswerType,
   QuestionAnswerTypeEnum,
   SendAnswerRequestDateType,
 } from "../@types/AxiosApiTypes";
-import { ControlTypeEnum } from "../@types/ControlTypes";
-import { PlaceHolderTypeEnum } from "../@types/PlaceHolderTypes";
+import { ControlTypeEnum } from "../@types/controls/ControlTypes";
+import { PlaceHolderTypeEnum } from "../@types/controls/PlaceHolderTypes";
 import { convertLocale } from "../hooks/useGlobalLocales";
 import { Place } from "@mui/icons-material";
 

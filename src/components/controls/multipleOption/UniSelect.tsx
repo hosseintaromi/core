@@ -1,5 +1,5 @@
 import { FC, memo } from "react";
-import { ControlType } from "../../../@types/ControlTypes";
+import { ControlType } from "../../../@types/controls/ControlTypes";
 import { shuffle } from "../../../utils/shuffle";
 import { useFBRegisterControl } from "../../../hooks/useFBRegisterControl";
 import { FormControlLabel, Radio, RadioGroup } from "@mui/material";

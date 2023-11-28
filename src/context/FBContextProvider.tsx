@@ -1,5 +1,5 @@
 import { ReactNode, createContext, memo, useRef } from "react";
-import { ControlType } from "../@types/ControlTypes";
+import { ControlType } from "../@types/controls/ControlTypes";
 import {
   FieldError,
   FieldErrorsImpl,

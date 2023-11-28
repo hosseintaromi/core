@@ -1,4 +1,4 @@
-import { TextOptionType } from "./MultipleOptionTypes";
+import { TextOptionType } from "../MultipleOptionTypes";
 
 export type DropDownType = {
   searchable?: boolean;

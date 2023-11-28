@@ -1,4 +1,4 @@
-import { ControlType } from "./ControlTypes";
+import { ControlType } from "./controls/ControlTypes";
 import { FormType } from "./FormTypes";
 
 export enum ApiMethodEnum {

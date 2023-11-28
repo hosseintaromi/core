@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { ControlType } from "../../@types/ControlTypes";
+import { ControlType } from "../../@types/controls/ControlTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 import { useFBControl } from "../../hooks/useFBControl";
 import { AdapterDateFnsJalali } from "@mui/x-date-pickers/AdapterDateFnsJalali";
@@ -11,7 +11,7 @@ import { ThemeProvider } from "@emotion/react";
 import { createTheme } from "@mui/material";
 import { useGlobalLocales } from "../../hooks/useGlobalLocales";
 import { MobileDateTimePicker, MobileTimePicker } from "@mui/x-date-pickers";
-import { DatePickerTypeEnum } from "../../@types/DatePickerTypes";
+import { DatePickerTypeEnum } from "../../@types/controls/DatePickerTypes";
 
 type DatePickerPropsType = {
   control: ControlType;

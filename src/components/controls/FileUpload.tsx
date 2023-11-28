@@ -1,6 +1,6 @@
 import { ChangeEvent, FC } from "react";
-import { ControlType } from "../../@types/ControlTypes";
-import { FileTypeEnum } from "../../@types/FileUploadTypes";
+import { ControlType } from "../../@types/controls/ControlTypes";
+import { FileTypeEnum } from "../../@types/controls/FileUploadTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 import { Box, Typography, Button, styled } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";

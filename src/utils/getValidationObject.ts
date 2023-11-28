@@ -1,5 +1,5 @@
 import { ValidationTypeEnum } from "../@types/ValidationTypes";
-import { ControlType } from "../@types/ControlTypes";
+import { ControlType } from "../@types/controls/ControlTypes";
 import { FieldValues, RegisterOptions } from "react-hook-form";
 import { convertLocale } from "../hooks/useGlobalLocales";
 

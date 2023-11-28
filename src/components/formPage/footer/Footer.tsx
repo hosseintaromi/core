@@ -1,13 +1,13 @@
 import { Box } from "@mui/material";
-import LinearProgressWithLabel from "../LinearProgressStyle";
-import NextButton from "../NextButton";
-import { ThemeType } from "../../@types/ThemeTypes";
-import { getControl } from "../../utils/controlUtils";
-import { useFormPage } from "../../hooks/useFormPage";
+import LinearProgressWithLabel from "./LinearProgressStyle";
+import NextButton from "./NextButton";
+import { ThemeType } from "../../../@types/ThemeTypes";
+import { getControl } from "../../../utils/controlUtils";
+import { useFormPage } from "../../../hooks/useFormPage";
 import { useState } from "react";
-import { PageIndexesType } from "../../@types/FormPageTypes";
-import { ControlTypeEnum } from "../../@types/ControlTypes";
-import { PlaceHolderTypeEnum } from "../../@types/PlaceHolderTypes";
+import { PageIndexesType } from "../../../@types/FormPageTypes";
+import { ControlTypeEnum } from "../../../@types/controls/ControlTypes";
+import { PlaceHolderTypeEnum } from "../../../@types/controls/PlaceHolderTypes";
 
 const Footer = ({ theme }: { theme?: ThemeType }) => {
   const border = theme?.controls_style?.border;

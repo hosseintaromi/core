@@ -1,13 +1,13 @@
 import { Box, ThemeProvider, Typography } from "@mui/material";
-import PartialTabContainer from "../core/components/containers/PartialTabContainer";
-import theme from "../utils/theme";
-import BackgroundStyle from "./styles/BackgroundStyle";
-import form from "../fakeData.json";
-import { ThemeType } from "../@types/ThemeTypes";
-import { FormType } from "../@types/FormTypes";
-import { FormPageContextProvider } from "../context/FormPageContextProvider";
-import Footer from "./formPage/Footer";
-import { Localizer } from "./Localizer";
+import PartialTabContainer from "../../core/components/containers/PartialTabContainer";
+import theme from "../../utils/theme";
+import BackgroundStyle from "./BackgroundStyle";
+import form from "../../fakeData.json";
+import { ThemeType } from "../../@types/ThemeTypes";
+import { FormType } from "../../@types/FormTypes";
+import { FormPageContextProvider } from "../../context/FormPageContextProvider";
+import Footer from "./footer/Footer";
+import { Localizer } from "../Localizer";
 
 const FormPage = () => {
   const formData = form as any as FormType;

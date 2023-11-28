@@ -1,6 +1,9 @@
 import { FC, ReactNode, useMemo } from "react";
-import { useFBControl } from "../hooks/useFBControl";
-import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
+import { useFBControl } from "../../hooks/useFBControl";
+import {
+  ControlType,
+  ControlTypeEnum,
+} from "../../@types/controls/ControlTypes";
 import {
   Box,
   FormControl,
@@ -8,7 +11,7 @@ import {
   InputLabel,
   Typography,
 } from "@mui/material";
-import { useFormPage } from "../hooks/useFormPage";
+import { useFormPage } from "../../hooks/useFormPage";
 
 type ControlWrapperPropsType = {
   control: ControlType;

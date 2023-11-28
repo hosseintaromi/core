@@ -1,13 +1,16 @@
-import { ControlType, ControlTypeEnum } from "../@types/ControlTypes";
-import { ThemeType } from "../@types/ThemeTypes";
-import DatePicker from "./controls/DatePicker";
-import DropDown from "./controls/DropDown";
-import FileUpload from "./controls/FileUpload";
-import FormSetGroup from "./controls/FormSetGroup";
-import MultipleOption from "./controls/multipleOption/MultipleOption";
-import PlaceHolder from "./controls/PlaceHolder";
-import TextArea from "./controls/TextArea";
-import TextBox from "./controls/TextBox";
+import {
+  ControlType,
+  ControlTypeEnum,
+} from "../../@types/controls/ControlTypes";
+import { ThemeType } from "../../@types/ThemeTypes";
+import DatePicker from "../controls/DatePicker";
+import DropDown from "../controls/DropDown";
+import FileUpload from "../controls/FileUpload";
+import FormSetGroup from "../controls/FormSetGroup";
+import MultipleOption from "../controls/multipleOption/MultipleOption";
+import PlaceHolder from "../controls/PlaceHolder";
+import TextArea from "../controls/TextArea";
+import TextBox from "../controls/TextBox";
 
 const ControlSelector = ({
   control,

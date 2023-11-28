@@ -1,10 +1,10 @@
 import { FC } from "react";
-import { ControlType } from "../../@types/ControlTypes";
+import { ControlType } from "../../@types/controls/ControlTypes";
 import { Box, Button, Typography } from "@mui/material";
 import { ThemeType } from "../../@types/ThemeTypes";
 import placeHolderStyle from "../../utils/theme/placeHolderStyle";
 import { useFormPage } from "../../hooks/useFormPage";
-import { PlaceHolderTypeEnum } from "../../@types/PlaceHolderTypes";
+import { PlaceHolderTypeEnum } from "../../@types/controls/PlaceHolderTypes";
 
 type PlaceHolderPropsType = {
   control: ControlType;

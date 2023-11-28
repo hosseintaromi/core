@@ -1,5 +1,5 @@
 import { SendFileHeaderDateType } from "../@types/AxiosApiTypes";
-import { FileInline, UploadOptions } from "../@types/MultiPartFile.model";
+import { FileInline, UploadOptions } from "../@types/MultiPartFileTypes";
 import { Deferred } from "./Deferred";
 // import { getCurrentUserFromStorage } from "./auth";
 

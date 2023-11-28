@@ -1,6 +1,6 @@
 import { createElement } from "react";
 import { renderToStaticMarkup } from "react-dom/server";
-import { ConvertLocaleType } from "../@types/UseGlobalLocales.model";
+import { ConvertLocaleType } from "../@types/UseGlobalLocalesTypes";
 import { globalLocales } from "../locale/global";
 
 export const convertLocale = ({ key, params }: ConvertLocaleType) => {

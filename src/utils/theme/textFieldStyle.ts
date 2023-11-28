@@ -10,6 +10,15 @@ const textFieldStyleOverride = ({
   return {
     styleOverrides: {
       root: {
+        "& .MuiOutlinedInput-root": {
+          "&.Mui-focused fieldset": {
+            borderTop: border?.top,
+            borderBottom: border?.bottom,
+            borderRight: border?.right,
+            borderLeft: border?.left,
+            borderWidth: 2,
+          },
+        },
         "& input:valid:focus + fieldset": {
           borderTop: border?.top,
           borderBottom: border?.bottom,

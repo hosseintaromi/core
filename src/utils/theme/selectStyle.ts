@@ -27,6 +27,13 @@ const selectStyleOverride = ({
           paddingInline: controls_style?.padding?.horizontal + "px",
           paddingBlock: controls_style?.padding?.vertical + "px",
         },
+        "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
+          borderTop: border?.top,
+          borderBottom: border?.bottom,
+          borderRight: border?.right,
+          borderLeft: border?.left,
+          borderWidth: 2,
+        },
         ".MuiSvgIcon-root": {
           zIndex: 1,
         },

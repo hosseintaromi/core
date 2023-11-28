@@ -11,6 +11,9 @@ const inputLabelStyle = ({ labels_style, font_size, font_name }: ThemeType) => {
         fontFamily: font_name,
         paddingInline: labels_style?.padding?.horizontal + "px",
         paddingBlock: labels_style?.padding?.vertical + "px",
+        "&.Mui-focused": {
+          color: labels_style?.text_color,
+        },
       },
     },
   };

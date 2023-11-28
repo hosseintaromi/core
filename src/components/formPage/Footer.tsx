@@ -2,9 +2,21 @@ import { Box } from "@mui/material";
 import LinearProgressWithLabel from "../LinearProgressStyle";
 import NextButton from "../NextButton";
 import { ThemeType } from "../../@types/ThemeTypes";
+import { getControl } from "../../utils/controlUtils";
+import { useFormPage } from "../../hooks/useFormPage";
+import { useState } from "react";
+import { PageIndexesType } from "../../@types/FormPageTypes";
+import { ControlTypeEnum } from "../../@types/ControlTypes";
+import { PlaceHolderTypeEnum } from "../../@types/PlaceHolderTypes";
 
 const Footer = ({ theme }: { theme?: ThemeType }) => {
   const border = theme?.controls_style?.border;
+  const [indexes, setIndexes] = useState<PageIndexesType>([0]);
+  const { submitForm, submitNext, form } = useFormPage({
+    onIndexChanged: (indexes: number[]) => {
+      setIndexes(indexes);
+    },
+  });
 
   function hexToRgbA(hex: any, opacity: any = 1) {
     let c: any;
@@ -24,6 +36,17 @@ const Footer = ({ theme }: { theme?: ThemeType }) => {
     }
     throw new Error("Bad Hex");
   }
+
+  const control = getControl(form.controls, indexes);
+  const isFinished = control?.control_id === "send";
+  if (
+    control?.type === ControlTypeEnum.PlaceHolder &&
+    control.placeholder_info?.type !== PlaceHolderTypeEnum.Note &&
+    !isFinished
+  ) {
+    return <></>;
+  }
+
   return (
     <Box
       display="flex"
@@ -34,8 +57,12 @@ const Footer = ({ theme }: { theme?: ThemeType }) => {
       borderTop={border?.top}
       sx={{ backgroundColor: hexToRgbA(theme?.background?.color, 0.5) }}
     >
-      <LinearProgressWithLabel />
-      <NextButton />
+      <LinearProgressWithLabel form={form} indexes={indexes} />
+      <NextButton
+        submitForm={submitForm}
+        submitNext={submitNext}
+        isFinished={isFinished}
+      />
     </Box>
   );
 };

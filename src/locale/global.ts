@@ -20,7 +20,4 @@ export const globalLocales: GlobalLocalesType = {
   FORM_DISABLED: "این پرسشنامه غیر‌فعال است و امکان ثبت پاسخ ندارد.",
   LAST_PAGE_DESCRIPTION: "آیا از اتمام پرسشنامه اطمینان دارید؟",
   LAST_PAGE_LABEL: "ارسال",
-  FIRST_PAGE_DESCRIPTION:
-    "برای پرکردن این پرسشنامه به ۲ دقیقه زمان نیاز دارید.",
-  FIRST_PAGE_LABEL: "خوش آمدید",
 };

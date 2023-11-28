@@ -50,7 +50,9 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
     >
       <FormControl error={hasError} sx={{ gap: 1 }}>
         <Box display="flex" alignItems="center">
-          {type !== ControlTypeEnum.Group && !hideQuestionNumber && (
+          {type !== ControlTypeEnum.Group &&
+          !hideQuestionNumber &&
+          questionNumber ? (
             <InputLabel
               shrink
               sx={{
@@ -63,7 +65,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
             >
               {questionNumber}.{" "}
             </InputLabel>
-          )}
+          ) : null}
           {((label &&
             [
               ControlTypeEnum.Group,

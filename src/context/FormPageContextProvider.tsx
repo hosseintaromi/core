@@ -1,7 +1,11 @@
 import { ReactNode, createContext, memo, useEffect, useRef } from "react";
 import { FormPageViewDataType, PageIndexesType } from "../@types/FormPageTypes";
 import { FormType } from "../@types/FormTypes";
-import { getNextIndex } from "../utils/controlUtils";
+import {
+  getControl,
+  getControlById,
+  getNextIndex,
+} from "../utils/controlUtils";
 import { FieldValues } from "react-hook-form";
 import { openView } from "../core/utils/viewManager";
 import FormPageItem from "../components/FormPageItem";
@@ -13,6 +17,7 @@ import {
 import { ControlTypeEnum } from "../@types/ControlTypes";
 import { PlaceHolderTypeEnum } from "../@types/PlaceHolderTypes";
 import { convertLocale } from "../hooks/useGlobalLocales";
+import { Place } from "@mui/icons-material";
 
 export type IndexListenersType = (indexes: PageIndexesType) => void;
 
@@ -37,14 +42,17 @@ export const FormPageContextProvider = memo(
     const viewDataRef = useRef<FormPageViewDataType>({});
 
     const addNewQuestion = (id: string) => {
+      console.log(form.controls, id);
+      const control = getControlById(form.controls, id);
+      console.log(control);
+      if (
+        control?.type === ControlTypeEnum.PlaceHolder &&
+        control.placeholder_info?.type !== PlaceHolderTypeEnum.Note
+      ) {
+        return 0;
+      }
       let pagesStack = questionStackRef.current;
-      // if (pagesStack.includes(id)) {
-      //   const index = pagesStack.findIndex((item) => item === id);
-      //   console.log(index);
-      //   pagesStack = pagesStack.slice(0, index + 1);
-      // } else {
       pagesStack.push(id);
-      // }
       return pagesStack.length;
     };
 
@@ -91,7 +99,6 @@ export const FormPageContextProvider = memo(
       }
       indexesRef.current = nextIndexes;
       indexListenersRef.current.forEach((listener) => listener(nextIndexes!));
-      console.log(nextIndexes);
       openPage(nextIndexes);
     };
 
@@ -107,11 +114,20 @@ export const FormPageContextProvider = memo(
         console.log("APICALL__doneForm", {
           form_id: form.form_id,
         });
+        gotoNext(data);
       })();
 
-    const addLastPage = () => {
-      form.controls.push({
-        control_id: "control_id_10",
+    const addSendPage = () => {
+      const controls = form.controls;
+      let firstEndPlaceHolder = controls.findIndex(
+        (item) =>
+          item.type === ControlTypeEnum.PlaceHolder &&
+          item.placeholder_info?.type === PlaceHolderTypeEnum.End,
+      );
+      firstEndPlaceHolder =
+        firstEndPlaceHolder !== -1 ? firstEndPlaceHolder : controls.length;
+      controls.splice(firstEndPlaceHolder, 0, {
+        control_id: "send",
         type: ControlTypeEnum.PlaceHolder,
         label_text: convertLocale({ key: "LAST_PAGE_LABEL" }).text,
         placeholder_info: {
@@ -121,22 +137,9 @@ export const FormPageContextProvider = memo(
       });
     };
 
-    const addFirstPage = () => {
-      form.controls.unshift({
-        control_id: "control_id_0",
-        type: ControlTypeEnum.PlaceHolder,
-        label_text: convertLocale({ key: "FIRST_PAGE_LABEL" }).text,
-        placeholder_info: {
-          description: convertLocale({ key: "FIRST_PAGE_DESCRIPTION" }).text,
-          type: PlaceHolderTypeEnum.Start,
-        },
-      });
-    };
-
     useEffect(() => {
       document.title = form.title || "Form Builder";
-      addFirstPage();
-      addLastPage();
+      addSendPage();
       openPage([0]);
       // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);

@@ -290,8 +290,7 @@
               "file_type": "Image",
               "allowed_extensions": ["jpg"],
               "max_size": 1000
-            },
-            "validations": [{ "type": "Required" }]
+            }
           }
         ]
       }

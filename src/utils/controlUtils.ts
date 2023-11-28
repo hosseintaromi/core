@@ -37,7 +37,7 @@ export const getControlById = (
     if (control.control_id === id) {
       return control;
     } else if (control.group_info?.controls) {
-      return getControlById(control.group_info?.controls, id);
+      getControlById(control.group_info?.controls, id);
     }
   }
   return null;
@@ -156,7 +156,6 @@ const getNextIndexFromConditions = (
       (item) => item.control_id === thenId,
     );
   }
-  console.log(thenIndex, indexes);
   return thenIndex !== undefined && thenIndex !== -1
     ? indexes.slice(0, -1).concat(thenIndex)
     : null;

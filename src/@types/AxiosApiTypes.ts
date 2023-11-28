@@ -79,4 +79,21 @@ export type RequestSendFileRequestDateType = {
 
 export type RequestSendFileResponseDateType = {};
 
-export type SendFileResponseDateType = {};
+export type SendFileRequestDateType = {
+  data: BinaryData;
+};
+
+export type SendFileHeaderDateType = {
+  "part-number": string;
+  "total-part": string;
+  "access-hash-send"?: string;
+  auth: string;
+  "file-id": string;
+  form_id: string;
+  control_id: string;
+  "Content-type": string;
+};
+
+export type SendFileResponseDateType = {
+  access_hash_rec: string;
+};

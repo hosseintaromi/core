@@ -104,7 +104,6 @@ export const FormPageContextProvider = memo(
 
     const submitForm = () =>
       viewDataRef.current?.submitHandler?.((data) => {
-        gotoNext(data);
         console.log("APICALL__doneForm", {
           form_id: form.form_id,
         });

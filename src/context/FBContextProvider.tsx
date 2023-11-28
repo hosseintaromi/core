@@ -65,7 +65,7 @@ export const FBContextProvider = memo(
         return;
       }
       const thenShowControlId = passCondition(thisControl?.conditions, {
-        [target.name]: target.value,
+        [target.name]: target.value || target.files?.[0],
       });
       if (!thenShowControlId) {
         return;

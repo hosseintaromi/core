@@ -21,6 +21,7 @@ export const FormPageContext = createContext<{
   form: FormType;
   submitNext: () => Promise<void> | undefined;
   submitForm: () => Promise<void> | undefined;
+  gotoPrev: () => void;
 }>({} as any);
 
 type FormPageContextProviderProps = {
@@ -31,6 +32,7 @@ type FormPageContextProviderProps = {
 export const FormPageContextProvider = memo(
   ({ children, form }: FormPageContextProviderProps) => {
     const questionStackRef = useRef<string[]>([]);
+    const pageStackRef = useRef<PageIndexesType[]>([]);
     const indexListenersRef = useRef<IndexListenersType[]>([]);
     const indexesRef = useRef<PageIndexesType>([0]);
     const viewDataRef = useRef<FormPageViewDataType>({});
@@ -53,6 +55,7 @@ export const FormPageContextProvider = memo(
         form,
         indexes,
       };
+      pageStackRef.current.push(indexes);
       openView({
         type: "FormContainer",
         data: viewDataRef.current,
@@ -92,6 +95,19 @@ export const FormPageContextProvider = memo(
       indexesRef.current = nextIndexes;
       indexListenersRef.current.forEach((listener) => listener(nextIndexes!));
       openPage(nextIndexes);
+    };
+
+    const gotoPrev = () => {
+      // TODO apicalls???
+
+      pageStackRef.current.pop();
+      let prevIndexes = pageStackRef.current.pop();
+      if (!prevIndexes || !prevIndexes.length) {
+        return;
+      }
+      indexesRef.current = prevIndexes;
+      indexListenersRef.current.forEach((listener) => listener(prevIndexes!));
+      openPage(prevIndexes);
     };
 
     const addIndexListener = (listener: IndexListenersType) => {
@@ -145,6 +161,7 @@ export const FormPageContextProvider = memo(
             form,
             submitNext,
             submitForm,
+            gotoPrev,
           }}
         >
           {children}

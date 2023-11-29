@@ -409,8 +409,7 @@ body {
   position: absolute;
   inset: 0;
 }
-.form-wrapper .view-wrapper
-{
+.form-wrapper .view-wrapper {
   top: 3rem;
   max-width: 900px;
   margin-left: auto;

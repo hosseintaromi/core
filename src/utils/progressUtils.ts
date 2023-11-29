@@ -18,5 +18,10 @@ export const getProgress = (form: FormType, indexes: number[]) => {
       }
     }
   }
-  return ((allControls - leftControls) / allControls) * 100;
+  const thisControl = allControls - leftControls + 1;
+  return {
+    progress: ((allControls - leftControls) / allControls) * 100,
+    thisPage: thisControl > allControls ? allControls : thisControl,
+    allPages: allControls,
+  };
 };

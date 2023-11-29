@@ -11,7 +11,7 @@ import groupStyle from "../../utils/theme/groupStyle";
 const ContainerStyle = styled(Box)({
   display: "flex",
   flexDirection: "column",
-  gap: 3,
+  gap: "24px",
 });
 
 type GroupPropsType = {

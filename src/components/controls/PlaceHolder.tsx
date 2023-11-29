@@ -5,6 +5,7 @@ import { ThemeType } from "../../@types/ThemeTypes";
 import placeHolderStyle from "../../utils/theme/placeHolderStyle";
 import { useFormPage } from "../../hooks/useFormPage";
 import { PlaceHolderTypeEnum } from "../../@types/controls/PlaceHolderTypes";
+import { Localizer } from "../Localizer";
 
 type PlaceHolderPropsType = {
   control: ControlType;
@@ -21,7 +22,9 @@ const PlaceHolder: FC<PlaceHolderPropsType> = ({ control, theme }) => {
       <Typography>{placeHolderInfo?.description}</Typography>
       {isStart && (
         <Button sx={{ justifySelf: "end" }} onClick={() => submitNext()}>
-          شروع
+          {placeHolderInfo.start_caption || (
+            <Localizer localeKey="START_BUTTON" />
+          )}
         </Button>
       )}
     </Box>

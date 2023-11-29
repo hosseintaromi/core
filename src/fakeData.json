@@ -6,6 +6,8 @@
   "has_page_number": true,
   "has_progress": true,
   "locale": "Persian",
+  "has_next": true,
+  "has_prev": true,
   "theme": {
     "padding": {
       "horizontal": 10,
@@ -34,7 +36,7 @@
       },
       "shadow": "none",
       "padding": {
-        "horizontal": 10,
+        "horizontal": 20,
         "vertical": 10
       },
       "margin": {
@@ -81,7 +83,8 @@
       "label_text": "خوش آمدید",
       "placeholder_info": {
         "description": "برای پرکردن این پرسشنامه به ۲ دقیقه زمان نیاز دارید.",
-        "type": "Start"
+        "type": "Start",
+        "start_caption": "برای شروع کلیک کنید"
       }
     },
     {

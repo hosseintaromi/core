@@ -11,4 +11,6 @@ export type FormType = {
   hide_question_number?: boolean;
   has_progress?: boolean;
   values: { [controlId: string]: string };
+  has_next?: boolean;
+  has_prev?: boolean;
 };

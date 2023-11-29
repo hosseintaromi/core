@@ -6,6 +6,7 @@ import {
 } from "../../@types/controls/ControlTypes";
 import {
   Box,
+  Button,
   FormControl,
   FormHelperText,
   InputLabel,
@@ -13,6 +14,9 @@ import {
   styled,
 } from "@mui/material";
 import { useFormPage } from "../../hooks/useFormPage";
+import { Localizer } from "../Localizer";
+import { getControlParentById } from "../../utils/controlUtils";
+import { PlaceHolderTypeEnum } from "../../@types/controls/PlaceHolderTypes";
 
 const Container = styled(Box)({
   display: "flex",
@@ -20,6 +24,7 @@ const Container = styled(Box)({
   width: "100%",
   maxWidth: "600px",
   margin: "0 auto",
+  gap: 16,
 });
 
 const QuestionNumberLabel = styled(InputLabel)({
@@ -51,12 +56,16 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   hideQuestionNumber,
 }) => {
   const { getControlErrors } = useFBControl(control);
-  const { getQuestionNumber } = useFormPage({ id: control.control_id });
+  const { getQuestionNumber, form, submitNext, gotoPrev } = useFormPage({
+    id: control.control_id,
+  });
 
   const id = control?.control_id;
   const label = control?.label_text;
   const type = control.type;
   const hasError = !!getControlErrors()?.type;
+  const hasNext = form.has_next;
+  const hasPrev = form.has_prev;
 
   const questionNumber = useMemo(() => {
     if (type !== ControlTypeEnum.Group) return getQuestionNumber();
@@ -79,6 +88,16 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
         ControlTypeEnum.DropDown,
       ].includes(control.type)) ||
     !isFloatingBox;
+
+  const parentControl = getControlParentById(control, form.controls, id);
+  const isParentGroup =
+    parentControl?.type === ControlTypeEnum.Group &&
+    parentControl.control_id !== id;
+
+  const hasNextPrevButton =
+    control.placeholder_info?.type !== PlaceHolderTypeEnum.End &&
+    control.placeholder_info?.type !== PlaceHolderTypeEnum.Start &&
+    !isParentGroup;
 
   return (
     <Container>
@@ -114,6 +133,20 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
           </FormHelperText>
         )}
       </FormControl>
+      {hasNextPrevButton ? (
+        <Box display="flex" gap={1} justifyContent="flex-end">
+          {hasPrev && (
+            <Button onClick={() => gotoPrev()}>
+              <Localizer localeKey="FORM_PREV_BUTTON" />
+            </Button>
+          )}
+          {hasNext && (
+            <Button onClick={() => submitNext()}>
+              <Localizer localeKey="FORM_NEXT_BUTTON" />
+            </Button>
+          )}
+        </Box>
+      ) : null}
     </Container>
   );
 };

@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef } from "react";
+import { useContext, useEffect } from "react";
 import {
   FormPageContext,
   IndexListenersType,
@@ -11,8 +11,14 @@ export const useFormPage = ({
   onIndexChanged?: IndexListenersType;
   id?: string;
 }) => {
-  const { addIndexListener, form, submitForm, submitNext, addNewQuestion } =
-    useContext(FormPageContext);
+  const {
+    addIndexListener,
+    form,
+    submitForm,
+    submitNext,
+    addNewQuestion,
+    gotoPrev,
+  } = useContext(FormPageContext);
 
   useEffect(() => {
     onIndexChanged && addIndexListener(onIndexChanged);
@@ -24,5 +30,6 @@ export const useFormPage = ({
     submitForm,
     submitNext,
     getQuestionNumber: () => id && addNewQuestion(id),
+    gotoPrev,
   };
 };

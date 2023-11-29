@@ -19,12 +19,12 @@ const LinearProgressWithLabel = ({
   indexes,
   form,
 }: LinearProgressWithLabelProps) => {
-  const progress = getProgress(form, indexes);
+  const { progress, thisPage, allPages } = getProgress(form, indexes);
   console.log(progress);
 
-  const allPages = hideControlsWithConditionOn(form.controls).filter(
-    (x) => !x.is_hidden,
-  ).length;
+  // const allPages = hideControlsWithConditionOn(form.controls).filter(
+  //   (x) => !x.is_hidden,
+  // ).length;
 
   return (
     <Stack spacing={1} maxWidth="50%" width="120px">
@@ -34,16 +34,14 @@ const LinearProgressWithLabel = ({
         color={form.theme.labels_style?.text_color}
         sx={{ mb: ".15rem !important" }}
       >
-        <Typography
-          variant="body2"
-          component="span"
-          pr={0.75}
-          sx={{ fontSize: "small" }}
-        >
-          {indexes[0] + 1 || 1}/{Math.max(indexes[0] + 1, allPages) || allPages}{" "}
-        </Typography>
         <Typography variant="body2" component="span" sx={{ fontSize: "small" }}>
-          <Localizer localeKey="YOU_ANSWERED" />
+          <Localizer
+            localeKey="YOU_ANSWERED"
+            params={{
+              thisPage: <strong>{thisPage}</strong>,
+              allPages: <strong>{allPages}</strong>,
+            }}
+          />
         </Typography>
       </Box>
       <LinearProgressStyle variant="determinate" value={progress} />

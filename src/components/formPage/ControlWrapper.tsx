@@ -17,6 +17,7 @@ import { useFormPage } from "../../hooks/useFormPage";
 import { Localizer } from "../Localizer";
 import { getControlParentById } from "../../utils/controlUtils";
 import { PlaceHolderTypeEnum } from "../../@types/controls/PlaceHolderTypes";
+import FileDisplay from "./FileDisplay";
 
 const Container = styled(Box)({
   display: "flex",
@@ -119,6 +120,11 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
           {control.description && (
             <Box marginBlock={isFloatingDropDown ? 0 : 1}>
               <Typography variant="body2">{control.description}</Typography>
+            </Box>
+          )}
+          {control.file_url && (
+            <Box marginBlock={2}>
+              <FileDisplay fileUrl={control.file_url} />
             </Box>
           )}
           <>{children}</>

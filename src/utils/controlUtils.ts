@@ -267,7 +267,14 @@ export const getControlParentById = (
     if (control.control_id === id) {
       return parent;
     } else if (control.group_info?.controls) {
-      return getControlParentById(control, control.group_info?.controls, id);
+      const parentControl = getControlParentById(
+        control,
+        control.group_info?.controls,
+        id,
+      );
+      if (parentControl) {
+        return parentControl;
+      }
     }
   }
   return null;

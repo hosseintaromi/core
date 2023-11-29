@@ -80,16 +80,6 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   const hasQuestionNumber =
     type !== ControlTypeEnum.Group && !hideQuestionNumber && questionNumber;
 
-  const hasLabel =
-    (label &&
-      [
-        ControlTypeEnum.Group,
-        ControlTypeEnum.MultipleOption,
-        ControlTypeEnum.PlaceHolder,
-        ControlTypeEnum.DropDown,
-      ].includes(control.type)) ||
-    !isFloatingBox;
-
   const parentControl = getControlParentById(control, form.controls, id);
   const isParentGroup =
     parentControl?.type === ControlTypeEnum.Group &&
@@ -107,14 +97,12 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
           {hasQuestionNumber ? (
             <QuestionNumberLabel shrink>{questionNumber}. </QuestionNumberLabel>
           ) : null}
-          {hasLabel && (
-            <LabelText
-              shrink={isFloatingDropDown ? undefined : true}
-              htmlFor={id}
-            >
-              {label}
-            </LabelText>
-          )}
+          <LabelText
+            shrink={isFloatingDropDown ? undefined : true}
+            htmlFor={id}
+          >
+            {label}
+          </LabelText>
         </Box>
         <Box display="flex" flexDirection="column">
           {control.description && (

@@ -24,8 +24,6 @@ const dateTimePickerStyle = ({
       borderLeft: border?.left,
       borderRadius: controls_style?.radius + "px",
       boxShadow: controls_style?.shadow,
-      paddingInline: controls_style?.padding?.horizontal + "px",
-      paddingBlock: controls_style?.padding?.vertical + "px",
     },
     "& .MuiOutlinedInput-root": {
       "&.Mui-focused fieldset": {
@@ -37,6 +35,10 @@ const dateTimePickerStyle = ({
       },
     },
     "& .MuiInputLabel-root": {
+      fontSize: labels_style?.font_size || font_size + "px",
+      fontWeight: labels_style?.font_weight,
+      color: labels_style?.text_color,
+      fontFamily: font_name,
       "&.Mui-focused": {
         color: labels_style?.text_color,
       },

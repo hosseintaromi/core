@@ -1,23 +1,17 @@
 import { ReactNode, createContext, memo, useEffect, useRef } from "react";
 import { FormPageViewDataType, PageIndexesType } from "../@types/FormPageTypes";
 import { FormType } from "../@types/FormTypes";
-import {
-  getControl,
-  getControlById,
-  getNextIndex,
-} from "../utils/controlUtils";
+import { getControlById, getNextIndex } from "../utils/controlUtils";
 import { FieldValues } from "react-hook-form";
 import { openView } from "../core/utils/viewManager";
 import FormPageItem from "../components/formPage/FormPageItem";
 import {
   QuestionAnswerType,
   QuestionAnswerTypeEnum,
-  SendAnswerRequestDateType,
 } from "../@types/AxiosApiTypes";
 import { ControlTypeEnum } from "../@types/controls/ControlTypes";
 import { PlaceHolderTypeEnum } from "../@types/controls/PlaceHolderTypes";
 import { convertLocale } from "../hooks/useGlobalLocales";
-import { Place } from "@mui/icons-material";
 
 export type IndexListenersType = (indexes: PageIndexesType) => void;
 

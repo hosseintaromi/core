@@ -1,13 +1,13 @@
 import { createTheme } from "@mui/material/styles";
-import { ThemeType } from "../@types/ThemeTypes";
-import textFieldStyleOverride from "./theme/textFieldStyle";
-import inputLabelStyle from "./theme/inputLabelStyle";
-import selectStyleOverride from "./theme/selectStyle";
-import buttonStyleOverride from "./theme/buttonStyle";
-import descriptionStyle from "./theme/descriptionStyle";
-import progressStyleOverride from "./theme/progressStyle";
-import autoCompleteListStyle from "./theme/autoCompleteListStyle";
-import selectListStyleOverride from "./theme/selectListStyle";
+import { ThemeType } from "../../@types/ThemeTypes";
+import textFieldStyleOverride from "./textFieldStyle";
+import inputLabelStyle from "./inputLabelStyle";
+import selectStyleOverride from "./selectStyle";
+import buttonStyleOverride from "./buttonStyle";
+import descriptionStyle from "./descriptionStyle";
+import progressStyleOverride from "./progressStyle";
+import autoCompleteListStyle from "./autoCompleteListStyle";
+import selectListStyleOverride from "./selectListStyle";
 
 const theme = (formTheme: ThemeType) =>
   createTheme({

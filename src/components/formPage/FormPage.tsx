@@ -1,6 +1,6 @@
 import { Box, ThemeProvider, Typography, styled } from "@mui/material";
 import PartialTabContainer from "../../core/components/containers/PartialTabContainer";
-import theme from "../../utils/theme";
+import theme from "../../utils/theme/theme";
 import BackgroundStyle from "./BackgroundStyle";
 import form from "../../fakeData.json";
 import { ThemeType } from "../../@types/ThemeTypes";

@@ -55,7 +55,6 @@ const DatePicker: FC<DatePickerPropsType> = ({
         onBlur,
         name,
         error: !!getControlErrors()?.type,
-        ...params,
         sx: {
           ...(params?.sx || {}),
           direction: "rtl",
@@ -111,6 +110,7 @@ const DatePicker: FC<DatePickerPropsType> = ({
     },
   };
 
+  console.log(datePickerProps);
   return (
     <ThemeProvider theme={datePickerTheme}>
       <LocalizationProvider

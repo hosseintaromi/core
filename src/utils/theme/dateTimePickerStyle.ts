@@ -2,6 +2,7 @@ import { ThemeType } from "../../@types/ThemeTypes";
 
 const dateTimePickerStyle = ({
   controls_style,
+  labels_style,
   answer_color,
   font_size,
   font_name,
@@ -25,6 +26,20 @@ const dateTimePickerStyle = ({
       boxShadow: controls_style?.shadow,
       paddingInline: controls_style?.padding?.horizontal + "px",
       paddingBlock: controls_style?.padding?.vertical + "px",
+    },
+    "& .MuiOutlinedInput-root": {
+      "&.Mui-focused fieldset": {
+        borderTop: border?.top,
+        borderBottom: border?.bottom,
+        borderRight: border?.right,
+        borderLeft: border?.left,
+        borderWidth: 2,
+      },
+    },
+    "& .MuiInputLabel-root": {
+      "&.Mui-focused": {
+        color: labels_style?.text_color,
+      },
     },
   };
 };

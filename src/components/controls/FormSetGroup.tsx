@@ -4,9 +4,15 @@ import { ControlType } from "../../@types/controls/ControlTypes";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { FBContext } from "../../context/FBContextProvider";
 import { hideControlsWithConditionOn } from "../../utils/controlUtils";
-import { Box } from "@mui/material";
+import { Box, styled } from "@mui/material";
 import { ThemeType } from "../../@types/ThemeTypes";
 import groupStyle from "../../utils/theme/groupStyle";
+
+const ContainerStyle = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  gap: 3,
+});
 
 type GroupPropsType = {
   control: ControlType;
@@ -38,13 +44,7 @@ const FormSetGroup = ({
   }, []);
 
   return (
-    <Box
-      sx={{ ...groupStyle(theme.groups_style) }}
-      display="flex"
-      flexDirection="column"
-      gap={3}
-      id="group"
-    >
+    <ContainerStyle sx={{ ...groupStyle(theme.groups_style) }}>
       {controls
         ?.filter((x) => !x.is_hidden)
         .map((controlItem: ControlType) => (
@@ -61,7 +61,7 @@ const FormSetGroup = ({
             />
           </ControlWrapper>
         ))}
-    </Box>
+    </ContainerStyle>
   );
 };
 

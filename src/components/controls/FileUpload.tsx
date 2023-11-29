@@ -8,6 +8,28 @@ import { Localizer } from "../Localizer";
 import { useFormPage } from "../../hooks/useFormPage";
 import fileUploadStyle from "../../utils/theme/fileUploadStyle";
 
+const ContainerStyle = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  justifyContent: "center",
+  alignItems: "center",
+  maxWidth: "18.4375rem",
+  minWidth: "12.5rem",
+  height: "7.5rem",
+});
+
+const VisuallyHiddenInput = styled("input")({
+  clip: "rect(0 0 0 0)",
+  clipPath: "inset(50%)",
+  height: 1,
+  overflow: "hidden",
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  whiteSpace: "nowrap",
+  width: 1,
+});
+
 type FileUploadPropsType = {
   control: ControlType;
   isFloatingBox?: boolean;
@@ -57,49 +79,27 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
       console.error("max size");
     }
   };
-  const VisuallyHiddenInput = styled("input")({
-    clip: "rect(0 0 0 0)",
-    clipPath: "inset(50%)",
-    height: 1,
-    overflow: "hidden",
-    position: "absolute",
-    bottom: 0,
-    left: 0,
-    whiteSpace: "nowrap",
-    width: 1,
-  });
 
   return (
-    <>
-      <Box
-        display="flex"
-        flexDirection="column"
-        justifyContent="center"
-        alignItems="center"
-        maxWidth="18.4375rem"
-        minWidth="12.5rem"
-        height="7.5rem"
-        sx={fileUploadStyle(form.theme)}
+    <ContainerStyle sx={fileUploadStyle(form.theme)}>
+      <Button
+        component="label"
+        variant="contained"
+        startIcon={<CloudUploadIcon />}
       >
-        <Button
-          component="label"
-          variant="contained"
-          startIcon={<CloudUploadIcon />}
-        >
-          <Typography variant="caption" component="span">
-            <Localizer localeKey="CHOOSE_FILE" />
-          </Typography>
-          <VisuallyHiddenInput
-            type="file"
-            accept={acceptType}
-            ref={ref}
-            onChange={onChange}
-            onBlur={onBlur}
-            name={name}
-          />
-        </Button>
-      </Box>
-    </>
+        <Typography variant="caption" component="span">
+          <Localizer localeKey="CHOOSE_FILE" />
+        </Typography>
+        <VisuallyHiddenInput
+          type="file"
+          accept={acceptType}
+          ref={ref}
+          onChange={onChange}
+          onBlur={onBlur}
+          name={name}
+        />
+      </Button>
+    </ContainerStyle>
   );
 };
 

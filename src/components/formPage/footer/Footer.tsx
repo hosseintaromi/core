@@ -8,6 +8,7 @@ import { useState } from "react";
 import { PageIndexesType } from "../../../@types/FormPageTypes";
 import { ControlTypeEnum } from "../../../@types/controls/ControlTypes";
 import { PlaceHolderTypeEnum } from "../../../@types/controls/PlaceHolderTypes";
+import { hexToRgbA } from "../../../utils/hexToRgbA";
 
 const Footer = ({ theme }: { theme?: ThemeType }) => {
   const border = theme?.controls_style?.border;
@@ -17,25 +18,6 @@ const Footer = ({ theme }: { theme?: ThemeType }) => {
       setIndexes(indexes);
     },
   });
-
-  function hexToRgbA(hex: any, opacity: any = 1) {
-    let c: any;
-    if (/^#([A-Fa-f0-9]{3}){1,2}$/.test(hex)) {
-      c = hex.substring(1).split("");
-      if (c.length == 3) {
-        c = [c[0], c[0], c[1], c[1], c[2], c[2]];
-      }
-      c = "0x" + c.join("");
-      return (
-        "rgba(" +
-        [(c >> 16) & 255, (c >> 8) & 255, c & 255].join(",") +
-        "," +
-        opacity +
-        ")"
-      );
-    }
-    throw new Error("Bad Hex");
-  }
 
   const control = getControl(form.controls, indexes);
   const isFinished = control?.control_id === "send";

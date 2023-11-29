@@ -42,9 +42,7 @@ export const FormPageContextProvider = memo(
     const viewDataRef = useRef<FormPageViewDataType>({});
 
     const addNewQuestion = (id: string) => {
-      console.log(form.controls, id);
       const control = getControlById(form.controls, id);
-      console.log(control);
       if (
         control?.type === ControlTypeEnum.PlaceHolder &&
         control.placeholder_info?.type !== PlaceHolderTypeEnum.Note

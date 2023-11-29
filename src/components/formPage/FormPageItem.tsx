@@ -3,21 +3,8 @@ import { getControl } from "../../utils/controlUtils";
 import ControlSelector from "./ControlSelector";
 import ControlWrapper from "./ControlWrapper";
 import { FBContextProvider } from "../../context/FBContextProvider";
-import { useFBControl } from "../../hooks/useFBControl";
-import { useEffect } from "react";
-import { ControlType } from "../../@types/controls/ControlTypes";
 import { FormPageViewDataType } from "../../@types/FormPageTypes";
-
-const NavigationHandler = ({ control }: { control: ControlType }) => {
-  const { submitForm } = useFBControl(control);
-  const { viewData } = useView<FormPageViewDataType>();
-
-  useEffect(() => {
-    viewData.submitHandler = submitForm;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-  return <></>;
-};
+import NavigationHandler from "./NavigationHandler";
 
 const FormPageItem = () => {
   const { viewData } = useView<FormPageViewDataType>();

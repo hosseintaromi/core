@@ -10,8 +10,32 @@ import {
   FormHelperText,
   InputLabel,
   Typography,
+  styled,
 } from "@mui/material";
 import { useFormPage } from "../../hooks/useFormPage";
+
+const Container = styled(Box)({
+  display: "flex",
+  flexDirection: "column",
+  width: "100%",
+  maxWidth: "600px",
+  margin: "0 auto",
+});
+
+const QuestionNumberLabel = styled(InputLabel)({
+  position: "static",
+  maxWidth: "unset",
+  display: "inline-block",
+  transform: "none",
+  pr: 0.75,
+});
+
+const LabelText = styled(InputLabel)({
+  position: "static",
+  display: "inline-block",
+  maxWidth: "unset",
+  transform: "none",
+});
 
 type ControlWrapperPropsType = {
   control: ControlType;
@@ -43,52 +67,33 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   const isFloatingDropDown =
     control.type === ControlTypeEnum.DropDown && isFloatingBox;
 
+  const hasQuestionNumber =
+    type !== ControlTypeEnum.Group && !hideQuestionNumber && questionNumber;
+
+  const hasLabel =
+    (label &&
+      [
+        ControlTypeEnum.Group,
+        ControlTypeEnum.MultipleOption,
+        ControlTypeEnum.PlaceHolder,
+        ControlTypeEnum.DropDown,
+      ].includes(control.type)) ||
+    !isFloatingBox;
+
   return (
-    <Box
-      display="flex"
-      flexDirection="column"
-      width="100%"
-      maxWidth="600px"
-      margin="0 auto"
-    >
+    <Container>
       <FormControl error={hasError} sx={{ gap: 1 }}>
         <Box display="flex" alignItems="center">
-          {type !== ControlTypeEnum.Group &&
-          !hideQuestionNumber &&
-          questionNumber ? (
-            <InputLabel
-              shrink
-              sx={{
-                position: "static",
-                maxWidth: "unset",
-                display: "inline-block",
-                transform: "none",
-                pr: 0.75,
-              }}
-            >
-              {questionNumber}.{" "}
-            </InputLabel>
+          {hasQuestionNumber ? (
+            <QuestionNumberLabel shrink>{questionNumber}. </QuestionNumberLabel>
           ) : null}
-          {((label &&
-            [
-              ControlTypeEnum.Group,
-              ControlTypeEnum.MultipleOption,
-              ControlTypeEnum.PlaceHolder,
-              ControlTypeEnum.DropDown,
-            ].includes(control.type)) ||
-            !isFloatingBox) && (
-            <InputLabel
-              sx={{
-                position: "static",
-                display: "inline-block",
-                maxWidth: "unset",
-                transform: "none",
-              }}
+          {hasLabel && (
+            <LabelText
               shrink={isFloatingDropDown ? undefined : true}
               htmlFor={id}
             >
               {label}
-            </InputLabel>
+            </LabelText>
           )}
         </Box>
         <Box display="flex" flexDirection="column">
@@ -99,19 +104,17 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
           )}
           <>{children}</>
         </Box>
-        <>
-          {hasError && (
-            <FormHelperText
-              sx={{
-                margin: 0,
-              }}
-            >
-              {getControlErrors()?.message?.toString()}
-            </FormHelperText>
-          )}
-        </>
+        {hasError && (
+          <FormHelperText
+            sx={{
+              margin: 0,
+            }}
+          >
+            {getControlErrors()?.message?.toString()}
+          </FormHelperText>
+        )}
       </FormControl>
-    </Box>
+    </Container>
   );
 };
 

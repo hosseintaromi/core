@@ -21,9 +21,6 @@ const TextBox = ({
       case TextBoxTypeEnum.Email:
         setInputType("email");
         break;
-      case TextBoxTypeEnum.Latin:
-        // setInputType("email");
-        break;
       case TextBoxTypeEnum.Mobile:
         setInputType("tel");
         break;

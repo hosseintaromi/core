@@ -12,6 +12,11 @@ const BackgroundStyle = styled(Container, {
   const imageAlign = backgroundStyles?.image_align;
 
   return {
+    display: "flex",
+    flexDirection: "column",
+    height: "100%",
+    padding: "0 !important",
+    maxWidth: "100% !important",
     " .partial-tab-container": {
       backgroundColor: backgroundStyles?.color || "#fff",
       backgroundImage: `url(${backgroundStyles?.image_url})`,

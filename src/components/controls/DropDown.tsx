@@ -64,14 +64,6 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
             label={isFloatingBox ? control.label_text : ""}
             defaultValue={defaultValue || options?.[0].value}
             MenuProps={{
-              anchorOrigin: {
-                vertical: "bottom",
-                horizontal: "center",
-              },
-              transformOrigin: {
-                vertical: "top",
-                horizontal: "center",
-              },
               marginThreshold: 0,
             }}
           >

@@ -15,9 +15,9 @@ const ContainerStyle = styled(Box)({
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  maxWidth: "18.4375rem",
-  minWidth: "12.5rem",
-  height: "7.5rem",
+  width: "100%",
+  height: "8.5rem",
+  alignSelf: "center",
   a: {
     display: "flex",
     justifyContent: "center",
@@ -26,7 +26,7 @@ const ContainerStyle = styled(Box)({
     },
   },
   img: {
-    height: "6.5rem",
+    height: "7.5rem",
     objectFit: "contain",
   },
   video: {

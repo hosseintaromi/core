@@ -1,6 +1,13 @@
 import React, { FC } from "react";
 import { ControlType } from "../../@types/controls/ControlTypes";
-import { Autocomplete, MenuItem, Select, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+} from "@mui/material";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 
 type DropDownPropsType = { control: ControlType; isFloatingBox?: boolean };
@@ -17,7 +24,7 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
   );
 
   return (
-    <>
+    <FormControl>
       {control.dropdown_info?.searchable ? (
         <Autocomplete
           ref={ref}
@@ -41,24 +48,27 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
           )}
         />
       ) : (
-        <Select
-          labelId={control.control_id}
-          ref={ref}
-          onChange={onChange}
-          onBlur={onBlur}
-          name={name}
-          sx={{ minWidth: 100 }}
-          label={isFloatingBox ? control.label_text : ""}
-          defaultValue={defaultValue || options?.[0].value}
-        >
-          {control.dropdown_info?.options?.map((option) => (
-            <MenuItem key={option.value} value={option.value}>
-              {option.text}
-            </MenuItem>
-          ))}
-        </Select>
+        <>
+          <InputLabel id={control.control_id}>{control.label_text}</InputLabel>
+          <Select
+            labelId={control.control_id}
+            ref={ref}
+            onChange={onChange}
+            onBlur={onBlur}
+            name={name}
+            sx={{ minWidth: 100 }}
+            label={isFloatingBox ? control.label_text : ""}
+            // defaultValue={defaultValue || options?.[0].value}
+          >
+            {control.dropdown_info?.options?.map((option) => (
+              <MenuItem key={option.value} value={option.value}>
+                {option.text}
+              </MenuItem>
+            ))}
+          </Select>
+        </>
       )}
-    </>
+    </FormControl>
   );
 };
 

@@ -24,8 +24,6 @@ const selectStyleOverride = ({
           borderLeft: border?.left,
           borderRadius: controls_style?.radius + "px",
           boxShadow: controls_style?.shadow,
-          paddingInline: controls_style?.padding?.horizontal + "px",
-          paddingBlock: controls_style?.padding?.vertical + "px",
         },
         "&.Mui-focused .MuiOutlinedInput-notchedOutline": {
           borderTop: border?.top,

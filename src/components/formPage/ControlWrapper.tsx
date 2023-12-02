@@ -100,6 +100,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
           <LabelText
             shrink={isFloatingDropDown ? undefined : true}
             htmlFor={id}
+            id={id}
           >
             {label}
           </LabelText>

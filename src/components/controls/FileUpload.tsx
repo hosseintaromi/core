@@ -1,4 +1,4 @@
-import { ChangeEvent, FC } from "react";
+import { ChangeEvent, FC, useState } from "react";
 import { ControlType } from "../../@types/controls/ControlTypes";
 import { FileTypeEnum } from "../../@types/controls/FileUploadTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
@@ -7,6 +7,8 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Localizer } from "../Localizer";
 import { useFormPage } from "../../hooks/useFormPage";
 import fileUploadStyle from "../../utils/theme/fileUploadStyle";
+import FileDisplay from "../formPage/FileDisplay";
+import { getDataUrl } from "../../utils/fileUpload";
 
 const ContainerStyle = styled(Box)({
   display: "flex",
@@ -16,6 +18,20 @@ const ContainerStyle = styled(Box)({
   maxWidth: "18.4375rem",
   minWidth: "12.5rem",
   height: "7.5rem",
+  a: {
+    display: "flex",
+    justifyContent: "center",
+    img: {
+      height: "100%",
+    },
+  },
+  img: {
+    height: "6.5rem",
+    objectFit: "contain",
+  },
+  video: {
+    width: "80%",
+  },
 });
 
 const VisuallyHiddenInput = styled("input")({
@@ -36,6 +52,8 @@ type FileUploadPropsType = {
 };
 
 const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
+  const [fileUrl, setFileUrl] = useState<string>();
+  const [file, setFile] = useState<File>();
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
   const { form } = useFormPage({});
 
@@ -73,32 +91,41 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
     allowedExtensions.forEach((ext) => (acceptType += `, .${ext}`));
   }
 
-  const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
+  const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file && info?.max_size && file?.size > info?.max_size) {
       console.error("max size");
+    }
+    onChange(e);
+    if (file) {
+      setFileUrl(await getDataUrl(file));
+      setFile(file);
     }
   };
 
   return (
     <ContainerStyle sx={fileUploadStyle(form.theme)}>
-      <Button
-        component="label"
-        variant="contained"
-        startIcon={<CloudUploadIcon />}
-      >
-        <Typography variant="caption" component="span">
-          <Localizer localeKey="CHOOSE_FILE" />
-        </Typography>
-        <VisuallyHiddenInput
-          type="file"
-          accept={acceptType}
-          ref={ref}
-          onChange={onChange}
-          onBlur={onBlur}
-          name={name}
-        />
-      </Button>
+      {file && fileUrl ? (
+        <FileDisplay fileUrl={fileUrl} file={file} />
+      ) : (
+        <Button
+          component="label"
+          variant="contained"
+          startIcon={<CloudUploadIcon />}
+        >
+          <Typography variant="caption" component="span">
+            <Localizer localeKey="CHOOSE_FILE" />
+          </Typography>
+          <VisuallyHiddenInput
+            type="file"
+            // accept={acceptType}
+            ref={ref}
+            onChange={handleChange}
+            onBlur={onBlur}
+            name={name}
+          />
+        </Button>
+      )}
     </ContainerStyle>
   );
 };

@@ -49,7 +49,11 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
         />
       ) : (
         <>
-          <InputLabel id={control.control_id}>{control.label_text}</InputLabel>
+          {isFloatingBox && (
+            <InputLabel id={control.control_id}>
+              {control.label_text}
+            </InputLabel>
+          )}
           <Select
             labelId={control.control_id}
             ref={ref}
@@ -58,7 +62,18 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
             name={name}
             sx={{ minWidth: 100 }}
             label={isFloatingBox ? control.label_text : ""}
-            // defaultValue={defaultValue || options?.[0].value}
+            defaultValue={defaultValue || options?.[0].value}
+            MenuProps={{
+              anchorOrigin: {
+                vertical: "bottom",
+                horizontal: "center",
+              },
+              transformOrigin: {
+                vertical: "top",
+                horizontal: "center",
+              },
+              marginThreshold: 0,
+            }}
           >
             {control.dropdown_info?.options?.map((option) => (
               <MenuItem key={option.value} value={option.value}>

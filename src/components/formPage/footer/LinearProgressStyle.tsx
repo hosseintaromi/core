@@ -1,6 +1,5 @@
 import { Box, LinearProgress, Typography, styled, Stack } from "@mui/material";
 import { getProgress } from "../../../utils/progressUtils";
-import { hideControlsWithConditionOn } from "../../../utils/controlUtils";
 import { PageIndexesType } from "../../../@types/FormPageTypes";
 import { Localizer } from "../../Localizer";
 import { FormType } from "../../../@types/FormTypes";
@@ -20,11 +19,6 @@ const LinearProgressWithLabel = ({
   form,
 }: LinearProgressWithLabelProps) => {
   const { progress, thisPage, allPages } = getProgress(form, indexes);
-  console.log(progress);
-
-  // const allPages = hideControlsWithConditionOn(form.controls).filter(
-  //   (x) => !x.is_hidden,
-  // ).length;
 
   return (
     <Stack spacing={1} maxWidth="50%" width="120px">

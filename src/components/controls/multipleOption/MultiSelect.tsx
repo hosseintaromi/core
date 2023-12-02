@@ -32,7 +32,7 @@ const MultiSelect: FC<MultiSelectPropsType> = ({ control, theme }) => {
       sx={{
         flexDirection:
           info.arrange_type === ArrangeTypeEnum.Horizontal ? "row" : "column",
-        ...groupStyle(theme.controls_style),
+        ...groupStyle(theme.groups_style),
       }}
     >
       {options?.map((option) => (

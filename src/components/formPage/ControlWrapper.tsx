@@ -18,6 +18,7 @@ import { Localizer } from "../Localizer";
 import { getControlParentById } from "../../utils/controlUtils";
 import { PlaceHolderTypeEnum } from "../../@types/controls/PlaceHolderTypes";
 import FileDisplay from "./FileDisplay";
+import { ValidationTypeEnum } from "../../@types/ValidationTypes";
 
 const Container = styled(Box)({
   display: "flex",
@@ -85,6 +86,10 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
     parentControl?.type === ControlTypeEnum.Group &&
     parentControl.control_id !== id;
 
+  const isRequired = control.validations?.find(
+    (item) => item.type === ValidationTypeEnum.Required,
+  );
+
   const hasNextPrevButton =
     control.placeholder_info?.type !== PlaceHolderTypeEnum.End &&
     control.placeholder_info?.type !== PlaceHolderTypeEnum.Start &&
@@ -103,11 +108,12 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
             id={id}
           >
             {label}
+            {isRequired ? <>*</> : null}
           </LabelText>
         </Box>
         <Box display="flex" flexDirection="column">
           {control.description && (
-            <Box marginBlock={isFloatingDropDown ? 0 : 1}>
+            <Box marginBlock={isFloatingDropDown ? 0 : 2}>
               <Typography variant="body2">{control.description}</Typography>
             </Box>
           )}

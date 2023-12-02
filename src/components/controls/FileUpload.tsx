@@ -118,7 +118,7 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
           </Typography>
           <VisuallyHiddenInput
             type="file"
-            // accept={acceptType}
+            accept={acceptType}
             ref={ref}
             onChange={handleChange}
             onBlur={onBlur}

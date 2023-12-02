@@ -28,6 +28,7 @@ const UniSelect: FC<UniSelectPropsType> = ({ control, theme }) => {
         flexDirection:
           info?.arrange_type === ArrangeTypeEnum.Horizontal ? "row" : "column",
         ...groupStyle(theme.controls_style),
+        margin: 0,
       }}
       defaultValue={defaultValue}
     >

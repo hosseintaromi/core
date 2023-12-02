@@ -83,10 +83,12 @@ export const FormPageContextProvider = memo(
     };
 
     const gotoNext = (data: FieldValues) => {
-      console.log("APICALL__sendAnswer", {
-        form_id: form.form_id,
-        answers: setAnswer(data),
-      });
+      if (Object.keys(data).length) {
+        console.log("APICALL__sendAnswer", {
+          form_id: form.form_id,
+          answers: setAnswer(data),
+        });
+      }
 
       let nextIndexes = getNextIndex(form, indexesRef.current || [], data);
       if (!nextIndexes || !nextIndexes.length) {

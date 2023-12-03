@@ -44,6 +44,10 @@ const LabelText = styled(InputLabel)({
   transform: "none",
 });
 
+const Required = styled("span")(({ theme }) => ({
+  color: theme.palette.error.main,
+}));
+
 type ControlWrapperPropsType = {
   control: ControlType;
   isFloatingBox?: boolean;
@@ -108,7 +112,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
             id={id}
           >
             {label}
-            {isRequired ? <>*</> : null}
+            {isRequired ? <Required>*</Required> : null}
           </LabelText>
         </Box>
         <Box display="flex" flexDirection="column">

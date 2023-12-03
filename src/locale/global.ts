@@ -13,9 +13,12 @@ export const globalLocales: GlobalLocalesType = {
   VALIDATION_NATIONAL_ID: "لطفا کد‌ملی خود را به درستی وارد کنید.",
   VALIDATION_PERSIAN: "لطفا فقط از حروف فارسی استفاده کنید.",
   VALIDATION_POSTAL_CODE: "لطفا کدپستی خود را به درستی وارد کنید.",
+  VALIDATION_FILE_SIZE: "اندازه فایل از حد مجاز بیشتر است.",
   CALENDAR_OK_BUTTON: "تایید",
   CALENDAR_CANCEL_BUTTON: "انصراف",
   CHOOSE_FILE: "انتخاب فایل",
+  CHOOSE_FILE_FORMAT:
+    "لطفا فایل  خود را به فرمت {{fileType}} و کمتر از {{maxSize}} کیلو بایت انتخاب کنید.",
   YOU_ANSWERED: "صفحه {{thisPage}} از {{allPages}}",
   FORM_DISABLED: "این پرسشنامه غیر‌فعال است و امکان ثبت پاسخ ندارد.",
   LAST_PAGE_DESCRIPTION: "آیا از اتمام پرسشنامه اطمینان دارید؟",

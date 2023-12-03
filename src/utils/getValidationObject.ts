@@ -1,11 +1,19 @@
 import { ValidationTypeEnum } from "../@types/ValidationTypes";
-import { ControlType } from "../@types/controls/ControlTypes";
+import { ControlType, ControlTypeEnum } from "../@types/controls/ControlTypes";
 import { FieldValues, RegisterOptions } from "react-hook-form";
 import { convertLocale } from "../hooks/useGlobalLocales";
 
 export const getValidationObject = (control: ControlType) => {
   const validationObj: RegisterOptions<FieldValues, string> = {};
   const validation = control.validations;
+  const maxSize = control.file_upload_info?.max_size;
+  if (control.type === ControlTypeEnum.FileUpload && maxSize) {
+    validationObj.validate = {
+      maxSize: (files) =>
+        files[0]?.size < maxSize ||
+        convertLocale({ key: "VALIDATION_FILE_SIZE" }).text,
+    };
+  }
   validation?.forEach((item) => {
     let regex: RegExp = /^/;
     if (item.regex_pattern) {
@@ -91,5 +99,6 @@ export const getValidationObject = (control: ControlType) => {
         break;
     }
   });
+  console.log(control.control_id, validationObj);
   return validationObj;
 };

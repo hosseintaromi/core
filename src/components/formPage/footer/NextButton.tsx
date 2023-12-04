@@ -21,7 +21,7 @@ const NextButton = ({
 }: NextButtonProps) => (
   <Box>
     {isFinished ? (
-      <Box display="flex" gap={2}>
+      <Box display="flex" gap={1}>
         <Button variant="outlined" disabled onClick={() => submitForm()}>
           <ExpandLessIcon />
         </Button>
@@ -31,12 +31,12 @@ const NextButton = ({
       </Box>
     ) : (
       <Box display="flex" gap={1}>
-        {hasPrev && (
+        {hasPrev !== false && (
           <Button variant="outlined" onClick={() => gotoPrev()}>
             <ExpandLessIcon />
           </Button>
         )}
-        {hasNext && (
+        {hasNext !== false && (
           <Button variant="outlined" onClick={() => submitNext()}>
             <ExpandMoreIcon />
           </Button>

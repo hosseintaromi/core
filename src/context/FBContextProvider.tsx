@@ -17,9 +17,7 @@ import {
   hideControlsWithConditionOn,
   passCondition,
 } from "../utils/controlUtils";
-import { convertLocale } from "../hooks/useGlobalLocales";
 import { useFormPage } from "../hooks/useFormPage";
-import { PlaceHolderTypeEnum } from "../@types/controls/PlaceHolderTypes";
 
 export const FBContext = createContext<{
   registerControl: (control: ControlType) => any;
@@ -64,8 +62,8 @@ export const FBContextProvider = memo(
       const thisControl =
         getControlById(controls || [], target.name) || mainControlRef.current;
       const files = target.files;
-      if (thisControl) {
-        doubleCheckFile(files?.[0], thisControl);
+      if (thisControl && files) {
+        doubleCheckFile(files[0], thisControl);
       }
 
       if (thisControl?.conditions && controls) {
@@ -82,14 +80,12 @@ export const FBContextProvider = memo(
             let groupControls = hideControlsWithConditionOn(
               formSet.group_info?.controls,
             );
-
             const thenControl = groupControls.find(
               (item) => item.control_id === thenShowControlId,
             );
             if (thenControl) {
               thenControl.is_hidden = false;
             }
-
             formSetListenRef.current[formSet.control_id]?.listenControlChanges(
               groupControls,
             );
@@ -131,13 +127,13 @@ export const FBContextProvider = memo(
     };
 
     const doubleCheckFile = (file: any, control: ControlType) => {
-      const validation = getValidationObject(control).required;
-      if (!file && validation) {
-        formController.setError(control.control_id, {
-          type: "required",
-          message: validation as string,
-        });
-      }
+      // const validation = getValidationObject(control).required;
+      // if (!file && validation) {
+      //   formController.setError(control.control_id, {
+      //     type: "required",
+      //     message: validation as string,
+      //   });
+      // }
     };
 
     const submitForm = (callback: SubmitHandler<FieldValues>) =>

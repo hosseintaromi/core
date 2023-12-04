@@ -70,8 +70,6 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   const label = control?.label_text;
   const type = control.type;
   const hasError = !!getControlErrors()?.type;
-  const hasNext = form.has_next;
-  const hasPrev = form.has_prev;
 
   const questionNumber = useMemo(() => {
     if (type !== ControlTypeEnum.Group) return getQuestionNumber();
@@ -94,14 +92,25 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
     (item) => item.type === ValidationTypeEnum.Required,
   );
 
-  const hasNextPrevButton =
-    control.placeholder_info?.type !== PlaceHolderTypeEnum.End &&
-    control.placeholder_info?.type !== PlaceHolderTypeEnum.Start &&
-    !isParentGroup;
+  const hasSubmitButton =
+    !isParentGroup &&
+    (type === ControlTypeEnum.Group ||
+      type === ControlTypeEnum.DatePicker ||
+      (type === ControlTypeEnum.PlaceHolder &&
+        control.placeholder_info?.type === PlaceHolderTypeEnum.Note) ||
+      type === ControlTypeEnum.TextArea ||
+      type === ControlTypeEnum.TextBox);
+
+  const isFirstPage =
+    type === ControlTypeEnum.PlaceHolder &&
+    control.placeholder_info?.type === PlaceHolderTypeEnum.Start;
 
   return (
     <Container>
-      <FormControl error={hasError} sx={{ gap: 1 }}>
+      <FormControl
+        error={hasError}
+        sx={{ gap: 1, ...(isFirstPage ? { alignItems: "center" } : {}) }}
+      >
         <Box display="flex" alignItems="center">
           {hasQuestionNumber ? (
             <QuestionNumberLabel shrink>{questionNumber}. </QuestionNumberLabel>
@@ -138,20 +147,13 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
           </FormHelperText>
         )}
       </FormControl>
-      {hasNextPrevButton ? (
-        <Box display="flex" gap={1} justifyContent="flex-end">
-          {hasPrev && (
-            <Button onClick={() => gotoPrev()}>
-              <Localizer localeKey="FORM_PREV_BUTTON" />
-            </Button>
-          )}
-          {hasNext && (
-            <Button onClick={() => submitNext()}>
-              <Localizer localeKey="FORM_NEXT_BUTTON" />
-            </Button>
-          )}
+      {hasSubmitButton && (
+        <Box display="flex" flexDirection="column" alignItems="flex-end">
+          <Button onClick={() => submitNext()}>
+            <Localizer localeKey="FORM_NEXT_BUTTON" />
+          </Button>
         </Box>
-      ) : null}
+      )}
     </Container>
   );
 };

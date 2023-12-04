@@ -23,7 +23,7 @@ export const globalLocales: GlobalLocalesType = {
   FORM_DISABLED: "این پرسشنامه غیر‌فعال است و امکان ثبت پاسخ ندارد.",
   LAST_PAGE_DESCRIPTION: "آیا از اتمام پرسشنامه اطمینان دارید؟",
   LAST_PAGE_LABEL: "ارسال",
-  FORM_NEXT_BUTTON: "بعدی",
+  FORM_NEXT_BUTTON: "تایید",
   FORM_PREV_BUTTON: "قبلی",
   START_BUTTON: "شروع",
 };

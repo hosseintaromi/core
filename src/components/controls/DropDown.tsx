@@ -28,7 +28,7 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
       {control.dropdown_info?.searchable ? (
         <Autocomplete
           ref={ref}
-          defaultValue={selectedValues?.[0]?.text}
+          // defaultValue={selectedValues?.[0]?.text}
           onChange={(event: any, value: any) => {
             onChange({
               target: {
@@ -62,7 +62,7 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
             name={name}
             sx={{ minWidth: 100 }}
             label={isFloatingBox ? control.label_text : ""}
-            defaultValue={defaultValue || options?.[0].value}
+            // defaultValue={defaultValue || options?.[0].value}
             MenuProps={{
               marginThreshold: 0,
             }}

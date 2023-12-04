@@ -21,7 +21,7 @@ const PlaceHolder: FC<PlaceHolderPropsType> = ({ control, theme }) => {
     <Box display="grid" gap={2} sx={placeHolderStyle(theme)}>
       <Typography>{placeHolderInfo?.description}</Typography>
       {isStart && (
-        <Button sx={{ justifySelf: "end" }} onClick={() => submitNext()}>
+        <Button sx={{ justifySelf: "center" }} onClick={() => submitNext()}>
           {placeHolderInfo.start_caption || (
             <Localizer localeKey="START_BUTTON" />
           )}

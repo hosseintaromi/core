@@ -83,6 +83,7 @@ export const FormPageContextProvider = memo(
     };
 
     const gotoNext = (data: FieldValues) => {
+      console.log(data);
       if (Object.keys(data).length) {
         console.log("APICALL__sendAnswer", {
           form_id: form.form_id,
@@ -116,8 +117,10 @@ export const FormPageContextProvider = memo(
       indexListenersRef.current.push(listener);
     };
 
-    const submitNext = () =>
-      viewDataRef.current?.submitHandler?.((data) => gotoNext(data))();
+    const submitNext = () => {
+      console.log("first");
+      return viewDataRef.current?.submitHandler?.((data) => gotoNext(data))();
+    };
 
     const submitForm = () =>
       viewDataRef.current?.submitHandler?.((data) => {

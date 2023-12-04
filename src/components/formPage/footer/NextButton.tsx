@@ -1,16 +1,23 @@
 import { Box, Button } from "@mui/material";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 type NextButtonProps = {
   isFinished: boolean;
   submitForm: () => Promise<void> | undefined;
   submitNext: () => Promise<void> | undefined;
+  gotoPrev: () => void;
+  hasNext?: boolean;
+  hasPrev?: boolean;
 };
 
 const NextButton = ({
   isFinished,
   submitForm,
   submitNext,
+  hasNext,
+  hasPrev,
+  gotoPrev,
 }: NextButtonProps) => (
   <Box>
     {isFinished ? (
@@ -23,9 +30,18 @@ const NextButton = ({
         </Button>
       </Box>
     ) : (
-      <Button variant="outlined" onClick={() => submitNext()}>
-        <ExpandLessIcon />
-      </Button>
+      <Box display="flex" gap={1}>
+        {hasPrev && (
+          <Button variant="outlined" onClick={() => gotoPrev()}>
+            <ExpandLessIcon />
+          </Button>
+        )}
+        {hasNext && (
+          <Button variant="outlined" onClick={() => submitNext()}>
+            <ExpandMoreIcon />
+          </Button>
+        )}
+      </Box>
     )}
   </Box>
 );

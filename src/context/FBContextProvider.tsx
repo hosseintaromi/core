@@ -1,5 +1,5 @@
 import { ReactNode, createContext, memo, useRef } from "react";
-import { ControlType } from "../@types/controls/ControlTypes";
+import { ControlType, ControlTypeEnum } from "../@types/controls/ControlTypes";
 import {
   FieldError,
   FieldErrorsImpl,
@@ -18,6 +18,8 @@ import {
   passCondition,
 } from "../utils/controlUtils";
 import { convertLocale } from "../hooks/useGlobalLocales";
+import { useFormPage } from "../hooks/useFormPage";
+import { PlaceHolderTypeEnum } from "../@types/controls/PlaceHolderTypes";
 
 export const FBContext = createContext<{
   registerControl: (control: ControlType) => any;
@@ -51,6 +53,7 @@ export const FBContextProvider = memo(
         listenControlChanges: (newControls: ControlType[]) => void;
       };
     }>({});
+    const { submitNext, form } = useFormPage({});
 
     const formController = useForm({
       defaultValues: controlDefaultValues.current,
@@ -58,45 +61,58 @@ export const FBContextProvider = memo(
 
     const onChangedControlValue = (target: any) => {
       let controls = mainControlRef.current.group_info?.controls;
-      if (!controls) {
-        return;
-      }
-      const thisControl = getControlById(controls, target.name);
+      const thisControl =
+        getControlById(controls || [], target.name) || mainControlRef.current;
       const files = target.files;
       if (thisControl) {
         doubleCheckFile(files?.[0], thisControl);
       }
-      if (!thisControl?.conditions) {
-        return;
-      }
-      const thenShowControlId = passCondition(thisControl?.conditions, {
-        [target.name]: target.value || files?.[0],
-      });
-      if (!thenShowControlId) {
-        return;
-      }
-      const formSet = getControlParentById(
-        mainControlRef.current,
-        controls,
-        target.name,
-      );
-      if (!formSet?.group_info?.controls) {
-        return;
-      }
-      let groupControls = hideControlsWithConditionOn(
-        formSet.group_info?.controls,
-      );
 
-      const thenControl = groupControls.find(
-        (item) => item.control_id === thenShowControlId,
-      );
-      if (thenControl) {
-        thenControl.is_hidden = false;
-      }
+      if (thisControl?.conditions && controls) {
+        const thenShowControlId = passCondition(thisControl?.conditions, {
+          [target.name]: target.value || files?.[0],
+        });
+        if (thenShowControlId) {
+          const formSet = getControlParentById(
+            mainControlRef.current,
+            controls,
+            target.name,
+          );
+          if (formSet?.group_info?.controls) {
+            let groupControls = hideControlsWithConditionOn(
+              formSet.group_info?.controls,
+            );
 
-      formSetListenRef.current[formSet.control_id]?.listenControlChanges(
-        groupControls,
-      );
+            const thenControl = groupControls.find(
+              (item) => item.control_id === thenShowControlId,
+            );
+            if (thenControl) {
+              thenControl.is_hidden = false;
+            }
+
+            formSetListenRef.current[formSet.control_id]?.listenControlChanges(
+              groupControls,
+            );
+          }
+        }
+      } else if (target.value !== undefined || target.files?.[0]) {
+        const type = mainControlRef.current.type;
+        const parent = getControlParentById(
+          control,
+          form.controls,
+          control.control_id,
+        );
+        const hasSubmitButton =
+          parent?.type !== ControlTypeEnum.Group &&
+          type !== ControlTypeEnum.DatePicker &&
+          type !== ControlTypeEnum.PlaceHolder &&
+          type !== ControlTypeEnum.TextArea &&
+          type !== ControlTypeEnum.TextBox;
+
+        if (hasSubmitButton) {
+          submitNext();
+        }
+      }
     };
 
     const registerControl = (control: ControlType) =>

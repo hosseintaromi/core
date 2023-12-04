@@ -13,7 +13,7 @@ import { hexToRgbA } from "../../../utils/hexToRgbA";
 const Footer = ({ theme }: { theme?: ThemeType }) => {
   const border = theme?.controls_style?.border;
   const [indexes, setIndexes] = useState<PageIndexesType>([0]);
-  const { submitForm, submitNext, form } = useFormPage({
+  const { submitForm, submitNext, form, gotoPrev } = useFormPage({
     onIndexChanged: (indexes: number[]) => {
       setIndexes(indexes);
     },
@@ -44,6 +44,9 @@ const Footer = ({ theme }: { theme?: ThemeType }) => {
         submitForm={submitForm}
         submitNext={submitNext}
         isFinished={isFinished}
+        hasNext={form.has_next}
+        hasPrev={form.has_prev}
+        gotoPrev={gotoPrev}
       />
     </Box>
   );

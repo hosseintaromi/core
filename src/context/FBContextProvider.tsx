@@ -62,10 +62,6 @@ export const FBContextProvider = memo(
       const thisControl =
         getControlById(controls || [], target.name) || mainControlRef.current;
       const files = target.files;
-      if (thisControl && files) {
-        doubleCheckFile(files[0], thisControl);
-      }
-
       if (thisControl?.conditions && controls) {
         const thenShowControlId = passCondition(thisControl?.conditions, {
           [target.name]: target.value || files?.[0],
@@ -124,16 +120,6 @@ export const FBContextProvider = memo(
       id: string,
     ) => {
       formSetListenRef.current[id] = { listenControlChanges };
-    };
-
-    const doubleCheckFile = (file: any, control: ControlType) => {
-      // const validation = getValidationObject(control).required;
-      // if (!file && validation) {
-      //   formController.setError(control.control_id, {
-      //     type: "required",
-      //     message: validation as string,
-      //   });
-      // }
     };
 
     const submitForm = (callback: SubmitHandler<FieldValues>) =>

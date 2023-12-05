@@ -1,7 +1,7 @@
 import { useView } from "../../core/hooks/useView";
 import { getControl } from "../../utils/controlUtils";
 import ControlSelector from "./ControlSelector";
-import ControlWrapper from "./ControlWrapper";
+import ControlWrapper from "./control-wrapper/ControlWrapper";
 import { FBContextProvider } from "../../context/FBContextProvider";
 import { FormPageViewDataType } from "../../@types/FormPageTypes";
 import NavigationHandler from "./NavigationHandler";

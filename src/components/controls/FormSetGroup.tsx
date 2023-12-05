@@ -1,4 +1,4 @@
-import ControlWrapper from "../form-page/ControlWrapper";
+import ControlWrapper from "../form-page/control-wrapper/ControlWrapper";
 import ControlSelector from "../form-page/ControlSelector";
 import { ControlType } from "../../@types/controls/ControlTypes";
 import { useCallback, useContext, useEffect, useState } from "react";

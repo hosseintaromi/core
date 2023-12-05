@@ -13,6 +13,7 @@ import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import FormPage from "./components/FormPage";
+import Home from "./components/Home";
 
 function App() {
   // Create rtl cache
@@ -24,7 +25,7 @@ function App() {
   useEffect(() => {
     openView({
       type: ViewContainerType.MasterTab,
-      component: FormPage,
+      component: Home,
     });
   }, []);
 

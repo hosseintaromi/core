@@ -62,7 +62,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
   hideQuestionNumber,
 }) => {
   const { getControlErrors } = useFBControl(control);
-  const { getQuestionNumber, form, submitNext, gotoPrev } = useFormPage({
+  const { getQuestionNumber, form, submitNext } = useFormPage({
     id: control.control_id,
   });
 

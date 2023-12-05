@@ -26,7 +26,7 @@ const Footer = ({ theme }: { theme?: ThemeType }) => {
     control.placeholder_info?.type !== PlaceHolderTypeEnum.Note &&
     !isFinished
   ) {
-    return <></>;
+    return null;
   }
 
   return (

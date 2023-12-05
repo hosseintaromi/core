@@ -4,7 +4,7 @@ import { FormType } from "../@types/FormTypes";
 import { getControlById, getNextIndex } from "../utils/controlUtils";
 import { FieldValues } from "react-hook-form";
 import { openView } from "../core/utils/viewManager";
-import FormPageItem from "../components/formPage/FormPageItem";
+import FormPageItem from "../components/form-page/FormPageItem";
 import {
   QuestionAnswerType,
   QuestionAnswerTypeEnum,

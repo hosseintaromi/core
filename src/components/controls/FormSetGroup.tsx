@@ -1,5 +1,5 @@
-import ControlWrapper from "../formPage/ControlWrapper";
-import ControlSelector from "../formPage/ControlSelector";
+import ControlWrapper from "../form-page/ControlWrapper";
+import ControlSelector from "../form-page/ControlSelector";
 import { ControlType } from "../../@types/controls/ControlTypes";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { FBContext } from "../../context/FBContextProvider";

@@ -21,15 +21,15 @@ const NoActiveMessage = styled(Box)({
 });
 
 const FormPage = () => {
-  const formData = form as any as FormType;
+  const formData = form as unknown as FormType;
   const formTheme = form.theme as ThemeType;
 
   return (
     <ThemeProvider theme={theme(formTheme)}>
       <FormPageContextProvider form={formData}>
-        <BackgroundStyle formtheme={formTheme}>
+        <BackgroundStyle formTheme={formTheme}>
           <NoActiveMessage>
-            <Typography sx={{ fontSize: "14px" }}>
+            <Typography fontSize={14}>
               <Localizer localeKey="FORM_DISABLED" />
             </Typography>
           </NoActiveMessage>

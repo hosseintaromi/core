@@ -7,7 +7,7 @@ import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Localizer } from "../Localizer";
 import { useFormPage } from "../../hooks/useFormPage";
 import fileUploadStyle from "../../utils/theme/fileUploadStyle";
-import FileDisplay from "../formPage/FileDisplay";
+import FileDisplay from "../form-page/FileDisplay";
 import { getDataUrl } from "../../utils/fileUpload";
 import ClearIcon from "@mui/icons-material/Clear";
 

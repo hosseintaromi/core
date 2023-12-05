@@ -7,7 +7,7 @@ import DatePicker from "../controls/DatePicker";
 import DropDown from "../controls/DropDown";
 import FileUpload from "../controls/FileUpload";
 import FormSetGroup from "../controls/FormSetGroup";
-import MultipleOption from "../controls/multipleOption/MultipleOption";
+import MultipleOption from "../controls/multiple-option/MultipleOption";
 import PlaceHolder from "../controls/PlaceHolder";
 import TextArea from "../controls/TextArea";
 import TextBox from "../controls/TextBox";

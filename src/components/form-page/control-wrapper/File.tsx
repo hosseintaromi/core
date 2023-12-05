@@ -1,7 +1,7 @@
 import { FC } from "react";
 import { ControlType } from "../../../@types/controls/ControlTypes";
 import { Box } from "@mui/material";
-import FileDisplay from "../FileDisplay";
+import FileDisplay from "../../shared/FileDisplay";
 type FilePropsType = {
   control: ControlType;
 };

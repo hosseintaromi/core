@@ -4,10 +4,9 @@ import { FileTypeEnum } from "../../@types/controls/FileUploadTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 import { Box, Typography, Button, styled, useTheme } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
-import { Localizer } from "../Localizer";
-import { useFormPage } from "../../hooks/useFormPage";
+import { Localizer } from "../shared/Localizer";
 import fileUploadStyle from "../../utils/theme/fileUploadStyle";
-import FileDisplay from "../form-page/FileDisplay";
+import FileDisplay from "../shared/FileDisplay";
 import { getDataUrl } from "../../utils/fileUpload";
 import ClearIcon from "@mui/icons-material/Clear";
 

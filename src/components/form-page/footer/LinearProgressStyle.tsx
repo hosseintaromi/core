@@ -8,7 +8,7 @@ import {
 } from "@mui/material";
 import { getProgress } from "../../../utils/progressUtils";
 import { PageIndexesType } from "../../../@types/FormPageTypes";
-import { Localizer } from "../../Localizer";
+import { Localizer } from "../../shared/Localizer";
 import { FormType } from "../../../@types/FormTypes";
 
 const LinearProgressStyle = styled(LinearProgress)({

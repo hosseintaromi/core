@@ -7,7 +7,7 @@ import { ThemeType } from "../../@types/ThemeTypes";
 import { FormType } from "../../@types/FormTypes";
 import { FormPageContextProvider } from "../../context/FormPageContextProvider";
 import Footer from "./footer/Footer";
-import { Localizer } from "../Localizer";
+import { Localizer } from "../shared/Localizer";
 
 const NoActiveMessage = styled(Box)({
   display: "flex",

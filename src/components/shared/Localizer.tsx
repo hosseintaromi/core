@@ -1,5 +1,5 @@
-import { LocalizerPropsType } from "../@types/LocalizerTypes";
-import { useGlobalLocales } from "../hooks/useGlobalLocales";
+import { LocalizerPropsType } from "../../@types/LocalizerTypes";
+import { useGlobalLocales } from "../../hooks/useGlobalLocales";
 
 export const Localizer = ({ localeKey, params }: LocalizerPropsType) => {
   const { convertLocale } = useGlobalLocales();

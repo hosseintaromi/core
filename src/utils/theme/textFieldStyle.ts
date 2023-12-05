@@ -10,6 +10,12 @@ const textFieldStyleOverride = ({
   return {
     styleOverrides: {
       root: {
+        "input:-webkit-autofill": {
+          transition: "background-color 5000s ease-in-out 0s",
+          "-webkit-text-fill-color": `${
+            controls_style?.text_color || answer_color
+          } !important`,
+        },
         "& .MuiOutlinedInput-root": {
           "&.Mui-focused fieldset": {
             borderTop: border?.top,

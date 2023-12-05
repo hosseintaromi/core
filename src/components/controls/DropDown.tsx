@@ -37,6 +37,7 @@ const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
               },
             });
           }}
+          noOptionsText=""
           onBlur={onBlur}
           options={options?.map((option) => option?.text) || []}
           sx={{ minWidth: 100, display: "flex" }}

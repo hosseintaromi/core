@@ -1,4 +1,4 @@
-import React, { ChangeEvent, FC, useEffect, useRef, useState } from "react";
+import { ChangeEvent, FC, useRef, useState } from "react";
 import { ControlType } from "../../@types/controls/ControlTypes";
 import { FileTypeEnum } from "../../@types/controls/FileUploadTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
@@ -9,6 +9,7 @@ import { useFormPage } from "../../hooks/useFormPage";
 import fileUploadStyle from "../../utils/theme/fileUploadStyle";
 import FileDisplay from "../formPage/FileDisplay";
 import { getDataUrl } from "../../utils/fileUpload";
+import ClearIcon from "@mui/icons-material/Clear";
 
 const ContainerStyle = styled(Box)({
   display: "flex",
@@ -115,7 +116,7 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
   return (
     <ContainerStyle sx={fileUploadStyle(form.theme)}>
       {file && fileUrl ? (
-        <Box position="relative">
+        <Box position="relative" display="flex">
           <FileDisplay fileUrl={fileUrl} file={file} />
           <RemoveFile
             onClick={() => {
@@ -128,7 +129,7 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
               });
             }}
           >
-            x
+            <ClearIcon />
           </RemoveFile>
         </Box>
       ) : null}

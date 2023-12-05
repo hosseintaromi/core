@@ -2,7 +2,7 @@ import { ChangeEvent, FC, useRef, useState } from "react";
 import { ControlType } from "../../@types/controls/ControlTypes";
 import { FileTypeEnum } from "../../@types/controls/FileUploadTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
-import { Box, Typography, Button, styled } from "@mui/material";
+import { Box, Typography, Button, styled, useTheme } from "@mui/material";
 import CloudUploadIcon from "@mui/icons-material/CloudUpload";
 import { Localizer } from "../Localizer";
 import { useFormPage } from "../../hooks/useFormPage";
@@ -63,7 +63,7 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
   const [fileUrl, setFileUrl] = useState<string>();
   let inputRef = useRef<HTMLInputElement | null>();
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
-  const { form } = useFormPage({});
+  const theme = useTheme();
 
   const info = control.file_upload_info;
   const maxSize = info?.max_size;
@@ -114,7 +114,7 @@ const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
   };
 
   return (
-    <ContainerStyle sx={fileUploadStyle(form.theme)}>
+    <ContainerStyle sx={fileUploadStyle(theme)}>
       {file && fileUrl ? (
         <Box position="relative" display="flex">
           <FileDisplay fileUrl={fileUrl} file={file} />

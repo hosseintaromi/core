@@ -1,24 +1,24 @@
-import { ThemeType } from "../../@types/ThemeTypes";
+import { Theme } from "@mui/material";
 
 const fileUploadStyle = ({
-  controls_style,
-  font_name,
-  font_size,
-  answer_color,
-}: ThemeType) => ({
-  fontSize: controls_style?.font_size || font_size + "px",
-  fontWeight: controls_style?.font_weight,
-  fontFamily: font_name,
-  color: controls_style?.text_color || answer_color,
-  backgroundColor: controls_style?.background_color,
-  borderTop: controls_style?.border?.top,
-  borderBottom: controls_style?.border?.bottom,
-  borderRight: controls_style?.border?.right,
-  borderLeft: controls_style?.border?.left,
-  borderRadius: controls_style?.radius + "px",
-  boxShadow: controls_style?.shadow,
-  paddingInline: controls_style?.padding?.horizontal + "px",
-  paddingBlock: controls_style?.padding?.vertical + "px",
+  controlsStyles,
+  fontName,
+  fontSize,
+  answerColor,
+}: Theme) => ({
+  fontSize: controlsStyles?.font_size || fontSize + "px",
+  fontWeight: controlsStyles?.font_weight,
+  fontFamily: fontName,
+  color: controlsStyles?.text_color || answerColor,
+  backgroundColor: controlsStyles?.background_color,
+  borderTop: controlsStyles?.border?.top,
+  borderBottom: controlsStyles?.border?.bottom,
+  borderRight: controlsStyles?.border?.right,
+  borderLeft: controlsStyles?.border?.left,
+  borderRadius: controlsStyles?.radius + "px",
+  boxShadow: controlsStyles?.shadow,
+  paddingInline: controlsStyles?.padding?.horizontal + "px",
+  paddingBlock: controlsStyles?.padding?.vertical + "px",
 });
 
 export default fileUploadStyle;

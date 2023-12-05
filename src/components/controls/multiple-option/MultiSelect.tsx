@@ -2,22 +2,21 @@ import { FC, Fragment, memo } from "react";
 import { ControlType } from "../../../@types/controls/ControlTypes";
 import { shuffle } from "../../../utils/shuffle";
 import { useFBRegisterControl } from "../../../hooks/useFBRegisterControl";
-import { Checkbox, FormControlLabel, FormGroup } from "@mui/material";
+import { Checkbox, FormControlLabel, FormGroup, useTheme } from "@mui/material";
 import {
   ArrangeTypeEnum,
   MultipleOptionTypeEnum,
 } from "../../../@types/MultipleOptionTypes";
 import groupStyle from "../../../utils/theme/groupStyle";
-import { ThemeType } from "../../../@types/ThemeTypes";
 
 type MultiSelectPropsType = {
   control: ControlType;
-  theme: ThemeType;
 };
 
-const MultiSelect: FC<MultiSelectPropsType> = ({ control, theme }) => {
+const MultiSelect: FC<MultiSelectPropsType> = ({ control }) => {
   const { onChange, onBlur, name, ref, defaultValue } =
     useFBRegisterControl(control);
+  const theme = useTheme();
 
   const info = control.multiple_option_info;
   if (!info) {
@@ -32,7 +31,7 @@ const MultiSelect: FC<MultiSelectPropsType> = ({ control, theme }) => {
       sx={{
         flexDirection:
           info.arrange_type === ArrangeTypeEnum.Horizontal ? "row" : "column",
-        ...groupStyle(theme.groups_style),
+        ...groupStyle(theme.groupsStyle),
       }}
     >
       {options?.map((option) => (

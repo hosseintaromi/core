@@ -5,7 +5,6 @@ const BackgroundStyle = styled(Container)(() => {
   const formTheme = useTheme();
   const backgroundStyles = formTheme.background;
   const imageAlign = backgroundStyles?.image_align;
-
   return {
     display: "flex",
     flexDirection: "column",

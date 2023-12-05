@@ -2,19 +2,18 @@ import { FC, memo } from "react";
 import { ControlType } from "../../../@types/controls/ControlTypes";
 import { shuffle } from "../../../utils/shuffle";
 import { useFBRegisterControl } from "../../../hooks/useFBRegisterControl";
-import { FormControlLabel, Radio, RadioGroup } from "@mui/material";
+import { FormControlLabel, Radio, RadioGroup, useTheme } from "@mui/material";
 import { ArrangeTypeEnum } from "../../../@types/MultipleOptionTypes";
 import groupStyle from "../../../utils/theme/groupStyle";
-import { ThemeType } from "../../../@types/ThemeTypes";
 
 type UniSelectPropsType = {
   control: ControlType;
-  theme: ThemeType;
 };
 
-const UniSelect: FC<UniSelectPropsType> = ({ control, theme }) => {
+const UniSelect: FC<UniSelectPropsType> = ({ control }) => {
   const { onChange, onBlur, name, ref, defaultValue } =
     useFBRegisterControl(control);
+  const theme = useTheme();
 
   const info = control.multiple_option_info;
 
@@ -27,7 +26,7 @@ const UniSelect: FC<UniSelectPropsType> = ({ control, theme }) => {
       sx={{
         flexDirection:
           info?.arrange_type === ArrangeTypeEnum.Horizontal ? "row" : "column",
-        ...groupStyle(theme.controls_style),
+        ...groupStyle(theme.controlsStyles),
         margin: 0,
       }}
       defaultValue={defaultValue}

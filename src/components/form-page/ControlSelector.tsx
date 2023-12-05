@@ -15,25 +15,17 @@ import TextBox from "../controls/TextBox";
 const ControlSelector = ({
   control,
   isFloatingBox,
-  theme,
   hideQuestionNumber,
 }: {
   control: ControlType;
   isFloatingBox?: boolean;
-  theme: ThemeType;
   hideQuestionNumber?: boolean;
 }) => {
   switch (control.type) {
     case ControlTypeEnum.TextBox:
       return <TextBox control={control} isFloatingBox={isFloatingBox} />;
     case ControlTypeEnum.DatePicker:
-      return (
-        <DatePicker
-          control={control}
-          isFloatingBox={isFloatingBox}
-          theme={theme}
-        />
-      );
+      return <DatePicker control={control} isFloatingBox={isFloatingBox} />;
     case ControlTypeEnum.DropDown:
       return <DropDown control={control} isFloatingBox={isFloatingBox} />;
     case ControlTypeEnum.FileUpload:
@@ -43,14 +35,13 @@ const ControlSelector = ({
         <FormSetGroup
           control={control}
           isFloatingBox={isFloatingBox}
-          theme={theme}
           hideQuestionNumber={hideQuestionNumber}
         />
       );
     case ControlTypeEnum.MultipleOption:
-      return <MultipleOption control={control} theme={theme} />;
+      return <MultipleOption control={control} />;
     case ControlTypeEnum.PlaceHolder:
-      return <PlaceHolder control={control} theme={theme} />;
+      return <PlaceHolder control={control} />;
     case ControlTypeEnum.TextArea:
       return <TextArea control={control} isFloatingBox={isFloatingBox} />;
     default:

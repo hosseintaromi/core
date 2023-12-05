@@ -1,4 +1,11 @@
-import { Box, LinearProgress, Typography, styled, Stack } from "@mui/material";
+import {
+  Box,
+  LinearProgress,
+  Typography,
+  styled,
+  Stack,
+  useTheme,
+} from "@mui/material";
 import { getProgress } from "../../../utils/progressUtils";
 import { PageIndexesType } from "../../../@types/FormPageTypes";
 import { Localizer } from "../../Localizer";
@@ -19,13 +26,14 @@ const LinearProgressWithLabel = ({
   form,
 }: LinearProgressWithLabelProps) => {
   const { progress, thisPage, allPages } = getProgress(form, indexes);
+  const theme = useTheme();
 
   return (
     <Stack spacing={1} maxWidth="50%" width="120px">
       <Box
         display="inline-flex"
         alignItems="center"
-        color={form.theme.labels_style?.text_color}
+        color={theme.labelsStyle?.text_color}
         sx={{ mb: ".15rem !important" }}
       >
         <Typography variant="body2" component="span" sx={{ fontSize: "small" }}>

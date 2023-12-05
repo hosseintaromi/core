@@ -24,7 +24,6 @@ const FormPageItem = () => {
         <ControlSelector
           control={control}
           isFloatingBox={form.layout?.floating_box}
-          theme={form.theme}
           hideQuestionNumber={form.hide_question_number}
         />
       </ControlWrapper>

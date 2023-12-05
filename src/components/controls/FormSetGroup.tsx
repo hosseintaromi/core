@@ -4,8 +4,7 @@ import { ControlType } from "../../@types/controls/ControlTypes";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { FBContext } from "../../context/FBContextProvider";
 import { hideControlsWithConditionOn } from "../../utils/controlUtils";
-import { Box, styled } from "@mui/material";
-import { ThemeType } from "../../@types/ThemeTypes";
+import { Box, styled, useTheme } from "@mui/material";
 import groupStyle from "../../utils/theme/groupStyle";
 
 const ContainerStyle = styled(Box)({
@@ -17,18 +16,17 @@ const ContainerStyle = styled(Box)({
 type GroupPropsType = {
   control: ControlType;
   isFloatingBox?: boolean;
-  theme: ThemeType;
   hideQuestionNumber?: boolean;
 };
 
 const FormSetGroup = ({
   control,
   isFloatingBox,
-  theme,
   hideQuestionNumber,
 }: GroupPropsType) => {
   const [controls, setControls] = useState<ControlType[]>([]);
 
+  const theme = useTheme();
   const { registerFormSet } = useContext(FBContext);
 
   const listenControlChanges = useCallback((newControls: ControlType[]) => {
@@ -44,7 +42,7 @@ const FormSetGroup = ({
   }, []);
 
   return (
-    <ContainerStyle sx={{ ...groupStyle(theme.groups_style) }}>
+    <ContainerStyle sx={{ ...groupStyle(theme.groupsStyle) }}>
       {controls
         ?.filter((x) => !x.is_hidden)
         .map((controlItem: ControlType) => (
@@ -57,7 +55,6 @@ const FormSetGroup = ({
             <ControlSelector
               control={controlItem}
               isFloatingBox={isFloatingBox}
-              theme={theme}
             />
           </ControlWrapper>
         ))}

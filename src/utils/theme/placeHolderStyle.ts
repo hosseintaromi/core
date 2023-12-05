@@ -1,27 +1,23 @@
-import { ThemeType } from "../../@types/ThemeTypes";
+import { Theme } from "@mui/material/styles";
 
-const placeHolderStyle = ({
-  placeholders_style,
-  font_size,
-  font_name,
-}: ThemeType) => {
-  const border = placeholders_style?.border;
+const placeHolderStyle = ({ placeHoldersStyle, fontSize, fontName }: Theme) => {
+  const border = placeHoldersStyle?.border;
   return {
-    marginBlock: placeholders_style?.margin?.horizontal + "px",
-    marginInline: placeholders_style?.margin?.vertical + "px",
-    backgroundColor: placeholders_style?.background_color,
-    fontSize: placeholders_style?.font_size || font_size + "px",
-    fontFamily: font_name,
-    fontWeight: placeholders_style?.font_weight,
-    color: placeholders_style?.text_color,
+    marginBlock: placeHoldersStyle?.margin?.horizontal + "px",
+    marginInline: placeHoldersStyle?.margin?.vertical + "px",
+    backgroundColor: placeHoldersStyle?.background_color,
+    fontSize: placeHoldersStyle?.font_size || fontSize + "px",
+    fontFamily: fontName,
+    fontWeight: placeHoldersStyle?.font_weight,
+    color: placeHoldersStyle?.text_color,
     borderTop: border?.top,
     borderBottom: border?.bottom,
     borderRight: border?.right,
     borderLeft: border?.left,
-    borderRadius: placeholders_style?.radius + "px",
-    boxShadow: placeholders_style?.shadow,
-    paddingInline: placeholders_style?.padding?.horizontal + "px",
-    paddingBlock: placeholders_style?.padding?.vertical + "px",
+    borderRadius: placeHoldersStyle?.radius + "px",
+    boxShadow: placeHoldersStyle?.shadow,
+    paddingInline: placeHoldersStyle?.padding?.horizontal + "px",
+    paddingBlock: placeHoldersStyle?.padding?.vertical + "px",
   };
 };
 

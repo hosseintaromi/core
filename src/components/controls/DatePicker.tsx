@@ -6,24 +6,19 @@ import { AdapterDateFnsJalali } from "@mui/x-date-pickers/AdapterDateFnsJalali";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dateTimePickerStyle from "../../utils/theme/dateTimePickerStyle";
-import { ThemeType } from "../../@types/ThemeTypes";
 import { ThemeProvider } from "@emotion/react";
-import { createTheme } from "@mui/material";
+import { createTheme, useTheme } from "@mui/material";
 import { useGlobalLocales } from "../../hooks/useGlobalLocales";
 import { MobileDateTimePicker, MobileTimePicker } from "@mui/x-date-pickers";
 import { DatePickerTypeEnum } from "../../@types/controls/DatePickerTypes";
 
 type DatePickerPropsType = {
   control: ControlType;
-  theme: ThemeType;
   isFloatingBox?: boolean;
 };
 
-const DatePicker: FC<DatePickerPropsType> = ({
-  control,
-  isFloatingBox,
-  theme,
-}) => {
+const DatePicker: FC<DatePickerPropsType> = ({ control, isFloatingBox }) => {
+  const theme = useTheme();
   const { convertLocale } = useGlobalLocales();
   const { onChange, onBlur, name, ref, defaultValue } =
     useFBRegisterControl(control);
@@ -32,7 +27,7 @@ const DatePicker: FC<DatePickerPropsType> = ({
   const datePickerTheme = createTheme({
     direction: "rtl",
     typography: {
-      fontFamily: theme.font_name,
+      fontFamily: theme.fontName,
       fontSize: 16,
     },
   });

@@ -19,11 +19,23 @@ declare module "@mui/material/styles" {
     background: ThemeBackgroundType;
     padding: MarginSizeType;
     controlsStyles: ControlStyleType;
+    fontName: string;
+    fontSize: number;
+    groupsStyle: ControlStyleType;
+    placeHoldersStyle: ControlStyleType;
+    labelsStyle: ControlStyleType;
+    answerColor: string;
   }
   interface ThemeOptions {
     background?: ThemeBackgroundType;
     padding?: MarginSizeType;
     controlsStyles?: ControlStyleType;
+    fontName?: string;
+    fontSize?: number;
+    groupsStyle?: ControlStyleType;
+    placeHoldersStyle?: ControlStyleType;
+    labelsStyle?: ControlStyleType;
+    answerColor?: string;
   }
 }
 
@@ -48,6 +60,12 @@ const theme = (formTheme: ThemeType) =>
     background: formTheme.background,
     padding: formTheme.padding,
     controlsStyles: formTheme.controls_style,
+    fontName: formTheme.font_name,
+    fontSize: formTheme.font_size,
+    groupsStyle: formTheme.groups_style,
+    placeHoldersStyle: formTheme.placeholders_style,
+    labelsStyle: formTheme.labels_style,
+    answerColor: formTheme.answer_color,
   });
 
 export default theme;

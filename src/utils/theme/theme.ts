@@ -1,5 +1,10 @@
 import { createTheme } from "@mui/material/styles";
-import { ThemeType } from "../../@types/ThemeTypes";
+import {
+  ControlStyleType,
+  MarginSizeType,
+  ThemeBackgroundType,
+  ThemeType,
+} from "../../@types/ThemeTypes";
 import textFieldStyleOverride from "./textFieldStyle";
 import inputLabelStyle from "./inputLabelStyle";
 import selectStyleOverride from "./selectStyle";
@@ -8,6 +13,19 @@ import descriptionStyle from "./descriptionStyle";
 import progressStyleOverride from "./progressStyle";
 import autoCompleteListStyle from "./autoCompleteListStyle";
 import selectListStyleOverride from "./selectListStyle";
+
+declare module "@mui/material/styles" {
+  interface Theme {
+    background: ThemeBackgroundType;
+    padding: MarginSizeType;
+    controlsStyles: ControlStyleType;
+  }
+  interface ThemeOptions {
+    background?: ThemeBackgroundType;
+    padding?: MarginSizeType;
+    controlsStyles?: ControlStyleType;
+  }
+}
 
 const theme = (formTheme: ThemeType) =>
   createTheme({
@@ -27,6 +45,9 @@ const theme = (formTheme: ThemeType) =>
       subtitle2: descriptionStyle(formTheme),
       body2: descriptionStyle(formTheme),
     },
+    background: formTheme.background,
+    padding: formTheme.padding,
+    controlsStyles: formTheme.controls_style,
   });
 
 export default theme;

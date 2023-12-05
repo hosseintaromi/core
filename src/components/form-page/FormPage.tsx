@@ -27,7 +27,7 @@ const FormPage = () => {
   return (
     <ThemeProvider theme={theme(formTheme)}>
       <FormPageContextProvider form={formData}>
-        <BackgroundStyle formTheme={formTheme}>
+        <BackgroundStyle>
           <NoActiveMessage>
             <Typography fontSize={14}>
               <Localizer localeKey="FORM_DISABLED" />
@@ -39,7 +39,7 @@ const FormPage = () => {
               containerName="FormContainer"
             />
           </Box>
-          <Footer theme={formTheme} />
+          <Footer />
         </BackgroundStyle>
       </FormPageContextProvider>
     </ThemeProvider>

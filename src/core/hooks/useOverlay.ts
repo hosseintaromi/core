@@ -45,7 +45,7 @@ export const useOverlay = <T, U>(overlayData: OverlayData<T, U>) => {
       data: overlayData.mapDataTo
         ? overlayData.mapDataTo(overlayData.data)
         : overlayData.data,
-      onClose: (res?: U) => {
+      onClosed: (res?: U) => {
         overlayData.onClose?.(res);
       },
       options: {

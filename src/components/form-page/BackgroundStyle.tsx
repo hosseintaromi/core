@@ -1,14 +1,9 @@
-import { Container, styled } from "@mui/material";
-import { ThemeType } from "../../@types/ThemeTypes";
+import { Container, styled, useTheme } from "@mui/material";
 import { getBackgroundPosition } from "../../utils/styleUtils";
-interface BackgroundStyleProps {
-  formTheme?: ThemeType;
-}
 
-const BackgroundStyle = styled(Container, {
-  shouldForwardProp: (prop: any) => prop !== "formTheme",
-})<BackgroundStyleProps>(({ formTheme }) => {
-  const backgroundStyles = formTheme?.background;
+const BackgroundStyle = styled(Container)(() => {
+  const formTheme = useTheme();
+  const backgroundStyles = formTheme.background;
   const imageAlign = backgroundStyles?.image_align;
 
   return {

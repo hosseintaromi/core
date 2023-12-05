@@ -1,7 +1,6 @@
-import { Box } from "@mui/material";
+import { Box, useTheme } from "@mui/material";
 import LinearProgressWithLabel from "./LinearProgressStyle";
 import NextButton from "./NextButton";
-import { ThemeType } from "../../../@types/ThemeTypes";
 import { getControl } from "../../../utils/controlUtils";
 import { useFormPage } from "../../../hooks/useFormPage";
 import { useState } from "react";
@@ -10,8 +9,9 @@ import { ControlTypeEnum } from "../../../@types/controls/ControlTypes";
 import { PlaceHolderTypeEnum } from "../../../@types/controls/PlaceHolderTypes";
 import { hexToRgbA } from "../../../utils/hexToRgbA";
 
-const Footer = ({ theme }: { theme?: ThemeType }) => {
-  const border = theme?.controls_style?.border;
+const Footer = () => {
+  const theme = useTheme();
+  const border = theme.controlsStyles?.border;
   const [indexes, setIndexes] = useState<PageIndexesType>([0]);
   const { submitForm, submitNext, form, gotoPrev } = useFormPage({
     onIndexChanged: (indexes: number[]) => {

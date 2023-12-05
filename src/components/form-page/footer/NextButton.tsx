@@ -22,7 +22,7 @@ const NextButton = ({
   <Box>
     {isFinished ? (
       <Box display="flex" gap={1}>
-        <Button variant="outlined" disabled onClick={() => submitForm()}>
+        <Button variant="outlined" onClick={() => gotoPrev()}>
           <ExpandLessIcon />
         </Button>
         <Button variant="outlined" onClick={() => submitForm()}>

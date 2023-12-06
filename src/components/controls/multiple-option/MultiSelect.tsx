@@ -31,7 +31,7 @@ const MultiSelect = ({ control }: MultiSelectPropsType) => {
       sx={{
         flexDirection:
           info.arrange_type === ArrangeTypeEnum.Horizontal ? "row" : "column",
-        ...groupStyle(theme.groupsStyle),
+        ...groupStyle(theme.controlsStyles),
       }}
     >
       {options?.map((option) => (
@@ -48,7 +48,9 @@ const MultiSelect = ({ control }: MultiSelectPropsType) => {
                   defaultChecked={defaultValue?.includes(option.value)}
                 />
               }
-              label={<img alt={option.text} src={option.image_url} />}
+              label={
+                <img alt={option.text} src={option.image_url} width="200px" />
+              }
             />
           ) : (
             <FormControlLabel

@@ -9,9 +9,12 @@ export const getValidationObject = (control: ControlType) => {
   const maxSize = control.file_upload_info?.max_size;
   if (control.type === ControlTypeEnum.FileUpload && maxSize) {
     validationObj.validate = {
-      maxSize: (files) =>
-        files?.[0]?.size < maxSize * 1000 ||
-        convertLocale({ key: "VALIDATION_FILE_SIZE" }).text,
+      maxSize: (files) => {
+        if (files?.[0] && files?.[0]?.size < maxSize * 1000) {
+          return convertLocale({ key: "VALIDATION_FILE_SIZE" }).text;
+        }
+        return true;
+      },
     };
   }
   validation?.forEach((item) => {

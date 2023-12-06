@@ -264,52 +264,47 @@
       }
     },
     {
-      "control_id": "control_id_2",
-      "type": "DropDown",
-      "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
-      "label_text": "جنسیت",
-      "file_url": "https://www.learningcontainer.com/wp-content/uploads/2020/05/sample-mp4-file.mp4",
-      "dropdown_info": {
-        "searchable": true,
-        "options": [
-          { "value": 0, "text": "زن" },
-          { "value": 1, "text": "مرد" }
-        ]
-      },
-      "conditions": [
-        {
-          "type": "ThenGo",
-          "then_control_id": "control_id_4",
-          "when_control_id": "control_id_2",
-          "conditions": [
-            {
-              "control_id": "control_id_2",
-              "condition_type": "Equal",
-              "condition_value": 0
-            }
-          ]
-        }
-      ]
-    },
-    {
       "control_id": "control_id_3",
       "type": "Group",
+      "label_text": "تقویم‌ها",
       "file_url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
       "group_info": {
         "type": "FormSet",
-        "title": "اطلاعات حقوقی",
+        "title": "تقویم‌ها",
         "controls": [
           {
-            "control_id": "control_id_5",
+            "control_id": "control_id_3_1",
             "type": "DatePicker",
-            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
             "label_text": "تاریخ تولد",
             "date_picker_info": { "type": "Jalali" }
           },
           {
-            "control_id": "control_id_6",
+            "control_id": "control_id_3_2",
+            "type": "DatePicker",
+            "label_text": "تاریخ تولد به میلادی",
+            "date_picker_info": { "type": "Christian" }
+          },
+          {
+            "control_id": "control_id_3_3",
+            "type": "DatePicker",
+            "label_text": "ساعت ورود",
+            "date_picker_info": { "type": "Time" }
+          }
+        ]
+      }
+    },
+    {
+      "control_id": "control_id_4",
+      "type": "Group",
+      "label_text": "انواع multiple options",
+      "file_url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+      "group_info": {
+        "type": "FormSet",
+        "title": "انواع multiple options",
+        "controls": [
+          {
+            "control_id": "control_id_4_1",
             "type": "MultipleOption",
-            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
             "label_text": "مقطع تحصیلی",
             "multiple_option_info": {
               "type": "Text",
@@ -321,49 +316,89 @@
                 { "text": "کارشناسی", "value": 1 },
                 { "text": "ارشد", "value": 2 }
               ]
-            },
-            "validations": [{ "type": "Required" }]
-          }
-        ]
-      }
-    },
-    {
-      "control_id": "control_id_4",
-      "type": "Group",
-      "group_info": {
-        "type": "FormSet",
-        "title": "آدرس",
-        "controls": [
-          {
-            "control_id": "control_id_7",
-            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
-            "type": "TextArea",
-            "label_text": "توضیحات",
-            "textarea_info": { "line_count": 3, "max_line": 4 }
-          },
-          {
-            "control_id": "control_id_8",
-            "type": "PlaceHolder",
-            "label_text": "قوانین",
-            "placeholder_info": {
-              "description": "قوانین را خوانده و تایید می‌نمایم.",
-              "type": "End"
             }
           },
           {
-            "control_id": "control_id_9",
-            "type": "FileUpload",
-            "label_text": "کارت ملی",
-            "file_upload_info": {
-              "file_type": "Image",
-              "allowed_extensions": ["jpg"],
-              "max_size": 1000
-            },
-            "validations": [{ "type": "Required" }]
+            "control_id": "control_id_4_2",
+            "type": "MultipleOption",
+            "label_text": "ژانر‌های مورد علاقه",
+            "multiple_option_info": {
+              "type": "Text",
+              "multi_select": true,
+              "randomize_option_number": false,
+              "arrange_type": "Vertical",
+              "options": [
+                { "text": "ترسناک", "value": 0 },
+                { "text": "تخیلی", "value": 1 },
+                { "text": "درام", "value": 2 }
+              ]
+            }
+          },
+          {
+            "control_id": "control_id_4_2",
+            "type": "MultipleOption",
+            "label_text": "رنگ مورد علاقه",
+            "multiple_option_info": {
+              "type": "Text",
+              "multi_select": true,
+              "randomize_option_number": false,
+              "arrange_type": "Horizontal",
+              "options": [
+                { "text": "ابی", "value": 0 },
+                { "text": "قرمز", "value": 1 },
+                { "text": "زرد", "value": 2 }
+              ]
+            }
+          },
+          {
+            "control_id": "control_id_4_2",
+            "type": "MultipleOption",
+            "label_text": "سوال امتحان",
+            "description": "رندم بودن ترتیب گزینه‌‌ها",
+            "multiple_option_info": {
+              "type": "Text",
+              "multi_select": false,
+              "randomize_option_number": true,
+              "arrange_type": "Vertical",
+              "options": [
+                { "text": "گزینه اول", "value": 0 },
+                { "text": "گزینه دوم", "value": 1 },
+                { "text": "هیچکدام", "value": 2 }
+              ]
+            }
+          },
+          {
+            "control_id": "control_id_4_3",
+            "type": "MultipleOption",
+            "label_text": "شهر مورد علاقه",
+            "multiple_option_info": {
+              "type": "Image",
+              "multi_select": false,
+              "randomize_option_number": false,
+              "arrange_type": "Vertical",
+              "options": [
+                {
+                  "text": "نیویورک",
+                  "value": 0,
+                  "image_url": "https://www.hellenicdailynewsny.com/images/new-york-city-.jpg"
+                },
+                {
+                  "text": "هند",
+                  "value": 1,
+                  "image_url": "https://www.thetimes.co.uk/travel/wp-content/uploads/sites/6/2022/04/Tawang-india-guesthouse-alamy-2AJEGND.jpeg"
+                },
+                {
+                  "text": "لندن",
+                  "value": 2,
+                  "image_url": "https://dandg.azureedge.net/cache/c/4/b/5/5/8/c4b5588929a134098233f42bdb21aa13d18fe456.jpg"
+                }
+              ]
+            }
           }
         ]
       }
     },
+
     {
       "control_id": "control_id_11",
       "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",

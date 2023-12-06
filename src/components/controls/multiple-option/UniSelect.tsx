@@ -40,7 +40,13 @@ const UniSelect = ({ control }: UniSelectPropsType) => {
           key={option.value}
           value={option.value}
           control={<Radio />}
-          label={option.text}
+          label={
+            option.image_url ? (
+              <img alt={option.text} src={option.image_url} width="200px" />
+            ) : (
+              option.text
+            )
+          }
         />
       ))}
     </RadioGroup>

@@ -27,6 +27,19 @@ const FileDisplay = ({ fileUrl, file }: { fileUrl: string; file?: File }) => {
   ) {
     return <img src={fileUrl} alt="File" width="100%" />;
   }
+
+  if (
+    fileExtension === "mp3" ||
+    fileExtension === "wav" ||
+    fileExtension === "ogg" ||
+    fileExtension === "aac" ||
+    fileExtension === "flac" ||
+    fileExtension === "webm" ||
+    fileExtension === "audio"
+  ) {
+    return <audio src={fileUrl} controls />;
+  }
+
   // Handle other file types (e.g., documents, zip files) as needed
   return (
     <Box display="flex" flexDirection="column">

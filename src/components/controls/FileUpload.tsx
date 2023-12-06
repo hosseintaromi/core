@@ -32,6 +32,9 @@ const ContainerStyle = styled(Box)({
   video: {
     width: "80%",
   },
+  audio: {
+    width: "300px",
+  },
 });
 
 const VisuallyHiddenInput = styled("input")({
@@ -168,13 +171,33 @@ const FileUpload = ({ control }: FileUploadPropsType) => {
           position: file ? "absolute" : "static",
         }}
       >
-        <Localizer
-          localeKey="CHOOSE_FILE_FORMAT"
-          params={{
-            maxSize: <strong>{maxSize}</strong>,
-            fileType: <strong>{acceptType}</strong>,
-          }}
-        />
+        <Localizer localeKey="CHOOSE_FILE_FORMAT_1" />{" "}
+        {fileType && (
+          <>
+            <Localizer
+              localeKey="CHOOSE_FILE_FORMAT_2"
+              params={{
+                fileType: <strong>{acceptType}</strong>,
+              }}
+            />{" "}
+          </>
+        )}
+        {fileType && maxSize && (
+          <>
+            <Localizer localeKey="AND" />{" "}
+          </>
+        )}
+        {maxSize && (
+          <>
+            <Localizer
+              localeKey="CHOOSE_FILE_FORMAT_3"
+              params={{
+                maxSize: <strong>{maxSize}</strong>,
+              }}
+            />{" "}
+          </>
+        )}
+        <Localizer localeKey="CHOOSE_FILE_FORMAT_4" />
       </Typography>
     </ContainerStyle>
   );

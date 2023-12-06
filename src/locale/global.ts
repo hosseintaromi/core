@@ -17,8 +17,11 @@ export const globalLocales: GlobalLocalesType = {
   CALENDAR_OK_BUTTON: "تایید",
   CALENDAR_CANCEL_BUTTON: "انصراف",
   CHOOSE_FILE: "انتخاب فایل",
-  CHOOSE_FILE_FORMAT:
-    "لطفا فایل  خود را به فرمت {{fileType}} و کمتر از {{maxSize}} کیلو بایت انتخاب کنید.",
+  CHOOSE_FILE_FORMAT_1: "لطفا فایل خود را ",
+  CHOOSE_FILE_FORMAT_2: "به فرمت {{fileType}} ",
+  CHOOSE_FILE_FORMAT_3: "کمتر از {{maxSize}} کیلو بایت ",
+  CHOOSE_FILE_FORMAT_4: " انتخاب کنید.",
+  AND: "و",
   YOU_ANSWERED: "صفحه {{thisPage}} از {{allPages}}",
   FORM_DISABLED: "این پرسشنامه غیر‌فعال است و امکان ثبت پاسخ ندارد.",
   LAST_PAGE_DESCRIPTION: "آیا از اتمام پرسشنامه اطمینان دارید؟",

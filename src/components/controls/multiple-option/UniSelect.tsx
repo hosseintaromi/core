@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { memo } from "react";
 import { ControlType } from "../../../@types/controls/ControlTypes";
 import { shuffle } from "../../../utils/shuffle";
 import { useFBRegisterControl } from "../../../hooks/useFBRegisterControl";
@@ -10,7 +10,7 @@ type UniSelectPropsType = {
   control: ControlType;
 };
 
-const UniSelect: FC<UniSelectPropsType> = ({ control }) => {
+const UniSelect = ({ control }: UniSelectPropsType) => {
   const { onChange, onBlur, name, ref, defaultValue } =
     useFBRegisterControl(control);
   const theme = useTheme();

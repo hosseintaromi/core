@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   ControlType,
   ControlTypeEnum,
@@ -10,7 +9,7 @@ type DescriptionPropsType = {
   isFloatingBox?: boolean;
 };
 
-const Description: FC<DescriptionPropsType> = ({ control, isFloatingBox }) => {
+const Description = ({ control, isFloatingBox }: DescriptionPropsType) => {
   const isFloatingDropDown =
     control.type === ControlTypeEnum.DropDown && isFloatingBox;
 

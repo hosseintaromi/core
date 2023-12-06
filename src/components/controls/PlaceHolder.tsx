@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { ControlType } from "../../@types/controls/ControlTypes";
 import { Box, Button, Typography, useTheme } from "@mui/material";
 import placeHolderStyle from "../../utils/theme/placeHolderStyle";
@@ -10,7 +9,7 @@ type PlaceHolderPropsType = {
   control: ControlType;
 };
 
-const PlaceHolder: FC<PlaceHolderPropsType> = ({ control }) => {
+const PlaceHolder = ({ control }: PlaceHolderPropsType) => {
   const placeHolderInfo = control.placeholder_info;
   const isStart = placeHolderInfo?.type === PlaceHolderTypeEnum.Start;
   const { submitNext } = useFormPage({});

@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { ControlType } from "../../@types/controls/ControlTypes";
 import {
   Autocomplete,
@@ -12,7 +12,7 @@ import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 
 type DropDownPropsType = { control: ControlType; isFloatingBox?: boolean };
 
-const DropDown: FC<DropDownPropsType> = ({ control, isFloatingBox }) => {
+const DropDown = ({ control, isFloatingBox }: DropDownPropsType) => {
   const { onChange, onBlur, name, ref, defaultValue } =
     useFBRegisterControl(control);
 

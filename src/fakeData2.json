@@ -241,7 +241,7 @@
               { "type": "Required" },
               {
                 "type": "Mobile",
-                "regex_pattern": "/^\\d+$/"
+                "regex_pattern": "/^09\\d{9}$/"
               }
             ]
           },

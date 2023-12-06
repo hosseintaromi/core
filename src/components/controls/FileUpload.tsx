@@ -1,4 +1,4 @@
-import { ChangeEvent, FC, useRef, useState } from "react";
+import { ChangeEvent, useRef, useState } from "react";
 import { ControlType } from "../../@types/controls/ControlTypes";
 import { FileTypeEnum } from "../../@types/controls/FileUploadTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
@@ -57,7 +57,7 @@ type FileUploadPropsType = {
   isFloatingBox?: boolean;
 };
 
-const FileUpload: FC<FileUploadPropsType> = ({ control }) => {
+const FileUpload = ({ control }: FileUploadPropsType) => {
   const [file, setFile] = useState<File | undefined>();
   const [fileUrl, setFileUrl] = useState<string>();
   let inputRef = useRef<HTMLInputElement | null>();

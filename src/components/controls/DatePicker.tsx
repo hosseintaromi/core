@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { ControlType } from "../../@types/controls/ControlTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 import { useFBControl } from "../../hooks/useFBControl";
@@ -17,7 +16,7 @@ type DatePickerPropsType = {
   isFloatingBox?: boolean;
 };
 
-const DatePicker: FC<DatePickerPropsType> = ({ control, isFloatingBox }) => {
+const DatePicker = ({ control, isFloatingBox }: DatePickerPropsType) => {
   const theme = useTheme();
   const { convertLocale } = useGlobalLocales();
   const { onChange, onBlur, name, ref, defaultValue } =

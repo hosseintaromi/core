@@ -22,8 +22,7 @@
     "font_name": "IRANSans",
     "font_size": 14,
     "labels_style": {
-      "font_size": 18,
-      "font_weight": "600",
+      "font_size": 16,
       "text_color": "#333333"
     },
 
@@ -44,8 +43,7 @@
       },
       "background_color": "#fff",
       "radius": 18,
-      "text_color": "#333",
-      "font_size": 20
+      "text_color": "#333"
     },
 
     "placeholders_style": {
@@ -90,15 +88,126 @@
     },
     {
       "control_id": "control_id_1",
-      "type": "TextBox",
-      "label_text": "نام و نام‌خانوادگی",
-      "textbox_info": { "type": "Text" },
-      "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+      "type": "Group",
+      "label_text": "انواع تکست فیلد ها",
       "file_url": "https://dfstudio-d420.kxcdn.com/wordpress/wp-content/uploads/2019/06/digital_camera_photo-980x653.jpg",
-      "validations": [
-        { "type": "Required" },
-        { "type": "Regex", "regex_pattern": "/^[\u0600-\u06FFs]+$/" }
-      ]
+      "group_info": {
+        "type": "FormSet",
+        "title": "انواع تکست فیلد‌ها",
+        "controls": [
+          {
+            "control_id": "control_id_1_0",
+            "type": "TextBox",
+            "label_text": "نام و نام خانوادگی",
+            "textbox_info": { "type": "Persian" },
+            "validations": [
+              { "type": "Required" },
+              { "type": "Persian", "regex_pattern": "/^[\u0600-\u06FF\\s]+$/" }
+            ]
+          },
+          {
+            "control_id": "control_id_1_1",
+            "type": "TextBox",
+            "label_text": "سن",
+            "textbox_info": { "type": "Number" },
+            "validations": [
+              { "type": "Required" },
+              {
+                "type": "Number",
+                "regex_pattern": "/^\\d+$/"
+              }
+            ]
+          },
+          {
+            "control_id": "control_id_1_2",
+            "type": "TextBox",
+            "label_text": "ایمیل",
+            "textbox_info": { "type": "Email" },
+            "validations": [
+              { "type": "Required" },
+              {
+                "type": "Email",
+                "regex_pattern": "/^[w.[a-z0-9]+@[a-z]+.[a-z]{2,3}/"
+              }
+            ]
+          },
+          {
+            "control_id": "control_id_1_3",
+            "type": "TextBox",
+            "label_text": "آدرس سایت مورد علاقه",
+            "textbox_info": { "type": "Url" },
+            "validations": [
+              { "type": "Required" },
+              {
+                "type": "Url",
+                "regex_pattern": "/^(https?|ftp):\\/\\/[^\\s/$.?#].[^\\s]*$/"
+              }
+            ]
+          },
+          {
+            "control_id": "control_id_1_4",
+            "type": "TextBox",
+            "label_text": "نام و نام خانوادگی به انگلیسی",
+            "textbox_info": { "type": "Latin" },
+            "validations": [
+              { "type": "Required" },
+              {
+                "type": "Latin",
+                "regex_pattern": "/^[a-zA-Z\\s]+$/"
+              }
+            ]
+          },
+          {
+            "control_id": "control_id_1_5",
+            "type": "TextBox",
+            "label_text": "شماره تلفن همراه",
+            "textbox_info": { "type": "Mobile" },
+            "validations": [
+              { "type": "Required" },
+              {
+                "type": "Mobile",
+                "regex_pattern": "/^09\\d{9}$/"
+              }
+            ]
+          },
+          {
+            "control_id": "control_id_1_6",
+            "type": "TextBox",
+            "label_text": "کدپستی",
+            "textbox_info": { "type": "PostalCode" },
+            "validations": [
+              { "type": "Required" },
+              {
+                "type": "PostalCode",
+                "regex_pattern": "\b(?!(\\d)\\1{3})[13-9]{4}[1346-9][013-9]{5}\b"
+              }
+            ]
+          },
+          {
+            "control_id": "control_id_1_7",
+            "type": "TextBox",
+            "label_text": "کدملی",
+            "textbox_info": { "type": "NationalId" },
+            "validations": [
+              { "type": "Required" },
+              {
+                "type": "NationalId",
+                "regex_pattern": "^(?!(\\d)\\1{9})\\d{10}$"
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "control_id": "control_id_3",
+      "type": "Group",
+      "file_url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+      "group_info": {
+        "type": "FormSet",
+        "title": "اطلاعات حقوقی",
+        "controls": []
+      }
     },
     {
       "control_id": "control_id_2",

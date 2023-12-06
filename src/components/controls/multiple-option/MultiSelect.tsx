@@ -1,4 +1,4 @@
-import { FC, Fragment, memo } from "react";
+import { Fragment, memo } from "react";
 import { ControlType } from "../../../@types/controls/ControlTypes";
 import { shuffle } from "../../../utils/shuffle";
 import { useFBRegisterControl } from "../../../hooks/useFBRegisterControl";
@@ -13,7 +13,7 @@ type MultiSelectPropsType = {
   control: ControlType;
 };
 
-const MultiSelect: FC<MultiSelectPropsType> = ({ control }) => {
+const MultiSelect = ({ control }: MultiSelectPropsType) => {
   const { onChange, onBlur, name, ref, defaultValue } =
     useFBRegisterControl(control);
   const theme = useTheme();

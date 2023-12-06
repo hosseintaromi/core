@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { ControlType } from "../../@types/controls/ControlTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 import { TextField } from "@mui/material";
@@ -8,7 +7,7 @@ type TextAreaPropsType = {
   isFloatingBox?: boolean;
 };
 
-const TextArea: FC<TextAreaPropsType> = ({ control, isFloatingBox }) => {
+const TextArea = ({ control, isFloatingBox }: TextAreaPropsType) => {
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
 
   return (

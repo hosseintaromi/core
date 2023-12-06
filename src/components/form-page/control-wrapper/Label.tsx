@@ -1,4 +1,4 @@
-import { FC, useMemo } from "react";
+import { useMemo } from "react";
 import {
   ControlType,
   ControlTypeEnum,
@@ -32,12 +32,12 @@ type LabelPropsType = {
   getQuestionNumber: () => number | "" | undefined;
 };
 
-const Label: FC<LabelPropsType> = ({
+const Label = ({
   control,
   getQuestionNumber,
   isFloatingBox,
   hideQuestionNumber,
-}) => {
+}: LabelPropsType) => {
   const id = control?.control_id;
   const label = control?.label_text;
   const type = control.type;

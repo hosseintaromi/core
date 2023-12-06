@@ -1,4 +1,3 @@
-import { FC } from "react";
 import { ControlType } from "../../../@types/controls/ControlTypes";
 import { Box } from "@mui/material";
 import FileDisplay from "../../shared/FileDisplay";
@@ -6,7 +5,7 @@ type FilePropsType = {
   control: ControlType;
 };
 
-const File: FC<FilePropsType> = ({ control }) => (
+const File = ({ control }: FilePropsType) => (
   <>
     {control.file_url && (
       <Box marginBlock={2}>

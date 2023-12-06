@@ -1,4 +1,4 @@
-import { FC, ReactNode } from "react";
+import { ReactNode } from "react";
 import { useFBControl } from "../../../hooks/useFBControl";
 import {
   ControlType,
@@ -29,12 +29,12 @@ type ControlWrapperPropsType = {
   children?: ReactNode | Element;
 };
 
-const ControlWrapper: FC<ControlWrapperPropsType> = ({
+const ControlWrapper = ({
   control,
   children,
   isFloatingBox,
   hideQuestionNumber,
-}) => {
+}: ControlWrapperPropsType) => {
   const { getControlErrors } = useFBControl(control);
   const { getQuestionNumber, form, submitNext } = useFormPage({
     id: control.control_id,
@@ -64,7 +64,7 @@ const ControlWrapper: FC<ControlWrapperPropsType> = ({
           <File control={control} />
           <>{children}</>
         </Box>
-        <Errors control={control} getControlErrors={getControlErrors} />
+        <Errors getControlErrors={getControlErrors} />
       </FormControl>
       <Submit control={control} form={form} submitNext={submitNext} />
     </Container>

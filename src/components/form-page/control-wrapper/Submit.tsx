@@ -1,4 +1,3 @@
-import { FC } from "react";
 import {
   ControlType,
   ControlTypeEnum,
@@ -15,7 +14,7 @@ type SubmitPropsType = {
   submitNext: () => Promise<void> | undefined;
 };
 
-const Submit: FC<SubmitPropsType> = ({ control, form, submitNext }) => {
+const Submit = ({ control, form, submitNext }: SubmitPropsType) => {
   const id = control?.control_id;
   const type = control.type;
 

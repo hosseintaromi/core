@@ -55,6 +55,7 @@ export const FBContextProvider = memo(
 
     const formController = useForm({
       defaultValues: controlDefaultValues.current,
+      mode: "onBlur",
     });
 
     const onChangedControlValue = (target: any) => {

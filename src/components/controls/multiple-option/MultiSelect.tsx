@@ -46,7 +46,8 @@ const MultiSelect = ({ control }: MultiSelectPropsType) => {
                   name={name}
                   value={option.value}
                   defaultChecked={
-                    defaultValue || info.default_value?.includes(option.value)
+                    defaultValue ||
+                    info.default_selected_index?.includes(option.value)
                   }
                 />
               }
@@ -64,7 +65,8 @@ const MultiSelect = ({ control }: MultiSelectPropsType) => {
                   name={name}
                   value={option.value}
                   defaultChecked={
-                    defaultValue || info.default_value?.includes(option.value)
+                    defaultValue ||
+                    info.default_selected_index?.includes(option.value)
                   }
                 />
               }

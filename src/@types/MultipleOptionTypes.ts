@@ -18,4 +18,5 @@ export type MultipleOptionType = {
   options?: TextOptionType[] | ImageOptionType[];
   randomize_option_number?: boolean;
   arrange_type?: ArrangeTypeEnum;
+  default_value?: string | string[];
 };

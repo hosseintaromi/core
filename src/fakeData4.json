@@ -309,6 +309,7 @@
             "label_text": "مقطع تحصیلی",
             "multiple_option_info": {
               "type": "Text",
+              "default_value": 1,
               "multi_select": false,
               "randomize_option_number": false,
               "arrange_type": "Vertical",
@@ -328,6 +329,7 @@
               "multi_select": true,
               "randomize_option_number": false,
               "arrange_type": "Vertical",
+              "default_value": [0, 1],
               "options": [
                 { "text": "ترسناک", "value": 0 },
                 { "text": "تخیلی", "value": 1 },
@@ -439,6 +441,20 @@
                 { "value": 8, "text": "چهارمحال و بختیاری" },
                 { "value": 9, "text": "خراسان جنوبی" },
                 { "value": 10, "text": "خراسان رضوی" }
+              ]
+            }
+          },
+          {
+            "control_id": "control_id_5_3",
+            "type": "DropDown",
+            "label_text": "سن",
+            "dropdown_info": {
+              "searchable": false,
+              "options": [
+                { "value": 0, "text": "۰-۱۵" },
+                { "value": 1, "text": "۱۵-۳۰" },
+                { "value": 2, "text": "۳۰-۴۵" },
+                { "value": 3, "text": "۴۵-۱۰۰" }
               ]
             }
           }

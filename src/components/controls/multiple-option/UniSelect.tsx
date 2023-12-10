@@ -29,7 +29,7 @@ const UniSelect = ({ control }: UniSelectPropsType) => {
         ...groupStyle(theme.controlsStyles),
         margin: 0,
       }}
-      defaultValue={defaultValue}
+      defaultValue={defaultValue || info?.default_value}
     >
       {options?.map((option) => (
         <FormControlLabel

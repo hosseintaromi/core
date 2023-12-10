@@ -4,7 +4,6 @@ import {
   ControlType,
   ControlTypeEnum,
 } from "../../../@types/controls/ControlTypes";
-import styled from "@mui/material/styles/styled";
 import FormControl from "@mui/material/FormControl";
 import Box from "@mui/material/Box";
 import { useFormPage } from "../../../hooks/useFormPage";
@@ -14,6 +13,7 @@ import Submit from "./Submit";
 import Errors from "./Errors";
 import Description from "./Description";
 import File from "./File";
+import { styled } from "@mui/material";
 
 const Container = styled(Box)({
   display: "flex",

@@ -1,4 +1,3 @@
-import useTheme from "@mui/material/styles/useTheme";
 import Box from "@mui/material/Box";
 import LinearProgressWithLabel from "./LinearProgressStyle";
 import NextButton from "./NextButton";
@@ -9,6 +8,7 @@ import { PageIndexesType } from "../../../@types/FormPageTypes";
 import { ControlTypeEnum } from "../../../@types/controls/ControlTypes";
 import { PlaceHolderTypeEnum } from "../../../@types/controls/PlaceHolderTypes";
 import { hexToRgbA } from "../../../utils/hexToRgbA";
+import { useTheme } from "@mui/material";
 
 const Footer = () => {
   const theme = useTheme();

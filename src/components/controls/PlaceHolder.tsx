@@ -1,5 +1,4 @@
 import { ControlType } from "../../@types/controls/ControlTypes";
-import useTheme from "@mui/material/styles/useTheme";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import Box from "@mui/material/Box";
@@ -8,6 +7,7 @@ import placeHolderStyle from "../../utils/theme/placeHolderStyle";
 import { useFormPage } from "../../hooks/useFormPage";
 import { PlaceHolderTypeEnum } from "../../@types/controls/PlaceHolderTypes";
 import { Localizer } from "../shared/Localizer";
+import { useTheme } from "@mui/material";
 
 type PlaceHolderPropsType = {
   control: ControlType;

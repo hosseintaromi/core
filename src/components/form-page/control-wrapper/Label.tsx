@@ -3,10 +3,10 @@ import {
   ControlType,
   ControlTypeEnum,
 } from "../../../@types/controls/ControlTypes";
-import styled from "@mui/material/styles/styled";
 import InputLabel from "@mui/material/InputLabel";
 import Box from "@mui/material/Box";
 import { ValidationTypeEnum } from "../../../@types/ValidationTypes";
+import { styled } from "@mui/material";
 
 const QuestionNumberLabel = styled(InputLabel)({
   position: "static",

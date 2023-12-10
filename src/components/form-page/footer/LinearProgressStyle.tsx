@@ -1,5 +1,3 @@
-import useTheme from "@mui/material/styles/useTheme";
-import styled from "@mui/material/styles/styled";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";
 import LinearProgress from "@mui/material/LinearProgress";
@@ -8,6 +6,7 @@ import { getProgress } from "../../../utils/progressUtils";
 import { PageIndexesType } from "../../../@types/FormPageTypes";
 import { Localizer } from "../../shared/Localizer";
 import { FormType, ProgressDisplayModeEnum } from "../../../@types/FormTypes";
+import { styled, useTheme } from "@mui/material";
 
 const LinearProgressStyle = styled(LinearProgress)({
   width: "100%",

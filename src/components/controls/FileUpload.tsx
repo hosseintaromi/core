@@ -2,8 +2,6 @@ import { ChangeEvent, useRef, useState } from "react";
 import { ControlType } from "../../@types/controls/ControlTypes";
 import { FileTypeEnum } from "../../@types/controls/FileUploadTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
-import useTheme from "@mui/material/styles/useTheme";
-import styled from "@mui/material/styles/styled";
 import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
@@ -13,6 +11,7 @@ import fileUploadStyle from "../../utils/theme/fileUploadStyle";
 import FileDisplay from "../shared/FileDisplay";
 import { getDataUrl } from "../../utils/fileUpload";
 import ClearIcon from "@mui/icons-material/Clear";
+import { styled, useTheme } from "@mui/material";
 
 const ContainerStyle = styled(Box)({
   display: "flex",

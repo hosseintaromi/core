@@ -1,5 +1,3 @@
-import styled from "@mui/material/styles/styled";
-import ThemeProvider from "@mui/material/styles/ThemeProvider";
 import Typography from "@mui/material/Typography";
 import Box from "@mui/material/Box";
 import PartialTabContainer from "../../core/components/containers/PartialTabContainer";
@@ -11,6 +9,7 @@ import { FormType } from "../../@types/FormTypes";
 import { FormPageContextProvider } from "../../context/FormPageContextProvider";
 import Footer from "./footer/Footer";
 import { Localizer } from "../shared/Localizer";
+import { ThemeProvider, styled } from "@mui/material";
 
 const NoActiveMessage = styled(Box)({
   display: "flex",

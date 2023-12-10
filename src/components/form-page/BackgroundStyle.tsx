@@ -1,8 +1,6 @@
-import useTheme from "@mui/material/styles/useTheme";
-import styled from "@mui/material/styles/styled";
-
 import Container from "@mui/material/Container";
 import { getBackgroundPosition } from "../../utils/styleUtils";
+import { styled, useTheme } from "@mui/material";
 
 const BackgroundStyle = styled(Container)(() => {
   const formTheme = useTheme();

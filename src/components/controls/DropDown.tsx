@@ -1,13 +1,11 @@
 import React from "react";
 import { ControlType } from "../../@types/controls/ControlTypes";
-import {
-  Autocomplete,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-  TextField,
-} from "@mui/material";
+import Autocomplete from "@mui/material/Autocomplete";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
+import MenuItem from "@mui/material/MenuItem";
+import Select from "@mui/material/Select";
+import TextField from "@mui/material/TextField";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 
 type DropDownPropsType = { control: ControlType; isFloatingBox?: boolean };

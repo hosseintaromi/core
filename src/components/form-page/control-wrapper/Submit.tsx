@@ -2,7 +2,8 @@ import {
   ControlType,
   ControlTypeEnum,
 } from "../../../@types/controls/ControlTypes";
-import { Box, Button } from "@mui/material";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import { Localizer } from "../../shared/Localizer";
 import { getControlParentById } from "../../../utils/controlUtils";
 import { PlaceHolderTypeEnum } from "../../../@types/controls/PlaceHolderTypes";

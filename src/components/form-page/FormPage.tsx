@@ -1,4 +1,7 @@
-import { Box, ThemeProvider, Typography, styled } from "@mui/material";
+import styled from "@mui/material/styles/styled";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
+import Typography from "@mui/material/Typography";
+import Box from "@mui/material/Box";
 import PartialTabContainer from "../../core/components/containers/PartialTabContainer";
 import theme from "../../utils/theme/theme";
 import BackgroundStyle from "./BackgroundStyle";

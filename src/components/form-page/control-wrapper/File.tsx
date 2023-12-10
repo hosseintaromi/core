@@ -1,6 +1,7 @@
 import { ControlType } from "../../../@types/controls/ControlTypes";
-import { Box } from "@mui/material";
+import Box from "@mui/material/Box";
 import FileDisplay from "../../shared/FileDisplay";
+
 type FilePropsType = {
   control: ControlType;
 };

@@ -2,7 +2,11 @@ import { Fragment, memo } from "react";
 import { ControlType } from "../../../@types/controls/ControlTypes";
 import { shuffle } from "../../../utils/shuffle";
 import { useFBRegisterControl } from "../../../hooks/useFBRegisterControl";
-import { Checkbox, FormControlLabel, FormGroup, useTheme } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+import FormGroup from "@mui/material/FormGroup";
+import FormControlLabel from "@mui/material/FormControlLabel";
+import Checkbox from "@mui/material/Checkbox";
+
 import {
   ArrangeTypeEnum,
   MultipleOptionTypeEnum,

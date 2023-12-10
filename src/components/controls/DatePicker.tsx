@@ -5,11 +5,12 @@ import { AdapterDateFnsJalali } from "@mui/x-date-pickers/AdapterDateFnsJalali";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import dateTimePickerStyle from "../../utils/theme/dateTimePickerStyle";
-import { ThemeProvider } from "@emotion/react";
-import { createTheme, useTheme } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+import createTheme from "@mui/material/styles/createTheme";
 import { useGlobalLocales } from "../../hooks/useGlobalLocales";
 import { MobileDatePicker, MobileTimePicker } from "@mui/x-date-pickers";
 import { DatePickerTypeEnum } from "../../@types/controls/DatePickerTypes";
+import ThemeProvider from "@mui/material/styles/ThemeProvider";
 
 type DatePickerPropsType = {
   control: ControlType;

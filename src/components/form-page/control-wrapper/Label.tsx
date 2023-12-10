@@ -3,7 +3,9 @@ import {
   ControlType,
   ControlTypeEnum,
 } from "../../../@types/controls/ControlTypes";
-import { Box, InputLabel, styled } from "@mui/material";
+import styled from "@mui/material/styles/styled";
+import InputLabel from "@mui/material/InputLabel";
+import Box from "@mui/material/Box";
 import { ValidationTypeEnum } from "../../../@types/ValidationTypes";
 
 const QuestionNumberLabel = styled(InputLabel)({

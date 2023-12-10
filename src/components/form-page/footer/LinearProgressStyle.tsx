@@ -1,11 +1,9 @@
-import {
-  Box,
-  LinearProgress,
-  Typography,
-  styled,
-  Stack,
-  useTheme,
-} from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+import styled from "@mui/material/styles/styled";
+import Box from "@mui/material/Box";
+import Stack from "@mui/material/Stack";
+import LinearProgress from "@mui/material/LinearProgress";
+import Typography from "@mui/material/Typography";
 import { getProgress } from "../../../utils/progressUtils";
 import { PageIndexesType } from "../../../@types/FormPageTypes";
 import { Localizer } from "../../shared/Localizer";

@@ -1,4 +1,5 @@
-import { Box, useTheme } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+import Box from "@mui/material/Box";
 import LinearProgressWithLabel from "./LinearProgressStyle";
 import NextButton from "./NextButton";
 import { getControl } from "../../../utils/controlUtils";

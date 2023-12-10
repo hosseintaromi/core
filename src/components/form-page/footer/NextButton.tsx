@@ -1,4 +1,5 @@
-import { Box, Button } from "@mui/material";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
 import ExpandLessIcon from "@mui/icons-material/ExpandLess";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 

@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { TextBoxTypeEnum } from "../../@types/controls/TextBoxTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 import { ControlType } from "../../@types/controls/ControlTypes";
-import { TextField } from "@mui/material";
+import TextField from "@mui/material/TextField";
 import { useFBControl } from "../../hooks/useFBControl";
 
 const TextBox = ({

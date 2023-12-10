@@ -1,4 +1,4 @@
-import { FormHelperText } from "@mui/material";
+import FormHelperText from "@mui/material/FormHelperText";
 import { FieldError, FieldErrorsImpl, Merge } from "react-hook-form";
 
 type ErrorsPropsType = {

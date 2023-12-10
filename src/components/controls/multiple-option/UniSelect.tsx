@@ -2,7 +2,11 @@ import { memo } from "react";
 import { ControlType } from "../../../@types/controls/ControlTypes";
 import { shuffle } from "../../../utils/shuffle";
 import { useFBRegisterControl } from "../../../hooks/useFBRegisterControl";
-import { FormControlLabel, Radio, RadioGroup, useTheme } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+import RadioGroup from "@mui/material/RadioGroup";
+import Radio from "@mui/material/Radio";
+import FormControlLabel from "@mui/material/FormControlLabel";
+
 import { ArrangeTypeEnum } from "../../../@types/MultipleOptionTypes";
 import groupStyle from "../../../utils/theme/groupStyle";
 

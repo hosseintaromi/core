@@ -1,5 +1,9 @@
 import { ControlType } from "../../@types/controls/ControlTypes";
-import { Box, Button, Typography, useTheme } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+import Typography from "@mui/material/Typography";
+import Button from "@mui/material/Button";
+import Box from "@mui/material/Box";
+
 import placeHolderStyle from "../../utils/theme/placeHolderStyle";
 import { useFormPage } from "../../hooks/useFormPage";
 import { PlaceHolderTypeEnum } from "../../@types/controls/PlaceHolderTypes";

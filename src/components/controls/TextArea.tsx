@@ -1,6 +1,6 @@
 import { ControlType } from "../../@types/controls/ControlTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
-import { TextField } from "@mui/material";
+import TextField from "@mui/material/TextField";
 
 type TextAreaPropsType = {
   control: ControlType;

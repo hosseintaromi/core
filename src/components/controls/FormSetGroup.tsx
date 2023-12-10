@@ -4,7 +4,9 @@ import { ControlType } from "../../@types/controls/ControlTypes";
 import { useCallback, useContext, useEffect, useState } from "react";
 import { FBContext } from "../../context/FBContextProvider";
 import { hideControlsWithConditionOn } from "../../utils/controlUtils";
-import { Box, styled, useTheme } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+import styled from "@mui/material/styles/styled";
+import Box from "@mui/material/Box";
 import groupStyle from "../../utils/theme/groupStyle";
 
 const ContainerStyle = styled(Box)({

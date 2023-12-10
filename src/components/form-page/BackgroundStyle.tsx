@@ -1,4 +1,7 @@
-import { Container, styled, useTheme } from "@mui/material";
+import useTheme from "@mui/material/styles/useTheme";
+import styled from "@mui/material/styles/styled";
+
+import Container from "@mui/material/Container";
 import { getBackgroundPosition } from "../../utils/styleUtils";
 
 const BackgroundStyle = styled(Container)(() => {

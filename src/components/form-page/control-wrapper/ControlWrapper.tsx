@@ -4,7 +4,9 @@ import {
   ControlType,
   ControlTypeEnum,
 } from "../../../@types/controls/ControlTypes";
-import { Box, FormControl, styled } from "@mui/material";
+import styled from "@mui/material/styles/styled";
+import FormControl from "@mui/material/FormControl";
+import Box from "@mui/material/Box";
 import { useFormPage } from "../../../hooks/useFormPage";
 import { PlaceHolderTypeEnum } from "../../../@types/controls/PlaceHolderTypes";
 import Label from "./Label";

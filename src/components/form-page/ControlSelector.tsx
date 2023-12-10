@@ -2,7 +2,6 @@ import {
   ControlType,
   ControlTypeEnum,
 } from "../../@types/controls/ControlTypes";
-import { ThemeType } from "../../@types/ThemeTypes";
 import DatePicker from "../controls/DatePicker";
 import DropDown from "../controls/DropDown";
 import FileUpload from "../controls/FileUpload";

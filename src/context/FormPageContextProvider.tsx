@@ -31,7 +31,7 @@ type FormPageContextProviderProps = {
 
 export const FormPageContextProvider = memo(
   ({ children, form }: FormPageContextProviderProps) => {
-    const questionStackRef = useRef<string[]>([]);
+    const questionStackRef = useRef<string[][]>([]);
     const pageStackRef = useRef<PageIndexesType[]>([]);
     const indexListenersRef = useRef<IndexListenersType[]>([]);
     const indexesRef = useRef<PageIndexesType>([0]);
@@ -46,8 +46,10 @@ export const FormPageContextProvider = memo(
         return 0;
       }
       let pagesStack = questionStackRef.current;
-      pagesStack.push(id);
-      return pagesStack.length;
+      pagesStack[pagesStack.length - 1].push(id);
+      let questionNumber = 0;
+      pagesStack.forEach((item) => (questionNumber += item.length));
+      return questionNumber;
     };
 
     const openPage = (indexes: number[]) => {
@@ -56,6 +58,7 @@ export const FormPageContextProvider = memo(
         indexes,
       };
       pageStackRef.current.push(indexes);
+      questionStackRef.current.push([]);
       openView({
         type: "FormContainer",
         data: viewDataRef.current,
@@ -103,6 +106,8 @@ export const FormPageContextProvider = memo(
     const gotoPrev = () => {
       // TODO apicalls???
 
+      questionStackRef.current.pop();
+      questionStackRef.current.pop();
       pageStackRef.current.pop();
       let prevIndexes = pageStackRef.current.pop();
       if (!prevIndexes || !prevIndexes.length) {

@@ -67,7 +67,7 @@
       "text_color": "#fff"
     }
   },
-  "layout": { "floating_box": true },
+  "layout": { "floating_box": false },
   "values": {
     "control_id_1": "ریحانه",
     "control_id_2": 1,
@@ -99,6 +99,7 @@
             "control_id": "control_id_1_0",
             "type": "TextBox",
             "label_text": "نام و نام خانوادگی",
+            "description": "حتما حروف فارسی وارد کنید.",
             "textbox_info": { "type": "Persian" },
             "validations": [
               { "type": "Persian", "regex_pattern": "/^[\u0600-\u06FF\\s]+$/" }

@@ -12,7 +12,7 @@ const textFieldStyleOverride = ({
       root: {
         "input:-webkit-autofill": {
           transition: "background-color 5000s ease-in-out 0s",
-          "-webkit-text-fill-color": `${
+          WebkitTextFillColor: `${
             controls_style?.text_color || answer_color
           } !important`,
         },

@@ -338,7 +338,7 @@
             }
           },
           {
-            "control_id": "control_id_4_2",
+            "control_id": "control_id_4_3",
             "type": "MultipleOption",
             "label_text": "رنگ مورد علاقه",
             "multiple_option_info": {
@@ -354,7 +354,7 @@
             }
           },
           {
-            "control_id": "control_id_4_2",
+            "control_id": "control_id_4_4",
             "type": "MultipleOption",
             "label_text": "سوال امتحان",
             "description": "رندم بودن ترتیب گزینه‌‌ها",
@@ -371,7 +371,7 @@
             }
           },
           {
-            "control_id": "control_id_4_3",
+            "control_id": "control_id_4_5",
             "type": "MultipleOption",
             "label_text": "شهر مورد علاقه",
             "multiple_option_info": {

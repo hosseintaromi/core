@@ -104,7 +104,6 @@ const DatePicker = ({ control, isFloatingBox }: DatePickerPropsType) => {
     },
   };
 
-  console.log(datePickerProps);
   return (
     <ThemeProvider theme={datePickerTheme}>
       <LocalizationProvider

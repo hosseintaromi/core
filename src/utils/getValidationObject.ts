@@ -102,6 +102,5 @@ export const getValidationObject = (control: ControlType) => {
         break;
     }
   });
-  console.log(control.control_id, validationObj);
   return validationObj;
 };

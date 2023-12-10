@@ -29,7 +29,7 @@ type LabelPropsType = {
   control: ControlType;
   isFloatingBox?: boolean;
   hideQuestionNumber?: boolean;
-  getQuestionNumber: () => number | "" | undefined;
+  getQuestionNumber: () => string | undefined;
 };
 
 const Label = ({
@@ -40,19 +40,17 @@ const Label = ({
 }: LabelPropsType) => {
   const id = control?.control_id;
   const label = control?.label_text;
-  const type = control.type;
-
-  const questionNumber = useMemo(() => {
-    if (type !== ControlTypeEnum.Group) return getQuestionNumber();
-    return 0;
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [control]);
 
   const isFloatingDropDown =
     control.type === ControlTypeEnum.DropDown && isFloatingBox;
 
-  const hasQuestionNumber =
-    type !== ControlTypeEnum.Group && !hideQuestionNumber && questionNumber;
+  const questionNumber = useMemo(
+    () => getQuestionNumber(),
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [control],
+  );
+
+  let hasQuestionNumber: boolean = !!(!hideQuestionNumber && questionNumber);
 
   const isRequired = control.validations?.find(
     (item) => item.type === ValidationTypeEnum.Required,

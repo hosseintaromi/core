@@ -201,6 +201,8 @@
       "group_info": {
         "type": "FormSet",
         "title": "انواع فایل ها",
+        "description": "بدون شماره سوال برای کنترل ها",
+        "page_no_type": "None",
         "controls": [
           {
             "control_id": "control_id_2_1",
@@ -272,6 +274,8 @@
       "file_url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
       "group_info": {
         "type": "FormSet",
+        "page_no_type": "Number",
+        "description": "عدد برای شماره سوال کنترل‌ها",
         "title": "تقویم‌ها",
         "controls": [
           {
@@ -302,6 +306,8 @@
       "file_url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
       "group_info": {
         "type": "FormSet",
+        "description": "استفاده از حروف الفبا برای شماره‌گذاری کنترل‌ها",
+        "page_no_type": "PersianAlphabet",
         "title": "انواع multiple options",
         "controls": [
           {
@@ -409,6 +415,8 @@
       "file_url": "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
       "group_info": {
         "type": "FormSet",
+        "page_no_type": "EnglishAlphabet",
+        "description": "استفاده از حروف انگلیسی برای نام‌گذاری کنترل‌ها",
         "title": "انواع drop down ها",
         "controls": [
           {

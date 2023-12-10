@@ -37,7 +37,10 @@ export const getControlById = (
     if (control.control_id === id) {
       return control;
     } else if (control.group_info?.controls) {
-      getControlById(control.group_info?.controls, id);
+      const foundControl = getControlById(control.group_info?.controls, id);
+      if (foundControl) {
+        return foundControl;
+      }
     }
   }
   return null;
@@ -296,3 +299,38 @@ export const getDefaultValues = (
   }
   return defaults;
 };
+
+export const persianAlphabet = [
+  "آ",
+  "ب",
+  "پ",
+  "ت",
+  "ث",
+  "ج",
+  "چ",
+  "ح",
+  "خ",
+  "د",
+  "ذ",
+  "ر",
+  "ز",
+  "ژ",
+  "س",
+  "ش",
+  "ص",
+  "ض",
+  "ط",
+  "ظ",
+  "ع",
+  "غ",
+  "ف",
+  "ق",
+  "ک",
+  "گ",
+  "ل",
+  "م",
+  "ن",
+  "و",
+  "ه",
+  "ی",
+];

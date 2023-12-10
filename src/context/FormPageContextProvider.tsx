@@ -1,7 +1,12 @@
 import { ReactNode, createContext, memo, useEffect, useRef } from "react";
 import { FormPageViewDataType, PageIndexesType } from "../@types/FormPageTypes";
 import { FormType } from "../@types/FormTypes";
-import { getControlById, getNextIndex } from "../utils/controlUtils";
+import {
+  getControlById,
+  getControlParentById,
+  getNextIndex,
+  persianAlphabet,
+} from "../utils/controlUtils";
 import { FieldValues } from "react-hook-form";
 import { openView } from "../core/utils/viewManager";
 import FormPageItem from "../components/form-page/FormPageItem";
@@ -12,11 +17,12 @@ import {
 import { ControlTypeEnum } from "../@types/controls/ControlTypes";
 import { PlaceHolderTypeEnum } from "../@types/controls/PlaceHolderTypes";
 import { convertLocale } from "../hooks/useGlobalLocales";
+import { PageNoTypeEnum } from "../@types/controls/GroupTypes";
 
 export type IndexListenersType = (indexes: PageIndexesType) => void;
 
 export const FormPageContext = createContext<{
-  addNewQuestion: (id: string) => number;
+  addNewQuestion: (id: string) => string | undefined;
   addIndexListener: (listener: IndexListenersType) => void;
   form: FormType;
   submitNext: () => Promise<void> | undefined;
@@ -39,17 +45,37 @@ export const FormPageContextProvider = memo(
 
     const addNewQuestion = (id: string) => {
       const control = getControlById(form.controls, id);
+      const type = control?.type;
       if (
-        control?.type === ControlTypeEnum.PlaceHolder &&
-        control.placeholder_info?.type !== PlaceHolderTypeEnum.Note
+        (type === ControlTypeEnum.PlaceHolder &&
+          control?.placeholder_info?.type !== PlaceHolderTypeEnum.Note) ||
+        !control
       ) {
-        return 0;
+        return;
       }
       let pagesStack = questionStackRef.current;
       pagesStack[pagesStack.length - 1].push(id);
-      let questionNumber = 0;
-      pagesStack.forEach((item) => (questionNumber += item.length));
-      return questionNumber;
+      const n = pagesStack[pagesStack.length - 1].length - 1;
+      const parentControl = getControlParentById(control, form.controls, id);
+      const pageNoType = parentControl?.group_info?.page_no_type;
+      const parentQuestionNumber = pagesStack.length.toString();
+      if (type === ControlTypeEnum.Group) {
+        return `${parentQuestionNumber}`;
+      } else {
+        switch (pageNoType) {
+          case PageNoTypeEnum.EnglishAlphabet:
+            return `${parentQuestionNumber}.${String.fromCharCode(
+              96 + (n % 26),
+            )}`;
+          case PageNoTypeEnum.PersianAlphabet:
+            return `${parentQuestionNumber}.${persianAlphabet[(n - 1) % 32]}`;
+          case PageNoTypeEnum.Number:
+            return `${parentQuestionNumber}.${n.toString()}`;
+          case PageNoTypeEnum.None:
+          default:
+            return;
+        }
+      }
     };
 
     const openPage = (indexes: number[]) => {
@@ -58,7 +84,6 @@ export const FormPageContextProvider = memo(
         indexes,
       };
       pageStackRef.current.push(indexes);
-      questionStackRef.current.push([]);
       openView({
         type: "FormContainer",
         data: viewDataRef.current,
@@ -99,6 +124,7 @@ export const FormPageContextProvider = memo(
       }
       indexesRef.current = nextIndexes;
       indexListenersRef.current.forEach((listener) => listener(nextIndexes!));
+      questionStackRef.current.push([]);
       openPage(nextIndexes);
     };
 
@@ -114,6 +140,7 @@ export const FormPageContextProvider = memo(
       }
       indexesRef.current = prevIndexes;
       indexListenersRef.current.forEach((listener) => listener(prevIndexes!));
+      questionStackRef.current.push([]);
       openPage(prevIndexes);
     };
 

@@ -8,6 +8,7 @@
   "locale": "Persian",
   "has_next": true,
   "has_prev": true,
+  "progress_display_mode": "PageNumber",
   "theme": {
     "padding": {
       "horizontal": 10,

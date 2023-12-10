@@ -11,7 +11,7 @@ const QuestionNumberLabel = styled(InputLabel)({
   maxWidth: "unset",
   display: "inline-block",
   transform: "none",
-  pr: 0.75,
+  paddingInlineEnd: "0.25rem",
 });
 
 const LabelText = styled(InputLabel)({
@@ -59,7 +59,7 @@ const Label = ({
   return (
     <Box display="flex" alignItems="center">
       {hasQuestionNumber ? (
-        <QuestionNumberLabel shrink>{questionNumber}. </QuestionNumberLabel>
+        <QuestionNumberLabel shrink>{questionNumber}- </QuestionNumberLabel>
       ) : null}
       <LabelText
         shrink={isFloatingDropDown ? undefined : true}

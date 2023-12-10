@@ -8,7 +8,7 @@ import dateTimePickerStyle from "../../utils/theme/dateTimePickerStyle";
 import { ThemeProvider } from "@emotion/react";
 import { createTheme, useTheme } from "@mui/material";
 import { useGlobalLocales } from "../../hooks/useGlobalLocales";
-import { MobileDateTimePicker, MobileTimePicker } from "@mui/x-date-pickers";
+import { MobileDatePicker, MobileTimePicker } from "@mui/x-date-pickers";
 import { DatePickerTypeEnum } from "../../@types/controls/DatePickerTypes";
 
 type DatePickerPropsType = {
@@ -117,7 +117,7 @@ const DatePicker = ({ control, isFloatingBox }: DatePickerPropsType) => {
         {hasTime ? (
           <MobileTimePicker {...datePickerProps} />
         ) : (
-          <MobileDateTimePicker {...datePickerProps} />
+          <MobileDatePicker {...datePickerProps} />
         )}
       </LocalizationProvider>
     </ThemeProvider>

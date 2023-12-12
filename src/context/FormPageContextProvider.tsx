@@ -2,13 +2,14 @@ import { ReactNode, createContext, memo, useEffect, useRef } from "react";
 import { FormPageViewDataType, PageIndexesType } from "../@types/FormPageTypes";
 import { FormType } from "../@types/FormTypes";
 import {
+  getControl,
   getControlById,
   getControlParentById,
   getNextIndex,
   persianAlphabet,
 } from "../utils/controlUtils";
 import { FieldValues } from "react-hook-form";
-import { openView } from "../core/utils/viewManager";
+import { closeView, openView } from "../core/utils/viewManager";
 import FormPageItem from "../components/form-page/FormPageItem";
 import {
   QuestionAnswerType,
@@ -84,11 +85,24 @@ export const FormPageContextProvider = memo(
         indexes,
       };
       pageStackRef.current.push(indexes);
+      const controlId = getControl(form.controls, indexes)?.control_id;
       openView({
+        id: controlId,
         type: "FormContainer",
         data: viewDataRef.current,
         component: FormPageItem,
       });
+    };
+
+    const closePage = (
+      currentIndexes: PageIndexesType,
+      prevIndexes: PageIndexesType,
+    ) => {
+      pageStackRef.current.push(currentIndexes);
+      const controlId = getControl(form.controls, prevIndexes)?.control_id;
+      if (controlId) {
+        closeView(controlId, "FormContainer");
+      }
     };
 
     const setAnswer = (data: FieldValues) => {
@@ -133,15 +147,15 @@ export const FormPageContextProvider = memo(
 
       questionStackRef.current.pop();
       questionStackRef.current.pop();
-      pageStackRef.current.pop();
-      let prevIndexes = pageStackRef.current.pop();
-      if (!prevIndexes || !prevIndexes.length) {
+      const prevIndexes = pageStackRef.current.pop();
+      let currIndexes = pageStackRef.current.pop();
+      if (!currIndexes || !currIndexes.length || !prevIndexes) {
         return;
       }
-      indexesRef.current = prevIndexes;
-      indexListenersRef.current.forEach((listener) => listener(prevIndexes!));
+      indexesRef.current = currIndexes;
+      indexListenersRef.current.forEach((listener) => listener(currIndexes!));
       questionStackRef.current.push([]);
-      openPage(prevIndexes);
+      closePage(currIndexes, prevIndexes);
     };
 
     const addIndexListener = (listener: IndexListenersType) => {

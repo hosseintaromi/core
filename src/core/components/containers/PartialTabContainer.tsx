@@ -19,7 +19,7 @@ const PartialTabContainer = ({
   const { viewsInfo } = useViewManage(
     containerName,
     0,
-    {},
+    { moveBetweenViews: true },
     {
       duration: 400,
       start(newView, prevView) {

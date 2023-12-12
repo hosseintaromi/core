@@ -69,13 +69,7 @@
     }
   },
   "layout": { "floating_box": false },
-  "values": {
-    "control_id_1": "ریحانه",
-    "control_id_2": 1,
-    "control_id_7": "هلتنسی مبسیمبتسی بسیمنبتسی بتمن ینبت بین.",
-    "control_id_6": "0",
-    "control_id_5": 1700305220701
-  },
+  "values": {},
   "controls": [
     {
       "control_id": "control_id_0",
@@ -104,6 +98,20 @@
             "textbox_info": { "type": "Persian" },
             "validations": [
               { "type": "Persian", "regex_pattern": "/^[\u0600-\u06FF\\s]+$/" }
+            ],
+            "conditions": [
+              {
+                "type": "ThenGo",
+                "then_control_id": "control_id_3",
+                "when_control_id": "control_id_2",
+                "conditions": [
+                  {
+                    "control_id": "control_id_2",
+                    "condition_type": "Equal",
+                    "condition_value": 0
+                  }
+                ]
+              }
             ]
           },
           {
@@ -463,9 +471,7 @@
                 { "value": 0, "text": "۰-۱۵" },
                 { "value": 1, "text": "۱۵-۳۰" },
                 { "value": 2, "text": "۳۰-۴۵" },
-                { "value": 3, "text": "۴۵-۱۰۰" },
-                { "value": 4, "text": "۴۵-۱۰۰" },
-                { "value": 5, "text": "۴۵-۱۰۰" }
+                { "value": 3, "text": "۴۵-۱۰۰" }
               ]
             }
           }

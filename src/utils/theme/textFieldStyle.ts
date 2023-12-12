@@ -15,6 +15,8 @@ const textFieldStyleOverride = ({
           WebkitTextFillColor: `${
             controls_style?.text_color || answer_color
           } !important`,
+          WebkitBoxShadow: `0 0 0px 1000px ${controls_style?.background_color} inset`,
+          borderRadius: controls_style?.radius + "px",
         },
         "& .MuiOutlinedInput-root": {
           "&.Mui-focused fieldset": {
@@ -38,6 +40,9 @@ const textFieldStyleOverride = ({
           fontFamily: font_name,
           color: controls_style?.text_color || answer_color,
           zIndex: 1,
+          // for webkit autofill
+          margin: 2,
+          padding: "14.5px 12px",
         },
         ".MuiOutlinedInput-notchedOutline": {
           backgroundColor: controls_style?.background_color,

@@ -9,23 +9,19 @@ type TextAreaPropsType = {
 
 const TextArea = ({ control, isFloatingBox }: TextAreaPropsType) => {
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
-
   return (
     <TextField
-      sx={{
-        "label + &": {
-          marginTop: 3,
-        },
+      InputLabelProps={{
+        sx: { marginTop: 3 },
       }}
-      multiline
       ref={ref}
+      name={name}
       onChange={onChange}
       onBlur={onBlur}
-      name={name}
+      multiline={true}
       rows={control.textarea_info?.line_count}
       label={isFloatingBox ? control.label_text : ""}
     />
   );
 };
-
 export default TextArea;

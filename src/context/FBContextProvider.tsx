@@ -67,26 +67,27 @@ export const FBContextProvider = memo(
         const thenShowControlId = passCondition(thisControl?.conditions, {
           [target.name]: target.value || files?.[0],
         });
-        if (thenShowControlId) {
-          const formSet = getControlParentById(
-            mainControlRef.current,
-            controls,
-            target.name,
+        const formSet = getControlParentById(
+          mainControlRef.current,
+          controls,
+          target.name,
+        );
+        if (formSet?.group_info?.controls) {
+          let groupControls = hideControlsWithConditionOn(
+            formSet.group_info?.controls,
           );
-          if (formSet?.group_info?.controls) {
-            let groupControls = hideControlsWithConditionOn(
-              formSet.group_info?.controls,
-            );
+          if (thenShowControlId) {
             const thenControl = groupControls.find(
               (item) => item.control_id === thenShowControlId,
             );
             if (thenControl) {
               thenControl.is_hidden = false;
             }
-            formSetListenRef.current[formSet.control_id]?.listenControlChanges(
-              groupControls,
-            );
           }
+
+          formSetListenRef.current[formSet.control_id]?.listenControlChanges(
+            groupControls,
+          );
         }
       } else if (target.value !== undefined || target.files?.[0]) {
         const type = mainControlRef.current.type;

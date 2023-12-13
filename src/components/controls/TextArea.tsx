@@ -12,7 +12,7 @@ const TextArea = ({ control, isFloatingBox }: TextAreaPropsType) => {
   return (
     <TextField
       InputLabelProps={{
-        sx: { marginTop: 3 },
+        sx: { marginTop: "3px" },
       }}
       ref={ref}
       name={name}

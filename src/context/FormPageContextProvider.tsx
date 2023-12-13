@@ -63,7 +63,10 @@ export const FormPageContextProvider = memo(
       const parentControl = getControlParentById(control, form.controls, id);
       const pageNoType = parentControl?.group_info?.page_no_type;
       const parentQuestionNumber = pagesStack.length.toString();
-      if (type === ControlTypeEnum.Group) {
+      if (
+        type === ControlTypeEnum.Group ||
+        parentControl?.type !== ControlTypeEnum.Group
+      ) {
         return `${parentQuestionNumber}`;
       } else {
         switch (pageNoType) {

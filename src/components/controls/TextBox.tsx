@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { TextBoxTypeEnum } from "../../@types/controls/TextBoxTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
 import { ControlType } from "../../@types/controls/ControlTypes";
@@ -14,36 +13,34 @@ const TextBox = ({
 }) => {
   const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
   const { getControlErrors } = useFBControl(control);
-  const [inputType, setInputType] = useState("text");
 
-  useEffect(() => {
-    switch (control?.textbox_info?.type) {
-      case TextBoxTypeEnum.Email:
-        setInputType("email");
-        break;
-      case TextBoxTypeEnum.Mobile:
-        setInputType("tel");
-        break;
-      case TextBoxTypeEnum.Number:
-        setInputType("number");
-        break;
-      case TextBoxTypeEnum.Text:
-        setInputType("text");
-        break;
-      case TextBoxTypeEnum.Url:
-        setInputType("url");
-        break;
-      case TextBoxTypeEnum.NationalId:
-        setInputType("tel");
-        break;
-      case TextBoxTypeEnum.PostalCode:
-        setInputType("tel");
-        break;
-      default:
-        break;
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  let inputType = "text";
+
+  switch (control?.textbox_info?.type) {
+    case TextBoxTypeEnum.Email:
+      inputType = "email";
+      break;
+    case TextBoxTypeEnum.Mobile:
+      inputType = "tel";
+      break;
+    case TextBoxTypeEnum.Number:
+      inputType = "number";
+      break;
+    case TextBoxTypeEnum.Text:
+      inputType = "text";
+      break;
+    case TextBoxTypeEnum.Url:
+      inputType = "url";
+      break;
+    case TextBoxTypeEnum.NationalId:
+      inputType = "tel";
+      break;
+    case TextBoxTypeEnum.PostalCode:
+      inputType = "tel";
+      break;
+    default:
+      break;
+  }
 
   return (
     <TextField

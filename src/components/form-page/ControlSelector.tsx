@@ -2,6 +2,7 @@ import {
   ControlType,
   ControlTypeEnum,
 } from "../../@types/controls/ControlTypes";
+import { hideControlsWithConditionOn } from "../../utils/controlUtils";
 import DatePicker from "../controls/DatePicker";
 import DropDown from "../controls/DropDown";
 import FileUpload from "../controls/FileUpload";
@@ -32,6 +33,9 @@ const ControlSelector = ({
     case ControlTypeEnum.Group:
       return (
         <FormSetGroup
+          controls={hideControlsWithConditionOn(
+            control.group_info?.controls || [],
+          )}
           control={control}
           isFloatingBox={isFloatingBox}
           hideQuestionNumber={hideQuestionNumber}

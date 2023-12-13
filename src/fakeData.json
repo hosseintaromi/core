@@ -159,7 +159,27 @@
                 { "text": "ارشد", "value": 2 }
               ]
             },
-            "validations": [{ "type": "Required" }]
+            "validations": [{ "type": "Required" }],
+            "conditions": [
+              {
+                "type": "ThenShow",
+                "then_control_id": "control_id_6_1",
+                "when_control_id": "control_id_6",
+                "conditions": [
+                  {
+                    "control_id": "control_id_6",
+                    "condition_type": "Equal",
+                    "condition_value": 2
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "control_id": "control_id_6_1",
+            "type": "DatePicker",
+            "label_text": "تاریخ اخذ مدرک",
+            "date_picker_info": { "type": "Jalali" }
           }
         ]
       }

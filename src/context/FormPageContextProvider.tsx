@@ -47,14 +47,17 @@ export const FormPageContextProvider = memo(
     const addNewQuestion = (id: string) => {
       const control = getControlById(form.controls, id);
       const type = control?.type;
+      let pagesStack = questionStackRef.current;
       if (
         (type === ControlTypeEnum.PlaceHolder &&
           control?.placeholder_info?.type !== PlaceHolderTypeEnum.Note) ||
         !control
       ) {
+        if (control?.placeholder_info?.type !== PlaceHolderTypeEnum.Start) {
+          pagesStack = [];
+        }
         return;
       }
-      let pagesStack = questionStackRef.current;
       pagesStack[pagesStack.length - 1].push(id);
       const n = pagesStack[pagesStack.length - 1].length - 1;
       const parentControl = getControlParentById(control, form.controls, id);
@@ -99,7 +102,15 @@ export const FormPageContextProvider = memo(
       prevIndexes: PageIndexesType,
     ) => {
       pageStackRef.current.push(currentIndexes);
-      const controlId = getControl(form.controls, prevIndexes)?.control_id;
+      const currentControl = getControl(form.controls, currentIndexes);
+      if (
+        currentControl?.placeholder_info?.type !== PlaceHolderTypeEnum.Start
+      ) {
+        questionStackRef.current.push([]);
+      }
+
+      const prevControl = getControl(form.controls, prevIndexes);
+      const controlId = prevControl?.control_id;
       if (controlId) {
         closeView(controlId, "FormContainer");
       }
@@ -154,7 +165,6 @@ export const FormPageContextProvider = memo(
       }
       indexesRef.current = currIndexes;
       indexListenersRef.current.forEach((listener) => listener(currIndexes!));
-      questionStackRef.current.push([]);
       closePage(currIndexes, prevIndexes);
     };
 

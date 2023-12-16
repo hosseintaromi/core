@@ -39,10 +39,9 @@ type FormPageContextProviderProps = {
 export const FormPageContextProvider = memo(
   ({ children, form }: FormPageContextProviderProps) => {
     const questionStackRef = useRef<string[][]>([]);
-    const pageStackRef = useRef<PageIndexesType[]>([]);
+    const pageStackRef = useRef<FormPageViewDataType[]>([]);
     const indexListenersRef = useRef<IndexListenersType[]>([]);
     const indexesRef = useRef<PageIndexesType>([0]);
-    const viewDataRef = useRef<FormPageViewDataType>({});
 
     const addNewQuestion = (id: string) => {
       const control = getControlById(form.controls, id);
@@ -86,21 +85,16 @@ export const FormPageContextProvider = memo(
     };
 
     const openPage = (indexes: number[], defaultValues?: FieldValues) => {
-      form.values = {
-        ...form.values,
-        ...defaultValues,
-        ...viewDataRef.current.getFormValues?.(),
-      };
-      viewDataRef.current = {
+      const data = {
         form,
         indexes,
       };
-      pageStackRef.current.push(indexes);
+      pageStackRef.current.push(data);
       const controlId = getControl(form.controls, indexes)?.control_id;
       openView({
         id: controlId,
         type: "FormContainer",
-        data: viewDataRef.current,
+        data,
         component: FormPageItem,
       });
     };
@@ -109,7 +103,7 @@ export const FormPageContextProvider = memo(
       currentIndexes: PageIndexesType,
       prevIndexes: PageIndexesType,
     ) => {
-      pageStackRef.current.push(currentIndexes);
+      console.log(form.values);
       const currentControl = getControl(form.controls, currentIndexes);
       if (
         currentControl?.placeholder_info?.type !== PlaceHolderTypeEnum.Start
@@ -163,17 +157,24 @@ export const FormPageContextProvider = memo(
 
     const gotoPrev = () => {
       // TODO apicalls???
-
+      form.values = {
+        ...form.values,
+        ...pageStackRef.current[
+          pageStackRef.current.length - 1
+        ]?.getFormValues?.(),
+      };
       questionStackRef.current.pop();
       questionStackRef.current.pop();
-      const prevIndexes = pageStackRef.current.pop();
-      let currIndexes = pageStackRef.current.pop();
-      if (!currIndexes || !currIndexes.length || !prevIndexes) {
+      const prevIndexes = pageStackRef.current.pop()?.indexes;
+      let currIndexes = pageStackRef.current[pageStackRef.current.length - 1];
+      if (!currIndexes || !prevIndexes) {
         return;
       }
-      indexesRef.current = currIndexes;
-      indexListenersRef.current.forEach((listener) => listener(currIndexes!));
-      closePage(currIndexes, prevIndexes);
+      indexesRef.current = currIndexes.indexes || [];
+      indexListenersRef.current.forEach((listener) =>
+        listener(currIndexes.indexes!),
+      );
+      closePage(currIndexes.indexes || [], prevIndexes);
     };
 
     const addIndexListener = (listener: IndexListenersType) => {
@@ -181,15 +182,19 @@ export const FormPageContextProvider = memo(
     };
 
     const submitNext = () =>
-      viewDataRef.current?.submitHandler?.((data) => gotoNext(data))();
+      pageStackRef.current[pageStackRef.current.length - 1].submitHandler?.(
+        (data) => gotoNext(data),
+      )();
 
     const submitForm = () =>
-      viewDataRef.current?.submitHandler?.((data) => {
-        console.log("APICALL__doneForm", {
-          form_id: form.form_id,
-        });
-        gotoNext(data);
-      })();
+      pageStackRef.current[pageStackRef.current.length - 1].submitHandler?.(
+        (data) => {
+          console.log("APICALL__doneForm", {
+            form_id: form.form_id,
+          });
+          gotoNext(data);
+        },
+      )();
 
     const addSendPage = () => {
       const controls = form.controls;

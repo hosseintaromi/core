@@ -5,10 +5,12 @@ import ControlWrapper from "./control-wrapper/ControlWrapper";
 import { FBContextProvider } from "../../context/FBContextProvider";
 import { FormPageViewDataType } from "../../@types/FormPageTypes";
 import NavigationHandler from "./NavigationHandler";
+import { useFormPage } from "../../hooks/useFormPage";
 
 const FormPageItem = () => {
   const { viewData } = useView<FormPageViewDataType>();
-  const { form, indexes } = viewData;
+  const { indexes } = viewData;
+  const { form } = useFormPage({});
   const control = getControl(form?.controls || [], indexes || []);
   if (!form || !indexes || indexes.length < 1 || !control) {
     return <></>;

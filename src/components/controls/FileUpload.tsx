@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { ChangeEvent, useEffect, useRef, useState } from "react";
 import { ControlType } from "../../@types/controls/ControlTypes";
 import { FileTypeEnum } from "../../@types/controls/FileUploadTypes";
 import { useFBRegisterControl } from "../../hooks/useFBRegisterControl";
@@ -67,8 +67,21 @@ const FileUpload = ({ control }: FileUploadPropsType) => {
   const [file, setFile] = useState<File | undefined>();
   const [fileUrl, setFileUrl] = useState<string>();
   let inputRef = useRef<HTMLInputElement | null>();
-  const { onChange, onBlur, name, ref } = useFBRegisterControl(control);
+  const { onChange, onBlur, name, ref, defaultValue } =
+    useFBRegisterControl(control);
   const theme = useTheme();
+
+  useEffect(() => {
+    async function fetchFile() {
+      const url = await getDataUrl(defaultValue[0]);
+      setFileUrl(url);
+    }
+    console.log(defaultValue);
+    if (defaultValue?.length) {
+      setFile(defaultValue[0]);
+      fetchFile();
+    }
+  }, [defaultValue]);
 
   const info = control.file_upload_info;
   const maxSize = info?.max_size;

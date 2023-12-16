@@ -18,7 +18,7 @@ type DatePickerPropsType = {
 const DatePicker = ({ control, isFloatingBox }: DatePickerPropsType) => {
   const theme = useTheme();
   const { convertLocale } = useGlobalLocales();
-  const { onChange, onBlur, name, ref, defaultValue } =
+  let { onChange, onBlur, name, ref, defaultValue } =
     useFBRegisterControl(control);
   const { getControlErrors } = useFBControl(control);
 
@@ -38,10 +38,15 @@ const DatePicker = ({ control, isFloatingBox }: DatePickerPropsType) => {
     sx: {
       ...dateTimePickerStyle(theme),
     },
-    defaultValue: { defaultValue },
+    defaultValue,
+    // inputRef: ref,
     onChange: (value: any) =>
-      onChange({ target: { value, name: control.control_id } }),
-    ref: ref,
+      onChange({
+        target: {
+          value: value.getTime(),
+          name: control.control_id,
+        },
+      }),
     slotProps: {
       textField: (params: any) => ({
         label: isFloatingBox ? control.label_text : "",

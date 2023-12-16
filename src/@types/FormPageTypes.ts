@@ -7,4 +7,7 @@ export type FormPageViewDataType = {
   form?: FormType;
   indexes?: PageIndexesType;
   submitHandler?: UseFormHandleSubmit<FieldValues, undefined>;
+  getFormValues?: () => {
+    [controlId: string]: string;
+  };
 };

@@ -85,7 +85,12 @@ export const FormPageContextProvider = memo(
       }
     };
 
-    const openPage = (indexes: number[]) => {
+    const openPage = (indexes: number[], defaultValues?: FieldValues) => {
+      form.values = {
+        ...form.values,
+        ...defaultValues,
+        ...viewDataRef.current.getFormValues?.(),
+      };
       viewDataRef.current = {
         form,
         indexes,
@@ -153,7 +158,7 @@ export const FormPageContextProvider = memo(
       indexesRef.current = nextIndexes;
       indexListenersRef.current.forEach((listener) => listener(nextIndexes!));
       questionStackRef.current.push([]);
-      openPage(nextIndexes);
+      openPage(nextIndexes, data);
     };
 
     const gotoPrev = () => {

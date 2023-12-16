@@ -30,6 +30,9 @@ export const FBContext = createContext<{
     id: string,
   ) => void;
   getDefaultValue: (controlId: string) => void;
+  getFormValues: () => {
+    [controlId: string]: string;
+  };
 }>({} as any);
 
 export const FBContextProvider = memo(
@@ -62,6 +65,9 @@ export const FBContextProvider = memo(
       let controls = mainControlRef.current.group_info?.controls;
       const thisControl =
         getControlById(controls || [], target.name) || mainControlRef.current;
+      if (thisControl.type === ControlTypeEnum.DatePicker) {
+        formController.setValue(target.name, target.value);
+      }
       const files = target.files;
       if (thisControl?.conditions && controls) {
         const thenShowControlId = passCondition(thisControl?.conditions, {
@@ -133,6 +139,8 @@ export const FBContextProvider = memo(
     const getDefaultValue = (controlId: string) =>
       controlDefaultValues.current[controlId];
 
+    const getFormValues = () => formController.getValues();
+
     return (
       <>
         <FBContext.Provider
@@ -142,6 +150,7 @@ export const FBContextProvider = memo(
             submitForm,
             registerFormSet,
             getDefaultValue,
+            getFormValues,
           }}
         >
           {children}

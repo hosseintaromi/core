@@ -86,7 +86,6 @@ export const FormPageContextProvider = memo(
 
     const openPage = (indexes: number[], defaultValues?: FieldValues) => {
       const data = {
-        form,
         indexes,
       };
       pageStackRef.current.push(data);
@@ -103,7 +102,6 @@ export const FormPageContextProvider = memo(
       currentIndexes: PageIndexesType,
       prevIndexes: PageIndexesType,
     ) => {
-      console.log(form.values);
       const currentControl = getControl(form.controls, currentIndexes);
       if (
         currentControl?.placeholder_info?.type !== PlaceHolderTypeEnum.Start

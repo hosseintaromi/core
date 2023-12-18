@@ -124,7 +124,6 @@ const FileUpload = ({ control }: FileUploadPropsType) => {
 
   const handleChange = async (e: ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-    onChange(e);
     if (file) {
       setFile(file);
       setFileUrl(await getDataUrl(file));

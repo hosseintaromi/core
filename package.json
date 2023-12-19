@@ -1,6 +1,6 @@
 {
 	"name": "@hosseintaromi/core",
-	"version": "0.1.82",
+	"version": "0.1.83",
 	"description": "core application for navigation in react projects",
 	"scripts": {
 		"rollup": "rollup -c",

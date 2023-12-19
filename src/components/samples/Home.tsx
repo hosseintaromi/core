@@ -1,13 +1,13 @@
 import React from "react";
 import { useRef } from "react";
-import MenuInlineSample from "./MenuInlineSample";
+import { MenuInlineSample } from "./MenuInlineSample";
 import { EventType } from "../../hooks/useEvent";
-import OverlaySlideContainer from "../containers/OverlaySlideContainer";
-import SlideContainer from "../containers/SlideContainer";
-import MenuInlineSample2 from "./MenuInlineSample2";
-import MenuInlineSample3 from "./MenuInlineSample3";
+import { OverlaySlideContainer } from "../containers/OverlaySlideContainer";
+import { SlideContainer } from "../containers/SlideContainer";
+import { MenuInlineSample2 } from "./MenuInlineSample2";
+import { MenuInlineSample3 } from "./MenuInlineSample3";
 
-function Home() {
+export function Home() {
 	const elRef = useRef<HTMLElement | undefined>();
 
 	return (
@@ -41,5 +41,3 @@ function Home() {
 		</div>
 	);
 }
-
-export default Home;

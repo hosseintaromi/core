@@ -1,6 +1,6 @@
 import React from "react";
 import { ViewComponent } from "../ViewComponent";
-import ViewContextProvider from "../../contexts/ViewContextProvider";
+import { ViewContextProvider } from "../../contexts/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import {
 	onEnterTabContainerConfig,
@@ -10,7 +10,7 @@ import {
 } from "../../utils/viewAnimations";
 import { ViewContainerType } from "../../@types/commonView";
 
-const MasterTabContainer = () => {
+export const MasterTabContainer = () => {
 	const { viewsInfo } = useViewManage(
 		ViewContainerType.MasterTab,
 		0,
@@ -38,5 +38,3 @@ const MasterTabContainer = () => {
 		</div>
 	);
 };
-
-export default MasterTabContainer;

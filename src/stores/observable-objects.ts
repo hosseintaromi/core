@@ -22,9 +22,7 @@ class MessageObservable extends Observable<Message> {
   }
 }
 
-const observables = {
+export const observables = {
   chat: new ChatObservable(),
   message: new MessageObservable(),
 };
-
-export default observables;

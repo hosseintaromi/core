@@ -1,7 +1,7 @@
 import React from "react";
 import { useView } from "../../hooks/useView";
 
-function MenuInlineSample3() {
+export function MenuInlineSample3() {
 	const { closeByType, close } = useView();
 	const closeAll = () => {
 		closeByType("All");
@@ -23,5 +23,3 @@ function MenuInlineSample3() {
 		</div>
 	);
 }
-
-export default MenuInlineSample3;

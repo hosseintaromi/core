@@ -7,7 +7,7 @@ import {
 	MutableRefObject,
 } from "react";
 import { ViewComponent } from "../ViewComponent";
-import ViewContextProvider from "../../contexts/ViewContextProvider";
+import { ViewContextProvider } from "../../contexts/ViewContextProvider";
 import {
 	closeView,
 	openView,
@@ -34,7 +34,7 @@ export interface OverlayInlineData<T, U> {
 	show?: (show: boolean) => void;
 }
 
-const OverlayInlineContainer = <T, U>({
+export const OverlayInlineContainer = <T, U>({
 	config,
 }: {
 	config: OverlayInlineData<T, U>;
@@ -261,5 +261,3 @@ const OverlayInlineContainer = <T, U>({
 		<></>
 	);
 };
-
-export default OverlayInlineContainer;

@@ -1,11 +1,11 @@
 import React from "react";
-import ViewContextProvider from "../../contexts/ViewContextProvider";
+import { ViewContextProvider } from "../../contexts/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import { ViewComponent } from "../ViewComponent";
 import { ViewEvent } from "../../@types/view";
 import { bezier } from "../../utils/bezier";
 
-const DesktopRightContainer = () => {
+export const DesktopRightContainer = () => {
 	const openConfig: ViewEvent = {
 		duration: 300,
 		start(newView, prevView) {
@@ -98,5 +98,3 @@ const DesktopRightContainer = () => {
 		</div>
 	);
 };
-
-export default DesktopRightContainer;

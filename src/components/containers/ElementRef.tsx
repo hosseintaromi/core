@@ -1,7 +1,7 @@
 import React from "react";
 import { ReactNode, useEffect, useRef } from "react";
 
-const ElementRef = ({
+export const ElementRef = ({
 	className,
 	children,
 	onLoad,
@@ -22,5 +22,3 @@ const ElementRef = ({
 		</div>
 	);
 };
-
-export default ElementRef;

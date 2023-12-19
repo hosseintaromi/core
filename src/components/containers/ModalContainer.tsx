@@ -1,13 +1,13 @@
 import React, { useEffect, useRef } from "react";
 import { ViewEvent } from "../../@types/view";
 import { ViewComponent } from "../ViewComponent";
-import ViewContextProvider from "../../contexts/ViewContextProvider";
+import { ViewContextProvider } from "../../contexts/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import { bezier } from "../../utils/bezier";
 import { closeView } from "../../utils/viewManager";
 import { ViewContainerType } from "../../@types/commonView";
 
-const ModalContainer = () => {
+export const ModalContainer = () => {
 	const slideIn = bezier(0.25, 1, 0.5, 1);
 	const backDropRef = useRef<any>(null);
 
@@ -108,5 +108,3 @@ const ModalContainer = () => {
 		</div>
 	);
 };
-
-export default ModalContainer;

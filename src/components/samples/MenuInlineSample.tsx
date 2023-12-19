@@ -1,32 +1,42 @@
 import React from "react";
-import { useView } from "../../hooks/useView";
-import { getChats, updateTest } from "../../stores/chat";
-import { Chat } from "../../stores/observable-objects";
-import { ChatItem } from "./ChatItem";
-import { ChatItem2 } from "./ChatItem2";
-import { MenuInlineSample2 } from "./MenuInlineSample2";
-import { useEffect, useState } from "react";
+import { getChats, chatUpdate, Chat } from "../../stores/chat";
+import ChatItem from "./ChatItem";
+import { useEffect, useState, memo } from "react";
+import { Message } from "../../stores";
+import ItemWrapper from "./ItemWrapper";
+import { getMessages, messageUpdate } from "../../stores/message";
 
-export function MenuInlineSample() {
-	const { close, openView } = useView();
+function MenuInlineSample() {
 	const [chats, setChats] = useState<Chat[]>([]);
+	const [messages, setMessages] = useState<Message[]>([]);
 
-	useEffect(() => {
-		const chats = getChats();
-		setChats(chats);
-		// setTimeout(() => {
-		//   updateTest();
-		// }, 3000);
-	}, []);
+	useEffect(
+		() => {
+			const chats = getChats();
+			const messages = getMessages();
+			setChats(chats);
+			setMessages(messages);
+			setTimeout(() => {
+				messageUpdate();
+				chatUpdate();
+			}, 3000);
+		},
+		// eslint-disable-next-line react-hooks/exhaustive-deps
+		[]
+	);
 
 	return (
 		<div>
 			{chats?.map((chat, index) => (
-				<ChatItem key={index} chat={chat} />
+				<ItemWrapper key={index}>
+					<ChatItem chat={chat} message={messages[index]} />
+				</ItemWrapper>
 			))}
-			{chats?.map((chat, index) => (
-				<ChatItem2 key={index} chat={chat} />
-			))}
+			{/* {chats?.map((chat, index) => (
+        <ChatItem2 key={index} chat={chat} />
+      ))} */}
 		</div>
 	);
 }
+
+export default memo(MenuInlineSample, () => true);

@@ -1,4 +1,4 @@
-import observables, { Chat } from "./observable-objects";
+import { Chat, observables } from "./observable-objects";
 
 const chats: Chat[] = [
   { id: "1", name: "ali" },

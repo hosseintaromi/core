@@ -1,6 +1,6 @@
 import React from "react";
 import { useObservable } from "../../hooks/useObservable";
-import observables, { Chat } from "../../stores/observable-objects";
+import { Chat, observables } from "../../stores/observable-objects";
 
 export function ChatItem3({ chat }: { chat: Chat }) {
 	const _chat = useObservable(observables.chat, chat);

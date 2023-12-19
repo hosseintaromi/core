@@ -1,6 +1,6 @@
 import React from "react";
 import { ViewComponent } from "../ViewComponent";
-import ViewContextProvider from "../../contexts/ViewContextProvider";
+import { ViewContextProvider } from "../../contexts/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import {
 	closeTabAnimationConfig,

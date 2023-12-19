@@ -1,7 +1,7 @@
 {
 	"name": "@hosseintaromi/core",
 	"version": "0.1.81",
-	"description": "Easily play any type of video by customizing the appearance",
+	"description": "core application for navigation in react projects",
 	"scripts": {
 		"rollup": "rollup -c",
 		"test": "jest",
@@ -9,7 +9,7 @@
 		"build-storybook": "storybook build",
 		"pb": "npm version patch && rollup -c && npm publish"
 	},
-	"author": "Hossein Taromi",
+	"author": "Reihaneh SadatShoukouhi",
 	"license": "ISC",
 	"devDependencies": {
 		"@babel/core": "^7.22.17",
@@ -69,8 +69,7 @@
 		"react-error-boundary": "^4.0.12"
 	},
 	"keywords": [
-		"hls",
-		"reactPlayer",
-		"ReactHlsPlayer"
+		"core",
+		"navigation"
 	]
 }

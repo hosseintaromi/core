@@ -1,11 +1,11 @@
 import React from "react";
 import { useRef } from "react";
-import { MenuInlineSample } from "./MenuInlineSample";
 import { EventType } from "../../hooks/useEvent";
 import { OverlaySlideContainer } from "../containers/OverlaySlideContainer";
 import { SlideContainer } from "../containers/SlideContainer";
 import { MenuInlineSample2 } from "./MenuInlineSample2";
 import { MenuInlineSample3 } from "./MenuInlineSample3";
+import { MenuInlineSample } from "./MenuInlineSample";
 
 export function Home() {
 	const elRef = useRef<HTMLElement | undefined>();

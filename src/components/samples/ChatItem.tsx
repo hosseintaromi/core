@@ -1,10 +1,11 @@
 import React from "react";
 import { useObservable } from "../../hooks";
 import useContextEvents from "../../hooks/useContextEvents";
-import { Chat, Message, chatObservable } from "../../stores";
+import { Chat, chatObservable } from "../../stores";
 import { useEffect } from "react";
+import { Message } from "../../stores/message";
 
-function ChatItem({ chat, message }: { chat: Chat; message: Message }) {
+export function ChatItem({ chat, message }: { chat: Chat; message: Message }) {
 	const _chat = useObservable(chatObservable, chat);
 
 	const { listen, call } = useContextEvents<{ onReady: "onReady" }, any>(
@@ -21,5 +22,3 @@ function ChatItem({ chat, message }: { chat: Chat; message: Message }) {
 		</>
 	);
 }
-
-export default ChatItem;

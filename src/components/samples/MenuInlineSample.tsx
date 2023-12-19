@@ -1,12 +1,11 @@
 import React from "react";
 import { getChats, chatUpdate, Chat } from "../../stores/chat";
-import ChatItem from "./ChatItem";
+import { ChatItem } from "./ChatItem";
 import { useEffect, useState, memo } from "react";
-import { Message } from "../../stores";
-import ItemWrapper from "./ItemWrapper";
-import { getMessages, messageUpdate } from "../../stores/message";
+import { ItemWrapper } from "./ItemWrapper";
+import { Message, getMessages, messageUpdate } from "../../stores/message";
 
-function MenuInlineSample() {
+export function MenuInlineSample() {
 	const [chats, setChats] = useState<Chat[]>([]);
 	const [messages, setMessages] = useState<Message[]>([]);
 
@@ -38,5 +37,3 @@ function MenuInlineSample() {
 		</div>
 	);
 }
-
-export default memo(MenuInlineSample, () => true);

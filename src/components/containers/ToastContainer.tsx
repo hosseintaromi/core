@@ -1,6 +1,6 @@
 import React from "react";
 import { ViewComponent } from "../ViewComponent";
-import ViewContextProvider from "../../contexts/ViewContextProvider";
+import { ViewContextProvider } from "../../contexts/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import {
 	onCloseToastConfig,
@@ -8,7 +8,7 @@ import {
 } from "../../utils/viewAnimations";
 import { ViewContainerType } from "../../@types/commonView";
 
-const ToastContainer = () => {
+export const ToastContainer = () => {
 	const { viewsInfo } = useViewManage(
 		ViewContainerType.Toast,
 		5,
@@ -33,5 +33,3 @@ const ToastContainer = () => {
 		</React.Fragment>
 	);
 };
-
-export default ToastContainer;

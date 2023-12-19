@@ -1,6 +1,6 @@
 import React, { useEffect, useRef } from "react";
 import { ViewComponent } from "../ViewComponent";
-import ViewContextProvider from "../../contexts/ViewContextProvider";
+import { ViewContextProvider } from "../../contexts/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import { closeView } from "../../utils/viewManager";
 import { ViewEvent, ViewRef } from "../../@types/view";
@@ -12,7 +12,7 @@ interface OverlayParamsType {
 	position: "TopLeft" | "TopRight" | "BottomLeft" | "BottomRight";
 }
 
-const OverlayContainer = () => {
+export const OverlayContainer = () => {
 	const slideIn = bezier(0.25, 1, 0.5, 1);
 
 	const backDropRef = useRef<any>(null);
@@ -124,5 +124,3 @@ const OverlayContainer = () => {
 		</div>
 	);
 };
-
-export default OverlayContainer;

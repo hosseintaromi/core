@@ -2,8 +2,8 @@ import React, { useEffect } from "react";
 import { MessageType } from "../@types/commonView";
 import { openView } from "../utils";
 import { Toast } from "../components";
-import ToastContainer from "../components/containers/ToastContainer";
-import MasterTabContainer from "../components/containers/MasterTabContainer";
+import { ToastContainer } from "../components/containers/ToastContainer";
+import { MasterTabContainer } from "../components/containers/MasterTabContainer";
 
 interface Props {
 	message: string;
@@ -73,5 +73,3 @@ export function Container({
 		</>
 	);
 }
-
-export default Container;

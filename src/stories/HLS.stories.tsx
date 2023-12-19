@@ -1,6 +1,6 @@
 import React from "react";
 import { withActions } from "@storybook/addon-actions/decorator";
-import Toast from "./Toast";
+import { Container as Toast } from "./Toast";
 import { MessageType } from "../@types/commonView";
 
 export default {

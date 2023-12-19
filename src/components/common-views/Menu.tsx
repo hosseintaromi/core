@@ -10,7 +10,7 @@ export interface Option {
 	value: string;
 }
 
-function Menu() {
+export function Menu() {
 	const { close, viewData } = useView<MenuOptions>();
 	return (
 		<div
@@ -34,5 +34,3 @@ function Menu() {
 		</div>
 	);
 }
-
-export default Menu;

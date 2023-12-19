@@ -1,9 +1,9 @@
 import React from "react";
 import { ViewComponent } from "../ViewComponent";
-import ViewContextProvider from "../../contexts/ViewContextProvider";
+import { ViewContextProvider } from "../../contexts/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 
-const DesktopMainContainer = () => {
+export const DesktopMainContainer = () => {
 	const { viewsInfo } = useViewManage(
 		"MasterMiddle",
 		0,
@@ -57,5 +57,3 @@ const DesktopMainContainer = () => {
 		</div>
 	);
 };
-
-export default DesktopMainContainer;

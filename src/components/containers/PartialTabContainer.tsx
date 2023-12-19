@@ -1,6 +1,6 @@
 import React from "react";
 import { ViewComponent } from "../ViewComponent";
-import ViewContextProvider from "../../contexts/ViewContextProvider";
+import { ViewContextProvider } from "../../contexts/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import {
 	closeTabAnimationConfig,
@@ -9,7 +9,7 @@ import {
 	slideIn,
 } from "../../utils/viewAnimations";
 
-const PartialTabContainer = ({
+export const PartialTabContainer = ({
 	containerName,
 	className,
 }: {
@@ -102,5 +102,3 @@ const PartialTabContainer = ({
 		</div>
 	);
 };
-
-export default PartialTabContainer;

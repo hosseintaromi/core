@@ -1,11 +1,11 @@
 import React, { MutableRefObject, useCallback, useEffect, useRef } from "react";
 import { ViewComponent } from "../ViewComponent";
-import ViewContextProvider from "../../contexts/ViewContextProvider";
+import { ViewContextProvider } from "../../contexts/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import { openView } from "../../utils/viewManager";
 import { EventType, TouchEvent, useEvent } from "../../hooks/useEvent";
 import { useAnimate } from "../../hooks/useAnimate";
-import ElementRef from "./ElementRef";
+import { ElementRef } from "./ElementRef";
 
 interface MoveInfo {
 	from: number;
@@ -34,7 +34,7 @@ export interface SlideInlineData<T, U> {
 	show?: (show: boolean) => void;
 }
 
-const SlideContainer = <T, U>({
+export const SlideContainer = <T, U>({
 	config,
 }: {
 	config: SlideInlineData<T, U>;
@@ -291,5 +291,3 @@ const SlideContainer = <T, U>({
 		</div>
 	);
 };
-
-export default SlideContainer;

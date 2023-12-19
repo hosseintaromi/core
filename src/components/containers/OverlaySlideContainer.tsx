@@ -1,7 +1,7 @@
 import React, { MutableRefObject, useCallback, useRef } from "react";
 import { ViewEvent, ViewEventConfigClose } from "../../@types/view";
 import { ViewComponent } from "../ViewComponent";
-import ViewContextProvider from "../../contexts/ViewContextProvider";
+import { ViewContextProvider } from "../../contexts/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
 import { bezier } from "../../utils/bezier";
 import { closeView, openView } from "../../utils/viewManager";
@@ -19,7 +19,7 @@ export interface OverlayInlineData<T, U> {
 	show?: (show: boolean) => void;
 }
 
-const OverlaySlideContainer = <T, U>({
+export const OverlaySlideContainer = <T, U>({
 	config,
 }: {
 	config: OverlayInlineData<T, U>;
@@ -199,5 +199,3 @@ const OverlaySlideContainer = <T, U>({
 		</div>
 	);
 };
-
-export default OverlaySlideContainer;

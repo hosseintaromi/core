@@ -8,7 +8,7 @@ import {
 } from "../../utils/viewAnimations";
 import { ViewContainerType } from "../../@types/commonView";
 
-const TabContainer = () => {
+export const TabContainer = () => {
 	const { viewsInfo } = useViewManage(
 		ViewContainerType.Tab,
 		2,
@@ -34,5 +34,3 @@ const TabContainer = () => {
 		</React.Fragment>
 	);
 };
-
-export default TabContainer;

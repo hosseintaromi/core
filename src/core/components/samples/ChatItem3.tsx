@@ -1,8 +1,8 @@
-import { useObservable } from "../../hooks/useObservable";
-import observables, { Chat } from "../../stores/observable-objects";
+import { useObserver } from "../../hooks/useObserver";
+import { Chat, chatObservable } from "../../stores/chat";
 
 function ChatItem3({ chat }: { chat: Chat }) {
-  const _chat = useObservable(observables.chat, chat);
+  const _chat = useObserver(chatObservable, chat);
 
   return <h1>{_chat.name}</h1>;
 }

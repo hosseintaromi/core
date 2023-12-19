@@ -45,7 +45,7 @@ export abstract class Observable<T> implements IObservable<T> {
     }
   }
 
-  private update(subject: T) {
+  public update(subject: T) {
     const id = this.getId(subject);
     const observable = this.observables[id];
     observable?.forEach((subscriber) => {
@@ -53,7 +53,7 @@ export abstract class Observable<T> implements IObservable<T> {
     });
   }
 
-  private delete(subject: T) {
+  public delete(subject: T) {
     const id = this.getId(subject);
     const observable = this.observables[id];
     observable?.forEach((subscriber) => {

@@ -1,19 +1,14 @@
 import { useEffect, useRef } from "react";
 
-type GenericEventFn = <U = any>(data: U) => void;
+type GenericEventFn = (data?: any) => void;
 
-export type GenericEvents<T extends Record<keyof T, GenericEventFn>> = {
+export type GenericEvents<T extends Record<keyof T, string>> = {
   [eventName in keyof T]?: GenericEventFn;
 };
 
-export const useContextEvents = <
-  Y extends Record<keyof Y, GenericEventFn>,
-  T = any,
->(
+export const useContextEvents = <Y extends Record<string, string>, T = any>(
   context: React.Context<T>,
 ) => {
-  let myIdentity: GenericEventFn = <Number>(arg: Number) => {};
-  myIdentity("ali");
   const listenersRef = useRef<{
     [key in keyof Y]: GenericEventFn[];
   }>({} as any);
@@ -28,17 +23,17 @@ export const useContextEvents = <
       return;
     }
     const __listeners = eventContext.__listeners;
-    for (let event in events) {
-      if (!__listeners[event]) {
-        bindCall(event);
-        __listeners[event] = [];
+    for (let eventName in events) {
+      if (!__listeners[eventName]) {
+        bindCall(eventName);
+        __listeners[eventName] = [];
       }
-      __listeners[event].push(events[event]);
-      let listeners: GenericEventFn[] = listenersRef.current[event];
+      __listeners[eventName].push(events[eventName]);
+      let listeners: GenericEventFn[] = listenersRef.current[eventName];
       if (!listeners) {
-        listeners = listenersRef.current[event] = [];
+        listeners = listenersRef.current[eventName] = [];
       }
-      listeners.push(events[event]!);
+      listeners.push(events[eventName]!);
     }
   };
 
@@ -53,7 +48,6 @@ export const useContextEvents = <
 
   useEffect(
     () => () => {
-      console.log("useContextEvents", "useEffect");
       const __listeners = eventContext.__listeners;
       const localListeners = listenersRef.current;
       for (let key in localListeners) {

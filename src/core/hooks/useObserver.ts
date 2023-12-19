@@ -1,26 +1,33 @@
 import { useEffect, useCallback, useState } from "react";
 import { IObservable, ObservableActionType } from "../stores/observable";
 
-export const useObservable = <T>(
+export const useObserver = <T>(
   observable: IObservable<T>,
   subject: T,
-  update?: (subject: T) => void,
   remove?: (subject: T) => void,
+  update?: (subject: T) => void,
 ) => {
   const [subjectState, setSubjectState] = useState<T>(subject);
 
-  const subscribe = useCallback((action: ObservableActionType, subject: T) => {
-    switch (action) {
-      case "Update":
-        setSubjectState({ ...subject });
-        update?.(subject);
-        break;
-      case "Delete":
-        remove?.(subject);
-        break;
-    }
+  const subscribe = useCallback(
+    (action: ObservableActionType, newSubject: T) => {
+      switch (action) {
+        case "Update":
+          if (newSubject === subject) {
+            setSubjectState({ ...newSubject });
+          } else {
+            setSubjectState(newSubject);
+          }
+          update?.(newSubject);
+          break;
+        case "Delete":
+          remove?.(newSubject);
+          break;
+      }
+    },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+    [],
+  );
 
   useEffect(
     () => {

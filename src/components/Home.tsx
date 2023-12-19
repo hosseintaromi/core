@@ -1,35 +1,16 @@
-import { useRef, useState, useEffect } from "react";
+import { useRef } from "react";
 import MenuInlineSample from "../core/components/samples/MenuInlineSample";
 import { EventType } from "../core/hooks/useEvent";
-import SlideContainer from "../core/components/containers/SlideContainer";
 import MenuInlineSample2 from "../core/components/samples/MenuInlineSample2";
-import MenuInlineSample3 from "../core/components/samples/MenuInlineSample3";
-import useContextEvents from "../core/hooks/useContextEvents";
-import { MyEvents } from "../@types/sample";
-import { ViewContext } from "../core/context/ViewContextProvider";
+import OverlayInlineContainer from "../core/components/containers/OverlayInlineContainer";
 
 function Home() {
   const elRef = useRef<HTMLElement | undefined>();
-  const countRef = useRef<number>(0);
-  const [count, setCount] = useState<number>();
-
-  const { listen, call } = useContextEvents<MyEvents>(ViewContext);
-
-  useEffect(() => {
-    listen({
-      onChange: (data) => {
-        // const a = data.name;
-      },
-      onReady(data) {},
-    });
-    setInterval(() => {
-      setCount((countRef.current += 1));
-    }, 1000);
-  }, []);
 
   return (
-    <div style={{ overflowY: "scroll", height: "93vh" }}>
+    <div>
       <div style={{ display: "flex" }}>
+        <MenuInlineSample />
         {/* <SlideContainer
           config={{
             event: EventType.Tap,
@@ -42,16 +23,24 @@ function Home() {
             className: "slide-menu",
           }}
         /> */}
-        {/* <OverlaySlideContainer
+        {/* <OverlayInlineContainer
           config={{
-            id: "setting1",
             event: EventType.Tap,
             component: MenuInlineSample,
             elRef: elRef as any,
             className: "slide-menu",
           }}
         /> */}
-        <h1>{count}</h1>
+      </div>
+      <div style={{ display: "flex" }}>
+        <OverlayInlineContainer
+          config={{
+            event: EventType.Tap,
+            component: MenuInlineSample2,
+            elRef: elRef as any,
+            className: "slide-menu",
+          }}
+        />
       </div>
     </div>
   );

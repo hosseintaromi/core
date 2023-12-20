@@ -1,9 +1,11 @@
 import React from "react";
-import { useObservable } from "../../hooks/useObservable";
-import { Chat, observables } from "../../stores/observable-objects";
+import { Chat, chatObservable } from "../../stores/chat";
+import { useObservable } from "../../hooks";
 
-export function ChatItem2({ chat }: { chat: Chat }) {
-	const _chat = useObservable(observables.chat, chat);
+function ChatItem2({ chat }: { chat: Chat }) {
+	useObservable(chatObservable, chat);
 
-	return <h1>{_chat.name}</h1>;
+	return <h1>{chat.name}</h1>;
 }
+
+export default ChatItem2;

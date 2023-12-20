@@ -43,7 +43,7 @@ const DatePicker = ({ control, isFloatingBox }: DatePickerPropsType) => {
     onChange: (value: any) =>
       onChange({
         target: {
-          value: value.getTime(),
+          value: value?.getTime?.(),
           name: control.control_id,
         },
       }),

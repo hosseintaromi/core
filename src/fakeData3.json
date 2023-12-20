@@ -80,6 +80,16 @@
   },
   "controls": [
     {
+      "control_id": "control_id_0",
+      "type": "PlaceHolder",
+      "label_text": "خوش آمدید",
+      "placeholder_info": {
+        "description": "برای پرکردن این پرسشنامه به ۲ دقیقه زمان نیاز دارید.",
+        "type": "Start",
+        "start_caption": "برای شروع کلیک کنید"
+      }
+    },
+    {
       "control_id": "control_id_1",
       "type": "Group",
       "group_info": {
@@ -292,6 +302,15 @@
             "validations": [{ "type": "Required" }]
           }
         ]
+      }
+    },
+    {
+      "control_id": "control_id_12",
+      "type": "PlaceHolder",
+      "label_text": "تشکر",
+      "placeholder_info": {
+        "description": "از زمان شما ممنونیم.",
+        "type": "End"
       }
     }
   ]

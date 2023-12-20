@@ -57,7 +57,7 @@ export const FormPageContextProvider = memo(
         }
         return;
       }
-      pagesStack[pagesStack.length - 1].push(id);
+      pagesStack[pagesStack.length - 1]?.push(id);
       const n = pagesStack[pagesStack.length - 1].length - 1;
       const parentControl = getControlParentById(control, form.controls, id);
       const pageNoType = parentControl?.group_info?.page_no_type;

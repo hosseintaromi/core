@@ -14,8 +14,10 @@ import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
 import FormPage from "./components/FormPage";
 import Home from "./components/Home";
+import { useTimeout } from "./core/hooks/useTimeout";
 
 function App() {
+  const timeout = useTimeout();
   // Create rtl cache
   const cacheRtl = createCache({
     key: "muirtl",
@@ -23,6 +25,16 @@ function App() {
   });
 
   useEffect(() => {
+    timeout(() => {
+      console.log("timeout2");
+    }, 2000);
+    timeout(
+      () => {
+        console.log("timeout2");
+      },
+      4000,
+      true,
+    );
     openView({
       type: ViewContainerType.MasterTab,
       component: Home,

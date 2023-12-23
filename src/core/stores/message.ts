@@ -21,8 +21,9 @@ export function getMessages() {
 }
 
 export function messageUpdate() {
-  const chat = messages[1];
-  chat.text = "by";
+  const msg = messages[1];
+  msg.text = "by";
+  msgObservable.update(msg);
 }
 
-export const messageObservable = new MessageObservable();
+export const msgObservable = new MessageObservable();

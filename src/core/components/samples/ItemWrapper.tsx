@@ -2,7 +2,7 @@ import { useEffect, ReactNode } from "react";
 
 function ItemWrapper({ children }: { children: ReactNode }) {
   useEffect(() => {
-    debugger;
+    // debugger;
   }, []);
   return <>{children}</>;
 }

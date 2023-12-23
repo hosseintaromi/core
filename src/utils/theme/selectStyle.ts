@@ -36,6 +36,13 @@ const selectStyleOverride = ({
           zIndex: 1,
         },
         "& input": { borderRadius: controls_style?.radius + "px" },
+        "&:hover:not(.Mui-focused) .MuiOutlinedInput-notchedOutline": {
+          borderTop: border?.top,
+          borderBottom: border?.bottom,
+          borderRight: border?.right,
+          borderLeft: border?.left,
+          borderWidth: "2px",
+        },
       },
     },
   };

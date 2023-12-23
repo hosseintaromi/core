@@ -53,6 +53,14 @@ const textFieldStyleOverride = ({
           borderRadius: controls_style?.radius + "px",
           boxShadow: controls_style?.shadow,
         },
+        ".MuiOutlinedInput-root:hover:not(.Mui-focused) .MuiOutlinedInput-notchedOutline ":
+          {
+            borderTop: border?.top,
+            borderBottom: border?.bottom,
+            borderRight: border?.right,
+            borderLeft: border?.left,
+            borderWidth: "2px",
+          },
       },
     },
   };

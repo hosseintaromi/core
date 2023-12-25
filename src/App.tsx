@@ -1,0 +1,57 @@
+import TabContainer from "./core/components/containers/TabContainer";
+import ModalContainer from "./core/components/containers/ModalContainer";
+import MasterTabContainer from "./core/components/containers/MasterTabContainer";
+import ToastContainer from "./core/components/containers/ToastContainer";
+import BottomSheetContainer from "./core/components/containers/BottomSheetContainer";
+import { openView } from "./core/utils/viewManager";
+import { ViewContainerType } from "./core/@types/commonView";
+import {} from "./core/utils/extensions";
+import OverlayContainer from "./core/components/containers/OverlayContainer";
+import rtlPlugin from "stylis-plugin-rtl";
+import { CacheProvider } from "@emotion/react";
+import createCache from "@emotion/cache";
+import { prefixer } from "stylis";
+import Home from "./components/Home";
+import { useTimeout } from "./core/hooks/useTimeout";
+import useInit from "./core/hooks/useInit";
+
+function App() {
+  const timeout = useTimeout();
+  // Create rtl cache
+  const cacheRtl = createCache({
+    key: "muirtl",
+    stylisPlugins: [prefixer, rtlPlugin],
+  });
+
+  useInit(() => {
+    timeout(() => {
+      console.log("timeout2");
+    }, 2000);
+    timeout(
+      () => {
+        console.log("timeout2");
+      },
+      4000,
+      true,
+    );
+    openView({
+      type: ViewContainerType.MasterTab,
+      component: Home,
+    });
+  });
+
+  return (
+    <>
+      <CacheProvider value={cacheRtl}>
+        <MasterTabContainer />
+        <TabContainer />
+        <ModalContainer />
+        <BottomSheetContainer />
+        <ToastContainer />
+        <OverlayContainer />
+      </CacheProvider>
+    </>
+  );
+}
+
+export default App;

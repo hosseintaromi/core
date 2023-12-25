@@ -1,0 +1,186 @@
+{
+  "form_id": "form_id_1",
+  "type": "Form",
+  "title": "فرم ثبت نام",
+  "hide_question_number": false,
+  "has_page_number": true,
+  "has_progress": true,
+  "locale": "Persian",
+  "theme": {
+    "theme_id": "dfdd",
+    "name": "پیش فرض 1",
+    "is_default": true,
+    "padding": {
+      "horizontal": 10,
+      "vertical": 10
+    },
+    "background": {
+      "color": "#f5fdff"
+    },
+    "font_name": "IRANSans",
+    "font_size": 14,
+    "labels_style": {
+      "font_size": 32,
+      "font_weight": "600",
+      "text_color": "#f15976"
+    },
+
+    "controls_style": {
+      "border": {
+        "top": "1px solid #67cae0",
+        "left": "1px solid #67cae0",
+        "right": "1px solid #67cae0",
+        "bottom": "1px solid #67cae0"
+      },
+      "shadow": "inset 0 0 0 .125rem #67cae0",
+      "padding": {
+        "horizontal": 20,
+        "vertical": 10
+      },
+      "margin": {
+        "horizontal": 20,
+        "vertical": 10
+      },
+      "background_color": "#f5fdff",
+      "radius": 18,
+      "text_color": "#f15976"
+    },
+
+    "placeholders_style": {
+      "text_color": "#f15976"
+    },
+
+    "groups_style": {},
+
+    "buttons_style": {
+      "border": {
+        "top": "1px solid #67cae0",
+        "left": "1px solid #67cae0",
+        "right": "1px solid #67cae0",
+        "bottom": "1px solid #67cae0"
+      },
+      "shadow": "none",
+      "background_color": "#67cae0",
+      "text_color": "#000"
+    }
+  },
+  "layout": { "floating_box": false },
+  "values": {
+    "control_id_1": "ریحانه",
+    "control_id_2": 1,
+    "control_id_7": "هلتنسی مبسیمبتسی بسیمنبتسی بتمن ینبت بین.",
+    "control_id_6": "0",
+    "control_id_5": 1700305220701
+  },
+  "controls": [
+    {
+      "control_id": "control_id_1",
+      "type": "TextBox",
+      "label_text": "نام و نام‌خانوادگی",
+      "textbox_info": { "type": "Text" },
+      "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+      "validations": [
+        { "type": "Required" },
+        { "type": "Regex", "regex_pattern": "/^[\u0600-\u06FFs]+$/" }
+      ]
+    },
+    {
+      "control_id": "control_id_2",
+      "type": "DropDown",
+      "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+      "label_text": "جنسیت",
+      "dropdown_info": {
+        "searchable": false,
+        "options": [
+          { "value": 0, "text": "زن" },
+          { "value": 1, "text": "مرد" }
+        ]
+      },
+      "conditions": [
+        {
+          "type": "ThenGo",
+          "then_control_id": "control_id_4",
+          "when_control_id": "control_id_2",
+          "conditions": [
+            {
+              "control_id": "control_id_2",
+              "condition_type": "Equal",
+              "condition_value": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "control_id": "control_id_3",
+      "type": "Group",
+      "group_info": {
+        "type": "FormSet",
+        "title": "اطلاعات حقوقی",
+        "controls": [
+          {
+            "control_id": "control_id_5",
+            "type": "DatePicker",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+            "label_text": "تاریخ تولد"
+          },
+          {
+            "control_id": "control_id_6",
+            "type": "MultipleOption",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+            "label_text": "مقطع تحصیلی",
+            "multiple_option_info": {
+              "type": "Text",
+              "multi_select": false,
+              "randomize_option_number": false,
+              "arrange_type": "Vertical",
+              "options": [
+                { "text": "دیپلم", "value": 0 },
+                { "text": "کارشناسی", "value": 1 },
+                { "text": "ارشد", "value": 2 }
+              ]
+            },
+            "validations": [{ "type": "Required" }]
+          }
+        ]
+      }
+    },
+    {
+      "control_id": "control_id_4",
+      "type": "Group",
+      "group_info": {
+        "type": "FormSet",
+        "title": "آدرس",
+        "controls": [
+          {
+            "control_id": "control_id_7",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+            "type": "TextArea",
+            "label_text": "توضیحات",
+            "textarea_info": { "line_count": 3, "max_line": 4 }
+          },
+          {
+            "control_id": "control_id_8",
+            "type": "PlaceHolder",
+            "description": "ینمبتی ینبتسی نتب نیتبنیب نیتبن نب نتب نیتب نتهتثنصضجتم یبخح.",
+            "label_text": "قوانین",
+            "placeholder_info": {
+              "description": "قوانین را خوانده و تایید می‌نمایم.",
+              "type": "End"
+            }
+          },
+          {
+            "control_id": "control_id_9",
+            "type": "FileUpload",
+            "label_text": "کارت ملی",
+            "file_upload_info": {
+              "file_type": "Image",
+              "allowed_extensions": ["jpg"],
+              "max_size": 1000
+            }
+          }
+        ]
+      }
+    }
+  ]
+}

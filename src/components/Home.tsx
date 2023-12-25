@@ -1,3 +1,4 @@
+import React from "react";
 import { useRef } from "react";
 import { useLocale } from "../hooks/useLocale";
 import { LocaleKeyChat, LocaleKeyUser } from "../@types/locale";

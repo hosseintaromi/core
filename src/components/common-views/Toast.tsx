@@ -2,6 +2,7 @@ import { useRef } from "react";
 import { useView } from "../../hooks/useView";
 import { MessageToast } from "../../@types/commonView";
 import useInit from "../../hooks/useInit";
+import React from "react";
 
 export function Toast() {
   const timer = useRef<NodeJS.Timeout>();

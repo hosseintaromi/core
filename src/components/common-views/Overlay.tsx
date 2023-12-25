@@ -1,4 +1,5 @@
 import { useView } from "../../hooks/useView";
+import React from "react";
 
 export interface MenuConfig {
   options: MenuOption[];

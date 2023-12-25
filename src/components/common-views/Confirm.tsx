@@ -1,5 +1,6 @@
 import { MessageConfirm } from "../../@types/commonView";
 import { useView } from "../../hooks/useView";
+import React from "react";
 
 export function Confirm() {
   const { close, viewData } = useView<MessageConfirm>({});

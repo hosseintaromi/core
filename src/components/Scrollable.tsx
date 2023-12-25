@@ -1,3 +1,4 @@
+import React from "react";
 import { ReactNode, useRef } from "react";
 import { EventType, useEvent } from "../hooks/useEvent";
 import { ViewInfo } from "../@types/view";

@@ -6,6 +6,7 @@ import {
   MessageLoadingResponseType,
 } from "../../@types/commonView";
 import useInit from "../../hooks/useInit";
+import React from "react";
 
 export function LoadingDialog() {
   const [loadingEnd, setLoadingEnd] = useState<

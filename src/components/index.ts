@@ -4,7 +4,6 @@ export * from './ViewComponent'
 
 export * from './common-views/Alert'
 export * from './common-views/Confirm'
-export * from './common-views/ErrorBoundaryWrapper'
 export * from './common-views/LoadingDialog'
 export * from './common-views/Menu'
 export * from './common-views/Overlay'

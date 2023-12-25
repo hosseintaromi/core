@@ -10,6 +10,7 @@ import {
 } from "../@types/view";
 import { closeView, openView } from "../utils/viewManager";
 import useInit from "../hooks/useInit";
+import React from "react";
 
 export const ViewContext = createContext<ViewContextType>({} as any);
 

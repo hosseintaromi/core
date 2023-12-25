@@ -1,3 +1,4 @@
+import React from "react";
 import TabContainer from "./components/containers/TabContainer";
 import ModalContainer from "./components/containers/ModalContainer";
 import MasterTabContainer from "./components/containers/MasterTabContainer";
@@ -10,7 +11,6 @@ import OverlayContainer from "./components/containers/OverlayContainer";
 import Home from "./components/Home";
 import { useTimeout } from "./hooks/useTimeout";
 import useInit from "./hooks/useInit";
-
 function App() {
   const timeout = useTimeout();
 

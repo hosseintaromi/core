@@ -1,6 +1,7 @@
 import { useRef } from "react";
 import { ViewInfo } from "../@types/view";
 import useInit from "../hooks/useInit";
+import React from "react";
 
 export function ViewComponent({ viewInfo }: { viewInfo: ViewInfo }) {
   const elRef = useRef<any>(null);

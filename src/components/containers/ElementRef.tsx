@@ -1,24 +1,25 @@
-import React from "react";
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useRef } from "react";
+import useInit from "../../hooks/useInit";
 
-export const ElementRef = ({
-	className,
-	children,
-	onLoad,
+const ElementRef = ({
+  className,
+  children,
+  onLoad,
 }: {
-	className: string;
-	children?: ReactNode;
-	onLoad?: (ref: HTMLElement) => void;
+  className: string;
+  children?: ReactNode;
+  onLoad?: (ref: HTMLElement) => void;
 }) => {
-	const elRef = useRef<any>();
-	useEffect(() => {
-		onLoad?.(elRef.current);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+  const elRef = useRef<any>();
+  useInit(() => {
+    onLoad?.(elRef.current);
+  });
 
-	return (
-		<div ref={elRef} className={className}>
-			{children}
-		</div>
-	);
+  return (
+    <div ref={elRef} className={className}>
+      {children}
+    </div>
+  );
 };
+
+export default ElementRef;

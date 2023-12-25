@@ -8,8 +8,14 @@ export interface OverlayData<T, U> {
   data?: T;
   backdrop?: boolean;
   className?: string;
+  position?:
+    | "TopLeft"
+    | "TopCenter"
+    | "TopRight"
+    | "BottomLeft"
+    | "BottomCenter"
+    | "BottomRight";
   positionType?: "ByEvent" | "ByElement";
-  position?: "TopLeft" | "TopRight" | "BottomLeft" | "BottomRight";
   getTargetElement?: () => HTMLElement;
   onClose?: (res?: U) => void;
   mapDataTo?: (data?: T) => any;
@@ -45,7 +51,7 @@ export const useOverlay = <T, U>(overlayData: OverlayData<T, U>) => {
       data: overlayData.mapDataTo
         ? overlayData.mapDataTo(overlayData.data)
         : overlayData.data,
-      onClosed: (res?: U) => {
+      onClose: (res?: U) => {
         overlayData.onClose?.(res);
       },
       options: {

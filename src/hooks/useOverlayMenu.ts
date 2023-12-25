@@ -1,8 +1,8 @@
-import { MenuOptions, Option, Menu } from "../components/common-views/Menu";
+import Menu, { MenuOptions, Option } from "../components/common-views/Menu";
 import { OverlayData, useOverlay } from "./useOverlay";
 
 export interface OverlayMenuConfig
-  extends Omit<OverlayData<MenuOptions, Option>, "component"> { }
+  extends Omit<OverlayData<MenuOptions, Option>, "component"> {}
 
 export const useOverlayMenu = (menuData: OverlayMenuConfig) => {
   const elRefMenu = useOverlay<MenuOptions, Option>({

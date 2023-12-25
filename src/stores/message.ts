@@ -1,11 +1,11 @@
-import { Observable } from "./observable";
+import { ObjectObservable } from "./observable";
 
 export interface Message {
   id: string;
   text: string;
 }
 
-class MessageObservable extends Observable<Message> {
+class MessageObservable extends ObjectObservable<Message> {
   getId(message: Message) {
     return message.id;
   }
@@ -21,8 +21,9 @@ export function getMessages() {
 }
 
 export function messageUpdate() {
-  const chat = messages[1];
-  chat.text = "by";
+  const msg = messages[1];
+  msg.text = "by";
+  msgObservable.update(msg);
 }
 
-export const messageObservable = new MessageObservable();
+export const msgObservable = new MessageObservable();

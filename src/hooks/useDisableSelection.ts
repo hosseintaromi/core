@@ -1,7 +1,7 @@
-import { useEffect } from "react";
+import useInit from "./useInit";
 
 export const useDisableSelection = () => {
-  useEffect(() => {
+  useInit(() => {
     const handleSelect = (e: Event) => {
       e.preventDefault();
     };
@@ -9,5 +9,5 @@ export const useDisableSelection = () => {
     return () => {
       window.removeEventListener("selectstart", handleSelect);
     };
-  }, []);
+  });
 };

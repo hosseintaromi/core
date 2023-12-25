@@ -1,30 +1,22 @@
-import React from "react";
-import { Suspense, useEffect, useRef } from "react";
-import { ErrorBoundaryWrapper } from "./common-views/ErrorBoundaryWrapper";
+import { useRef } from "react";
 import { ViewInfo } from "../@types/view";
+import useInit from "../hooks/useInit";
 
 export function ViewComponent({ viewInfo }: { viewInfo: ViewInfo }) {
-	const elRef = useRef<any>(null);
-	const className = viewInfo.view.className;
+  const elRef = useRef<any>(null);
+  const className = viewInfo.view.className;
 
-	useEffect(() => {
-		viewInfo.elRef = elRef.current;
-		viewInfo.onInit?.(elRef.current);
-		// eslint-disable-next-line react-hooks/exhaustive-deps
-	}, []);
+  useInit(() => {
+    viewInfo.elRef = elRef.current;
+    viewInfo.onInit?.(elRef.current);
+  });
 
-	const View = viewInfo.view.component;
-
-	return (
-		<div
-			ref={elRef}
-			className={"view-wrapper" + (className ? ` ${className}` : "")}
-		>
-			<ErrorBoundaryWrapper>
-				<Suspense fallback="loading...">
-					<View />
-				</Suspense>
-			</ErrorBoundaryWrapper>
-		</div>
-	);
+  return (
+    <div
+      ref={elRef}
+      className={"view-wrapper" + (className ? ` ${className}` : "")}
+    >
+      {viewInfo.view.component()}
+    </div>
+  );
 }

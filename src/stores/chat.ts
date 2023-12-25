@@ -24,7 +24,7 @@ export function getChats() {
 export function chatUpdate() {
   const chat = chats[1];
   chat.name = "Hasan";
-  chatObservable.update(chat);
+  chatObservable.emit("Update", chat);
 }
 
 export interface ChatInput {
@@ -38,7 +38,7 @@ export interface ChatOutput {
 
 export const apiPost =
   <T, U>(method: string) =>
-    (input: T) =>
-      Promise.resolve<U>({} as U);
+  (input: T) =>
+    Promise.resolve<U>({} as U);
 
 export const getChatsApi = apiPost<ChatInput, ChatOutput>("getChatsApi");

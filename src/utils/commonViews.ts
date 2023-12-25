@@ -29,7 +29,7 @@ export async function openAlert(messageAlert: MessageAlert) {
       id: "alert-" + Date.now(),
       component: Alert,
       data: messageAlert,
-      onClosed: () => {
+      onClose: () => {
         resolve(true);
       },
     });
@@ -58,7 +58,7 @@ export async function openCustomConfirm<T>(
       id: "confirm-" + Date.now(),
       component: component,
       data,
-      onClosed: (res: any) => {
+      onClose: (res: any) => {
         if (res) {
           resolve(res);
         } else {

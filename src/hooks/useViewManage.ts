@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import {
   ChangeContainerEventType,
   CloseType,
@@ -16,6 +16,8 @@ import {
   updateViewsByCloseType,
 } from "../utils/viewManager";
 import { useAnimate } from "./useAnimate";
+import useInit from "./useInit";
+import useFn from "./useFn";
 
 export const useViewManage = (
   type: string,
@@ -32,7 +34,7 @@ export const useViewManage = (
   const initRef = useRef<boolean>(false);
   const { requestAnimate } = useAnimate();
 
-  const handleViewEvent = useCallback(
+  const handleViewEvent = useFn(
     <T extends ViewEventConfigBase>(
       newView: ViewRef,
       prevView?: ViewRef,
@@ -63,11 +65,9 @@ export const useViewManage = (
           },
         );
       }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
   );
 
-  const openView = useCallback(
+  const openView = useFn(
     (newView: ViewType<any>) =>
       new Promise((resolve, reject) => {
         const newPgeInfo: ViewInfo = {
@@ -118,11 +118,9 @@ export const useViewManage = (
         viewsInfo.push(newPgeInfo);
         setViewsInfo([...viewsInfo]);
       }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
   );
 
-  const closeView = useCallback(
+  const closeView = useFn(
     async (
       view: ViewType<any>,
       newActiveView: ViewType<any> | undefined,
@@ -173,11 +171,9 @@ export const useViewManage = (
         setViewsInfo([...viewsInfo]);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
   );
 
-  const activateView = useCallback(async (view: ViewType<any>) => {
+  const activateView = useFn(async (view: ViewType<any>) => {
     const viewInfo = viewsInfo.find((x) => x.id === view.id);
     if (!viewInfo) {
       return;
@@ -210,10 +206,9 @@ export const useViewManage = (
     viewInfo.events?.onEnter?.({
       fromView: currentViewInfo?.view,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
-  const changeContainer = useCallback(
+  const changeContainer = useFn(
     async (fromView: ViewType<any>, eventType: ChangeContainerEventType) => {
       const activeViewInfo = viewsInfo.find(
         (x) => x.id === activeViewIdRef.current,
@@ -245,11 +240,9 @@ export const useViewManage = (
         });
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
   );
 
-  useEffect(() => {
+  useInit(() => {
     registerContainer(
       type,
       containerOrder,
@@ -262,8 +255,7 @@ export const useViewManage = (
     return () => {
       removeContainer(type);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return {
     activeViewId: activeViewIdRef.current,

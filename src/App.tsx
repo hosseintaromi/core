@@ -1,27 +1,18 @@
-import TabContainer from "./core/components/containers/TabContainer";
-import ModalContainer from "./core/components/containers/ModalContainer";
-import MasterTabContainer from "./core/components/containers/MasterTabContainer";
-import ToastContainer from "./core/components/containers/ToastContainer";
-import BottomSheetContainer from "./core/components/containers/BottomSheetContainer";
-import { openView } from "./core/utils/viewManager";
-import { ViewContainerType } from "./core/@types/commonView";
-import {} from "./core/utils/extensions";
-import OverlayContainer from "./core/components/containers/OverlayContainer";
-import rtlPlugin from "stylis-plugin-rtl";
-import { CacheProvider } from "@emotion/react";
-import createCache from "@emotion/cache";
-import { prefixer } from "stylis";
+import TabContainer from "./components/containers/TabContainer";
+import ModalContainer from "./components/containers/ModalContainer";
+import MasterTabContainer from "./components/containers/MasterTabContainer";
+import ToastContainer from "./components/containers/ToastContainer";
+import BottomSheetContainer from "./components/containers/BottomSheetContainer";
+import { openView } from "./utils/viewManager";
+import { ViewContainerType } from "./@types/commonView";
+import {} from "./utils/extensions";
+import OverlayContainer from "./components/containers/OverlayContainer";
 import Home from "./components/Home";
-import { useTimeout } from "./core/hooks/useTimeout";
-import useInit from "./core/hooks/useInit";
+import { useTimeout } from "./hooks/useTimeout";
+import useInit from "./hooks/useInit";
 
 function App() {
   const timeout = useTimeout();
-  // Create rtl cache
-  const cacheRtl = createCache({
-    key: "muirtl",
-    stylisPlugins: [prefixer, rtlPlugin],
-  });
 
   useInit(() => {
     timeout(() => {
@@ -42,14 +33,12 @@ function App() {
 
   return (
     <>
-      <CacheProvider value={cacheRtl}>
-        <MasterTabContainer />
-        <TabContainer />
-        <ModalContainer />
-        <BottomSheetContainer />
-        <ToastContainer />
-        <OverlayContainer />
-      </CacheProvider>
+      <MasterTabContainer />
+      <TabContainer />
+      <ModalContainer />
+      <BottomSheetContainer />
+      <ToastContainer />
+      <OverlayContainer />
     </>
   );
 }

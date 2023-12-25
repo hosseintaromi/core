@@ -1,4 +1,5 @@
-import { useEffect, MutableRefObject, useRef } from "react";
+import { MutableRefObject, useRef } from "react";
+import useInit from "./useInit";
 export const useClickAsync = <T>(
   asyncRequest: () => Promise<T>,
   success?: (res: T) => void,
@@ -8,7 +9,7 @@ export const useClickAsync = <T>(
 
   const elRef: MutableRefObject<any | undefined> = { current: undefined };
 
-  useEffect(() => {
+  useInit(() => {
     const element = elRef.current;
     if (!element) {
       return;
@@ -30,8 +31,7 @@ export const useClickAsync = <T>(
         failed?.(error);
       }
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return elRef;
 };

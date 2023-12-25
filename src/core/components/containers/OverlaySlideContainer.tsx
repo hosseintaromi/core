@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useCallback, useRef } from "react";
+import React, { MutableRefObject, useRef } from "react";
 import { ViewEvent, ViewEventConfigClose } from "../../@types/view";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
@@ -6,6 +6,7 @@ import { useViewManage } from "../../hooks/useViewManage";
 import { bezier } from "../../utils/bezier";
 import { closeView, openView } from "../../utils/viewManager";
 import { EventType, useEvent } from "../../hooks/useEvent";
+import useFn from "../../hooks/useFn";
 
 export interface OverlayInlineData<T, U> {
   id?: string;
@@ -103,48 +104,40 @@ const OverlaySlideContainer = <T, U>({
     } as ViewEvent<ViewEventConfigClose>,
   );
 
-  const openConfigView = useCallback(
-    async () => {
-      try {
-        if (doingRef.current) {
-          return;
-        }
-        doingRef.current = true;
-        await openView({
-          id: config.id,
-          type: containerType,
-          component: config.component,
-          data: config.data,
-          className: config.className,
-        });
-        doingRef.current = false;
-      } catch {
-        doingRef.current = false;
+  const openConfigView = useFn(async () => {
+    try {
+      if (doingRef.current) {
+        return;
       }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+      doingRef.current = true;
+      await openView({
+        id: config.id,
+        type: containerType,
+        component: config.component,
+        data: config.data,
+        className: config.className,
+      });
+      doingRef.current = false;
+    } catch {
+      doingRef.current = false;
+    }
+  });
 
-  const showByHover = useCallback(
-    (show: boolean) => {
-      if (hoverTimerRef.current) {
-        clearTimeout(hoverTimerRef.current);
-      }
-      hoverTimerRef.current = setTimeout(() => {
-        if (isHoverRef.current === show) {
-          if (show) {
-            openConfigView();
-          } else {
-            const view = viewsInfo[0].view;
-            closeView(view.id, view.type);
-          }
+  const showByHover = useFn((show: boolean) => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+    }
+    hoverTimerRef.current = setTimeout(() => {
+      if (isHoverRef.current === show) {
+        if (show) {
+          openConfigView();
+        } else {
+          const view = viewsInfo[0].view;
+          closeView(view.id, view.type);
         }
-      }, 300);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+      }
+    }, 300);
+  });
 
   useEvent(config.elRef || { current: undefined }, config.event, {
     onPress: () => openConfigView(),

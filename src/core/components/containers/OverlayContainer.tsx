@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
@@ -105,8 +105,6 @@ const OverlayContainer = () => {
       closeView(view.id, view.type);
     }
   };
-
-  useEffect(() => {}, []);
 
   return (
     <div className={viewsInfo.length === 0 ? "hidden" : "overlay-container"}>

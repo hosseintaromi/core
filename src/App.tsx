@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import TabContainer from "./core/components/containers/TabContainer";
 import ModalContainer from "./core/components/containers/ModalContainer";
 import MasterTabContainer from "./core/components/containers/MasterTabContainer";
@@ -12,9 +11,9 @@ import rtlPlugin from "stylis-plugin-rtl";
 import { CacheProvider } from "@emotion/react";
 import createCache from "@emotion/cache";
 import { prefixer } from "stylis";
-import FormPage from "./components/FormPage";
 import Home from "./components/Home";
 import { useTimeout } from "./core/hooks/useTimeout";
+import useInit from "./core/hooks/useInit";
 
 function App() {
   const timeout = useTimeout();
@@ -24,7 +23,7 @@ function App() {
     stylisPlugins: [prefixer, rtlPlugin],
   });
 
-  useEffect(() => {
+  useInit(() => {
     timeout(() => {
       console.log("timeout2");
     }, 2000);
@@ -39,7 +38,7 @@ function App() {
       type: ViewContainerType.MasterTab,
       component: Home,
     });
-  }, []);
+  });
 
   return (
     <>

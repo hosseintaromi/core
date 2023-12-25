@@ -1,4 +1,4 @@
-import { ReactNode, useEffect, useRef, memo, createContext } from "react";
+import { ReactNode, useRef, memo, createContext } from "react";
 import {
   ViewEventType,
   ViewEvents,
@@ -9,6 +9,7 @@ import {
   CloseType,
 } from "../@types/view";
 import { closeView, openView } from "../utils/viewManager";
+import useInit from "../hooks/useInit";
 
 export const ViewContext = createContext<ViewContextType>({} as any);
 
@@ -74,7 +75,7 @@ const ViewContextProvider = ({
     openView(view);
   };
 
-  useEffect(() => {
+  useInit(() => {
     viewInfo.events = {
       onEnter: (e: ViewEventArg) => {
         emitEvent(ViewEventType.onEnter, e);
@@ -86,8 +87,7 @@ const ViewContextProvider = ({
         emitEvent(ViewEventType.onClosing, e);
       },
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <ViewContext.Provider

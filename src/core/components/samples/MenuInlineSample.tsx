@@ -1,27 +1,24 @@
 import { getChats, chatUpdate, Chat } from "../../stores/chat";
 import { Message, getMessages, messageUpdate } from "../../stores/message";
 import ChatItem from "./ChatItem";
-import { useEffect, useState, memo } from "react";
+import { useState, memo } from "react";
 import ItemWrapper from "./ItemWrapper";
+import useInit from "../../hooks/useInit";
 
 function MenuInlineSample() {
   const [chats, setChats] = useState<Chat[]>([]);
   const [messages, setMessages] = useState<Message[]>([]);
 
-  useEffect(
-    () => {
-      const chats = getChats();
-      const messages = getMessages();
-      setChats(chats);
-      setMessages(messages);
-      setTimeout(() => {
-        messageUpdate();
-        chatUpdate();
-      }, 3000);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  useInit(() => {
+    const chats = getChats();
+    const messages = getMessages();
+    setChats(chats);
+    setMessages(messages);
+    setTimeout(() => {
+      messageUpdate();
+      chatUpdate();
+    }, 3000);
+  });
 
   return (
     <div>
@@ -37,4 +34,4 @@ function MenuInlineSample() {
   );
 }
 
-export default memo(MenuInlineSample, () => true);
+export default MenuInlineSample;

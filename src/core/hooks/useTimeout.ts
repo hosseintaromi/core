@@ -1,22 +1,20 @@
-import { useCallback, useEffect, useRef } from "react";
+import { useRef } from "react";
+import useInit from "./useInit";
+import useFn from "./useFn";
 
 export const useTimeout = (callback?: () => void, delay?: number) => {
   const timeoutRef = useRef<NodeJS.Timeout[]>([]);
 
-  useEffect(
-    () => {
-      if (callback) {
-        timeout(callback, delay);
-      }
-      return () => {
-        clearAll();
-      };
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  useInit(() => {
+    if (callback) {
+      timeout(callback, delay);
+    }
+    return () => {
+      clearAll();
+    };
+  });
 
-  const timeout = useCallback(
+  const timeout = useFn(
     (callback: () => void, delay?: number, reset?: boolean) => {
       if (reset) {
         clearAll();
@@ -29,7 +27,6 @@ export const useTimeout = (callback?: () => void, delay?: number) => {
         timeouts.remove((x) => x === newTimeout);
       };
     },
-    [],
   );
 
   const clearAll = () => {

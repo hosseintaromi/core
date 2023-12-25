@@ -1,10 +1,4 @@
-import {
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-  MutableRefObject,
-} from "react";
+import { useRef, useState, MutableRefObject } from "react";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import {
@@ -21,6 +15,8 @@ import {
   addEventListenerEl,
   removeEventListenerEl,
 } from "../../utils/extensions";
+import useInit from "../../hooks/useInit";
+import useFn from "../../hooks/useFn";
 
 export interface OverlayInlineData<T, U> {
   event: EventType;
@@ -65,22 +61,18 @@ const OverlayInlineContainer = <T, U>({
     },
   });
 
-  const showByHover = useCallback(
-    (show: boolean) => {
-      if (hoverTimerRef.current) {
-        clearTimeout(hoverTimerRef.current);
+  const showByHover = useFn((show: boolean) => {
+    if (hoverTimerRef.current) {
+      clearTimeout(hoverTimerRef.current);
+    }
+    hoverTimerRef.current = setTimeout(() => {
+      if (isHoverRef.current === show && openedRef.current !== show) {
+        showView(show);
       }
-      hoverTimerRef.current = setTimeout(() => {
-        if (isHoverRef.current === show && openedRef.current !== show) {
-          showView(show);
-        }
-      }, 300);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+    }, 300);
+  });
 
-  const doAnimate = useCallback(
+  const doAnimate = useFn(
     (newView: ViewRef, config: ViewEvent) =>
       new Promise<any>((resolve, reject) => {
         config.start?.(newView);
@@ -97,11 +89,9 @@ const OverlayInlineContainer = <T, U>({
           },
         );
       }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
   );
 
-  const loadView = useCallback(
+  const loadView = useFn(
     (newView: ViewType<any>) =>
       new Promise<ViewInfo>((resolve, reject) => {
         const newViewInfo: ViewInfo = {
@@ -118,11 +108,9 @@ const OverlayInlineContainer = <T, U>({
         };
         setViewInfoState(newViewInfo);
       }),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
   );
 
-  const openOverlayView = useCallback(async (newView: ViewType<any>) => {
+  const openOverlayView = useFn(async (newView: ViewType<any>) => {
     let viewInfo = viewInfoRef.current;
     if (!viewInfo) {
       viewInfo = await loadView(newView);
@@ -158,82 +146,71 @@ const OverlayInlineContainer = <T, U>({
       fromView: undefined,
       data: newView.data,
     });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
-  const closeOverlayView = useCallback(
-    async (view?: ViewType<any>) => {
-      const viewInfo = viewInfoRef.current;
-      if (!viewInfo) {
-        return;
-      }
-      viewInfo.events?.onClosing?.({
-        toView: undefined,
+  const closeOverlayView = useFn(async (view?: ViewType<any>) => {
+    const viewInfo = viewInfoRef.current;
+    if (!viewInfo) {
+      return;
+    }
+    viewInfo.events?.onClosing?.({
+      toView: undefined,
+    });
+
+    await doAnimate(
+      {
+        view: viewInfo.view,
+        ref: viewInfo.elRef as any,
+      },
+      {
+        duration: 500,
+        start(closeView) {
+          const closeViewStyle = closeView.ref.style;
+          closeViewStyle.scale = "1";
+        },
+        animate(t, closeView) {
+          const p = slideIn(t);
+          const closeViewStyle = closeView.ref.style;
+          closeViewStyle.scale = 1 - p / 3 + "";
+          closeViewStyle.opacity = 1 - p + "";
+        },
+        end() {
+          openedRef.current = false;
+          setHide(true);
+        },
+      },
+    );
+  });
+
+  const showView = useFn((show: boolean) => {
+    const viewInfoCurrent = viewInfoRef.current;
+    const view = viewInfoCurrent?.view;
+    if (show) {
+      openView({
+        id: "overlay-view",
+        type: containerIdRef.current || "",
+        component: config.component,
+        data: config.data,
       });
-
-      await doAnimate(
-        {
-          view: viewInfo.view,
-          ref: viewInfo.elRef as any,
-        },
-        {
-          duration: 500,
-          start(closeView) {
-            const closeViewStyle = closeView.ref.style;
-            closeViewStyle.scale = "1";
-          },
-          animate(t, closeView) {
-            const p = slideIn(t);
-            const closeViewStyle = closeView.ref.style;
-            closeViewStyle.scale = 1 - p / 3 + "";
-            closeViewStyle.opacity = 1 - p + "";
-          },
-          end() {
-            openedRef.current = false;
-            setHide(true);
-          },
-        },
-      );
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
-
-  const showView = useCallback(
-    (show: boolean) => {
-      const viewInfoCurrent = viewInfoRef.current;
-      const view = viewInfoCurrent?.view;
-      if (show) {
-        openView({
-          id: "overlay-view",
-          type: containerIdRef.current || "",
-          component: config.component,
-          data: config.data,
-        });
-      } else if (view) {
-        closeView(view.id, view.type);
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+    } else if (view) {
+      closeView(view.id, view.type);
+    }
+  });
 
   const handleMouseEvents = (el: HTMLElement) => {
     addEventListenerEl(el, "mouseover", handleMouseOver);
     addEventListenerEl(el, "mouseout", handleMouseOut);
   };
 
-  const handleMouseOver = useCallback(() => {
+  const handleMouseOver = useFn(() => {
     showByHover(true);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
-  const handleMouseOut = useCallback(() => {
+  const handleMouseOut = useFn(() => {
     showByHover(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
-  useEffect(() => {
+  useInit(() => {
     const id = (containerIdRef.current = "overlay-inline-" + Date.now());
     registerContainer(id, 6, {}, openOverlayView, closeOverlayView);
     config.show = showView;
@@ -243,8 +220,7 @@ const OverlayInlineContainer = <T, U>({
       removeEventListenerEl(viewRef.current, "mouseout", handleMouseOut);
       removeContainer(id);
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return viewInfoState ? (
     <div className={hide ? "hidden" : "overlay-inline-container"}>

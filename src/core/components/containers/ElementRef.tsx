@@ -1,4 +1,5 @@
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useRef } from "react";
+import useInit from "../../hooks/useInit";
 
 const ElementRef = ({
   className,
@@ -10,10 +11,9 @@ const ElementRef = ({
   onLoad?: (ref: HTMLElement) => void;
 }) => {
   const elRef = useRef<any>();
-  useEffect(() => {
+  useInit(() => {
     onLoad?.(elRef.current);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <div ref={elRef} className={className}>

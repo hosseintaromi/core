@@ -1,5 +1,7 @@
-import { useEffect, useCallback, useState } from "react";
-import { IObservable, ObservableActionType } from "../stores/observable";
+import { useState } from "react";
+import { IObservable } from "../stores/observable";
+import useInit from "./useInit";
+import useFn from "./useFn";
 
 export const useObserver = <T>(
   observable: IObservable<T>,
@@ -9,37 +11,29 @@ export const useObserver = <T>(
 ) => {
   const [subjectState, setSubjectState] = useState<T>(subject);
 
-  const subscribe = useCallback(
-    (action: ObservableActionType, newSubject: T) => {
-      switch (action) {
-        case "Update":
-          if (newSubject === subject) {
-            setSubjectState({ ...newSubject });
-          } else {
-            setSubjectState(newSubject);
-          }
-          update?.(newSubject);
-          break;
-        case "Delete":
-          remove?.(newSubject);
-          break;
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  const subscribe = useFn((action: string, newSubject: T) => {
+    switch (action) {
+      case "Update":
+        if (newSubject === subject) {
+          setSubjectState({ ...newSubject });
+        } else {
+          setSubjectState(newSubject);
+        }
+        update?.(newSubject);
+        break;
+      case "Delete":
+        remove?.(newSubject);
+        break;
+    }
+  });
 
-  useEffect(
-    () => {
-      observable.on(subject, subscribe);
+  useInit(() => {
+    observable.on(subscribe, subject);
 
-      return () => {
-        observable.off(subject, subscribe);
-      };
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+    return () => {
+      observable.off(subscribe, subject);
+    };
+  });
 
   return subjectState;
 };

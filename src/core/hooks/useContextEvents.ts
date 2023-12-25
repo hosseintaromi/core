@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
+import useInit from "./useInit";
 
 type GenericEventFn = (data?: any) => void;
 
@@ -46,23 +47,19 @@ export const useContextEvents = <Y extends Record<string, string>, T = any>(
     };
   };
 
-  useEffect(
-    () => () => {
-      const __listeners = eventContext.__listeners;
-      const localListeners = listenersRef.current;
-      for (let key in localListeners) {
-        const items: GenericEventFn[] = localListeners[key];
-        items.forEach((event: GenericEventFn) => {
-          const index = __listeners[key].findIndex(
-            (x: GenericEventFn) => x === event,
-          );
-          __listeners[key].splice(index, 1);
-        });
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  useInit(() => () => {
+    const __listeners = eventContext.__listeners;
+    const localListeners = listenersRef.current;
+    for (let key in localListeners) {
+      const items: GenericEventFn[] = localListeners[key];
+      items.forEach((event: GenericEventFn) => {
+        const index = __listeners[key].findIndex(
+          (x: GenericEventFn) => x === event,
+        );
+        __listeners[key].splice(index, 1);
+      });
+    }
+  });
 
   return {
     listen,

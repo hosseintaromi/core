@@ -1,4 +1,4 @@
-import React, { MutableRefObject, useCallback, useEffect, useRef } from "react";
+import React, { MutableRefObject, useRef } from "react";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
 import { useViewManage } from "../../hooks/useViewManage";
@@ -6,6 +6,8 @@ import { openView } from "../../utils/viewManager";
 import { EventType, TouchEvent, useEvent } from "../../hooks/useEvent";
 import { useAnimate } from "../../hooks/useAnimate";
 import ElementRef from "./ElementRef";
+import useInit from "../../hooks/useInit";
+import useFn from "../../hooks/useFn";
 
 interface MoveInfo {
   from: number;
@@ -80,30 +82,26 @@ const SlideContainer = <T, U>({
     disableBrowserHistory: true,
   });
 
-  const openConfigView = useCallback(
-    async (index: number) => {
-      let viewInfo = viewsInfo.find((x) => x.id === index + "");
-      if (viewInfo) {
-        return;
-      }
-      await openView({
-        id: index + "",
-        type: containerType,
-        component: config.components[index].component,
-        data: config.data,
-        className: config.className,
-        options: { disableAnimate: true, inBackground: index > 0 },
-      });
-      viewInfo = viewsInfo.find((x) => x.id === index + "");
-      const ref = viewInfo?.elRef;
-      ref!.style.display = "block";
-      if (index > 0) {
-        ref!.style.transform = `translateX(100%)`;
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  const openConfigView = useFn(async (index: number) => {
+    let viewInfo = viewsInfo.find((x) => x.id === index + "");
+    if (viewInfo) {
+      return;
+    }
+    await openView({
+      id: index + "",
+      type: containerType,
+      component: config.components[index].component,
+      data: config.data,
+      className: config.className,
+      options: { disableAnimate: true, inBackground: index > 0 },
+    });
+    viewInfo = viewsInfo.find((x) => x.id === index + "");
+    const ref = viewInfo?.elRef;
+    ref!.style.display = "block";
+    if (index > 0) {
+      ref!.style.transform = `translateX(100%)`;
+    }
+  });
 
   const getView = (index: number) => {
     if (index < 0 || index > lastViewIndex) {
@@ -250,12 +248,11 @@ const SlideContainer = <T, U>({
     } as MoveInfo;
   };
 
-  useEffect(() => {
+  useInit(() => {
     hideViews(components.map((x) => x.ref));
     setPointer(0, 0, true);
     openConfigView(0);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <div ref={containerRef} className="slide-inline-container">

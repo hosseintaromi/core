@@ -5,6 +5,7 @@ import {
   MessageLoadingViewModel,
   MessageLoadingResponseType,
 } from "../../@types/commonView";
+import useInit from "../../hooks/useInit";
 
 export function LoadingDialog() {
   const [loadingEnd, setLoadingEnd] = useState<
@@ -27,7 +28,7 @@ export function LoadingDialog() {
     }
   };
 
-  useEffect(() => {
+  useInit(() => {
     callLoading();
     viewData.onClickedBackdrop = () => {
       if (loaded.current) {
@@ -35,8 +36,7 @@ export function LoadingDialog() {
       }
     };
     return () => {};
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   useEffect(() => {
     loaded.current = !!loadingEnd;

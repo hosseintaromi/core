@@ -1,13 +1,14 @@
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useView } from "../../hooks/useView";
 import { MessageToast } from "../../@types/commonView";
+import useInit from "../../hooks/useInit";
 
 export function Toast() {
   const timer = useRef<NodeJS.Timeout>();
 
   const { close, viewData } = useView<MessageToast>({});
 
-  useEffect(() => {
+  useInit(() => {
     if (viewData.delay) {
       timer.current = setTimeout(() => {
         close();
@@ -18,8 +19,7 @@ export function Toast() {
         clearTimeout(timer.current);
       }
     };
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return (
     <div className="w-100">

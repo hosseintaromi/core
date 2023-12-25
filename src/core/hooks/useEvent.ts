@@ -1,5 +1,7 @@
-import { MutableRefObject, useEffect, useRef, useCallback } from "react";
+import { MutableRefObject, useRef } from "react";
 import { useDisableSelection } from "./useDisableSelection";
+import useInit from "./useInit";
+import useFn from "./useFn";
 const MIN_PRESS_TIME = 500;
 const MAX_TAP_TIME = 300;
 const MIN_MOVE_TIME = 10;
@@ -165,7 +167,7 @@ export const useEvent = (
     touchRef.current = [];
   };
 
-  const handleTouchStart = useCallback((e: Event) => {
+  const handleTouchStart = useFn((e: Event) => {
     const touches = touchRef.current;
     if (touches.length > 2) {
       touchRef.current.length = 0;
@@ -175,10 +177,9 @@ export const useEvent = (
 
     listenMove(true);
     handleStartEvents(e);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
-  const handleTouchEnd = useCallback((e: Event) => {
+  const handleTouchEnd = useFn((e: Event) => {
     handleEndEvents(e);
     listenMove(false);
     clearTimer();
@@ -186,8 +187,7 @@ export const useEvent = (
       events.onTouchEnd?.(touchEventRef.current!);
       startSwipeRef.current = undefined;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   const clearTimer = () => {
     const timer = timeoutRef.current;
@@ -222,7 +222,7 @@ export const useEvent = (
 
   const detectMove = (e: Event) => true;
 
-  const handleTouchMove = useCallback((e: Event) => {
+  const handleTouchMove = useFn((e: Event) => {
     isTouchMoveRef.current = detectMove(e);
     switch (eventType) {
       case EventType.HorizontalSwipe:
@@ -230,18 +230,15 @@ export const useEvent = (
         handleSwipe(e);
         break;
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
-  const handleMouseover = useCallback((e: Event) => {
+  const handleMouseover = useFn((e: Event) => {
     events?.onMouseover?.(e);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
-  const handleMouseout = useCallback((e: Event) => {
+  const handleMouseout = useFn((e: Event) => {
     events?.onMouseout?.(e);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   const listenMove = (listen: boolean) => {
     if (listen && !isTouchMoveRef.current) {
@@ -311,16 +308,12 @@ export const useEvent = (
     clearTimer();
   };
 
-  useEffect(
-    () => {
-      addListeners();
-      return () => {
-        removeListeners();
-      };
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  useInit(() => {
+    addListeners();
+    return () => {
+      removeListeners();
+    };
+  });
 
   return {
     updateRef: () => {

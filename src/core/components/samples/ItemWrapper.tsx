@@ -1,9 +1,10 @@
-import { useEffect, ReactNode } from "react";
+import { ReactNode } from "react";
+import useInit from "../../hooks/useInit";
 
 function ItemWrapper({ children }: { children: ReactNode }) {
-  useEffect(() => {
+  useInit(() => {
     // debugger;
-  }, []);
+  });
   return <>{children}</>;
 }
 

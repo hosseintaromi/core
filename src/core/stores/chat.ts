@@ -24,7 +24,7 @@ export function getChats() {
 export function chatUpdate() {
   const chat = chats[1];
   chat.name = "Hasan";
-  chatObservable.update(chat);
+  chatObservable.emit("Update", chat);
 }
 
 export interface ChatInput {

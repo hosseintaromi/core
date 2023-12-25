@@ -1,6 +1,7 @@
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useRef } from "react";
 import { EventType, useEvent } from "../hooks/useEvent";
 import { ViewInfo } from "../@types/view";
+import useInit from "../hooks/useInit";
 
 export function Scrollable({
   children,
@@ -22,11 +23,10 @@ export function Scrollable({
     },
   });
 
-  useEffect(() => {
+  useInit(() => {
     elRef2.current = viewInfo.elRef;
     updateRef();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   return <>{children}</>;
 }

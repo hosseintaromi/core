@@ -1,30 +1,31 @@
-import { useCallback, useEffect, useRef } from "react";
-import { useLocaleObserver } from "./useLocaleObserver";
-import { L } from "../stores/L";
-import { useObserver } from "./useObserver";
-import { getLocale, getLocales, localeObservable } from "../stores/locale";
+import { LocaleKeyTypes } from "../@types/locale";
+import { useState } from "react";
+import {
+  getCurrentLocaleKey,
+  getLocale,
+  localeObservable,
+} from "../stores/locale";
+import useInit from "./useInit";
+import useFn from "./useFn";
 
-export const useLocale = () => {
-  const _locale = useObserver(localeObservable, getLocales("fa"));
+export const useLocale = <T extends LocaleKeyTypes = LocaleKeyTypes>() => {
+  const [localeKey, setLocaleKey] = useState<string>(getCurrentLocaleKey());
 
-  // useEffect(
-  //   () => {
-  //     if (callback) {
-  //       timeout(callback, delay);
-  //     }
-  //     return () => {
-  //       clearAll();
-  //     };
-  //   },
-  //   // eslint-disable-next-line react-hooks/exhaustive-deps
-  //   [],
-  // );
+  const subscribe = useFn((action: string, newKey: string) => {
+    if (newKey !== localeKey) {
+      setLocaleKey(newKey);
+    }
+  });
 
-  const locale = useCallback(
-    (key: keyof L) => getLocale(key),
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
-  );
+  useInit(() => {
+    localeObservable.on(subscribe);
+
+    return () => {
+      localeObservable.off(subscribe);
+    };
+  });
+
+  const locale = useFn((key: T) => getLocale(key));
 
   return locale;
 };

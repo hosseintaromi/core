@@ -1,23 +1,25 @@
-export type ObservableActionType = "Update" | "Delete";
-export type ObservableAction<T> = (
-  action: ObservableActionType,
-  subject: T,
-) => void;
+export type ObservableAction<T> = (action: string, subject: T) => void;
 
 export interface IObservable<T> {
-  on: (subject: T, subscriber: ObservableAction<T>) => void;
-  off: (subject: T, subscriber: ObservableAction<T>) => void;
+  on: (subscriber: ObservableAction<T>, subject?: T) => void;
+  off: (subscriber: ObservableAction<T>, subject?: T) => void;
+  emit: (action: string, subject: T) => void;
 }
 
 export abstract class Observable<T> implements IObservable<T> {
-  private observables: {
+  protected observables: {
     [id: string]: ObservableAction<T>[];
   } = {};
 
-  protected abstract getId(subject: T): string;
+  readonly defaultId = "subscribers";
 
-  on(subject: T, subscriber: ObservableAction<T>) {
-    const id = this.getId(subject);
+  protected abstract getId?(subject: T): string;
+
+  private getForceId = (subject?: T) =>
+    this.getId?.(subject || ({} as any)) || this.defaultId;
+
+  on(subscriber: ObservableAction<T>, subject?: T) {
+    const id = this.getForceId(subject);
     let observable = this.observables[id];
     if (!observable) {
       observable = this.observables[id] = [];
@@ -25,8 +27,8 @@ export abstract class Observable<T> implements IObservable<T> {
     observable.push(subscriber);
   }
 
-  off(subject: T, subscriber: ObservableAction<T>) {
-    const id = this.getId(subject);
+  off(subscriber: ObservableAction<T>, subject?: T) {
+    const id = this.getForceId(subject);
     const observable = this.observables[id];
     observable?.remove((x) => x === subscriber);
     if (observable.length === 0) {
@@ -34,31 +36,25 @@ export abstract class Observable<T> implements IObservable<T> {
     }
   }
 
-  public emit(action: ObservableActionType, subject: T) {
-    switch (action) {
-      case "Update":
-        this.update(subject);
-        break;
-      case "Delete":
-        this.delete(subject);
-        break;
-    }
-  }
-
-  public update(subject: T) {
-    const id = this.getId(subject);
+  emit(action: string, subject: T) {
+    const id = this.getForceId(subject);
     const observable = this.observables[id];
     observable?.forEach((subscriber) => {
-      subscriber?.apply(subscriber, ["Update", subject]);
+      subscriber?.apply(subscriber, [action, subject]);
     });
+  }
+}
+
+export abstract class ObjectObservable<T> extends Observable<T> {
+  public update(subject: T) {
+    this.emit("Update", subject);
   }
 
   public delete(subject: T) {
-    const id = this.getId(subject);
-    const observable = this.observables[id];
-    observable?.forEach((subscriber) => {
-      subscriber?.apply(subscriber, ["Delete", subject]);
-    });
-    delete this.observables[id];
+    this.emit("Delete", subject);
+    const id = this.getId?.(subject);
+    if (id) {
+      delete this.observables[id];
+    }
   }
 }

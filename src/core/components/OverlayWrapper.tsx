@@ -1,5 +1,6 @@
-import { ReactNode, useEffect, useRef } from "react";
+import { ReactNode, useRef } from "react";
 import { OverlayConfig, useOverlay } from "../hooks/useOverlay";
+import useInit from "../hooks/useInit";
 
 export function ContextMenuWrapper<T, U>({
   children,
@@ -14,10 +15,9 @@ export function ContextMenuWrapper<T, U>({
 }) {
   const elRef = useRef<HTMLElement>(null);
 
-  useEffect(() => {
+  useInit(() => {
     menuRef.current = elRef.current?.children[0];
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   const menuRef = useOverlay<T, U>({
     component: contextMenuConfig.component,

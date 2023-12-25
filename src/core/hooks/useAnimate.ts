@@ -1,14 +1,16 @@
-import { useEffect, useRef, useCallback } from "react";
+import { useRef } from "react";
 import { requestAnimation } from "../utils/animator";
+import useInit from "./useInit";
+import useFn from "./useFn";
 
 export const useAnimate = () => {
   const cancelRef = useRef<(() => void)[]>([]);
 
-  const removeCancelRequest = useCallback((request: () => void) => {
+  const removeCancelRequest = useFn((request: () => void) => {
     cancelRef.current.remove((x) => x === request);
-  }, []);
+  });
 
-  const requestAnimate = useCallback(
+  const requestAnimate = useFn(
     (
       duration: number,
       animate: (t: number) => void,
@@ -32,25 +34,19 @@ export const useAnimate = () => {
       cancelRef.current.push(request);
       return request;
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [],
   );
 
-  const cancelAnimate = useCallback((cancelRequest: () => void) => {
+  const cancelAnimate = useFn((cancelRequest: () => void) => {
     removeCancelRequest(cancelRequest);
     cancelRequest();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
-  useEffect(
-    () => () => {
-      cancelRef.current.forEach((cancelRequest) => {
-        cancelRequest();
-      });
-      cancelRef.current = [];
-    },
-    [],
-  );
+  useInit(() => () => {
+    cancelRef.current.forEach((cancelRequest) => {
+      cancelRequest();
+    });
+    cancelRef.current = [];
+  });
 
   return {
     requestAnimate,

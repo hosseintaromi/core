@@ -1,19 +1,19 @@
 import { CloseType, ViewEvents, ViewType } from "../@types/view";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { ViewContext } from "../context/ViewContextProvider";
+import useInit from "./useInit";
 
 export const useView = <T = any>(events?: ViewEvents) => {
   const viewContext = useContext(ViewContext);
 
-  useEffect(() => {
+  useInit(() => {
     if (events) {
       const unListener = viewContext.listenEvents(events);
       return () => {
         unListener();
       };
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  });
 
   const close = (res?: any) => {
     closeByType("Current", res);

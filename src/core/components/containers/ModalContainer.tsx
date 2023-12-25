@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { ViewEvent } from "../../@types/view";
 import { ViewComponent } from "../ViewComponent";
 import ViewContextProvider from "../../context/ViewContextProvider";
@@ -75,8 +75,6 @@ const ModalContainer = () => {
       },
     } as ViewEvent,
   );
-
-  useEffect(() => {}, []);
 
   const closeModal = () => {
     if (viewsInfo.length === 0) {

@@ -1,11 +1,11 @@
-import { Observable } from "./observable";
+import { ObjectObservable } from "./observable";
 
 export interface Message {
   id: string;
   text: string;
 }
 
-class MessageObservable extends Observable<Message> {
+class MessageObservable extends ObjectObservable<Message> {
   getId(message: Message) {
     return message.id;
   }
